@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "numismatic-overhaul",
+  "version": "${version}",
+  "name": "Numismatic Overhaul",
+  "description": "Adds a Terraria-style currency system into Minecraft!",
+  "authors": [
+    "glisco",
+    "Pois1x"
+  ],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/numismatic-overhaul/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.glisco.numismaticoverhaul.client.NumismaticOverhaulClient"
+    ],
+    "main": [
+      "com.glisco.numismaticoverhaul.NumismaticOverhaul"
+    ],
+    "cardinal-components-entity": [
+      "com.glisco.numismaticoverhaul.ModComponents"
+    ]
+  },
+  "mixins": [
+    "numismatic-overhaul.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.16.5"
+  },
+  "custom": {
+    "cardinal-components": [
+      "numismatic-overhaul:currency"
+    ]
+  }
+}

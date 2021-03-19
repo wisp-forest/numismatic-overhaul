@@ -1,0 +1,49 @@
+{
+  "profession": "librarian",
+  "trades": {
+    "novice": [
+      {
+        "sell": {
+          "item": "minecraft:book",
+          "count": 2
+        },
+        "price": 16,
+        "maxUses": 2
+      },
+      {
+        "sell": {
+          "item": "minecraft:gold_ingot",
+          "count": 25
+        },
+        "price": 5,
+        "maxUses": 1
+      },
+      {
+        "sell": {
+          "item": "minecraft:bow",
+          "count": 1
+        },
+        "price": 99,
+        "maxUses": 1
+      }
+    ],
+    "apprentice": [
+      {
+        "sell": {
+          "item": "minecraft:enchanted_book",
+          "count": 2
+        },
+        "price": 160063,
+        "maxUses": 2
+      },
+      {
+        "sell": {
+          "item": "minecraft:diamond_pickaxe",
+          "count": 99
+        },
+        "price": 5,
+        "maxUses": 2
+      }
+    ]
+  }
+}

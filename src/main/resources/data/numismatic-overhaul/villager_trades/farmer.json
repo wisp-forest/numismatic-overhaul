@@ -1,0 +1,41 @@
+{
+  "profession": "farmer",
+  "trades": {
+    "novice": [
+      {
+        "sell": {
+          "item": "minecraft:cookie",
+          "count": 2
+        },
+        "price": 65,
+        "maxUses": 2
+      },
+      {
+        "sell": {
+          "item": "minecraft:gold_ingot",
+          "count": 10
+        },
+        "price": 5,
+        "maxUses": 20
+      }
+    ],
+    "apprentice": [
+      {
+        "sell": {
+          "item": "minecraft:cookie",
+          "count": 2
+        },
+        "price": 65,
+        "maxUses": 2
+      },
+      {
+        "sell": {
+          "item": "minecraft:gold_ingot",
+          "count": 10
+        },
+        "price": 5,
+        "maxUses": 20
+      }
+    ]
+  }
+}
