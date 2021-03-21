@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents an amount of currency stored somewhere.
+ * <p>
+ * Provides convenience methods for converting to {@link ItemStack}
+ */
 public class CurrencyStack {
 
     private int value;
@@ -24,10 +29,13 @@ public class CurrencyStack {
         this.value = value;
     }
 
+    /**
+     * @return An array of 3 {@link ItemStack}, format ItemStack[]{BRONZE, SILVER, GOLD}, stack sizes can exceed 99
+     */
     public ItemStack[] getAsItemStackArray() {
         ItemStack[] output = new ItemStack[]{null, null, null};
 
-        int[] values = CurrencyResolver.getValues(value);
+        int[] values = CurrencyResolver.splitValues(value);
 
         output[2] = new ItemStack(NumismaticOverhaul.GOLD_COIN, values[2]);
         output[1] = new ItemStack(NumismaticOverhaul.SILVER_COIN, values[1]);
@@ -36,6 +44,11 @@ public class CurrencyStack {
         return output;
     }
 
+    /**
+     * Wrapper for {@link CurrencyStack#getAsItemStackArray()} that only includes non-zero {@link ItemStack}
+     *
+     * @return A list of {@link ItemStack}, stack sizes can exceed 99
+     */
     public List<ItemStack> getAsItemStackList() {
         List<ItemStack> list = new ArrayList<>();
 
@@ -46,8 +59,11 @@ public class CurrencyStack {
         return list;
     }
 
-    public int getRequiredItemStacks() {
-        return (int) Arrays.stream(CurrencyResolver.getValues(value)).filter(value1 -> value1 != 0).count();
+    /**
+     * @return The amount of currency types required to represent this stack's raw value
+     */
+    public int getRequiredCurrencyTypes() {
+        return (int) Arrays.stream(CurrencyResolver.splitValues(value)).filter(value1 -> value1 != 0).count();
     }
 
     public static CurrencyStack fromJson(JsonObject data) {
@@ -55,9 +71,15 @@ public class CurrencyStack {
         values[0] = data.has("bronze") ? data.get("bronze").getAsInt() : 0;
         values[1] = data.has("silver") ? data.get("silver").getAsInt() : 0;
         values[2] = data.has("gold") ? data.get("gold").getAsInt() : 0;
-        return new CurrencyStack(CurrencyResolver.getRawValue(values));
+        return new CurrencyStack(CurrencyResolver.combineValues(values));
     }
 
+    /**
+     * Splits the provided list into another list where no stacks are over their max size
+     *
+     * @param input A list of {@link ItemStack} that could contain some with illegal sizes
+     * @return A list where no stacks have illegal sizes, most likely bigger than input
+     */
     public static List<ItemStack> splitAtMaxCount(List<ItemStack> input) {
         List<ItemStack> output = new ArrayList<>();
 

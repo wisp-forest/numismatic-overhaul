@@ -26,6 +26,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     PurseWidget purse;
 
+    //The purse is injected via mixin instead of event because I need special callbacks in render(...) and mouseClicked(...) to handle
+    //the non-button widget anyways, so I can just inject them here
+
     @Inject(method = "init", at = @At("TAIL"))
     public void addButton(CallbackInfo ci) {
         purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(playerInventory.player));

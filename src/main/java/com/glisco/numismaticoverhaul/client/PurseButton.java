@@ -19,17 +19,21 @@ public class PurseButton extends TexturedButtonWidget {
 
     @Override
     public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
-        RenderSystem.disableDepthTest();
-        drawTexture(matrices, 570, mouseY - 25, 73, 0, 44, 39);
 
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[2].getCount()), 200, mouseY - 25, 11184810);
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[1].getCount()), 200, mouseY - 14, 11184810);
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[0].getCount()), 200, mouseY + 3, 11184810);
+        //Try as hard as possible to have this on top, however because of drawing order not that much can be done
+        RenderSystem.disableDepthTest();
+
+        //Draw this fixed to the side of the inventory
+        drawTexture(matrices, x + 20, mouseY - 25, 73, 0, 44, 39);
+
+        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[2].getCount()), x + 35, mouseY - 20, 11184810);
+        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[1].getCount()), x + 35, mouseY - 9, 11184810);
+        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[0].getCount()), x + 35, mouseY + 2, 11184810);
 
     }
 
-    @Override
+    /*@Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderButton(matrices, mouseX, mouseY, delta);
-    }
+    }*/
 }

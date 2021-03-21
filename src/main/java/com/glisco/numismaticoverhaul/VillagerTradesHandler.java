@@ -62,7 +62,7 @@ public class VillagerTradesHandler {
 
                     JsonObject trade = tradeElement.getAsJsonObject();
 
-                    if (new CurrencyStack(trade.get("price").getAsInt()).getRequiredItemStacks() > 2) {
+                    if (new CurrencyStack(trade.get("price").getAsInt()).getRequiredCurrencyTypes() > 2) {
                         NumismaticOverhaul.LOGGER.error("Not adding trades for profession " + trades.get("profession").getAsString() + ", would require too many coins");
                         break innerLoop;
                     }
@@ -103,7 +103,7 @@ public class VillagerTradesHandler {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            if (price.getRequiredItemStacks() == 2) {
+            if (price.getRequiredCurrencyTypes() == 2) {
                 List<ItemStack> buy = price.getAsItemStackList();
                 return new TradeOffer(buy.get(0), buy.get(1), sell.copy(), this.maxUses, this.experience, this.multiplier);
             } else {

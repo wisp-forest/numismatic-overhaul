@@ -53,6 +53,11 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         }
     }
 
+    //TODO make this return false if would go into debt
+    /**
+     * Modifies this component, displays a message in the action bar
+     * @param value The value to modify by
+     */
     public void modify(int value) {
         setValue(this.value + value);
 
@@ -73,6 +78,10 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         provider.sendMessage(message, true);
     }
 
+    /**
+     * Same as {@link CurrencyComponent#modify(int)}, but doesn't show a message in the action bar
+     * @param value The value to modify by
+     */
     public void silentModify(int value) {
         setValue(this.value + value);
     }

@@ -23,19 +23,18 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
 
     public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/purse_widget.png");
     private final MinecraftClient client;
-    private int x;
-    private int y;
-
-    private MutableInt goldAmount = new MutableInt(0);
-    private MutableInt silverAmount = new MutableInt(0);
-    private MutableInt bronzeAmount = new MutableInt(0);
-
-    private List<ButtonWidget> buttons = new ArrayList<>();
-
-    private final CurrencyComponent currencyStorage;
+    private final int x;
+    private final int y;
 
     private boolean active = false;
+    private final List<ButtonWidget> buttons = new ArrayList<>();
 
+    private final MutableInt goldAmount = new MutableInt(0);
+    private final MutableInt silverAmount = new MutableInt(0);
+    private final MutableInt bronzeAmount = new MutableInt(0);
+    private final CurrencyComponent currencyStorage;
+
+    @SuppressWarnings("ConstantConditions")
     public PurseWidget(int x, int y, MinecraftClient client, CurrencyComponent currencyStorage) {
 
         this.client = client;
@@ -52,7 +51,6 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         buttons.add(new SmallPurseAdjustButton(x + 18, y + 35, button -> modifyInBounds(bronzeAmount, false, CurrencyResolver.Currency.BRONZE), false));
 
         buttons.add(new AlwaysOnTopTexturedButtonWidget(x + 3, y + 41, 24, 8, 37, 0, 16, TEXTURE, button -> {
-
             if (Screen.hasShiftDown() && Screen.hasControlDown()) {
                 client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.EXTRACT_ALL));
             } else {
@@ -70,6 +68,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if (!active) return;
 
+        //Draw over items in the crafting interface
         RenderSystem.disableDepthTest();
         client.getTextureManager().bindTexture(TEXTURE);
         drawTexture(matrices, x, y, 0, 0, 37, 60);
@@ -92,6 +91,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         return isMouseOver(mouseX, mouseY);
     }
 
+    //Required to not draw tooltips for items in the crafting interface
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
         return mouseX >= x && mouseX <= x + 37 && mouseY >= y && mouseY <= y + 57 && active;
@@ -101,15 +101,35 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         active = !active;
     }
 
+    /**
+     * Modifies a value by either 1 or 10 depending on whether or not SHIFT is held
+     * <br>
+     * Shortcut for {@link PurseWidget#modifyInBounds(MutableInt, int, boolean, CurrencyResolver.Currency)}
+     */
     private void modifyInBounds(MutableInt value, boolean add, CurrencyResolver.Currency currency) {
         modifyInBounds(value, Screen.hasShiftDown() ? 10 : 1, add, currency);
     }
 
+
+    /**
+     * Modifies a value with respect to the total amount of money the player has.
+     * If modifying the value even by one would surpass the player's worth when added
+     * to the two other selected values, nothing will happen
+     *
+     * @param value    The value to modify
+     * @param modifyBy The amount to modify by
+     * @param add      Whether to add or subtract
+     * @param currency The currency this selector is for
+     */
     private void modifyInBounds(MutableInt value, int modifyBy, boolean add, CurrencyResolver.Currency currency) {
 
+        //Get the step size of this selector
         int stepSize = currency.getRawValue(1);
+
+        //Calculate possible steps using the difference between the player's worth and the currently selected values added together
         int possibleSteps = (currencyStorage.getValue() - getCurrentSelectedValue()) / stepSize;
 
+        //Upper bound is either 99 or the the current value of this selector plus the possible steps
         int upperBound = Math.min(value.intValue() + possibleSteps, 99);
 
         if (add) value.add(modifyBy);
@@ -119,12 +139,22 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         if (value.intValue() > upperBound) value.setValue(upperBound);
     }
 
+    /**
+     * Resolves the selected values into a raw currency value
+     *
+     * @return The raw value of all selectors added with respect to their different worths
+     */
     private int getCurrentSelectedValue() {
-        return CurrencyResolver.getRawValue(new int[]{bronzeAmount.getValue(), silverAmount.getValue(), goldAmount.getValue()});
+        return CurrencyResolver.combineValues(new int[]{bronzeAmount.getValue(), silverAmount.getValue(), goldAmount.getValue()});
     }
 
+    /**
+     * This adjusts the extract values to the maximum you can do by simply setting
+     * them to zero and then letting them run into bounds
+     */
     private void resetSelectedValue() {
 
+        //Silently modify client cache because this runs before the sync packet is received
         currencyStorage.silentModify(-getCurrentSelectedValue());
 
         int oldGoldAmount = goldAmount.intValue();
@@ -140,6 +170,9 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         modifyInBounds(bronzeAmount, oldBronzeAmount, true, CurrencyResolver.Currency.BRONZE);
     }
 
+    /**
+     * Convenience class so I don't have init 6 buttons with the same config
+     */
     public static class SmallPurseAdjustButton extends AlwaysOnTopTexturedButtonWidget {
         public SmallPurseAdjustButton(int x, int y, PressAction pressAction, boolean add) {
             super(x, y, 9, 5, add ? 37 : 46, 24, 10, PurseWidget.TEXTURE, pressAction);

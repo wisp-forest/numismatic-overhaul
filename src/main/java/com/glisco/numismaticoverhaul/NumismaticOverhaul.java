@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import com.glisco.numismaticoverhaul.item.CurrencyItem;
+import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import net.fabricmc.api.ModInitializer;
@@ -18,9 +18,9 @@ public class NumismaticOverhaul implements ModInitializer {
 
     public static final String MOD_ID = "numismatic-overhaul";
 
-    public static final Item BRONZE_COIN = new CurrencyItem(CurrencyResolver.Currency.BRONZE);
-    public static final Item SILVER_COIN = new CurrencyItem(CurrencyResolver.Currency.SILVER);
-    public static final Item GOLD_COIN = new CurrencyItem(CurrencyResolver.Currency.GOLD);
+    public static final Item BRONZE_COIN = new CoinItem(CurrencyResolver.Currency.BRONZE);
+    public static final Item SILVER_COIN = new CoinItem(CurrencyResolver.Currency.SILVER);
+    public static final Item GOLD_COIN = new CoinItem(CurrencyResolver.Currency.GOLD);
 
     public static final Item MONEY_BAG = new MoneyBagItem();
 

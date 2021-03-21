@@ -13,13 +13,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class CurrencyItem extends Item {
+public class CoinItem extends Item {
 
     public final CurrencyResolver.Currency currency;
 
     private final Style NAME_STYLE;
 
-    public CurrencyItem(CurrencyResolver.Currency currency) {
+    public CoinItem(CurrencyResolver.Currency currency) {
         super(new Settings().group(ItemGroup.MISC).maxCount(99));
         this.currency = currency;
         this.NAME_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(currency.getNameColor()));
@@ -29,7 +29,7 @@ public class CurrencyItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
         ItemStack clickedStack = user.getStackInHand(hand);
-        int rawValue = ((CurrencyItem) clickedStack.getItem()).currency.getRawValue(clickedStack.getCount());
+        int rawValue = ((CoinItem) clickedStack.getItem()).currency.getRawValue(clickedStack.getCount());
 
         if (!world.isClient) {
             ModComponents.CURRENCY.get(user).modify(rawValue);

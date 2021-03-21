@@ -6,8 +6,12 @@ import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
+/**
+ * Extension of a normal {@link TexturedButtonWidget} that does no depth testing and thus always draws on top
+ */
 public class AlwaysOnTopTexturedButtonWidget extends TexturedButtonWidget {
 
+    //Replicate some fields from super because they are private for reason
     private final int u;
     private final int v;
     private final int hoveredVOffset;
@@ -32,7 +36,9 @@ public class AlwaysOnTopTexturedButtonWidget extends TexturedButtonWidget {
             i += this.hoveredVOffset;
         }
 
+        //Layers are for pussies
         RenderSystem.disableDepthTest();
+
         drawTexture(matrices, this.x, this.y, this.u, i, this.width, this.height);
         if (this.isHovered()) {
             this.renderToolTip(matrices, mouseX, mouseY);

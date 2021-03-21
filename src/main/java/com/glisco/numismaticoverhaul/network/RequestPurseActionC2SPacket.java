@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul.network;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
-import com.glisco.numismaticoverhaul.item.CurrencyItem;
+import com.glisco.numismaticoverhaul.item.CoinItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -33,11 +33,12 @@ public class RequestPurseActionC2SPacket {
             if (player.currentScreenHandler instanceof PlayerScreenHandler) {
                 if (action == Action.STORE_ALL) {
 
+                    //Iterate through all items in the player's inventory and put them into the purse if they're coins
                     for (int i = 0; i < player.inventory.size(); i++) {
                         ItemStack stack = player.inventory.getStack(i);
-                        if (!(stack.getItem() instanceof CurrencyItem)) continue;
+                        if (!(stack.getItem() instanceof CoinItem)) continue;
 
-                        CurrencyItem currency = (CurrencyItem) stack.getItem();
+                        CoinItem currency = (CoinItem) stack.getItem();
                         ModComponents.CURRENCY.get(player).pushTransaction(currency.currency.getRawValue(stack.getCount()));
 
                         player.inventory.removeOne(stack);
@@ -46,6 +47,8 @@ public class RequestPurseActionC2SPacket {
                     ModComponents.CURRENCY.get(player).commitTransactions();
 
                 } else if (action == Action.EXTRACT) {
+
+                    //Check if we can actually extract this much money to prevent cheeky packet forgery
                     if (ModComponents.CURRENCY.get(player).getValue() < values[1]) return;
 
                     CurrencyStack currencyStack = new CurrencyStack(values[1]);
