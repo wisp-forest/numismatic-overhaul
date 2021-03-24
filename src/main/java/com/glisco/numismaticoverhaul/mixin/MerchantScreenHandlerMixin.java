@@ -27,6 +27,7 @@ public class MerchantScreenHandlerMixin {
 
     }
 
+    //TODO remove unnecessary commits
     private static void autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
         //Bail if this autofill is not about coins, but commit any possible transactions if we're onto the second slot
         if (!(stack.getItem() instanceof CoinItem)) return;

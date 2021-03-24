@@ -3,6 +3,7 @@
   "trades": {
     "novice": [
       {
+        "type": "numismatic-overhaul:sell_for_currency",
         "sell": {
           "item": "minecraft:cookie",
           "count": 2
@@ -11,16 +12,15 @@
         "maxUses": 2
       },
       {
-        "sell": {
-          "item": "minecraft:gold_ingot",
-          "count": 10
-        },
+        "type": "numismatic-overhaul:sell_map_for_currency",
+        "structure": "minecraft:bastion_remnant",
         "price": 5,
         "maxUses": 20
       }
     ],
     "apprentice": [
       {
+        "type": "numismatic-overhaul:sell",
         "sell": {
           "item": "minecraft:cookie",
           "count": 2
@@ -29,6 +29,7 @@
         "maxUses": 2
       },
       {
+        "type": "numismatic-overhaul:sell_for_currency",
         "sell": {
           "item": "minecraft:gold_ingot",
           "count": 10

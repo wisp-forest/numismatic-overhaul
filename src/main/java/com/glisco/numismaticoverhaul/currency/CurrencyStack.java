@@ -59,6 +59,7 @@ public class CurrencyStack {
         return list;
     }
 
+    //TODO account for oversize itemstacks
     /**
      * @return The amount of currency types required to represent this stack's raw value
      */

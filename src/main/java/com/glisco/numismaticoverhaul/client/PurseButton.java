@@ -32,8 +32,4 @@ public class PurseButton extends TexturedButtonWidget {
 
     }
 
-    /*@Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.renderButton(matrices, mouseX, mouseY, delta);
-    }*/
 }

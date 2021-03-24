@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
+import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.Item;
@@ -37,8 +38,10 @@ public class NumismaticOverhaul implements ModInitializer {
 
         ServerPlayNetworking.registerGlobalReceiver(RequestPurseActionC2SPacket.ID, RequestPurseActionC2SPacket::onPacket);
 
+        VillagerTradesHandler.init();
+
         try {
-            VillagerTradesHandler.init();
+            VillagerTradesHandler.loadTrades();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 public class ServerPlayNetworkHandlerMixin {
 
     //Another :concern: mixin to allow creative cheating of items with stack sizes of 64
+    @SuppressWarnings("SameReturnValue")
     @ModifyConstant(method = "onCreativeInventoryAction", constant = @Constant(intValue = 64))
     public int increaseStackLimit(int originalValue) {
         return 99;
