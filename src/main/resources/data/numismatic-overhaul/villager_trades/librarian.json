@@ -3,46 +3,45 @@
   "trades": {
     "novice": [
       {
+        "type": "numismatic-overhaul:enchant_book",
+        "level": 30,
+        "allow_treasure": true
+      },
+      {
+        "type": "numismatic-overhaul:sell_single_enchantment",
+        "maxUses": 1
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:book",
+          "item": "minecraft:enchanted_book",
           "count": 2
         },
         "price": 16,
         "maxUses": 2
       },
       {
-        "sell": {
-          "item": "minecraft:gold_ingot",
-          "count": 25
-        },
-        "price": 5,
-        "maxUses": 1
-      },
-      {
-        "sell": {
-          "item": "minecraft:bow",
-          "count": 1
-        },
-        "price": 99,
-        "maxUses": 1
-      }
-    ],
-    "apprentice": [
-      {
-        "sell": {
-          "item": "minecraft:enchanted_book",
-          "count": 2
-        },
-        "price": 160063,
-        "maxUses": 2
-      },
-      {
+        "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:diamond_pickaxe",
           "count": 99
         },
         "price": 5,
         "maxUses": 2
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "numismatic-overhaul:process_item",
+        "sell": {
+          "item": "minecraft:diamond"
+        },
+        "buy": {
+          "item": "minecraft:emerald"
+        },
+        "price": 2000
       }
     ]
   }

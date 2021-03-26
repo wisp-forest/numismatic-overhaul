@@ -1,15 +1,21 @@
 package com.glisco.numismaticoverhaul.item;
 
-import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class MoneyBagItem extends Item {
 
@@ -18,10 +24,48 @@ public class MoneyBagItem extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ItemStack getDefaultStack() {
+        ItemStack defaultStack = super.getDefaultStack();
+        defaultStack.getOrCreateTag().putInt("Value", 0);
+        return defaultStack;
+    }
 
-        user.sendMessage(new LiteralText("Balance on " + (world.isClient ? "client" : "server") + ": " + ModComponents.CURRENCY.get(user).getValue() + new CurrencyStack(ModComponents.CURRENCY.get(user).getValue()).getAsItemStackList()), false);
+    public static ItemStack create(int value) {
+        ItemStack stack = new ItemStack(NumismaticOverhaul.MONEY_BAG);
+        stack.getOrCreateTag().putInt("Value", value);
+        return stack;
+    }
 
-        return TypedActionResult.success(user.getStackInHand(hand));
+    public static int getValue(ItemStack stack) {
+        return stack.getOrCreateTag().getInt("Value");
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.clear();
+
+        CurrencyStack currencyStack = new CurrencyStack(getValue(stack));
+
+        if (currencyStack.getRawValue() == 0) {
+            tooltip.add(new LiteralText("§7Empty"));
+            return;
+        }
+
+        for (ItemStack coin : currencyStack.getAsItemStackList()) {
+            tooltip.add(new LiteralText(coin.getCount() + " " + coin.getName().getString().split(" ")[0]).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(((CoinItem) coin.getItem()).currency.getNameColor()))));
+        }
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (!(entity instanceof PlayerEntity)) return;
+
+        PlayerEntity player = (PlayerEntity) entity;
+        player.inventory.removeOne(stack);
+
+        CurrencyStack currencyStack = new CurrencyStack(getValue(stack));
+        for (ItemStack toOffer : CurrencyStack.splitAtMaxCount(currencyStack.getAsItemStackList())) {
+            player.inventory.offerOrDrop(world, toOffer);
+        }
     }
 }

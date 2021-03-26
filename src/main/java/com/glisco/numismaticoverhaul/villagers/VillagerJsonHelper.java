@@ -12,4 +12,8 @@ public class VillagerJsonHelper {
     public static int int_getOrDefault(JsonObject object, String key, int defaultValue) {
         return object.has("key") ? object.get(key).getAsInt() : defaultValue;
     }
+
+    public static boolean boolean_getOrDefault(JsonObject object, String key, boolean defaultValue) {
+        return object.has("key") ? object.get(key).getAsBoolean() : defaultValue;
+    }
 }

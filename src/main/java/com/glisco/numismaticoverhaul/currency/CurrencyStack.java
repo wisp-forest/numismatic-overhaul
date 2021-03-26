@@ -59,12 +59,11 @@ public class CurrencyStack {
         return list;
     }
 
-    //TODO account for oversize itemstacks
     /**
      * @return The amount of currency types required to represent this stack's raw value
      */
     public int getRequiredCurrencyTypes() {
-        return (int) Arrays.stream(CurrencyResolver.splitValues(value)).filter(value1 -> value1 != 0).count();
+        return splitAtMaxCount(getAsItemStackList()).size();
     }
 
     public static CurrencyStack fromJson(JsonObject data) {

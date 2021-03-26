@@ -1,8 +1,12 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
+import com.glisco.numismaticoverhaul.currency.PlayerCurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.MerchantScreenHandler;
@@ -21,35 +25,56 @@ public class MerchantScreenHandlerMixin {
         MerchantScreenHandler handler = (MerchantScreenHandler) (Object) this;
         CurrencyComponent playerBalance = ModComponents.CURRENCY.get(((PlayerInventory) handler.getSlot(3).inventory).player);
 
-        autofillWithCoins(slot, stack, handler, playerBalance);
+        //if (((PlayerInventory) handler.getSlot(3).inventory).player.world.isClient) return;
+
+        if (stack.getItem() instanceof CoinItem) {
+            autofillWithCoins(slot, stack, handler, playerBalance);
+        } else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
+            autofillWithMoneyBag(slot, stack, handler, playerBalance);
+        }
 
         if (slot == 1) playerBalance.commitTransactions();
 
     }
 
-    //TODO remove unnecessary commits
     private static void autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
-        //Bail if this autofill is not about coins, but commit any possible transactions if we're onto the second slot
-        if (!(stack.getItem() instanceof CoinItem)) return;
-
         //See how much is required and how much was already autofilled
         int requiredCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
         int presentCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(handler.getSlot(slot).getStack().getCount());
 
         if (requiredCurrency <= presentCurrency) return;
 
-
-        //Find out how we still need to fill
+        //Find out how much we still need to fill
         int neededCurrency = requiredCurrency - presentCurrency;
 
         //Is that even possible?
-        if (!(neededCurrency <= playerBalance.getValue())) if (slot == 1) playerBalance.commitTransactions();
+        if (!(neededCurrency <= playerBalance.getValue())) return;
 
-        //Push a transaction and commit it if we're onto the second slot
         playerBalance.pushTransaction(-neededCurrency);
-        if (slot == 1) playerBalance.commitTransactions();
 
-        System.out.println(neededCurrency + " deduced from player balance");
+        handler.slots.get(slot).setStack(stack.copy());
+    }
+
+    private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
+
+        PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
+
+        //See how much is required and how much was already autofilled
+        int requiredCurrency = MoneyBagItem.getValue(stack);
+        int availableCurrencyInPlayerInventory = PlayerCurrencyHelper.getMoneyInInventory(player, false);
+
+        //Find out how much we still need to fill
+        int neededCurrency = requiredCurrency - availableCurrencyInPlayerInventory;
+
+        //Is that even possible?
+        if (neededCurrency > playerBalance.getValue()) return;
+
+        if (neededCurrency < 0) {
+            PlayerCurrencyHelper.deduceFromInventory(player, requiredCurrency);
+        } else {
+            playerBalance.pushTransaction(-neededCurrency);
+        }
+
         handler.slots.get(slot).setStack(stack.copy());
     }
 

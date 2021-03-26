@@ -6,14 +6,13 @@ import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.IOException;
 
 public class NumismaticOverhaul implements ModInitializer {
 
@@ -40,11 +39,9 @@ public class NumismaticOverhaul implements ModInitializer {
 
         VillagerTradesHandler.init();
 
-        try {
-            VillagerTradesHandler.loadTrades();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, serverResourceManager, success) -> {
+            VillagerTradesHandler.broadcastErrors(server);
+        });
     }
 
 }

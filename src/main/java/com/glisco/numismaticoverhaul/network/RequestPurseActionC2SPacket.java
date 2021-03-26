@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.network;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
+import com.glisco.numismaticoverhaul.currency.PlayerCurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -33,18 +34,7 @@ public class RequestPurseActionC2SPacket {
             if (player.currentScreenHandler instanceof PlayerScreenHandler) {
                 if (action == Action.STORE_ALL) {
 
-                    //Iterate through all items in the player's inventory and put them into the purse if they're coins
-                    for (int i = 0; i < player.inventory.size(); i++) {
-                        ItemStack stack = player.inventory.getStack(i);
-                        if (!(stack.getItem() instanceof CoinItem)) continue;
-
-                        CoinItem currency = (CoinItem) stack.getItem();
-                        ModComponents.CURRENCY.get(player).pushTransaction(currency.currency.getRawValue(stack.getCount()));
-
-                        player.inventory.removeOne(stack);
-                    }
-
-                    ModComponents.CURRENCY.get(player).commitTransactions();
+                    ModComponents.CURRENCY.get(player).modify(PlayerCurrencyHelper.getMoneyInInventory(player, true));
 
                 } else if (action == Action.EXTRACT) {
 
