@@ -6,8 +6,9 @@
   "mixins": [
     "InventoryMixin",
     "MerchantScreenHandlerMixin",
-    "ServerResourceManagerMixin",
-    "ServerPlayNetworkHandlerMixin"
+    "MerchantScreenMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "ServerResourceManagerMixin"
   ],
   "client": [
     "InventoryScreenMixin"

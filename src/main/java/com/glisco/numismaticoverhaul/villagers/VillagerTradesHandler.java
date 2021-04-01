@@ -108,7 +108,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
 
     public static void broadcastErrors(MinecraftServer server) {
         if (!EXCEPTIONS_DURING_LOADING.isEmpty()) {
-            server.getPlayerManager().broadcastChatMessage(new LiteralText("§cThe following errors have occured during numismatic-overhaul reload:"), MessageType.SYSTEM, null);
+            server.getPlayerManager().broadcastChatMessage(new LiteralText("§cThe following errors have occurred during numismatic-overhaul reload:"), MessageType.SYSTEM, null);
             EXCEPTIONS_DURING_LOADING.forEach(e -> {
                 server.getPlayerManager().broadcastChatMessage(new LiteralText("§7- " + e.getMessage()), MessageType.SYSTEM, null);
             });

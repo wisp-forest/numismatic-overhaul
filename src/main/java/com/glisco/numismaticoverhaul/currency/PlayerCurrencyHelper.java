@@ -39,6 +39,8 @@ public class PlayerCurrencyHelper {
         int presentInInventory = getMoneyInInventory(player, false);
         if (presentInInventory < value) return false;
 
+        System.out.println("deduce");
+
         getMoneyInInventory(player, true);
 
         offerAsCoins(player, new CurrencyStack(presentInInventory - value));

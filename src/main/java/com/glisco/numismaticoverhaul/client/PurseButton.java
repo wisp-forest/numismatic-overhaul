@@ -2,34 +2,37 @@ package com.glisco.numismaticoverhaul.client;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
+import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 
 public class PurseButton extends TexturedButtonWidget {
 
     private final CurrencyComponent currencyStorage;
+    private final Screen parent;
+    private final Text TOOLTIP_TITLE;
 
-    public PurseButton(int x, int y, PressAction pressAction, PlayerEntity player) {
+    public PurseButton(int x, int y, PressAction pressAction, PlayerEntity player, Screen parent) {
         super(x, y, 11, 12, 62, 0, 12, PurseWidget.TEXTURE, pressAction);
         this.currencyStorage = ModComponents.CURRENCY.get(player);
+        this.parent = parent;
+        this.TOOLTIP_TITLE = new LiteralText("Purse").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.GOLD.getNameColor())));
     }
 
     @Override
     public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
-
-        //Try as hard as possible to have this on top, however because of drawing order not that much can be done
-        RenderSystem.disableDepthTest();
-
-        //Draw this fixed to the side of the inventory
-        drawTexture(matrices, x + 20, mouseY - 25, 73, 0, 44, 39);
-
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[2].getCount()), x + 35, mouseY - 20, 11184810);
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[1].getCount()), x + 35, mouseY - 9, 11184810);
-        MinecraftClient.getInstance().textRenderer.draw(matrices, String.valueOf(currencyStorage.getCurrencyStack().getAsItemStackArray()[0].getCount()), x + 35, mouseY + 2, 11184810);
-
+        CurrencyTooltipRenderer.renderTooltip(
+                currencyStorage.getCurrencyStack(),
+                matrices, parent,
+                TOOLTIP_TITLE,
+                x + 14, mouseY - 15);
     }
+
 
 }

@@ -39,7 +39,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
             } else {
                 purse.toggleActive();
             }
-        }, this.playerInventory.player));
+        }, this.playerInventory.player, this));
     }
 
     @Inject(method = "render", at = @At("TAIL"))

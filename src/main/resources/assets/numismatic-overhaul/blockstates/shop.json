@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "numismatic-overhaul:block/shop"
+    }
+  }
+}

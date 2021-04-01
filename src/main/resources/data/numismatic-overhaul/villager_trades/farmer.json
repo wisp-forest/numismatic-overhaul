@@ -3,17 +3,13 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cookie",
-          "count": 2
-        },
-        "price": 10101,
-        "maxUses": 2
+        "type": "numismatic-overhaul:enchant_book",
+        "level": 65,
+        "allow_treasure": true
       },
       {
         "type": "numismatic-overhaul:sell_map",
-        "structure": "minecraft:monument",
+        "structure": "minecraft:endcity",
         "price": 5,
         "maxUses": 20
       }
