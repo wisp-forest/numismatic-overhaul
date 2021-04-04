@@ -10,26 +10,29 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.village.Merchant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
+    private final List<ShopOffer> offers;
 
     public ShopBlockEntity() {
         super(NumismaticOverhaul.SHOP_BLOCK_ENTITY);
         this.merchant = new ShopMerchant(this);
+        this.offers = new ArrayList<>();
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     @Override
     public Text getDisplayName() {
-        return new LiteralText("Shop Inventory");
+        return new TranslatableText("gui.numismatic-overhaul.shop.inventory_title");
     }
 
     @NotNull
@@ -62,10 +65,15 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         return merchant;
     }
 
+    public List<ShopOffer> getOffers() {
+        return offers;
+    }
+
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         Inventories.toTag(tag, INVENTORY);
+        ShopOffer.toTag(tag, offers);
         return tag;
     }
 
@@ -73,11 +81,41 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         Inventories.fromTag(tag, INVENTORY);
+        ShopOffer.fromTag(tag, offers);
+    }
+
+    public List<ShopOffer> addOrReplaceOffer(ShopOffer offer) {
+
+        int indexToReplace = -1;
+
+        for (int i = 0; i < offers.size(); i++) {
+            if (!ItemStack.areEqual(offer.getSellStack(), offers.get(i).getSellStack())) continue;
+            indexToReplace = i;
+            break;
+        }
+
+        if (indexToReplace == -1) {
+            offers.add(offer);
+        } else {
+            offers.set(indexToReplace, offer);
+        }
+
+        this.markDirty();
+
+        return offers;
+    }
+
+    public List<ShopOffer> deleteOffer(ItemStack stack) {
+        offers.removeIf(offer -> ItemStack.areEqual(stack, offer.getSellStack()));
+
+        this.markDirty();
+
+        return offers;
     }
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new GenericContainerScreenHandler(ScreenHandlerType.GENERIC_9X3, syncId, inv, this, 3);
+        return new ShopScreenHandler(syncId, inv, this);
     }
 }

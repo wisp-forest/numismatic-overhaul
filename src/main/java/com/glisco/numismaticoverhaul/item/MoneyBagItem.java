@@ -8,10 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import net.minecraft.text.*;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +45,7 @@ public class MoneyBagItem extends Item {
         CurrencyStack currencyStack = new CurrencyStack(getValue(stack));
 
         if (currencyStack.getRawValue() == 0) {
-            tooltip.add(new LiteralText("§7Empty"));
+            tooltip.add(new TranslatableText("numismatic-overhaul.empty").formatted(Formatting.GRAY));
             return;
         }
 

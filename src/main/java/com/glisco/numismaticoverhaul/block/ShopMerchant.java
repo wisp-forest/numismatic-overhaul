@@ -1,9 +1,7 @@
 package com.glisco.numismaticoverhaul.block;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.village.Merchant;
@@ -16,7 +14,6 @@ public class ShopMerchant implements Merchant {
 
     ShopBlockEntity shop;
     private TradeOfferList recipeList = new TradeOfferList();
-
     private PlayerEntity customer;
 
     public ShopMerchant(ShopBlockEntity blockEntity) {
@@ -25,13 +22,7 @@ public class ShopMerchant implements Merchant {
 
     public void updateTrades() {
         recipeList.clear();
-        shop.getItems().forEach(itemStack -> {
-            if (itemStack.getItem() == Items.AIR) return;
-
-            ItemStack toSell = itemStack.copy();
-            toSell.setCount(1);
-            recipeList.add(new TradeOffer(new ItemStack(NumismaticOverhaul.BRONZE_COIN), toSell, itemStack.getCount(), 0, 0));
-        });
+        shop.getOffers().forEach(offer -> recipeList.add(offer.toTradeOffer(shop)));
     }
 
     @Override
@@ -62,8 +53,9 @@ public class ShopMerchant implements Merchant {
         System.out.println("Selling: " + offer.getSellItem());
 
         shop.getItems().forEach(itemStack -> {
-            if (itemStack.getItem() != offer.getSellItem().getItem()) return;
-
+            ItemStack comparisonStack = itemStack.copy();
+            comparisonStack.setCount(1);
+            if (!ItemStack.areEqual(comparisonStack, offer.getSellItem())) return;
             itemStack.decrement(1);
         });
     }

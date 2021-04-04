@@ -2,5 +2,29 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "numismatic-overhaul:item/bronze_coin"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "coins": 0.09
+      },
+      "model": "numismatic-overhaul:item/bronze_coin_0"
+    },
+    {
+      "predicate": {
+        "coins": 0.27
+      },
+      "model": "numismatic-overhaul:item/bronze_coin_1"
+    },{
+      "predicate": {
+        "coins": 0.45
+      },
+      "model": "numismatic-overhaul:item/bronze_coin_2"
+    },{
+      "predicate": {
+        "coins": 0.63
+      },
+      "model": "numismatic-overhaul:item/bronze_coin_3"
+    }
+  ]
 }
