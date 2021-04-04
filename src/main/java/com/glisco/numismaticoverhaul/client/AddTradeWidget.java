@@ -61,12 +61,18 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
     }
 
     private void onTextChanged(String newText) {
-        if (!newText.isEmpty()) {
-            if (parent.isBufferEmpty() && Integer.parseInt(newText) != 0)
+        updateButtonActiveState();
+    }
+
+    public void updateButtonActiveState() {
+        if (!PRICE_FIELD.getText().isEmpty()) {
+            if (parent.isBufferEmpty() && Integer.parseInt(PRICE_FIELD.getText()) != 0) {
                 buttons.forEach(buttonWidget -> buttonWidget.active = true);
-        } else {
-            buttons.forEach(buttonWidget -> buttonWidget.active = false);
+                return;
+            }
         }
+
+        buttons.forEach(buttonWidget -> buttonWidget.active = false);
     }
 
     @Override

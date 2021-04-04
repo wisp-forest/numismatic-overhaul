@@ -56,6 +56,10 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         drawTexture(matrices, x - (selected ? 29 : 27), y, 113, selected ? 196 : 168, 32, 28);
     }
 
+    public void updateTradeWidget() {
+        this.TRADE_WIDGET.updateButtonActiveState();
+    }
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);

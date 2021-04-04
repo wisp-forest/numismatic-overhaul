@@ -92,6 +92,9 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void onBufferChanged() {
         System.out.println(BUFFER_INVENTORY.getStack(0));
+        if (this.owner.world.isClient) {
+            ((ShopScreen) MinecraftClient.getInstance().currentScreen).updateTradeWidget();
+        }
     }
 
     @Override
