@@ -25,6 +25,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
     private AddTradeWidget TRADE_WIDGET;
     int selected_tab = 0;
+    private int tabs = 2;
 
     private final List<ButtonWidget> tradeButtons = new ArrayList<>();
     private List<ShopOffer> offers = new ArrayList<>();
@@ -43,17 +44,20 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
-        drawTab(matrices, y + 14, selected_tab == 0);
-        drawTab(matrices, y + 46, selected_tab == 1);
-
-        client.getItemRenderer().renderInGuiWithOverrides(new ItemStack(Items.CHEST), x - 20, y + 19);
-        client.getItemRenderer().renderInGuiWithOverrides(new ItemStack(Items.EMERALD), x - 20, y + 52);
+        for (int i = 0; i < tabs; i++) {
+            drawTab(matrices, i, selected_tab == i);
+        }
     }
 
-    private void drawTab(MatrixStack matrices, int y, boolean selected) {
+    private void drawTab(MatrixStack matrices, int index, boolean selected) {
         client.getTextureManager().bindTexture(TEXTURE);
+
         int x = (width - backgroundWidth) / 2;
-        drawTexture(matrices, x - (selected ? 29 : 27), y, 113, selected ? 196 : 168, 32, 28);
+        int y = (height - backgroundHeight) / 2;
+
+        drawTexture(matrices, x - (selected ? 29 : 27), y + 5 + index * 32, 113, selected ? 196 : 168, 32, 28);
+
+        client.getItemRenderer().renderInGuiWithOverrides(new ItemStack(index == 0 ? Items.CHEST : Items.EMERALD), x - 20, y + 11 + index * 32);
     }
 
     public void updateTradeWidget() {
@@ -67,9 +71,13 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         TRADE_WIDGET.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
-        if (selected_tab == 1) {
-            for (ButtonWidget button : tradeButtons) {
-                button.render(matrices, mouseX, mouseY, delta);
+        if (selected_tab != 0) {
+
+            int offset = (selected_tab - 1) * 6;
+
+            for (int i = offset; i < 6 + offset; i++) {
+                if (i > tradeButtons.size() - 1) break;
+                tradeButtons.get(i).render(matrices, mouseX, mouseY, delta);
             }
         }
 
@@ -80,10 +88,15 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
         tradeButtons.clear();
         this.offers = offers;
+        this.tabs = (int) Math.ceil(1 + offers.size() / 6.0d);
+        if (this.selected_tab > tabs - 1) this.selected_tab = tabs - 1;
+
+        NumismaticOverhaul.LOGGER.info("Tabs: {}", tabs);
 
         for (int i = 0; i < offers.size(); i++) {
-            tradeButtons.add(new TradeButtonWidget(x + (i < 3 ? 8 : 90), y + 10 + (i % 3) * 20, offers.get(i).getPrice(), offers.get(i).getSellStack(), i));
+            tradeButtons.add(new TradeButtonWidget(x + (i % 6 < 3 ? 8 : 90), y + 10 + (i % 3) * 20, offers.get(i).getPrice(), offers.get(i).getSellStack(), i));
         }
+
     }
 
     public void loadOffer(int index) {
@@ -95,18 +108,20 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
 
         if (mouseX >= x - 27 && mouseX <= x) {
-            if (mouseY >= y + 14 && mouseY <= y + 42) {
-                selectTab(0);
-                return true;
-            } else if (mouseY >= y + 46 && mouseY <= y + 74) {
-                selectTab(1);
-                return true;
+            for (int i = 0; i < tabs; i++) {
+                if (mouseY >= y + 14 + i * 32 && mouseY <= y + 42 + i * 32) {
+                    selectTab(i);
+                    return true;
+                }
             }
         }
 
-        if (selected_tab == 1) {
-            for (ButtonWidget buttonWidget : tradeButtons) {
-                if (buttonWidget.mouseClicked(mouseX, mouseY, button)) return true;
+        if (selected_tab != 0) {
+            int offset = (selected_tab - 1) * 6;
+
+            for (int i = offset; i < 6 + offset; i++) {
+                if (i > tradeButtons.size() - 1) break;
+                tradeButtons.get(i).mouseClicked(mouseX, mouseY, button);
             }
         }
 
@@ -115,7 +130,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
     private void selectTab(int tab) {
         selected_tab = tab;
-        TRADE_WIDGET.setActive(tab == 1);
+        TRADE_WIDGET.setActive(tab != 0);
         this.titleY = tab == 0 ? 6 : 6000;
         client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }

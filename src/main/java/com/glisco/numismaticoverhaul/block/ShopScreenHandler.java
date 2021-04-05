@@ -56,7 +56,7 @@ public class ShopScreenHandler extends ScreenHandler {
         //Shop Inventory
         for (m = 0; m < 3; ++m) {
             for (l = 0; l < 9; ++l) {
-                this.addSlot(new AutoHidingSlot(shopInventory, l + m * 9, 8 + l * 18, 18 + m * 18, 0));
+                this.addSlot(new AutoHidingSlot(shopInventory, l + m * 9, 8 + l * 18, 18 + m * 18, 0, false));
             }
         }
 
@@ -72,7 +72,7 @@ public class ShopScreenHandler extends ScreenHandler {
         }
 
         //Trade Buffer Slot
-        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 29, 1) {
+        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 29, 0, true) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 ItemStack shadow = stack.copy();
@@ -149,17 +149,23 @@ public class ShopScreenHandler extends ScreenHandler {
     private static class AutoHidingSlot extends Slot {
 
         private final int targetTab;
+        private final boolean hide;
 
-        public AutoHidingSlot(Inventory inventory, int index, int x, int y, int targetTab) {
+        public AutoHidingSlot(Inventory inventory, int index, int x, int y, int targetTab, boolean hide) {
             super(inventory, index, x, y);
             this.targetTab = targetTab;
+            this.hide = hide;
         }
 
         @Override
         @Environment(EnvType.CLIENT)
         public boolean doDrawHoveringEffect() {
             if (!(MinecraftClient.getInstance().currentScreen instanceof ShopScreen)) return true;
-            return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() == targetTab;
+            if (hide) {
+                return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() != targetTab;
+            } else {
+                return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() == targetTab;
+            }
         }
     }
 }
