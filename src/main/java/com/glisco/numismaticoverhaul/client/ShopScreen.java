@@ -24,8 +24,9 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public static final Identifier TRADES_TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui_trades.png");
 
     private AddTradeWidget TRADE_WIDGET;
+
     int selected_tab = 0;
-    private int tabs = 2;
+    private int tabs = 1;
 
     private final List<ButtonWidget> tradeButtons = new ArrayList<>();
     private List<ShopOffer> offers = new ArrayList<>();
@@ -34,6 +35,14 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         super(handler, inventory, title);
         this.playerInventoryTitleY += 3;
         this.backgroundHeight = 168;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.TRADE_WIDGET = new AddTradeWidget(x + 178, y + 21, client, this);
+        updateShopOffers(offers);
+        selectTab(selected_tab);
     }
 
     @Override
@@ -60,10 +69,6 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         client.getItemRenderer().renderInGuiWithOverrides(new ItemStack(index == 0 ? Items.CHEST : Items.EMERALD), x - 20, y + 11 + index * 32);
     }
 
-    public void updateTradeWidget() {
-        this.TRADE_WIDGET.updateButtonActiveState();
-    }
-
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
@@ -82,26 +87,6 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         }
 
         drawMouseoverTooltip(matrices, mouseX, mouseY);
-    }
-
-    public void updateShopOffers(List<ShopOffer> offers) {
-
-        tradeButtons.clear();
-        this.offers = offers;
-        this.tabs = (int) Math.ceil(1 + offers.size() / 6.0d);
-        if (this.selected_tab > tabs - 1) this.selected_tab = tabs - 1;
-
-        NumismaticOverhaul.LOGGER.info("Tabs: {}", tabs);
-
-        for (int i = 0; i < offers.size(); i++) {
-            tradeButtons.add(new TradeButtonWidget(x + (i % 6 < 3 ? 8 : 90), y + 10 + (i % 3) * 20, offers.get(i).getPrice(), offers.get(i).getSellStack(), i));
-        }
-
-    }
-
-    public void loadOffer(int index) {
-        TRADE_WIDGET.setText(String.valueOf(offers.get(index).getPrice()));
-        client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createLOAD(index));
     }
 
     @Override
@@ -128,6 +113,47 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         return TRADE_WIDGET.mouseClicked(mouseX, mouseY, button) || super.mouseClicked(mouseX, mouseY, button);
     }
 
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return TRADE_WIDGET.isMouseOver(mouseX, mouseY) || super.isMouseOver(mouseX, mouseY);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        return this.TRADE_WIDGET.keyPressed(keyCode, scanCode, modifiers) || super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        return this.TRADE_WIDGET.charTyped(chr, modifiers);
+    }
+
+
+    public void updateTradeWidget() {
+        this.TRADE_WIDGET.updateButtonActiveState();
+    }
+
+    public void updateShopOffers(List<ShopOffer> offers) {
+
+        tradeButtons.clear();
+        this.offers = offers;
+
+        this.tabs = (int) Math.ceil(1 + offers.size() / 6.0d);
+        if (this.selected_tab > tabs - 1) this.selected_tab = tabs - 1;
+
+        for (int i = 0; i < offers.size(); i++) {
+            tradeButtons.add(new TradeButtonWidget(x + (i % 6 < 3 ? 8 : 90), y + 10 + (i % 3) * 20, offers.get(i).getPrice(), offers.get(i).getSellStack(), i));
+        }
+
+        trySelectTab();
+        updateTradeWidget();
+    }
+
+    public void loadOffer(int index) {
+        TRADE_WIDGET.setText(String.valueOf(offers.get(index).getPrice()));
+        client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createLOAD(index));
+    }
+
     private void selectTab(int tab) {
         selected_tab = tab;
         TRADE_WIDGET.setActive(tab != 0);
@@ -139,33 +165,22 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         return selected_tab;
     }
 
-    @Override
-    public boolean isMouseOver(double mouseX, double mouseY) {
-        return TRADE_WIDGET.isMouseOver(mouseX, mouseY) || super.isMouseOver(mouseX, mouseY);
-    }
+    public void trySelectTab() {
 
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 256) {
-            this.client.player.closeHandledScreen();
+        ItemStack tradeItem = this.handler.getBufferStack();
+
+        for (ShopOffer offer : offers) {
+            if (!ItemStack.areEqual(offer.getSellStack(), tradeItem)) continue;
+            this.selected_tab = 1 + offers.indexOf(offer) / 6;
+            return;
         }
-
-        return this.TRADE_WIDGET.keyPressed(keyCode, scanCode, modifiers) || super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    @Override
-    public boolean charTyped(char chr, int modifiers) {
-        return this.TRADE_WIDGET.charTyped(chr, modifiers);
+    public ItemStack getBuffer() {
+        return this.handler.getBufferStack();
     }
 
-    //TODO ScreenHandlerListener to update button active state
-    public boolean isBufferEmpty() {
-        return this.handler.slots.get(this.handler.slots.size() - 1).hasStack();
-    }
-
-
-    @Override
-    protected void init() {
-        super.init();
-        this.TRADE_WIDGET = new AddTradeWidget(x + 178, y + 21, client, this);
+    public List<ShopOffer> getOffers() {
+        return offers;
     }
 }

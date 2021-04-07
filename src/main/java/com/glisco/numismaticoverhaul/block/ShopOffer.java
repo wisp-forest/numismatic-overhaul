@@ -16,6 +16,10 @@ public class ShopOffer {
     private final int price;
 
     public ShopOffer(ItemStack sell, int price) {
+
+        if (sell.isEmpty()) throw new IllegalArgumentException("Sell Stack must not be empty");
+        if (price == 0) throw new IllegalArgumentException("Price must not be null");
+
         this.sell = sell;
         this.price = price;
     }
@@ -79,5 +83,10 @@ public class ShopOffer {
 
             offers.add(new ShopOffer(sell, price));
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.sell + "@" + this.price + "coins";
     }
 }

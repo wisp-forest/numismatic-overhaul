@@ -84,7 +84,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         ShopOffer.fromTag(tag, offers);
     }
 
-    public List<ShopOffer> addOrReplaceOffer(ShopOffer offer) {
+    public void addOrReplaceOffer(ShopOffer offer) {
 
         int indexToReplace = -1;
 
@@ -95,22 +95,25 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         }
 
         if (indexToReplace == -1) {
+            if (offers.size() >= 24) {
+                NumismaticOverhaul.LOGGER.error("Tried adding more than 24 trades to shop at {}", this.pos);
+                return;
+            }
             offers.add(offer);
         } else {
             offers.set(indexToReplace, offer);
         }
 
         this.markDirty();
-
-        return offers;
     }
 
-    public List<ShopOffer> deleteOffer(ItemStack stack) {
-        offers.removeIf(offer -> ItemStack.areEqual(stack, offer.getSellStack()));
+    public void deleteOffer(ItemStack stack) {
+        if (!offers.removeIf(offer -> ItemStack.areEqual(stack, offer.getSellStack()))) {
+            NumismaticOverhaul.LOGGER.error("Tried to delete invalid trade for {} from shop at {}", stack, this.pos);
+            return;
+        }
 
         this.markDirty();
-
-        return offers;
     }
 
     @Nullable

@@ -20,8 +20,9 @@ import java.util.List;
 
 public class ShopScreenHandler extends ScreenHandler {
 
-    private final Inventory shopInventory;
     private final PlayerEntity owner;
+
+    private final Inventory shopInventory;
     private final Inventory BUFFER_INVENTORY = new SimpleInventory(1) {
         @Override
         public void markDirty() {
@@ -72,7 +73,7 @@ public class ShopScreenHandler extends ScreenHandler {
         }
 
         //Trade Buffer Slot
-        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 29, 0, true) {
+        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 36, 0, true) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 ItemStack shadow = stack.copy();
@@ -90,29 +91,35 @@ public class ShopScreenHandler extends ScreenHandler {
 
     }
 
-    public void onBufferChanged() {
-        System.out.println(BUFFER_INVENTORY.getStack(0));
-        if (this.owner.world.isClient) {
-            ((ShopScreen) MinecraftClient.getInstance().currentScreen).updateTradeWidget();
-        }
-    }
-
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.shopInventory.canPlayerUse(player);
     }
 
+    public void onBufferChanged() {
+        if (this.owner.world.isClient) {
+            ((ShopScreen) MinecraftClient.getInstance().currentScreen).updateTradeWidget();
+        }
+    }
+
     public void loadOffer(int index) {
 
-        if (index > offers.size() - 1) return;
-        ShopOffer offer = offers.get(index);
+        if (index > offers.size() - 1) {
+            NumismaticOverhaul.LOGGER.error("Player {} attempted to load invalid trade at index {}", owner.getName(), index);
+            return;
+        }
 
+        ShopOffer offer = offers.get(index);
         BUFFER_INVENTORY.setStack(0, offer.getSellStack());
     }
 
     public void createOffer(int price) {
         shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
         ((ServerPlayerEntity) owner).networkHandler.sendPacket(SetShopOffersS2CPacket.create(shop.getOffers()));
+    }
+
+    public ItemStack getBufferStack() {
+        return BUFFER_INVENTORY.getStack(0);
     }
 
     public void deleteOffer() {

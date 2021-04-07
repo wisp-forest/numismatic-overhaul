@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.client;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.ModifyShopOfferC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -11,8 +12,10 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +40,16 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         this.y = y;
         this.parent = parent;
 
-        buttons.add(new TradeWidgetButton(x + 7, y + 27, button -> {
+        buttons.add(new TradeWidgetButton(x + 7, y + 36, button -> {
             client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createCREATE(Integer.parseInt(PRICE_FIELD.getText())));
         }, true));
 
-        buttons.add(new TradeWidgetButton(x + 50, y + 27, button -> {
+        buttons.add(new TradeWidgetButton(x + 50, y + 36, button -> {
             client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createDELETE());
         }, false));
 
         client.keyboard.setRepeatEvents(true);
-        PRICE_FIELD = new TextFieldWidget(client.textRenderer, x + 36, y + 10, 64, 14, new LiteralText("")) {
+        PRICE_FIELD = new TextFieldWidget(client.textRenderer, x + 36, y + 19, 64, 14, new LiteralText("")) {
             @Override
             public void write(String string) {
                 if (!string.matches("[0-9]+")) return;
@@ -54,7 +57,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
             }
         };
 
-        PRICE_FIELD.setMaxLength(8);
+        PRICE_FIELD.setMaxLength(7);
         PRICE_FIELD.setDrawsBackground(false);
         PRICE_FIELD.active = true;
         PRICE_FIELD.setChangedListener(this::onTextChanged);
@@ -65,14 +68,23 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
     }
 
     public void updateButtonActiveState() {
-        if (!PRICE_FIELD.getText().isEmpty()) {
-            if (parent.isBufferEmpty() && Integer.parseInt(PRICE_FIELD.getText()) != 0) {
-                buttons.forEach(buttonWidget -> buttonWidget.active = true);
-                return;
-            }
-        }
 
-        buttons.forEach(buttonWidget -> buttonWidget.active = false);
+        System.out.println("update");
+
+        buttons.get(0).active = isEnteredTextValid() && (parent.getOffers().size() < 24 || doesTradeExistFor(parent.getBuffer()));
+
+        buttons.get(1).active = doesTradeExistFor(parent.getBuffer());
+    }
+
+    private boolean doesTradeExistFor(ItemStack stack) {
+        return parent.getOffers().stream().anyMatch(shopOffer -> ItemStack.areEqual(stack, shopOffer.getSellStack()));
+    }
+
+    private boolean isEnteredTextValid() {
+        if (StringUtils.isBlank(PRICE_FIELD.getText())) {
+            return false;
+        }
+        return Integer.parseInt(PRICE_FIELD.getText()) != 0;
     }
 
     @Override
@@ -80,13 +92,24 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         if (!active) return;
 
         client.getTextureManager().bindTexture(TEXTURE);
-        drawTexture(matrices, x, y, 15, 168, 98, 45);
+        drawTexture(matrices, x, y, 15, 169, 98, 54);
 
         for (ButtonWidget button : buttons) {
             button.render(matrices, mouseX, mouseY, delta);
         }
 
-        drawTexture(matrices, x + 28, y + 7, 0, 168, 7, 12);
+        drawTexture(matrices, x + 28, y + 16, 0, 168, 7, 12);
+
+        int[] values = CurrencyResolver.splitValues(isEnteredTextValid() ? Integer.parseInt(PRICE_FIELD.getText()) : 0);
+
+        matrices.push();
+        matrices.scale(0.8f, 0.8f, 0.8f);
+        matrices.translate(93, 17.5, 0);
+        client.textRenderer.draw(matrices, String.valueOf(values[0]), x + 36, y + 5, 0x8b8b8b);
+        client.textRenderer.draw(matrices, String.valueOf(values[1]), x + 61, y + 5, 0x8b8b8b);
+        client.textRenderer.draw(matrices, String.valueOf(values[2]), x + 86, y + 5, 0x8b8b8b);
+        matrices.pop();
+
         PRICE_FIELD.render(matrices, mouseX, mouseY, delta);
         RenderSystem.color4f(255.0f, 255.0f, 255.0f, 255.0f);
     }
@@ -135,11 +158,11 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         private final Identifier texture = AddTradeWidget.TEXTURE;
 
         public TradeWidgetButton(int x, int y, PressAction pressAction, boolean confirm) {
-            super(x, y, 41, 11, confirm ? 15 : 56, 227, 11, AddTradeWidget.TEXTURE, pressAction);
+            super(x, y, 41, 11, confirm ? 15 : 56, 234, 11, AddTradeWidget.TEXTURE, pressAction);
 
             hoveredVOffset = height;
             this.u = confirm ? 15 : 56;
-            this.v = 227;
+            this.v = 234;
 
             active = false;
         }
