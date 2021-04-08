@@ -115,9 +115,6 @@ public class TradeJsonAdapters {
             ItemStack sell = TradeJsonAdapter.getItemStackFromJson(json.get("sell").getAsJsonObject());
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
-            /*if (price.getRequiredCurrencyTypes() > 2) {
-                throw new JsonSyntaxException("Price " + price.getRawValue() + " requires more than two currency types");
-            }*/
 
             return new SellStackFactory(sell, price, maxUses, villagerExperience);
         }

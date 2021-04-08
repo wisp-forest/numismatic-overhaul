@@ -74,7 +74,7 @@ public class ShopScreenHandler extends ScreenHandler {
         }
 
         //Trade Buffer Slot
-        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 36, 0, true) {
+        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 15, 0, true) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 ItemStack shadow = stack.copy();

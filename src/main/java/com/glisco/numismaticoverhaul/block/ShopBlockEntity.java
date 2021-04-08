@@ -2,6 +2,9 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.ImplementedInventory;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +17,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.village.Merchant;
@@ -23,12 +27,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
+public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory, BlockEntityClientSerializable, Tickable {
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
     private final List<ShopOffer> offers;
     private int storedCurrency;
+
+    private int tradeIndex;
 
     public ShopBlockEntity() {
         super(NumismaticOverhaul.SHOP_BLOCK_ENTITY);
@@ -134,9 +140,39 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         this.markDirty();
     }
 
+    @Override
+    public void tick() {
+        if (world.getTime() % 60 == 0) tradeIndex++;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public ItemStack getItemToRender() {
+        if (tradeIndex > offers.size() - 1) tradeIndex = 0;
+        return offers.get(tradeIndex).getSellStack();
+    }
+
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new ShopScreenHandler(syncId, inv, this);
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag tag) {
+        fromTag(getCachedState(), tag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        toTag(tag);
+        tag.remove("Items");
+        tag.remove("StoredCurrency");
+        return tag;
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        if (!world.isClient()) this.sync();
     }
 }

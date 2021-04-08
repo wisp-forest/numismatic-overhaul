@@ -143,6 +143,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         this.offers = offers;
 
         this.tabs = (int) Math.ceil(1 + offers.size() / 6.0d);
+        if (this.tabs == 1) tabs++;
         if (this.selected_tab > tabs - 1) this.selected_tab = tabs - 1;
 
         for (int i = 0; i < offers.size(); i++) {
