@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul.client;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
-import com.glisco.numismaticoverhaul.network.ModifyShopOfferC2SPacket;
+import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -24,6 +24,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public static final Identifier TRADES_TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui_trades.png");
 
     private AddTradeWidget TRADE_WIDGET;
+    private CurrencyStorageWidget CURRENCY_WIDGET;
 
     int selected_tab = 0;
     private int tabs = 1;
@@ -40,9 +41,11 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     @Override
     protected void init() {
         super.init();
-        this.TRADE_WIDGET = new AddTradeWidget(x + 178, y + 21, client, this);
-        updateShopOffers(offers);
-        selectTab(selected_tab);
+        this.TRADE_WIDGET = new AddTradeWidget(x + 178, y, client, this);
+        this.CURRENCY_WIDGET = new CurrencyStorageWidget(x + 178, y + 60
+                , client);
+        updateScreen(offers, 0);
+        selectTab(selected_tab, false);
     }
 
     @Override
@@ -74,6 +77,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         renderBackground(matrices);
 
         TRADE_WIDGET.render(matrices, mouseX, mouseY, delta);
+        CURRENCY_WIDGET.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
         if (selected_tab != 0) {
@@ -95,7 +99,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         if (mouseX >= x - 27 && mouseX <= x) {
             for (int i = 0; i < tabs; i++) {
                 if (mouseY >= y + 14 + i * 32 && mouseY <= y + 42 + i * 32) {
-                    selectTab(i);
+                    selectTab(i, true);
                     return true;
                 }
             }
@@ -110,7 +114,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
             }
         }
 
-        return TRADE_WIDGET.mouseClicked(mouseX, mouseY, button) || super.mouseClicked(mouseX, mouseY, button);
+        return CURRENCY_WIDGET.mouseClicked(mouseX, mouseY, button) || TRADE_WIDGET.mouseClicked(mouseX, mouseY, button) || super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
@@ -133,7 +137,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         this.TRADE_WIDGET.updateButtonActiveState();
     }
 
-    public void updateShopOffers(List<ShopOffer> offers) {
+    public void updateScreen(List<ShopOffer> offers, int storedCurrency) {
 
         tradeButtons.clear();
         this.offers = offers;
@@ -147,18 +151,21 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
         trySelectTab();
         updateTradeWidget();
+
+        CURRENCY_WIDGET.setCurrencyStorage(storedCurrency);
     }
 
     public void loadOffer(int index) {
         TRADE_WIDGET.setText(String.valueOf(offers.get(index).getPrice()));
-        client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createLOAD(index));
+        client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createLOAD(index));
     }
 
-    private void selectTab(int tab) {
+    private void selectTab(int tab, boolean clickSound) {
         selected_tab = tab;
         TRADE_WIDGET.setActive(tab != 0);
+        CURRENCY_WIDGET.setActive(tab != 0);
         this.titleY = tab == 0 ? 6 : 6000;
-        client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        if (clickSound) client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 
     public int getSelectedTab() {

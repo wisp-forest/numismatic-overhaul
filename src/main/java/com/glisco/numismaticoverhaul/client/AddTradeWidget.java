@@ -2,7 +2,7 @@ package com.glisco.numismaticoverhaul.client;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import com.glisco.numismaticoverhaul.network.ModifyShopOfferC2SPacket;
+import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
@@ -41,11 +41,11 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         this.parent = parent;
 
         buttons.add(new TradeWidgetButton(x + 7, y + 36, button -> {
-            client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createCREATE(Integer.parseInt(PRICE_FIELD.getText())));
+            client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createCREATE(Integer.parseInt(PRICE_FIELD.getText())));
         }, true));
 
         buttons.add(new TradeWidgetButton(x + 50, y + 36, button -> {
-            client.getNetworkHandler().sendPacket(ModifyShopOfferC2SPacket.createDELETE());
+            client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createDELETE());
         }, false));
 
         client.keyboard.setRepeatEvents(true);
@@ -68,8 +68,6 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
     }
 
     public void updateButtonActiveState() {
-
-        System.out.println("update");
 
         buttons.get(0).active = isEnteredTextValid() && (parent.getOffers().size() < 24 || doesTradeExistFor(parent.getBuffer()));
 
@@ -102,13 +100,9 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
 
         int[] values = CurrencyResolver.splitValues(isEnteredTextValid() ? Integer.parseInt(PRICE_FIELD.getText()) : 0);
 
-        matrices.push();
-        matrices.scale(0.8f, 0.8f, 0.8f);
-        matrices.translate(93, 17.5, 0);
-        client.textRenderer.draw(matrices, String.valueOf(values[0]), x + 36, y + 5, 0x8b8b8b);
-        client.textRenderer.draw(matrices, String.valueOf(values[1]), x + 61, y + 5, 0x8b8b8b);
-        client.textRenderer.draw(matrices, String.valueOf(values[2]), x + 86, y + 5, 0x8b8b8b);
-        matrices.pop();
+        client.textRenderer.draw(matrices, String.valueOf(values[0]), x + 36, y + 6, 0x8b8b8b);
+        client.textRenderer.draw(matrices, String.valueOf(values[1]), x + 56, y + 6, 0x8b8b8b);
+        client.textRenderer.draw(matrices, String.valueOf(values[2]), x + 76, y + 6, 0x8b8b8b);
 
         PRICE_FIELD.render(matrices, mouseX, mouseY, delta);
         RenderSystem.color4f(255.0f, 255.0f, 255.0f, 255.0f);

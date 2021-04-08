@@ -1,10 +1,13 @@
 package com.glisco.numismaticoverhaul.currency;
 
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class PlayerCurrencyHelper {
+import java.util.List;
+
+public class CurrencyHelper {
 
     /**
      * Checks how much money a player has as coin items in their inventory
@@ -27,6 +30,21 @@ public class PlayerCurrencyHelper {
         }
 
         return value;
+    }
+
+    public static int getValue(List<ItemStack> stacks) {
+        return stacks.stream().mapToInt(stack -> {
+
+            if (stack == null) return 0;
+
+            if (stack.getItem() instanceof CoinItem) {
+                return ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
+            } else if (stack.getItem() instanceof MoneyBagItem) {
+                return MoneyBagItem.getValue(stack);
+            } else {
+                return 0;
+            }
+        }).sum();
     }
 
     public static void offerAsCoins(PlayerEntity player, CurrencyStack stack) {

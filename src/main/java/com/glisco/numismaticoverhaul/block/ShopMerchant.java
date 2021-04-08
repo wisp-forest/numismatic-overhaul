@@ -1,5 +1,6 @@
 package com.glisco.numismaticoverhaul.block;
 
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
@@ -9,6 +10,8 @@ import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
 
 public class ShopMerchant implements Merchant {
 
@@ -50,14 +53,14 @@ public class ShopMerchant implements Merchant {
     public void trade(TradeOffer offer) {
         offer.use();
 
-        System.out.println("Selling: " + offer.getSellItem());
-
         shop.getItems().forEach(itemStack -> {
             ItemStack comparisonStack = itemStack.copy();
             comparisonStack.setCount(1);
             if (!ItemStack.areEqual(comparisonStack, offer.getSellItem())) return;
             itemStack.decrement(1);
         });
+
+        shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }
 
     @Override

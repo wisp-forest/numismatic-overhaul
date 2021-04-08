@@ -1,8 +1,9 @@
 package com.glisco.numismaticoverhaul.block;
 
+import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.client.ShopScreen;
-import com.glisco.numismaticoverhaul.network.SetShopOffersS2CPacket;
+import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -115,7 +116,13 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void createOffer(int price) {
         shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
-        ((ServerPlayerEntity) owner).networkHandler.sendPacket(SetShopOffersS2CPacket.create(shop.getOffers()));
+        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+    }
+
+    public void extractCurrency() {
+        ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
+        shop.setStoredCurrency(0);
+        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
     }
 
     public ItemStack getBufferStack() {
@@ -124,7 +131,7 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void deleteOffer() {
         shop.deleteOffer(BUFFER_INVENTORY.getStack(0));
-        ((ServerPlayerEntity) owner).networkHandler.sendPacket(SetShopOffersS2CPacket.create(shop.getOffers()));
+        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
     }
 
     // Shift + Player Inv Slot

@@ -6,7 +6,7 @@ import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
-import com.glisco.numismaticoverhaul.network.ModifyShopOfferC2SPacket;
+import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
 import net.fabricmc.api.ModInitializer;
@@ -58,7 +58,7 @@ public class NumismaticOverhaul implements ModInitializer {
         SHOP_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "shop"), BlockEntityType.Builder.create(ShopBlockEntity::new, SHOP_BLOCK).build(null));
 
         ServerPlayNetworking.registerGlobalReceiver(RequestPurseActionC2SPacket.ID, RequestPurseActionC2SPacket::onPacket);
-        ServerPlayNetworking.registerGlobalReceiver(ModifyShopOfferC2SPacket.ID, ModifyShopOfferC2SPacket::onPacket);
+        ServerPlayNetworking.registerGlobalReceiver(ShopScreenHandlerRequestC2SPacket.ID, ShopScreenHandlerRequestC2SPacket::onPacket);
 
         VillagerTradesHandler.init();
 

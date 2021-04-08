@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul.network;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
-import com.glisco.numismaticoverhaul.currency.PlayerCurrencyHelper;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -32,7 +32,7 @@ public class RequestPurseActionC2SPacket {
             if (player.currentScreenHandler instanceof PlayerScreenHandler) {
                 if (action == Action.STORE_ALL) {
 
-                    ModComponents.CURRENCY.get(player).modify(PlayerCurrencyHelper.getMoneyInInventory(player, true));
+                    ModComponents.CURRENCY.get(player).modify(CurrencyHelper.getMoneyInInventory(player, true));
 
                 } else if (action == Action.EXTRACT) {
 

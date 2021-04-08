@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul.mixin;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
-import com.glisco.numismaticoverhaul.currency.PlayerCurrencyHelper;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.Entity;
@@ -66,7 +66,7 @@ public class MerchantScreenHandlerMixin {
 
         //See how much is required and how much in present in the player's inventory
         int requiredCurrency = MoneyBagItem.getValue(stack);
-        int availableCurrencyInPlayerInventory = PlayerCurrencyHelper.getMoneyInInventory(player, false);
+        int availableCurrencyInPlayerInventory = CurrencyHelper.getMoneyInInventory(player, false);
 
         //Find out how much we still need to fill
         int neededCurrency = requiredCurrency - availableCurrencyInPlayerInventory;
@@ -75,9 +75,9 @@ public class MerchantScreenHandlerMixin {
         if (neededCurrency > playerBalance.getValue()) return;
 
         if (neededCurrency <= 0) {
-            PlayerCurrencyHelper.deduceFromInventory(player, requiredCurrency);
+            CurrencyHelper.deduceFromInventory(player, requiredCurrency);
         } else {
-            PlayerCurrencyHelper.deduceFromInventory(player, availableCurrencyInPlayerInventory);
+            CurrencyHelper.deduceFromInventory(player, availableCurrencyInPlayerInventory);
             playerBalance.pushTransaction(-neededCurrency);
         }
 

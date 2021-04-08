@@ -16,28 +16,31 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetShopOffersS2CPacket {
+public class UpdateShopScreenS2CPacket {
 
-    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "set-shop-offers");
+    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "update-shop-screen");
 
     public static void onPacket(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buffer, PacketSender sender) {
 
         List<ShopOffer> offers = new ArrayList<>();
         ShopOffer.fromTag(buffer.readCompoundTag(), offers);
 
+        int storedCurrency = buffer.readVarInt();
+
         client.execute(() -> {
             if (MinecraftClient.getInstance().currentScreen instanceof ShopScreen) {
                 ShopScreen screen = (ShopScreen) MinecraftClient.getInstance().currentScreen;
-                screen.updateShopOffers(offers);
+                screen.updateScreen(offers, storedCurrency);
             }
         });
     }
 
-    public static Packet<?> create(List<ShopOffer> offers) {
+    public static Packet<?> create(List<ShopOffer> offers, int storedCurrency) {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
         CompoundTag tag = ShopOffer.toTag(new CompoundTag(), offers);
         buffer.writeCompoundTag(tag);
+        buffer.writeVarInt(storedCurrency);
 
         return ServerPlayNetworking.createS2CPacket(ID, buffer);
     }

@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.client;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.network.SetShopOffersS2CPacket;
+import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -21,7 +21,7 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.SILVER_COIN, new Identifier("coins"), (stack, world, entity) -> stack.getCount() / 100.0f);
         FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.GOLD_COIN, new Identifier("coins"), (stack, world, entity) -> stack.getCount() / 100.0f);
 
-        ClientPlayNetworking.registerGlobalReceiver(SetShopOffersS2CPacket.ID, SetShopOffersS2CPacket::onPacket);
+        ClientPlayNetworking.registerGlobalReceiver(UpdateShopScreenS2CPacket.ID, UpdateShopScreenS2CPacket::onPacket);
     }
 
 }

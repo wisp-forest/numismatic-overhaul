@@ -12,27 +12,29 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class ModifyShopOfferC2SPacket {
+public class ShopScreenHandlerRequestC2SPacket {
 
-    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "modify-shop-offer");
+    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "shop-screen-handler-request");
 
     public static void onPacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buffer, PacketSender sender) {
 
         int[] values = buffer.readIntArray();
 
-        ModifyShopOfferC2SPacket.Action action = ModifyShopOfferC2SPacket.Action.values()[values[0]];
+        ShopScreenHandlerRequestC2SPacket.Action action = ShopScreenHandlerRequestC2SPacket.Action.values()[values[0]];
 
         server.execute(() -> {
             if (player.currentScreenHandler instanceof ShopScreenHandler) {
 
                 ShopScreenHandler shopHandler = (ShopScreenHandler) player.currentScreenHandler;
 
-                if (action == Action.LOAD) {
+                if (action == Action.LOAD_OFFER) {
                     shopHandler.loadOffer(values[1]);
-                } else if (action == Action.CREATE) {
+                } else if (action == Action.CREATE_OFFER) {
                     shopHandler.createOffer(values[1]);
-                } else if (action == Action.DELETE) {
+                } else if (action == Action.DELETE_OFFER) {
                     shopHandler.deleteOffer();
+                } else if (action == Action.EXTRACT_CURRENCY) {
+                    shopHandler.extractCurrency();
                 }
 
             }
@@ -42,7 +44,7 @@ public class ModifyShopOfferC2SPacket {
     public static Packet<?> createCREATE(int price) {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
-        int[] values = new int[]{Action.CREATE.ordinal(), price};
+        int[] values = new int[]{Action.CREATE_OFFER.ordinal(), price};
         buffer.writeIntArray(values);
 
         return ClientPlayNetworking.createC2SPacket(ID, buffer);
@@ -51,7 +53,7 @@ public class ModifyShopOfferC2SPacket {
     public static Packet<?> createLOAD(int index) {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
-        int[] values = new int[]{Action.LOAD.ordinal(), index};
+        int[] values = new int[]{Action.LOAD_OFFER.ordinal(), index};
         buffer.writeIntArray(values);
 
         return ClientPlayNetworking.createC2SPacket(ID, buffer);
@@ -60,14 +62,23 @@ public class ModifyShopOfferC2SPacket {
     public static Packet<?> createDELETE() {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
-        int[] values = new int[]{Action.DELETE.ordinal()};
+        int[] values = new int[]{Action.DELETE_OFFER.ordinal()};
+        buffer.writeIntArray(values);
+
+        return ClientPlayNetworking.createC2SPacket(ID, buffer);
+    }
+
+    public static Packet<?> createEXTRACT() {
+        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+
+        int[] values = new int[]{Action.EXTRACT_CURRENCY.ordinal()};
         buffer.writeIntArray(values);
 
         return ClientPlayNetworking.createC2SPacket(ID, buffer);
     }
 
     public enum Action {
-        CREATE, DELETE, LOAD
+        CREATE_OFFER, DELETE_OFFER, LOAD_OFFER, EXTRACT_CURRENCY
     }
 
 }

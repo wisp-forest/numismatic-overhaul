@@ -28,11 +28,13 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
     private final List<ShopOffer> offers;
+    private int storedCurrency;
 
     public ShopBlockEntity() {
         super(NumismaticOverhaul.SHOP_BLOCK_ENTITY);
         this.merchant = new ShopMerchant(this);
         this.offers = new ArrayList<>();
+        this.storedCurrency = 0;
     }
 
     @Override
@@ -69,11 +71,26 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         return offers;
     }
 
+    public int getStoredCurrency() {
+        return storedCurrency;
+    }
+
+    public void setStoredCurrency(int storedCurrency) {
+        this.storedCurrency = storedCurrency;
+        markDirty();
+    }
+
+    public void addCurrency(int value) {
+        this.storedCurrency += value;
+        markDirty();
+    }
+
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         Inventories.toTag(tag, INVENTORY);
         ShopOffer.toTag(tag, offers);
+        tag.putInt("StoredCurrency", storedCurrency);
         return tag;
     }
 
@@ -82,6 +99,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         super.fromTag(state, tag);
         Inventories.fromTag(tag, INVENTORY);
         ShopOffer.fromTag(tag, offers);
+        this.storedCurrency = tag.getInt("StoredCurrency");
     }
 
     public void addOrReplaceOffer(ShopOffer offer) {

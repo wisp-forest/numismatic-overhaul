@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.block;
 
-import com.glisco.numismaticoverhaul.network.SetShopOffersS2CPacket;
+import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.BlockRenderType;
@@ -41,7 +41,10 @@ public class ShopBlock extends BlockWithEntity {
         if (!world.isClient) {
             if (!player.isSneaking()) {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                ((ServerPlayerEntity) player).networkHandler.sendPacket(SetShopOffersS2CPacket.create(((ShopBlockEntity) world.getBlockEntity(pos)).getOffers()));
+
+                ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
+
+                ((ServerPlayerEntity) player).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
             } else {
                 ((ShopMerchant) ((ShopBlockEntity) world.getBlockEntity(pos)).getMerchant()).updateTrades();
                 ((ShopBlockEntity) world.getBlockEntity(pos)).getMerchant().setCurrentCustomer(player);
