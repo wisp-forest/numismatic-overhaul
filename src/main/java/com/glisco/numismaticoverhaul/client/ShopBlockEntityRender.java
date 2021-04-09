@@ -32,7 +32,7 @@ public class ShopBlockEntityRender extends BlockEntityRenderer<ShopBlockEntity> 
         int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 
         matrices.push();
-        matrices.translate(0.5, isBlockItem ? 1.1 : 1.2, 0.5);
+        matrices.translate(0.5, isBlockItem ? 0.85 : 0.95, 0.5);
 
         float scale = isBlockItem ? 0.95f : 0.85f;
         matrices.scale(scale, scale, scale);
