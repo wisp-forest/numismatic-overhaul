@@ -3,7 +3,7 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:enchant_book",
+        "type": "numismatic-overhaul:enchant_item",
         "level": 65,
         "allow_treasure": true
       },

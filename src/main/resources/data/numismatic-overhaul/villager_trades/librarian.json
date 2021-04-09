@@ -3,9 +3,12 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:enchant_book",
+        "type": "numismatic-overhaul:enchant_item",
         "level": 30,
-        "allow_treasure": true
+        "allow_treasure": true,
+        "item": {
+          "item": "minecraft:diamond_sword"
+        }
       },
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
@@ -14,13 +17,9 @@
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:enchanted_book",
-          "count": 2
-        },
-        "price": 16,
-        "maxUses": 2
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_boots",
+        "price": 101
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -42,6 +41,11 @@
           "item": "minecraft:emerald"
         },
         "price": 2000
+      },
+      {
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_boots",
+        "price": 200730
       }
     ]
   }

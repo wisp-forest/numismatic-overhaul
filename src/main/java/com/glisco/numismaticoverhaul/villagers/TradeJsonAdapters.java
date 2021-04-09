@@ -1,22 +1,22 @@
 package com.glisco.numismaticoverhaul.villagers;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.FilledMapItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.item.map.MapIcon;
 import net.minecraft.item.map.MapState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -53,9 +53,6 @@ public class TradeJsonAdapters {
             }
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
-            if (price.getRequiredCurrencyTypes() > 1) {
-                throw new JsonSyntaxException("Price " + price.getRawValue() + " requires more than one currency type");
-            }
 
             MapIcon.Type iconType = MapIcon.Type.TARGET_POINT;
             if (feature == StructureFeature.MONUMENT) iconType = MapIcon.Type.MONUMENT;
@@ -92,7 +89,7 @@ public class TradeJsonAdapters {
                     FilledMapItem.fillExplorationMap(serverWorld, itemStack);
                     MapState.addDecorationsTag(itemStack, blockPos, "+", this.iconType);
                     itemStack.setCustomName(new TranslatableText("filled_map." + this.structure.getName().toLowerCase(Locale.ROOT)));
-                    return new TradeOffer(price.getAsItemStackList().get(0), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, 0.2F);
+                    return new TradeOffer(CurrencyHelper.getAsStacks(price, 1).get(0), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, 0.2F);
                 } else {
                     return null;
                 }
@@ -112,7 +109,7 @@ public class TradeJsonAdapters {
             int maxUses = VillagerJsonHelper.int_getOrDefault(json, "max_uses", 12);
             int villagerExperience = VillagerJsonHelper.int_getOrDefault(json, "villager_experience", 5);
 
-            ItemStack sell = TradeJsonAdapter.getItemStackFromJson(json.get("sell").getAsJsonObject());
+            ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
 
@@ -124,25 +121,23 @@ public class TradeJsonAdapters {
         private final ItemStack sell;
         private final int maxUses;
         private final int experience;
-        private final float multiplier;
         private final CurrencyStack price;
 
         public SellStackFactory(ItemStack sell, CurrencyStack price, int maxUses, int experience) {
             this.sell = sell;
             this.maxUses = maxUses;
             this.experience = experience;
-            this.multiplier = 0.05F;
             this.price = price;
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            if (price.getRequiredCurrencyTypes() > 2) {
-                return new TradeOffer(MoneyBagItem.create(price.getRawValue()), sell.copy(), this.maxUses, this.experience, this.multiplier);
-            } else if (price.getRequiredCurrencyTypes() == 2) {
-                List<ItemStack> buy = price.getAsItemStackList();
-                return new TradeOffer(buy.get(0), buy.get(1), sell.copy(), this.maxUses, this.experience, this.multiplier);
+
+            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
+
+            if (priceStacks.size() > 1) {
+                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), sell, this.maxUses, this.experience, 0.05F);
             } else {
-                return new TradeOffer(price.getAsItemStackList().get(0), sell.copy(), this.maxUses, this.experience, this.multiplier);
+                return new TradeOffer(priceStacks.get(0), sell, this.maxUses, this.experience, 0.05F);
             }
         }
     }
@@ -181,15 +176,12 @@ public class TradeJsonAdapters {
                 cost *= 2;
             }
 
-            if (cost > 99) {
-                cost = 99;
-            }
-
-            return new TradeOffer(new ItemStack(NumismaticOverhaul.SILVER_COIN, cost), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, 0.2F);
+            return new TradeOffer(CurrencyHelper.getAsStacks(new CurrencyStack(cost), 1).get(0), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, 0.2F);
         }
     }
 
-    public static class EnchantBook implements TradeJsonAdapter {
+
+    public static class EnchantItem implements TradeJsonAdapter {
 
         @Override
         @NotNull
@@ -202,26 +194,29 @@ public class TradeJsonAdapters {
             boolean allow_treasure = VillagerJsonHelper.boolean_getOrDefault(json, "allow_treasure", false);
 
             int level = json.get("level").getAsInt();
+            ItemStack item = VillagerJsonHelper.ItemStack_getOrDefault(json, "item", new ItemStack(Items.BOOK));
 
-            return new EnchantBookFactory(maxUses, villagerExperience, level, allow_treasure);
+            return new EnchantItemFactory(item, maxUses, villagerExperience, level, allow_treasure);
         }
     }
 
-    private static class EnchantBookFactory implements TradeOffers.Factory {
+    private static class EnchantItemFactory implements TradeOffers.Factory {
         private final int experience;
         private final int maxUses;
         private final int level;
         private final boolean allowTreasure;
+        private final ItemStack toEnchant;
 
-        public EnchantBookFactory(int maxUses, int experience, int level, boolean allowTreasure) {
+        public EnchantItemFactory(ItemStack item, int maxUses, int experience, int level, boolean allowTreasure) {
             this.experience = experience;
             this.maxUses = maxUses;
             this.level = level;
             this.allowTreasure = allowTreasure;
+            this.toEnchant = item;
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            ItemStack itemStack = new ItemStack(Items.BOOK);
+            ItemStack itemStack = toEnchant.copy();
             itemStack = EnchantmentHelper.enchant(random, itemStack, level, allowTreasure);
 
             int price = 8;
@@ -230,9 +225,10 @@ public class TradeJsonAdapters {
                 price += entry.getKey().isTreasure() ? 1.0f : 2.0f * ((float) entry.getValue() / (float) entry.getKey().getMaxLevel()) * 12.0f * 0.5f * (10.0f / (float) entry.getKey().getRarity().getWeight());
             }
 
-            return new TradeOffer(new ItemStack(NumismaticOverhaul.SILVER_COIN, price), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, 0.2F);
+            return new TradeOffer(CurrencyHelper.getAsStacks(new CurrencyStack(price), 1).get(0), toEnchant, itemStack, maxUses, this.experience, 0.2F);
         }
     }
+
 
     public static class ProcessItem implements TradeJsonAdapter {
 
@@ -247,13 +243,10 @@ public class TradeJsonAdapters {
             int maxUses = VillagerJsonHelper.int_getOrDefault(json, "max_uses", 12);
             int villagerExperience = VillagerJsonHelper.int_getOrDefault(json, "villager_experience", 5);
 
-            ItemStack sell = TradeJsonAdapter.getItemStackFromJson(json.get("sell").getAsJsonObject());
-            ItemStack buy = TradeJsonAdapter.getItemStackFromJson(json.get("buy").getAsJsonObject());
+            ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
+            ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
-            if (price.getRequiredCurrencyTypes() > 1) {
-                throw new JsonSyntaxException("Price " + price.getRawValue() + " requires more than one currency type");
-            }
 
             return new ProcessItemFactory(buy, sell, price, maxUses, villagerExperience);
         }
@@ -278,7 +271,70 @@ public class TradeJsonAdapters {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(price.getAsItemStackList().get(0), buy, sell, this.maxUses, this.experience, this.multiplier);
+            return new TradeOffer(CurrencyHelper.getAsStacks(price, 1).get(0), buy, sell, this.maxUses, this.experience, this.multiplier);
+        }
+    }
+
+
+    public static class SellDyedArmor implements TradeJsonAdapter {
+
+        @Override
+        public @NotNull TradeOffers.Factory deserialize(JsonObject json) {
+
+            VillagerJsonHelper.assertElement(json, "item");
+            VillagerJsonHelper.assertElement(json, "price");
+
+            int maxUses = VillagerJsonHelper.int_getOrDefault(json, "max_uses", 12);
+            int villagerExperience = VillagerJsonHelper.int_getOrDefault(json, "villager_experience", 5);
+
+            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            Item item = VillagerJsonHelper.getItemFromID(json.get("item").getAsString());
+
+            return new SellDyedArmorFactory(item, price, maxUses, villagerExperience);
+        }
+    }
+
+    private static class SellDyedArmorFactory implements TradeOffers.Factory {
+        private final Item sell;
+        private final CurrencyStack price;
+        private final int maxUses;
+        private final int experience;
+
+        public SellDyedArmorFactory(Item item, CurrencyStack price, int maxUses, int experience) {
+            this.sell = item;
+            this.price = price;
+            this.maxUses = maxUses;
+            this.experience = experience;
+        }
+
+        public TradeOffer create(Entity entity, Random random) {
+            ItemStack itemStack2 = new ItemStack(this.sell);
+            if (this.sell instanceof DyeableArmorItem) {
+                List<DyeItem> list = Lists.newArrayList();
+                list.add(getDye(random));
+                if (random.nextFloat() > 0.7F) {
+                    list.add(getDye(random));
+                }
+
+                if (random.nextFloat() > 0.8F) {
+                    list.add(getDye(random));
+                }
+
+                itemStack2 = DyeableItem.blendAndSetColor(itemStack2, list);
+            }
+
+            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
+
+            if (priceStacks.size() > 1) {
+                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), itemStack2, this.maxUses, this.experience, 0.05F);
+            } else {
+                return new TradeOffer(priceStacks.get(0), itemStack2, this.maxUses, this.experience, 0.05F);
+            }
+
+        }
+
+        private static DyeItem getDye(Random random) {
+            return DyeItem.byColor(DyeColor.byId(random.nextInt(16)));
         }
     }
 

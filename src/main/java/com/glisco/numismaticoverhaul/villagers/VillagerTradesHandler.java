@@ -49,8 +49,9 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_stack"), new TradeJsonAdapters.SellStack());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_map"), new TradeJsonAdapters.SellMap());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_single_enchantment"), new TradeJsonAdapters.SellSingleEnchantment());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "enchant_book"), new TradeJsonAdapters.EnchantBook());
+        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "enchant_item"), new TradeJsonAdapters.EnchantItem());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "process_item"), new TradeJsonAdapters.ProcessItem());
+        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_dyed_armor"), new TradeJsonAdapters.SellDyedArmor());
     }
 
     private static HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> reloadTrades() throws IOException {

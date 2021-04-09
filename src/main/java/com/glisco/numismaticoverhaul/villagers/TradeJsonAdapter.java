@@ -13,11 +13,4 @@ public interface TradeJsonAdapter {
 
     @NotNull
     TradeOffers.Factory deserialize(JsonObject json);
-
-    static ItemStack getItemStackFromJson(JsonObject json) {
-        Item item = Registry.ITEM.getOrEmpty(Identifier.tryParse(json.get("item").getAsString())).orElseThrow(() -> new JsonSyntaxException("Invalid item:" + json.get("item").getAsString()));
-        int count = json.has("count") ? json.get("count").getAsInt() : 1;
-
-        return new ItemStack(item, count);
-    }
 }

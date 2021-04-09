@@ -5,6 +5,7 @@ import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyHelper {
@@ -63,6 +64,27 @@ public class CurrencyHelper {
 
         offerAsCoins(player, new CurrencyStack(presentInInventory - value));
         return true;
+    }
+
+    /**
+     * Converts a {@link CurrencyStack} to a list of {@link ItemStack}, prefers {@link CoinItem} but may fall back to {@link MoneyBagItem}
+     *
+     * @param stack     The {@link CurrencyStack} to convert
+     * @param maxStacks The maximum amount of stacks the result may have
+     * @return The List of {@link ItemStack}
+     */
+    public static List<ItemStack> getAsStacks(CurrencyStack stack, int maxStacks) {
+
+        List<ItemStack> stacks = new ArrayList<>();
+        List<ItemStack> rawStacks = CurrencyStack.splitAtMaxCount(stack.getAsItemStackList());
+
+        if (rawStacks.size() <= maxStacks) {
+            stacks.addAll(rawStacks);
+        } else {
+            stacks.add(MoneyBagItem.create(stack.getRawValue()));
+        }
+
+        return stacks;
     }
 
 }

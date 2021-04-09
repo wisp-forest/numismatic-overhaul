@@ -4,10 +4,7 @@ import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -17,12 +14,24 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public class ShopBlock extends BlockWithEntity {
+
+    private static final VoxelShape MAIN_PILLAR = Block.createCuboidShape(1, 0, 1, 14, 8, 14);
+
+    private static final VoxelShape PLATE = Block.createCuboidShape(0, 8, 0, 16, 12, 16);
+
+    private static final VoxelShape PILLAR_1 = Block.createCuboidShape(13, 0, 0, 16, 8, 3);
+    private static final VoxelShape PILLAR_2 = Block.createCuboidShape(0, 0, 0, 3, 8, 3);
+    private static final VoxelShape PILLAR_3 = Block.createCuboidShape(0, 0, 13, 3, 8, 16);
+    private static final VoxelShape PILLAR_4 = Block.createCuboidShape(13, 0, 13, 16, 8, 16);
+
+    private static final VoxelShape SHAPE = VoxelShapes.union(MAIN_PILLAR, PLATE, PILLAR_1, PILLAR_2, PILLAR_3, PILLAR_4);
 
     public ShopBlock() {
         super(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).nonOpaque().hardness(5.0f));
@@ -37,6 +46,11 @@ public class ShopBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
 
     @Override
@@ -65,7 +79,7 @@ public class ShopBlock extends BlockWithEntity {
             CurrencyStack.splitAtMaxCount(new CurrencyStack(shop.getStoredCurrency()).getAsItemStackList()).forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
             ItemScatterer.spawn(shop.getWorld(), pos, shop);
 
-            super.onBroken(world, pos, state);
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
 }
