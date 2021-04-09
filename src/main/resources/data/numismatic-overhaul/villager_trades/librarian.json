@@ -25,7 +25,10 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:diamond_pickaxe",
-          "count": 99
+          "count": 99,
+          "tag": {
+            "Damage": 75
+          }
         },
         "price": 5,
         "maxUses": 2

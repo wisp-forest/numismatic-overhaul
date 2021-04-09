@@ -3,9 +3,17 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:enchant_item",
-        "level": 65,
-        "allow_treasure": true
+        "type": "numismatic-overhaul:sell_potion_container",
+        "container_item": {
+          "item": "minecraft:potion"
+        },
+        "buy_item": {
+          "item": "minecraft:potion",
+          "tag": {
+            "Potion": "minecraft:water"
+          }
+        },
+        "price": 76
       },
       {
         "type": "numismatic-overhaul:sell_map",

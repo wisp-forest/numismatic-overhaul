@@ -2,8 +2,12 @@ package com.glisco.numismaticoverhaul.villagers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -15,6 +19,10 @@ public class VillagerJsonHelper {
 
     public static int int_getOrDefault(JsonObject object, String key, int defaultValue) {
         return object.has(key) ? object.get(key).getAsInt() : defaultValue;
+    }
+
+    public static float float_getOrDefault(JsonObject object, String key, float defaultValue) {
+        return object.has(key) ? object.get(key).getAsFloat() : defaultValue;
     }
 
     public static boolean boolean_getOrDefault(JsonObject object, String key, boolean defaultValue) {
@@ -29,10 +37,26 @@ public class VillagerJsonHelper {
         Item item = getItemFromID(json.get("item").getAsString());
         int count = json.has("count") ? json.get("count").getAsInt() : 1;
 
-        return new ItemStack(item, count);
+        ItemStack stack = new ItemStack(item, count);
+
+        if (json.has("tag")) {
+
+            String toParse = json.get("tag").getAsJsonObject().toString();
+            CompoundTag stackTag = null;
+
+            try {
+                stackTag = new StringNbtReader(new StringReader(toParse)).parseCompoundTag();
+            } catch (CommandSyntaxException e) {
+                VillagerTradesHandler.addLoadingException(e);
+            }
+
+            if (stackTag != null) stack.setTag(stackTag);
+        }
+
+        return stack;
     }
 
     public static Item getItemFromID(String id) {
-        return Registry.ITEM.getOrEmpty(Identifier.tryParse(id)).orElseThrow(() -> new JsonSyntaxException("Invalid item:" + id));
+        return Registry.ITEM.getOrEmpty(Identifier.tryParse(id)).orElseThrow(() -> new JsonSyntaxException("Invalid item: \"" + id + "\""));
     }
 }

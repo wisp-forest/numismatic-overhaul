@@ -18,7 +18,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +34,8 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
     public static final HashMap<String, Integer> professionKeys = new HashMap<>();
     public static final HashMap<Identifier, TradeJsonAdapter> tradeTypesRegistry = new HashMap<>();
 
-    private static final List<Exception> EXCEPTIONS_DURING_LOADING = new ArrayList<>();
+    private static final Map<String, List<String>> EXCEPTIONS_DURING_LOADING = new HashMap<>();
+    private static String currentProfessionId = null;
 
     static {
         professionKeys.put("novice", 1);
@@ -52,6 +52,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "enchant_item"), new TradeJsonAdapters.EnchantItem());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "process_item"), new TradeJsonAdapters.ProcessItem());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_dyed_armor"), new TradeJsonAdapters.SellDyedArmor());
+        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_potion_container"), new TradeJsonAdapters.SellPotionContainerItem());
     }
 
     private static HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> reloadTrades() throws IOException {
@@ -66,12 +67,15 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
             File tradesFile = new File(tradeFiles.next().toString());
             if (!tradesFile.getPath().endsWith(".json")) continue;
 
-            JsonObject jsonRoot = GSON.fromJson(new BufferedReader(new FileReader(tradesFile)), JsonObject.class);
-
-            VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(Identifier.tryParse(jsonRoot.get("profession").getAsString()));
-            Int2ObjectOpenHashMap<TradeOffers.Factory[]> tradesMap = new Int2ObjectOpenHashMap<>();
-
             try {
+
+                JsonObject jsonRoot = GSON.fromJson(new FileReader(tradesFile), JsonObject.class);
+
+                VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(Identifier.tryParse(jsonRoot.get("profession").getAsString()));
+                Int2ObjectOpenHashMap<TradeOffers.Factory[]> tradesMap = new Int2ObjectOpenHashMap<>();
+
+                currentProfessionId = profession.toString();
+
                 for (Map.Entry<String, JsonElement> entry : jsonRoot.get("trades").getAsJsonObject().entrySet()) {
 
                     TradeOffers.Factory[] factories = new TradeOffers.Factory[entry.getValue().getAsJsonArray().size()];
@@ -96,22 +100,38 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
                     }
                     tradesMap.put(professionKeys.get(entry.getKey()).intValue(), factories);
                 }
-            } catch (Exception e) {
-                EXCEPTIONS_DURING_LOADING.add(e);
-            }
 
-            tradesCache.put(profession, tradesMap);
+                tradesCache.put(profession, tradesMap);
+
+            } catch (Exception e) {
+                addLoadingException(e);
+            }
 
         }
 
+        currentProfessionId = null;
         return tradesCache;
+    }
+
+    public static void addLoadingException(Exception e) {
+        if (currentProfessionId == null) {
+            currentProfessionId = "JSON_PARSING";
+        }
+
+        if (EXCEPTIONS_DURING_LOADING.containsKey(currentProfessionId)) {
+            EXCEPTIONS_DURING_LOADING.get(currentProfessionId).add(e.getMessage());
+        } else {
+            EXCEPTIONS_DURING_LOADING.put(currentProfessionId, new ArrayList<>(Collections.singletonList(e.getMessage())));
+        }
     }
 
     public static void broadcastErrors(MinecraftServer server) {
         if (!EXCEPTIONS_DURING_LOADING.isEmpty()) {
             server.getPlayerManager().broadcastChatMessage(new LiteralText("§cThe following errors have occurred during numismatic-overhaul reload:"), MessageType.SYSTEM, null);
-            EXCEPTIONS_DURING_LOADING.forEach(e -> {
-                server.getPlayerManager().broadcastChatMessage(new LiteralText("§7- " + e.getMessage()), MessageType.SYSTEM, null);
+            server.getPlayerManager().broadcastChatMessage(new LiteralText(""), MessageType.SYSTEM, null);
+            EXCEPTIONS_DURING_LOADING.forEach((profession, messages) -> {
+                server.getPlayerManager().broadcastChatMessage(new LiteralText("§7-> Profession: " + profession), MessageType.SYSTEM, null);
+                messages.forEach(s -> server.getPlayerManager().broadcastChatMessage(new LiteralText("§7    - " + s), MessageType.SYSTEM, null));
             });
         }
         EXCEPTIONS_DURING_LOADING.clear();
@@ -139,10 +159,6 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         data.forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::put);
 
         System.out.println("--- APPLY TRADES ---");
-
-        EXCEPTIONS_DURING_LOADING.forEach(e -> {
-
-        });
 
         CompletableFuture<Void> future = new CompletableFuture<>();
         future.complete(null);
