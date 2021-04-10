@@ -14,6 +14,7 @@ import java.util.List;
 
 public class CurrencyTooltipRenderer {
 
+    //TODO render this at the correct height, extending downwards
     public static void renderTooltip(CurrencyStack stack, MatrixStack matrices, Screen screen, Text title, int x, int y) {
 
         List<Text> tooltip = new ArrayList<>();

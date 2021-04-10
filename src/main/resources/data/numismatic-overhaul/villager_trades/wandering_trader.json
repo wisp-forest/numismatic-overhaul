@@ -1,0 +1,61 @@
+{
+  "profession": "wandering_trader",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:sell_potion_container",
+        "container_item": {
+          "item": "minecraft:potion"
+        },
+        "buy_item": {
+          "item": "minecraft:potion",
+          "tag": {
+            "Potion": "minecraft:water"
+          }
+        },
+        "price": 76
+      },
+      {
+        "type": "numismatic-overhaul:sell_map",
+        "structure": "minecraft:endcity",
+        "price": 5,
+        "maxUses": 20
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cookie",
+          "count": 2
+        },
+        "price": 65,
+        "maxUses": 2
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:gold_ingot",
+          "count": 10
+        },
+        "price": 5,
+        "maxUses": 20
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:process_item",
+        "sell": {
+          "item": "minecraft:diamond"
+        },
+        "buy": {
+          "item": "minecraft:emerald"
+        },
+        "price": 2000
+      },
+      {
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_boots",
+        "price": 200730
+      }
+    ]
+  }
+}

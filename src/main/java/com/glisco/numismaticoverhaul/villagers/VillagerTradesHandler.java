@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.fabricmc.loader.api.FabricLoader;
@@ -35,6 +36,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
     public static final HashMap<Identifier, TradeJsonAdapter> tradeTypesRegistry = new HashMap<>();
 
     private static final Map<String, List<String>> EXCEPTIONS_DURING_LOADING = new HashMap<>();
+    private static final Int2ObjectMap<TradeOffers.Factory[]> WANDERING_TRADER_CACHE = new Int2ObjectOpenHashMap<>();
     private static String currentProfessionId = null;
 
     static {
@@ -55,6 +57,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_potion_container"), new TradeJsonAdapters.SellPotionContainerItem());
     }
 
+    //TODO try to support multiple files per profession
     private static HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> reloadTrades() throws IOException {
 
         System.out.println("--- RELOAD TRADES ---");
@@ -71,37 +74,16 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
 
                 JsonObject jsonRoot = GSON.fromJson(new FileReader(tradesFile), JsonObject.class);
 
-                VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(Identifier.tryParse(jsonRoot.get("profession").getAsString()));
-                Int2ObjectOpenHashMap<TradeOffers.Factory[]> tradesMap = new Int2ObjectOpenHashMap<>();
+                Identifier professionId = Identifier.tryParse(jsonRoot.get("profession").getAsString());
+                currentProfessionId = professionId.getPath();
 
-                currentProfessionId = profession.toString();
-
-                for (Map.Entry<String, JsonElement> entry : jsonRoot.get("trades").getAsJsonObject().entrySet()) {
-
-                    TradeOffers.Factory[] factories = new TradeOffers.Factory[entry.getValue().getAsJsonArray().size()];
-                    int i = 0;
-
-                    for (JsonElement tradeElement : entry.getValue().getAsJsonArray()) {
-
-                        JsonObject trade = tradeElement.getAsJsonObject();
-
-                        if (!trade.has("type")) {
-                            throw new JsonSyntaxException("Not adding trades for profession " + jsonRoot.get("profession").getAsString() + ", type missing");
-                        }
-
-                        TradeJsonAdapter adapter = tradeTypesRegistry.get(Identifier.tryParse(trade.get("type").getAsString()));
-
-                        if (adapter == null) {
-                            throw new JsonSyntaxException("Not adding trades for profession " + jsonRoot.get("profession").getAsString() + ", unknown trade type " + trade.get("type").getAsString());
-                        }
-
-                        factories[i] = adapter.deserialize(trade);
-                        i++;
-                    }
-                    tradesMap.put(professionKeys.get(entry.getKey()).intValue(), factories);
+                if (professionId.getPath().equals("wandering_trader")) {
+                    WANDERING_TRADER_CACHE.clear();
+                    WANDERING_TRADER_CACHE.putAll(loadTrades(jsonRoot));
+                } else {
+                    VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(professionId);
+                    tradesCache.put(profession, loadTrades(jsonRoot));
                 }
-
-                tradesCache.put(profession, tradesMap);
 
             } catch (Exception e) {
                 addLoadingException(e);
@@ -111,6 +93,37 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
 
         currentProfessionId = null;
         return tradesCache;
+    }
+
+    private static Int2ObjectOpenHashMap<TradeOffers.Factory[]> loadTrades(JsonObject jsonRoot) {
+        Int2ObjectOpenHashMap<TradeOffers.Factory[]> tradesMap = new Int2ObjectOpenHashMap<>();
+
+        for (Map.Entry<String, JsonElement> entry : jsonRoot.get("trades").getAsJsonObject().entrySet()) {
+
+            TradeOffers.Factory[] factories = new TradeOffers.Factory[entry.getValue().getAsJsonArray().size()];
+            int i = 0;
+
+            for (JsonElement tradeElement : entry.getValue().getAsJsonArray()) {
+
+                JsonObject trade = tradeElement.getAsJsonObject();
+
+                if (!trade.has("type")) {
+                    throw new JsonSyntaxException("Not adding trades for profession " + jsonRoot.get("profession").getAsString() + ", type missing");
+                }
+
+                TradeJsonAdapter adapter = tradeTypesRegistry.get(Identifier.tryParse(trade.get("type").getAsString()));
+
+                if (adapter == null) {
+                    throw new JsonSyntaxException("Not adding trades for profession " + jsonRoot.get("profession").getAsString() + ", unknown trade type " + trade.get("type").getAsString());
+                }
+
+                factories[i] = adapter.deserialize(trade);
+                i++;
+            }
+            tradesMap.put(professionKeys.get(entry.getKey()).intValue(), factories);
+        }
+
+        return tradesMap;
     }
 
     public static void addLoadingException(Exception e) {
@@ -155,8 +168,13 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
     @Override
     public CompletableFuture<Void> apply(HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> data, ResourceManager manager, Profiler profiler, Executor executor) {
 
-        TradeOffers.PROFESSION_TO_LEVELED_TRADE.clear();
-        data.forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::put);
+        //TradeOffers.PROFESSION_TO_LEVELED_TRADE.clear();
+        data.forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
+
+        if (!WANDERING_TRADER_CACHE.isEmpty()) {
+            TradeOffers.WANDERING_TRADER_TRADES.clear();
+            TradeOffers.WANDERING_TRADER_TRADES.putAll(WANDERING_TRADER_CACHE);
+        }
 
         System.out.println("--- APPLY TRADES ---");
 
