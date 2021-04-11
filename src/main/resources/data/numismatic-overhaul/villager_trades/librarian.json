@@ -13,6 +13,23 @@
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
         "maxUses": 1
+      },
+      {
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_boots",
+        "price": 101
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_pickaxe",
+          "count": 99,
+          "tag": {
+            "Damage": 75
+          }
+        },
+        "price": 5,
+        "maxUses": 2
       }
     ],
     "apprentice": [

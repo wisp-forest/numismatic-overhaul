@@ -55,6 +55,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "process_item"), new TradeJsonAdapters.ProcessItem());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_dyed_armor"), new TradeJsonAdapters.SellDyedArmor());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_potion_container"), new TradeJsonAdapters.SellPotionContainerItem());
+        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "buy_item"), new TradeJsonAdapters.BuyItem());
     }
 
     //TODO try to support multiple files per profession
@@ -136,6 +137,7 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
         } else {
             EXCEPTIONS_DURING_LOADING.put(currentProfessionId, new ArrayList<>(Collections.singletonList(e.getMessage())));
         }
+        e.printStackTrace();
     }
 
     public static void broadcastErrors(MinecraftServer server) {
@@ -168,12 +170,12 @@ public class VillagerTradesHandler implements SimpleResourceReloadListener<HashM
     @Override
     public CompletableFuture<Void> apply(HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> data, ResourceManager manager, Profiler profiler, Executor executor) {
 
-        //TradeOffers.PROFESSION_TO_LEVELED_TRADE.clear();
         data.forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
 
         if (!WANDERING_TRADER_CACHE.isEmpty()) {
             TradeOffers.WANDERING_TRADER_TRADES.clear();
             TradeOffers.WANDERING_TRADER_TRADES.putAll(WANDERING_TRADER_CACHE);
+            WANDERING_TRADER_CACHE.clear();
         }
 
         System.out.println("--- APPLY TRADES ---");

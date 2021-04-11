@@ -386,4 +386,41 @@ public class TradeJsonAdapters {
         }
     }
 
+    public static class BuyItem extends TradeJsonAdapter {
+
+        @Override
+        @NotNull
+        TradeOffers.Factory deserialize(JsonObject json) {
+
+            loadDefaultStats(json, true);
+
+            VillagerJsonHelper.assertElement(json, "buy");
+
+            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());
+
+            return new BuyItemFactory(buy, price, max_uses, villager_experience, price_multiplier);
+        }
+    }
+
+    private static class BuyItemFactory implements TradeOffers.Factory {
+        private final ItemStack buy;
+        private final CurrencyStack price;
+        private final int maxUses;
+        private final int experience;
+        private final float multiplier;
+
+        public BuyItemFactory(ItemStack buy, CurrencyStack price, int maxUses, int experience, float multiplier) {
+            this.buy = buy;
+            this.price = price;
+            this.maxUses = maxUses;
+            this.experience = experience;
+            this.multiplier = multiplier;
+        }
+
+        public TradeOffer create(Entity entity, Random random) {
+            return new TradeOffer(buy, CurrencyHelper.getAsStacks(price, 1).get(0), this.maxUses, this.experience, this.multiplier);
+        }
+    }
+
 }

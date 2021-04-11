@@ -3,6 +3,14 @@
   "trades": {
     "novice": [
       {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:brown_wool",
+          "count": 6
+        },
+        "price": 74000
+      },
+      {
         "type": "numismatic-overhaul:sell_potion_container",
         "container_item": {
           "item": "minecraft:potion"
