@@ -14,14 +14,12 @@ import java.util.List;
 
 public class CurrencyTooltipRenderer {
 
-    //TODO render this at the correct height, extending downwards
     public static void renderTooltip(CurrencyStack stack, MatrixStack matrices, Screen screen, Text title, int x, int y) {
 
         List<Text> tooltip = new ArrayList<>();
         tooltip.add(title);
 
-        y += 15;
-        y += (3 - stack.getAsItemStackList().size()) * 10;
+        y += 10;
 
         List<ItemStack> coins = stack.getAsItemStackList();
         MinecraftClient.getInstance().getItemRenderer().zOffset = 700.0f;
@@ -36,7 +34,6 @@ public class CurrencyTooltipRenderer {
         }
 
         if (tooltip.size() == 1) {
-            y -= 10;
             tooltip.add(new TranslatableText("numismatic-overhaul.empty").formatted(Formatting.GRAY));
         }
 

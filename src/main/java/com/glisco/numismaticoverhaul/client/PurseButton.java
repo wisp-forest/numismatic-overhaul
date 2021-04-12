@@ -31,7 +31,7 @@ public class PurseButton extends TexturedButtonWidget {
                 currencyStorage.getCurrencyStack(),
                 matrices, parent,
                 TOOLTIP_TITLE,
-                x + 14, mouseY - 15);
+                x + 14, y + 5);
     }
 
 
