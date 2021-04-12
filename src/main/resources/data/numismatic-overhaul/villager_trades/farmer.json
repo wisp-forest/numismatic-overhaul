@@ -16,7 +16,7 @@
           "item": "minecraft:potion"
         },
         "buy_item": {
-          "item": "minecraft:potion",
+          "item": "minecraft:potio",
           "tag": {
             "Potion": "minecraft:water"
           }

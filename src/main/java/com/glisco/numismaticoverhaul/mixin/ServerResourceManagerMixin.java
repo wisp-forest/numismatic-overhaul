@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.mixin;
 
-import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
+import com.glisco.numismaticoverhaul.villagers.VillagerTradesResourceListener;
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.command.CommandManager;
@@ -20,7 +20,7 @@ public class ServerResourceManagerMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void onReload(CommandManager.RegistrationEnvironment registrationEnvironment, int i, CallbackInfo ci) {
-        resourceManager.registerListener(new VillagerTradesHandler());
+        resourceManager.registerListener(new VillagerTradesResourceListener());
     }
 
 }
