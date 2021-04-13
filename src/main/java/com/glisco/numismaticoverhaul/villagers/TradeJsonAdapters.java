@@ -19,6 +19,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
@@ -44,11 +45,11 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "structure");
+            VillagerJsonHelper.assertString(json, "structure");
 
             StructureFeature<?> feature = Registry.STRUCTURE_FEATURE.get(new Identifier(json.get("structure").getAsString()));
             if (feature == null) {
-                throw new JsonSyntaxException("Structure " + json.get("structure").getAsString() + " not found");
+                throw new DeserializationException("Structure " + json.get("structure").getAsString() + " not found");
             }
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
@@ -106,7 +107,7 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "sell");
+            VillagerJsonHelper.assertJsonObject(json, "sell");
 
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
 
@@ -188,7 +189,7 @@ public class TradeJsonAdapters {
         public TradeOffers.Factory deserialize(JsonObject json) {
 
             loadDefaultStats(json, false);
-            VillagerJsonHelper.assertElement(json, "level");
+            VillagerJsonHelper.assertInt(json, "level");
 
             boolean allow_treasure = VillagerJsonHelper.boolean_getOrDefault(json, "allow_treasure", false);
 
@@ -239,8 +240,8 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "buy");
-            VillagerJsonHelper.assertElement(json, "sell");
+            VillagerJsonHelper.assertJsonObject(json, "buy");
+            VillagerJsonHelper.assertJsonObject(json, "sell");
 
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
             ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());
@@ -282,7 +283,7 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "item");
+            VillagerJsonHelper.assertString(json, "item");
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
             Item item = VillagerJsonHelper.getItemFromID(json.get("item").getAsString());
@@ -345,8 +346,8 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "container_item");
-            VillagerJsonHelper.assertElement(json, "buy_item");
+            VillagerJsonHelper.assertJsonObject(json, "container_item");
+            VillagerJsonHelper.assertJsonObject(json, "buy_item");
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
             ItemStack container_item = VillagerJsonHelper.getItemStackFromJson(json.get("container_item").getAsJsonObject());
@@ -394,7 +395,7 @@ public class TradeJsonAdapters {
 
             loadDefaultStats(json, true);
 
-            VillagerJsonHelper.assertElement(json, "buy");
+            VillagerJsonHelper.assertJsonObject(json, "buy");
 
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
             ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());

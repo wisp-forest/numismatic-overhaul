@@ -1,14 +1,19 @@
 package com.glisco.numismaticoverhaul.villagers;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,13 +25,12 @@ import java.util.function.BiConsumer;
 
 public class VillagerTradesHandler {
 
-    public static final Gson GSON = new Gson();
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static final HashMap<String, Integer> professionKeys = new HashMap<>();
     public static final HashMap<Identifier, TradeJsonAdapter> tradeTypesRegistry = new HashMap<>();
 
-    private static final Map<String, List<String>> EXCEPTIONS_DURING_LOADING = new HashMap<>();
-    private static String currentProfessionId = null;
+    private static final List<DeserializationException> EXCEPTIONS_DURING_LOADING = new ArrayList<>();
 
     static {
         professionKeys.put("novice", 1);
@@ -54,23 +58,43 @@ public class VillagerTradesHandler {
         Iterator<Path> tradeFiles = Files.walk(FabricLoader.getInstance().getModContainer("numismatic-overhaul").get().getRootPath().resolve("data/numismatic-overhaul/villager_trades/")).iterator();
 
         while (tradeFiles.hasNext()) {
+
+            //Clear context
+            DeserializationContext.clear();
+
             File tradesFile = new File(tradeFiles.next().toString());
             if (!tradesFile.getPath().endsWith(".json")) continue;
 
+            //Push path to context
+            DeserializationContext.setFile(tradesFile.getPath());
+
+            JsonObject jsonRoot;
+            Identifier professionId;
+
             try {
-                JsonObject jsonRoot = GSON.fromJson(new FileReader(tradesFile), JsonObject.class);
+                jsonRoot = GSON.fromJson(new FileReader(tradesFile), JsonObject.class);
+                professionId = Identifier.tryParse(jsonRoot.get("profession").getAsString());
+            } catch (Exception e) {
+                addLoadingException(new DeserializationException(e.getMessage()));
+                continue;
+            }
 
-                Identifier professionId = Identifier.tryParse(jsonRoot.get("profession").getAsString());
-                currentProfessionId = professionId.getPath();
+            if (professionId == null) {
+                addLoadingException(new DeserializationException("Could not parse profession id \"" + jsonRoot.get("profession").getAsString() + "\""));
+                continue;
+            }
 
+            //Push profession to context
+            DeserializationContext.setProfession(professionId.getPath());
+
+            try {
                 if (professionId.getPath().equals("wandering_trader")) {
                     deserializeTrades(jsonRoot, NumismaticVillagerTradesRegistry::registerWanderingTraderTrade);
                 } else {
                     VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(professionId);
                     deserializeTrades(jsonRoot, (integer, factory) -> NumismaticVillagerTradesRegistry.registerVillagerTrade(profession, integer, factory));
                 }
-
-            } catch (Exception e) {
+            } catch (DeserializationException e) {
                 addLoadingException(e);
             }
 
@@ -78,46 +102,60 @@ public class VillagerTradesHandler {
 
     }
 
-    private static void deserializeTrades(JsonObject jsonRoot, BiConsumer<Integer, TradeOffers.Factory> tradeConsumer) {
+    private static void deserializeTrades(@NotNull JsonObject jsonRoot, BiConsumer<Integer, TradeOffers.Factory> tradeConsumer) {
+
+        if (!jsonRoot.get("trades").isJsonObject()) throw new DeserializationException(jsonRoot.get("trades") + " is not a JsonObject");
 
         //Iterate villager levels
         for (Map.Entry<String, JsonElement> entry : jsonRoot.get("trades").getAsJsonObject().entrySet()) {
 
             int level = professionKeys.get(entry.getKey());
+
+            if (!entry.getValue().isJsonArray()) throw new DeserializationException(entry.getValue() + " is not a JsonArray");
             JsonArray tradesArray = entry.getValue().getAsJsonArray();
 
             //Iterate trades in that level
             for (JsonElement tradeElement : tradesArray) {
 
+                if (!tradeElement.isJsonObject()) {
+                    addLoadingException(new DeserializationException(tradeElement + " is not a JsonObject"));
+                    continue;
+                }
+
                 JsonObject trade = tradeElement.getAsJsonObject();
 
+                //Push trade to context
+                DeserializationContext.setTrade(trade);
+                DeserializationContext.setLevel(level);
+
                 if (!trade.has("type")) {
-                    throw new JsonSyntaxException("Type missing");
+                    throw new DeserializationException("Type missing");
                 }
 
                 TradeJsonAdapter adapter = tradeTypesRegistry.get(Identifier.tryParse(trade.get("type").getAsString()));
 
                 if (adapter == null) {
-                    throw new JsonSyntaxException("Unknown trade type " + trade.get("type").getAsString());
+                    throw new DeserializationException("Unknown trade type " + trade.get("type").getAsString());
                 }
 
                 //Register trade
-                tradeConsumer.accept(level, adapter.deserialize(trade));
+                try {
+                    tradeConsumer.accept(level, adapter.deserialize(trade));
+                } catch (DeserializationException e) {
+                    addLoadingException(e);
+                }
             }
         }
 
     }
 
-    public static void addLoadingException(Exception e) {
-        if (currentProfessionId == null) {
-            currentProfessionId = "JSON_PARSING";
-        }
+    public static void addLoadingException(DeserializationException e) {
+        EXCEPTIONS_DURING_LOADING.add(e);
 
-        if (EXCEPTIONS_DURING_LOADING.containsKey(currentProfessionId)) {
-            EXCEPTIONS_DURING_LOADING.get(currentProfessionId).add(e.getMessage());
-        } else {
-            EXCEPTIONS_DURING_LOADING.put(currentProfessionId, new ArrayList<>(Collections.singletonList(e.getMessage())));
-        }
+        NumismaticOverhaul.LOGGER.error("");
+        NumismaticOverhaul.LOGGER.error(" -- Caught exception during loading trade definitions, full stacktrace commencing -- ");
+        NumismaticOverhaul.LOGGER.error("");
+
         e.printStackTrace();
     }
 
@@ -130,9 +168,20 @@ public class VillagerTradesHandler {
             players.forEach(playerEntity -> {
                 playerEntity.sendMessage(new LiteralText("§cThe following errors have occurred during numismatic-overhaul reload:"), false);
                 playerEntity.sendMessage(new LiteralText(""), false);
-                EXCEPTIONS_DURING_LOADING.forEach((profession, messages) -> {
-                    playerEntity.sendMessage(new LiteralText("§7-> Profession: " + profession), false);
-                    messages.forEach(s -> playerEntity.sendMessage(new LiteralText("§7    - " + s), false));
+                EXCEPTIONS_DURING_LOADING.forEach(e -> {
+
+                    MutableText message = new LiteralText("§7-> " + e.getMessage() + " §8(hover for more info)");
+
+                    MutableText hoverText = new LiteralText("");
+                    hoverText.append(new LiteralText("File: §7" + e.getContext().file + "\n\n"));
+                    hoverText.append(new LiteralText("Profession: §7" + e.getContext().profession + "\n"));
+                    hoverText.append(new LiteralText("Level: §7" + e.getContext().level + "\n\n"));
+                    hoverText.append(new LiteralText("Problematic trade: \n§7" + GSON.toJson(e.getContext().trade)));
+
+                    message.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText)));
+
+                    playerEntity.sendMessage(message, false);
+
                 });
             });
             EXCEPTIONS_DURING_LOADING.clear();

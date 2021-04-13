@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul.villagers;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,8 +20,11 @@ public abstract class TradeJsonAdapter {
         this.price_multiplier = VillagerJsonHelper.float_getOrDefault(jsonObject, "price_multiplier", 0.05f);
 
         if (verifyPrice) {
-            if (!jsonObject.has("price")) throw new JsonSyntaxException("Missing price");
-            if (jsonObject.get("price").getAsInt() == 0) throw new JsonSyntaxException("Price must not be zero");
+            if (!jsonObject.has("price")) throw new DeserializationException("Missing price");
+
+            VillagerJsonHelper.assertInt(jsonObject, "price");
+
+            if (jsonObject.get("price").getAsInt() == 0) throw new DeserializationException("Price must not be zero");
         }
 
     }
