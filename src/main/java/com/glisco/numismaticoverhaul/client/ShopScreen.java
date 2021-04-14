@@ -42,8 +42,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     protected void init() {
         super.init();
         this.TRADE_WIDGET = new AddTradeWidget(x + 178, y, client, this);
-        this.CURRENCY_WIDGET = new CurrencyStorageWidget(x + 178, y + 60
-                , client);
+        this.CURRENCY_WIDGET = new CurrencyStorageWidget(x + 178, y + 60, client);
         updateScreen(offers, 0);
         selectTab(selected_tab, false);
     }
@@ -164,7 +163,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     private void selectTab(int tab, boolean clickSound) {
         selected_tab = tab;
         TRADE_WIDGET.setActive(tab != 0);
-        CURRENCY_WIDGET.setActive(tab != 0);
+        CURRENCY_WIDGET.setY(tab == 0 ? y : y + 60);
         this.titleY = tab == 0 ? 6 : 6000;
         if (clickSound) client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }

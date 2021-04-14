@@ -100,9 +100,9 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
 
         int[] values = CurrencyResolver.splitValues(isEnteredTextValid() ? Integer.parseInt(PRICE_FIELD.getText()) : 0);
 
-        client.textRenderer.draw(matrices, String.valueOf(values[0]), x + 36, y + 6, 0x8b8b8b);
-        client.textRenderer.draw(matrices, String.valueOf(values[1]), x + 56, y + 6, 0x8b8b8b);
-        client.textRenderer.draw(matrices, String.valueOf(values[2]), x + 76, y + 6, 0x8b8b8b);
+        renderText(matrices, String.valueOf(values[0]), x + 36, y + 6, 7f, 0x8b8b8b);
+        renderText(matrices, String.valueOf(values[1]), x + 56, y + 6, 7f, 0x8b8b8b);
+        renderText(matrices, String.valueOf(values[2]), x + 76, y + 6, 7f, 0x8b8b8b);
 
         PRICE_FIELD.render(matrices, mouseX, mouseY, delta);
         RenderSystem.color4f(255.0f, 255.0f, 255.0f, 255.0f);
@@ -141,6 +141,14 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
     public void setText(String text) {
         PRICE_FIELD.setText(text);
         buttons.forEach(buttonWidget -> buttonWidget.active = true);
+    }
+
+    private void renderText(MatrixStack matrices, String text, int x, int y, float size, int color) {
+        matrices.push();
+        float scaling = ((size * 1.2f) / (float) client.textRenderer.fontHeight);
+        matrices.scale(scaling, scaling, 1);
+        client.textRenderer.draw(matrices, text, x / scaling, y / scaling, color);
+        matrices.pop();
     }
 
     private static class TradeWidgetButton extends TexturedButtonWidget {

@@ -41,9 +41,7 @@ public class VillagerTradesResourceListener implements SimpleResourceReloadListe
             TradeOffers.WANDERING_TRADER_TRADES.putAll(data.getValue());
         }
 
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        future.complete(null);
-        return future;
+        return CompletableFuture.completedFuture(null);
     }
 
     @Override

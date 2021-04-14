@@ -40,7 +40,6 @@ public class DeserializationContext {
         file_cache = file;
     }
 
-
     public static void setProfession(String profession) {
         profession_cache = profession;
     }

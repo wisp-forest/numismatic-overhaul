@@ -7,7 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -19,18 +18,18 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
 
     private final MinecraftClient client;
     private final int x;
-    private final int y;
+    private int y;
     private boolean active;
 
     private int currencyStorage;
 
-    private final ButtonWidget CONFIRM_BUTTON;
+    private final TexturedButtonWidget CONFIRM_BUTTON;
 
     public CurrencyStorageWidget(int x, int y, MinecraftClient client) {
         this.client = client;
         this.x = x;
         this.y = y;
-        this.active = false;
+        this.active = true;
         this.CONFIRM_BUTTON = new CurrencyRetrieveButton(x + 4, y + 41, button -> {
             client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createEXTRACT());
         });
@@ -55,8 +54,9 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
         return CONFIRM_BUTTON.mouseClicked(mouseX, mouseY, button);
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setY(int y) {
+        this.y = y;
+        this.CONFIRM_BUTTON.setPos(this.CONFIRM_BUTTON.x, y + 41);
     }
 
     public void setCurrencyStorage(int currencyStorage) {
