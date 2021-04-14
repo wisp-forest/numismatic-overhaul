@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.data;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import javafx.util.Pair;

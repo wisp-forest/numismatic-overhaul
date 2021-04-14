@@ -2,7 +2,7 @@ package com.glisco.numismaticoverhaul.network;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;
-import com.glisco.numismaticoverhaul.client.ShopScreen;
+import com.glisco.numismaticoverhaul.client.gui.shop.ShopScreen;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

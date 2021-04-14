@@ -1,5 +1,6 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.exceptions;
 
+import com.glisco.numismaticoverhaul.villagers.json.VillagerJsonHelper;
 import com.google.gson.JsonObject;
 
 public class DeserializationContext {

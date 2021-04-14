@@ -1,9 +1,9 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui.purse;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import com.google.gson.JsonParseException;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;

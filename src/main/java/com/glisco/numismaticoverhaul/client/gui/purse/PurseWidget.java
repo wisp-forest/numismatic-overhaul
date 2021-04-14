@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui.purse;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;

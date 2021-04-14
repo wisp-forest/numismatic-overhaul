@@ -1,24 +1,21 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.json;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.villagers.data.NumismaticVillagerTradesRegistry;
+import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationContext;
+import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.google.gson.*;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.DataCommand;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
-import net.minecraft.util.FileNameUtil;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
-import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.mixin;
 
-import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
+import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;

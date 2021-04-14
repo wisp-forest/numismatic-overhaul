@@ -1,8 +1,8 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.client.PurseButton;
-import com.glisco.numismaticoverhaul.client.PurseWidget;
+import com.glisco.numismaticoverhaul.client.gui.purse.PurseButton;
+import com.glisco.numismaticoverhaul.client.gui.purse.PurseWidget;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;

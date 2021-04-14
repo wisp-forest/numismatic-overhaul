@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui.purse;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;

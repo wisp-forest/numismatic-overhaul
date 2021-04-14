@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.mixin;
 
-import com.glisco.numismaticoverhaul.villagers.VillagerTradesResourceListener;
+import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.command.CommandManager;

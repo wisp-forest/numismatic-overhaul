@@ -8,7 +8,7 @@ import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
-import com.glisco.numismaticoverhaul.villagers.VillagerTradesHandler;
+import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

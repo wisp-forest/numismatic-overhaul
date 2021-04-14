@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui.shop;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;

@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import net.minecraft.client.MinecraftClient;

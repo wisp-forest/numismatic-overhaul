@@ -1,5 +1,6 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.json;
 
+import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.google.gson.JsonObject;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;

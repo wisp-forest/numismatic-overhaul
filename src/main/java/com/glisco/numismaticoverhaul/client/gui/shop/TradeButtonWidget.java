@@ -1,5 +1,6 @@
-package com.glisco.numismaticoverhaul.client;
+package com.glisco.numismaticoverhaul.client.gui.shop;
 
+import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.mojang.blaze3d.systems.RenderSystem;

@@ -1,6 +1,7 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.data;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import javafx.util.Pair;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;

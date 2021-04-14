@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.villagers;
+package com.glisco.numismaticoverhaul.villagers.exceptions;
 
 public class DeserializationException extends RuntimeException {
 
