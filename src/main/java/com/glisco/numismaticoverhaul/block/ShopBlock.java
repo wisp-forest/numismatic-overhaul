@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -56,19 +58,43 @@ public class ShopBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            if (!player.isSneaking()) {
-                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 
-                ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
+            ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
 
-                ((ServerPlayerEntity) player).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+            if (shop.getOwner().equals(player.getUuid())) {
+                if (player.isSneaking()) {
+                    return openShopMerchant(player, shop);
+                } else {
+                    player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+                    ((ServerPlayerEntity) player).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+                }
             } else {
-                ((ShopMerchant) ((ShopBlockEntity) world.getBlockEntity(pos)).getMerchant()).updateTrades();
-                ((ShopBlockEntity) world.getBlockEntity(pos)).getMerchant().setCurrentCustomer(player);
-                ((ShopBlockEntity) world.getBlockEntity(pos)).getMerchant().sendOffers(player, new TranslatableText("gui.numismatic-overhaul.shop.merchant_title"), 0);
+                return openShopMerchant(player, shop);
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    private ActionResult openShopMerchant(PlayerEntity player, ShopBlockEntity shop) {
+        if (shop.getMerchant().getCurrentCustomer() != null) return ActionResult.SUCCESS;
+
+        ((ShopMerchant) shop.getMerchant()).updateTrades();
+        shop.getMerchant().setCurrentCustomer(player);
+        shop.getMerchant().sendOffers(player, new TranslatableText("gui.numismatic-overhaul.shop.merchant_title"), 0);
+
+        return ActionResult.SUCCESS;
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (world.isClient) return;
+
+        if (!(placer instanceof ServerPlayerEntity)) {
+            world.breakBlock(pos, true);
+            return;
+        }
+
+        ((ShopBlockEntity) world.getBlockEntity(pos)).setOwner(placer.getUuid());
     }
 
     @Override

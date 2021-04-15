@@ -15,6 +15,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,6 +182,14 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
             this.selected_tab = 1 + offers.indexOf(offer) / 6;
             return;
         }
+    }
+
+    public int getRootX() {
+        return (width - backgroundWidth) / 2;
+    }
+
+    public int getRootY() {
+        return (height - backgroundHeight) / 2;
     }
 
     public ItemStack getBuffer() {

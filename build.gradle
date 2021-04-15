@@ -15,6 +15,8 @@ repositories {
         name = "Ladysnake Mods"
         url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
+
+    maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -28,6 +30,9 @@ dependencies {
 
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}"
+
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+    modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

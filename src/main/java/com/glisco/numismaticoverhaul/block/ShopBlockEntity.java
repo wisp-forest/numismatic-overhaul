@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory, BlockEntityClientSerializable, Tickable {
 
@@ -33,6 +34,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     private final Merchant merchant;
     private final List<ShopOffer> offers;
     private int storedCurrency;
+    private UUID owner;
 
     private int tradeIndex;
 
@@ -97,6 +99,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         Inventories.toTag(tag, INVENTORY);
         ShopOffer.toTag(tag, offers);
         tag.putInt("StoredCurrency", storedCurrency);
+        tag.putUuid("Owner", owner);
         return tag;
     }
 
@@ -105,6 +108,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         super.fromTag(state, tag);
         Inventories.fromTag(tag, INVENTORY);
         ShopOffer.fromTag(tag, offers);
+        owner = tag.getUuid("Owner");
         this.storedCurrency = tag.getInt("StoredCurrency");
     }
 
@@ -160,6 +164,15 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     @Override
     public void fromClientTag(CompoundTag tag) {
         fromTag(getCachedState(), tag);
+    }
+
+    public UUID getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UUID owner) {
+        this.owner = owner;
+        markDirty();
     }
 
     @Override

@@ -21,6 +21,9 @@
     ],
     "cardinal-components-entity": [
       "com.glisco.numismaticoverhaul.ModComponents"
+    ],
+    "rei_plugins": [
+      "com.glisco.numismaticoverhaul.compat.rei.NOReiPlugin"
     ]
   },
   "mixins": [
@@ -29,7 +32,9 @@
   "depends": {
     "fabricloader": ">=0.10.8",
     "fabric": "*",
-    "minecraft": ">=1.16.2"
+    "minecraft": ">=1.16.2",
+    "cardinal-components-base": "*",
+    "cardinal-components-entity": "*"
   },
   "custom": {
     "cardinal-components": [
