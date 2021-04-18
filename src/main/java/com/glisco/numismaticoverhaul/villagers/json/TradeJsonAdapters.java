@@ -143,6 +143,57 @@ public class TradeJsonAdapters {
         }
     }
 
+    public static class DimensionAwareSellStack extends TradeJsonAdapter {
+
+        @Override
+        @NotNull
+        public TradeOffers.Factory deserialize(JsonObject json) {
+
+            loadDefaultStats(json, true);
+
+            VillagerJsonHelper.assertJsonObject(json, "sell");
+            VillagerJsonHelper.assertString(json, "dimension");
+
+            ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
+            String dimension = json.get("dimension").getAsString();
+
+            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+
+            return new DimensionAwareSellStackFactory(sell, price, dimension, max_uses, villager_experience, price_multiplier);
+        }
+    }
+
+    private static class DimensionAwareSellStackFactory implements TradeOffers.Factory {
+        private final ItemStack sell;
+        private final int maxUses;
+        private final int experience;
+        private final CurrencyStack price;
+        private final float multiplier;
+        private final String targetDimensionId;
+
+        public DimensionAwareSellStackFactory(ItemStack sell, CurrencyStack price, String targetDimensionId, int maxUses, int experience, float multiplier) {
+            this.sell = sell;
+            this.maxUses = maxUses;
+            this.experience = experience;
+            this.price = price;
+            this.multiplier = multiplier;
+            this.targetDimensionId = targetDimensionId;
+        }
+
+        public TradeOffer create(Entity entity, Random random) {
+
+            if (!entity.world.getRegistryKey().getValue().toString().equals(targetDimensionId)) return null;
+
+            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
+
+            if (priceStacks.size() > 1) {
+                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), sell, this.maxUses, this.experience, multiplier);
+            } else {
+                return new TradeOffer(priceStacks.get(0), sell, this.maxUses, this.experience, multiplier);
+            }
+        }
+    }
+
     public static class SellSingleEnchantment extends TradeJsonAdapter {
 
         @Override

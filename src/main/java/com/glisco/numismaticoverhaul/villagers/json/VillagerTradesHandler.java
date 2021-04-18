@@ -45,6 +45,7 @@ public class VillagerTradesHandler {
 
     public static void init() {
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_stack"), new TradeJsonAdapters.SellStack());
+        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "dimension_sell_stack"), new TradeJsonAdapters.DimensionAwareSellStack());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_map"), new TradeJsonAdapters.SellMap());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_single_enchantment"), new TradeJsonAdapters.SellSingleEnchantment());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "enchant_item"), new TradeJsonAdapters.EnchantItem());
