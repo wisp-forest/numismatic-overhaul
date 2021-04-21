@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul.villagers.data;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import javafx.util.Pair;
+import net.minecraft.util.Pair;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -35,11 +35,11 @@ public class VillagerTradesResourceListener implements SimpleResourceReloadListe
 
     @Override
     public CompletableFuture<Void> apply(Pair<HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>>, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> data, ResourceManager manager, Profiler profiler, Executor executor) {
-        data.getKey().forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
+        data.getLeft().forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
 
-        if (!data.getValue().isEmpty()) {
+        if (!data.getLeft().isEmpty()) {
             TradeOffers.WANDERING_TRADER_TRADES.clear();
-            TradeOffers.WANDERING_TRADER_TRADES.putAll(data.getValue());
+            TradeOffers.WANDERING_TRADER_TRADES.putAll(data.getRight());
         }
 
         return CompletableFuture.completedFuture(null);

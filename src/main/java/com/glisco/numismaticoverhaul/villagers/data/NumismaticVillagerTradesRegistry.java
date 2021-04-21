@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.villagers.data;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import javafx.util.Pair;
+import net.minecraft.util.Pair;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 
