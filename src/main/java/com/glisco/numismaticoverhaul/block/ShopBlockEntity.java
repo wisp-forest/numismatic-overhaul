@@ -99,7 +99,9 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         Inventories.toTag(tag, INVENTORY);
         ShopOffer.toTag(tag, offers);
         tag.putInt("StoredCurrency", storedCurrency);
-        tag.putUuid("Owner", owner);
+        if (owner != null) {
+            tag.putUuid("Owner", owner);
+        }
         return tag;
     }
 
@@ -108,7 +110,9 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         super.fromTag(state, tag);
         Inventories.fromTag(tag, INVENTORY);
         ShopOffer.fromTag(tag, offers);
-        owner = tag.getUuid("Owner");
+        if (tag.contains("Owner")) {
+            owner = tag.getUuid("Owner");
+        }
         this.storedCurrency = tag.getInt("StoredCurrency");
     }
 
