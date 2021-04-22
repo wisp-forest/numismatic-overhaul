@@ -1,0 +1,177 @@
+{
+  "profession": "armorer",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_helmet",
+          "count": 1
+        },
+        "price": 800,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_chestplate",
+          "count": 1
+        },
+        "price": 1280,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_leggings",
+          "count": 1
+        },
+        "price": 1120,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_boots",
+          "count": 1
+        },
+        "price": 640,
+		"max_uses": 4
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_helmet",
+          "count": 1
+        },
+        "price": 1800,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_chestplate",
+          "count": 1
+        },
+        "price": 2880,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_leggings",
+          "count": 1
+        },
+        "price": 2520,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_boots",
+          "count": 1
+        },
+        "price": 1440,
+		"max_uses": 4
+      }
+    ],
+	"journeyman": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:shield",
+          "count": 1
+        },
+        "price": 390,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_chestplate",
+          "count": 1
+        },
+        "price": 1280,
+		"max_uses": 2
+      }
+    ],
+	"expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_chestplate",
+          "count": 1
+        },
+        "price": 16000,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_chestplate",
+          "count": 1
+        },
+        "price": 2880,
+		"max_uses": 4
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_boots",
+          "count": 1
+        },
+        "price": 8000,
+		"max_uses": 4
+      }
+    ],
+	"master": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_helmet",
+          "count": 1
+        },
+        "price": 10000,
+		"max_uses": 1
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_chestplate",
+          "count": 1
+        },
+        "price": 16000,
+		"max_uses": 1
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_leggings",
+          "count": 1
+        },
+        "price": 14000,
+		"max_uses": 1
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_boots",
+          "count": 1
+        },
+        "price": 8000,
+		"max_uses": 1
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:totem_of_undying",
+          "count": 1
+        },
+        "price": 25000,
+		"max_uses": 2
+      }
+    ]
+  }
+}
