@@ -5,50 +5,137 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:brown_wool",
+          "item": "minecraft:wheat",
+          "count": 20
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:potato",
+          "count": 26
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:carrot",
+          "count": 22
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:beetroot",
+          "count": 15
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bread",
           "count": 6
         },
-        "price": 74000
-      },
-      {
-        "type": "numismatic-overhaul:sell_potion_container",
-        "container_item": {
-          "item": "minecraft:potion"
-        },
-        "buy_item": {
-          "item": "minecraft:potio",
-          "tag": {
-            "Potion": "minecraft:water"
-          }
-        },
-        "price": 76
-      },
-      {
-        "type": "numismatic-overhaul:sell_map",
-        "structure": "minecraft:endcity",
-        "price": 5,
-        "maxUses": 20
+        "price": 640,
+		"max_uses": 16
       }
     ],
     "apprentice": [
       {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:pumpkin",
+          "count": 6
+        },
+        "price": 74000,
+		"max_uses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pumpkin_pie",
+          "count": 4
+        },
+        "price": 640,
+		"max_uses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:apple",
+          "count": 8
+        },
+        "price": 640,
+		"max_uses": 16
+      }
+    ],
+	"journeyman": [
+		{
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:melon",
+          "count": 4
+        },
+        "price": 74000,
+		"max_uses": 12
+      },
+	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cookie",
-          "count": 2
+          "count": 18
         },
-        "price": 65,
-        "maxUses": 2
-      },
-      {
+        "price": 640,
+		"max_uses": 12
+      }
+	],
+	"expert": [
+	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:gold_ingot",
-          "count": 10
+          "item": "minecraft:suspicious_stew",
+          "count": 1
         },
-        "price": 5,
-        "maxUses": 20
+        "price": 640,
+		"max_uses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cake",
+          "count": 1
+        },
+        "price": 640,
+		"max_uses": 12
       }
-    ]
+	],
+	"master": [
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:golden_carrot",
+          "count": 3
+        },
+        "price": 640,
+		"max_uses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:glistering_melon",
+          "count": 3
+        },
+        "price": 640,
+		"max_uses": 12
+      }
+	]
   }
 }

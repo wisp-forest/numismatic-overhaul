@@ -1,0 +1,108 @@
+{
+  "profession": "cartographer",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:paper",
+          "count": 24
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:empty_map",
+          "count": 1
+        },
+        "price": 640,
+		"max_uses": 12
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:glass_pane",
+          "count": 11
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_map",
+        "structure": "minecraft:monument",
+        "price": 2550,
+        "maxUses": 12
+      }
+    ],
+	"journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:compass",
+          "count": 1
+        },
+        "price": 74000,
+		"max_uses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_map",
+        "structure": "minecraft:mansion",
+        "price": 5,
+        "maxUses": 2550
+      }
+    ],
+	"expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:item_frame",
+          "count": 7,
+        },
+        "price": 5,
+        "maxUses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:banner",
+          "count": 3,
+        },
+        "price": 5,
+        "maxUses": 12
+      }
+    ],
+	"master": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:flower_banner_pattern",
+          "count": 1,
+        },
+        "price": 5,
+        "maxUses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:field_masoned_banner_pattern",
+          "count": 1,
+        },
+        "price": 5,
+        "maxUses": 12
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bordure_indented_banner_pattern",
+          "count": 1,
+        },
+        "price": 5,
+        "maxUses": 12
+      }
+    ]
+  }
+}

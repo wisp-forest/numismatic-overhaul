@@ -1,0 +1,141 @@
+{
+  "profession": "butcher",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:raw_chicken",
+          "count": 14
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:raw_rabbit",
+          "count": 4
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:raw_porkchop",
+          "count": 7
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:rabbit_stew",
+          "count": 1
+        },
+        "price": 640,
+		"max_uses": 12
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:coal",
+          "count": 15
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_rabbit",
+          "count": 5
+        },
+        "price": 2880,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_chicken",
+          "count": 8
+        },
+        "price": 2880,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_porkchop",
+          "count": 5
+        },
+        "price": 2880,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_mutton",
+          "count": 4
+        },
+        "price": 2880,
+		"max_uses": 16
+      }
+    ],
+	"journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:raw_beef",
+          "count": 10
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:raw_mutton",
+          "count": 7
+        },
+        "price": 74000,
+		"max_uses": 16
+      },
+	  {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_beef",
+          "count": 3
+        },
+        "price": 1280,
+		"max_uses": 16
+      }
+    ],
+	"expert": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:dried_kelp_block",
+          "count": 10
+        },
+        "price": 74000,
+		"max_uses": 12
+      }
+    ],
+	"master": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:sweet_berries",
+          "count": 10
+        },
+        "price": 74000,
+		"max_uses": 12
+      }
+    ]
+  }
+}
