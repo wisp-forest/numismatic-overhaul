@@ -1,0 +1,141 @@
+{
+  "profession": "librarian",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:paper",
+          "count": 20
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:bookshelf",
+          "count": 26
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:enchanted_book",
+          "count": 22
+        },
+        "price": 74000,
+        "max_uses": 16
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:book",
+          "count": 6
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:lantern",
+          "count": 4
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:enchanted_book",
+          "count": 8
+        },
+        "price": 640,
+        "max_uses": 16
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:ink_sac",
+          "count": 4
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:glass",
+          "count": 18
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:enchanted_book",
+          "count": 18
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:book_and_quill",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:compass",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:clock",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:enchanted_book",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "master": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:name_tag",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ]
+  }
+}

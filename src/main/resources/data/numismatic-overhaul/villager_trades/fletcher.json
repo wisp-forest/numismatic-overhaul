@@ -1,0 +1,123 @@
+{
+  "profession": "fletcher",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:stick",
+          "count": 20
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:arrow",
+          "count": 26
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:flint",
+          "count": 22
+        },
+        "price": 74000,
+        "max_uses": 16
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:flint",
+          "count": 6
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bow",
+          "count": 4
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:string",
+          "count": 4
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:crossbow",
+          "count": 18
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:feather",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bow",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "master": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:tripwire_hook",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:crossbow",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:tipped_arrow",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ]
+  }
+}

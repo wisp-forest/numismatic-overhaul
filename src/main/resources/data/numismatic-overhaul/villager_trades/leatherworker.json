@@ -1,0 +1,123 @@
+{
+  "profession": "leatherworker",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:leather",
+          "count": 20
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:leather_pants",
+          "count": 26
+        },
+        "price": 74000,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:leather_tunic",
+          "count": 22
+        },
+        "price": 74000,
+        "max_uses": 16
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:flint",
+          "count": 6
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather_helmet",
+          "count": 4
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather_boots",
+          "count": 8
+        },
+        "price": 640,
+        "max_uses": 16
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:rabbit_hide",
+          "count": 4
+        },
+        "price": 74000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather_chestplate",
+          "count": 18
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:scute",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather_horse_armor",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ],
+    "master": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather_helmet",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:saddle",
+          "count": 3
+        },
+        "price": 640,
+        "max_uses": 12
+      }
+    ]
+  }
+}

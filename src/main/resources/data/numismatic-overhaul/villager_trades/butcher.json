@@ -8,7 +8,7 @@
           "item": "minecraft:raw_chicken",
           "count": 14
         },
-        "price": 74000,
+        "price": 420,
 		"max_uses": 16
       },
 	  {
@@ -17,7 +17,7 @@
           "item": "minecraft:raw_rabbit",
           "count": 4
         },
-        "price": 74000,
+        "price": 100,
 		"max_uses": 16
       },
 	  {
@@ -26,7 +26,7 @@
           "item": "minecraft:raw_porkchop",
           "count": 7
         },
-        "price": 74000,
+        "price": 280,
 		"max_uses": 16
       },
 	  {
@@ -35,7 +35,7 @@
           "item": "minecraft:rabbit_stew",
           "count": 1
         },
-        "price": 640,
+        "price": 410,
 		"max_uses": 12
       }
     ],
@@ -46,7 +46,7 @@
           "item": "minecraft:coal",
           "count": 15
         },
-        "price": 74000,
+        "price": 1200,
 		"max_uses": 16
       },
 	  {
@@ -55,7 +55,7 @@
           "item": "minecraft:cooked_rabbit",
           "count": 5
         },
-        "price": 2880,
+        "price": 175,
 		"max_uses": 16
       },
 	  {
@@ -64,7 +64,7 @@
           "item": "minecraft:cooked_chicken",
           "count": 8
         },
-        "price": 2880,
+        "price": 320,
 		"max_uses": 16
       },
 	  {
@@ -73,7 +73,7 @@
           "item": "minecraft:cooked_porkchop",
           "count": 5
         },
-        "price": 2880,
+        "price": 250,
 		"max_uses": 16
       },
 	  {
@@ -82,7 +82,7 @@
           "item": "minecraft:cooked_mutton",
           "count": 4
         },
-        "price": 2880,
+        "price": 160,
 		"max_uses": 16
       }
     ],
@@ -93,7 +93,7 @@
           "item": "minecraft:raw_beef",
           "count": 10
         },
-        "price": 74000,
+        "price": 400,
 		"max_uses": 16
       },
 	  {
@@ -102,7 +102,7 @@
           "item": "minecraft:raw_mutton",
           "count": 7
         },
-        "price": 74000,
+        "price": 210,
 		"max_uses": 16
       },
 	  {
@@ -111,7 +111,7 @@
           "item": "minecraft:cooked_beef",
           "count": 3
         },
-        "price": 1280,
+        "price": 150,
 		"max_uses": 16
       }
     ],
@@ -122,7 +122,7 @@
           "item": "minecraft:dried_kelp_block",
           "count": 10
         },
-        "price": 74000,
+        "price": 700,
 		"max_uses": 12
       }
     ],
@@ -133,7 +133,7 @@
           "item": "minecraft:sweet_berries",
           "count": 10
         },
-        "price": 74000,
+        "price": 600,
 		"max_uses": 12
       }
     ]

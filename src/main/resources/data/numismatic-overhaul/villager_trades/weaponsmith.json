@@ -1,0 +1,96 @@
+{
+  "profession": "weaponsmith",
+  "trades": {
+    "novice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:coal",
+          "count": 32
+        },
+        "price": 2560,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_axe",
+          "count": 2
+        },
+        "price": 1083,
+        "max_uses": 12
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:iron_ingot",
+          "count": 3
+        },
+        "price": 360,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:iron_sword",
+          "count": 1
+        },
+        "price": 723,
+        "max_uses": 12
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:flint",
+          "count": 2
+        },
+        "price": 84,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bell",
+          "count": 1
+        },
+        "price": 1080,
+        "max_uses": 12
+      }
+    ],
+    "expert": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:diamond",
+          "count": 3
+        },
+        "price": 6000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:diamond_axe",
+          "count": 1
+        },
+        "price": 6003,
+        "max_uses": 12
+      }
+    ],
+    "master": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:diamond_sword",
+          "count": 1
+        },
+        "price": 4003,
+        "max_uses": 12
+      }
+    ]
+  }
+}
