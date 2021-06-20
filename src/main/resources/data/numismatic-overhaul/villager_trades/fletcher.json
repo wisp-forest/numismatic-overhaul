@@ -6,38 +6,29 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:stick",
-          "count": 20
+          "count": 40
         },
-        "price": 74000,
-        "max_uses": 16
-      },
-      {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:arrow",
-          "count": 26
-        },
-        "price": 74000,
-        "max_uses": 16
+        "price": 4,
+        "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:flint",
-          "count": 22
+          "count": 10
         },
-        "price": 74000,
-        "max_uses": 16
+        "price": 60,
+        "max_uses": 10
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:flint",
-          "count": 6
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:arrow",
+          "count": 16
         },
-        "price": 74000,
+        "price": 100,
         "max_uses": 12
       },
       {
@@ -55,19 +46,19 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:string",
-          "count": 4
+          "count": 6
         },
-        "price": 74000,
+        "price": 70,
         "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:crossbow",
-          "count": 18
+          "count": 1
         },
-        "price": 640,
-        "max_uses": 12
+        "price": 1200,
+        "max_uses": 4
       }
     ],
     "expert": [
@@ -75,9 +66,9 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:feather",
-          "count": 1
+          "count": 15
         },
-        "price": 640,
+        "price": 900,
         "max_uses": 12
       },
       {

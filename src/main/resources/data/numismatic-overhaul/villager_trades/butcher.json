@@ -5,7 +5,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_chicken",
+          "item": "minecraft:chicken",
           "count": 14
         },
         "price": 420,
@@ -14,7 +14,7 @@
 	  {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_rabbit",
+          "item": "minecraft:rabbit",
           "count": 4
         },
         "price": 100,
@@ -23,7 +23,7 @@
 	  {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_porkchop",
+          "item": "minecraft:porkchop",
           "count": 7
         },
         "price": 280,
@@ -90,16 +90,25 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_beef",
+          "item": "minecraft:beef",
           "count": 10
         },
         "price": 400,
 		"max_uses": 16
       },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:campfire",
+          "count": 1
+        },
+        "price": 640,
+        "max_uses": 16
+      },
 	  {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_mutton",
+          "item": "minecraft:mutton",
           "count": 7
         },
         "price": 210,
@@ -124,9 +133,7 @@
         },
         "price": 700,
 		"max_uses": 12
-      }
-    ],
-	"master": [
+      },
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
@@ -134,7 +141,18 @@
           "count": 10
         },
         "price": 600,
-		"max_uses": 12
+        "max_uses": 12
+      }
+    ],
+	"master": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:diamond_axe",
+          "count": 9
+        },
+        "price": 100000,
+        "max_uses": 12
       }
     ]
   }

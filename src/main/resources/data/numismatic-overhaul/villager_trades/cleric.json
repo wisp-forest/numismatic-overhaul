@@ -14,7 +14,7 @@
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:redstone_dust",
+          "item": "minecraft:redstone",
           "count": 2
         },
         "price": 640,
@@ -45,7 +45,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:rabbits_foot",
+          "item": "minecraft:rabbit_foot",
           "count": 2
         },
         "price": 74000,

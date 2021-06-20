@@ -8,46 +8,28 @@
           "item": "minecraft:string",
           "count": 20
         },
-        "price": 74000,
-        "max_uses": 16
-      },
-      {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:coal",
-          "count": 10
-        },
-        "price": 74000,
+        "price": 80,
         "max_uses": 16
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "buy": {
-          "item": "minecraft:bucket_of_cod",
-          "count": 3
+        "sell": {
+          "item": "minecraft:cod_bucket",
+          "count": 1
         },
-        "price": 74000,
-        "max_uses": 16
+        "price": 450,
+        "max_uses": 5
       }
     ],
     "apprentice": [
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_cod",
-          "count": 15
+          "item": "minecraft:cod",
+          "count": 8
         },
-        "price": 74000,
+        "price": 80,
         "max_uses": 16
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:campfire",
-          "count": 1
-        },
-        "price": 640,
-        "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -63,19 +45,19 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:raw_salmon",
-          "count": 4
+          "item": "minecraft:salmon",
+          "count": 5
         },
-        "price": 74000,
-        "max_uses": 12
+        "price": 80,
+        "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:fishing_rod",
-          "count": 18
+          "count": 1
         },
-        "price": 640,
+        "price": 800,
         "max_uses": 12
       }
     ],
@@ -86,7 +68,7 @@
           "item": "minecraft:tropical_fish",
           "count": 1
         },
-        "price": 640,
+        "price": 100,
         "max_uses": 12
       }
     ],

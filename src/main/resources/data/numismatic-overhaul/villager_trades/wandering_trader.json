@@ -18,8 +18,8 @@
       {
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:endcity",
-        "price": 5,
-        "maxUses": 20
+        "price": 50000,
+        "maxUses": 2
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -27,17 +27,17 @@
           "item": "minecraft:cookie",
           "count": 2
         },
-        "price": 65,
-        "maxUses": 2
+        "price": 55,
+        "maxUses": 20
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:gold_ingot",
-          "count": 10
+          "count": 16
         },
-        "price": 5,
-        "maxUses": 20
+        "price": 4000,
+        "maxUses": 2
       }
     ],
     "apprentice": [
@@ -54,7 +54,7 @@
       {
         "type": "numismatic-overhaul:sell_dyed_armor",
         "item": "minecraft:leather_boots",
-        "price": 200730
+        "price": 400
       }
     ]
   }

@@ -92,7 +92,7 @@
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:book_and_quill",
+          "item": "minecraft:writable_book",
           "count": 1
         },
         "price": 640,

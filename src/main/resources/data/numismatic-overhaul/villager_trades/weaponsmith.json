@@ -6,19 +6,19 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:coal",
-          "count": 32
+          "count": 15
         },
-        "price": 2560,
-        "max_uses": 16
+        "price": 90,
+        "max_uses": 4
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:iron_axe",
-          "count": 2
+          "count": 1
         },
         "price": 1083,
-        "max_uses": 12
+        "max_uses": 4
       }
     ],
     "apprentice": [
@@ -66,10 +66,10 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:diamond",
-          "count": 3
+          "count": 1
         },
-        "price": 6000,
-        "max_uses": 12
+        "price": 10000,
+        "max_uses": 3
       },
       {
         "type": "numismatic-overhaul:buy_item",
@@ -77,7 +77,7 @@
           "item": "minecraft:diamond_axe",
           "count": 1
         },
-        "price": 6003,
+        "price": 20003,
         "max_uses": 12
       }
     ],
@@ -88,7 +88,7 @@
           "item": "minecraft:diamond_sword",
           "count": 1
         },
-        "price": 4003,
+        "price": 15003,
         "max_uses": 12
       }
     ]

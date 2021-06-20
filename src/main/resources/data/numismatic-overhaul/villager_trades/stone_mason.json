@@ -65,7 +65,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:nether_quartz",
+          "item": "minecraft:quartz",
           "count": 4
         },
         "price": 74000,
@@ -85,7 +85,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:block_of_quartz",
+          "item": "minecraft:quartz_block",
           "count": 22
         },
         "price": 74000,

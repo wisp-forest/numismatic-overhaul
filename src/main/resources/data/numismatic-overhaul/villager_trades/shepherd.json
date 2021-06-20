@@ -8,16 +8,16 @@
           "item": "minecraft:white_wool",
           "count": 20
         },
-        "price": 74000,
+        "price": 100,
         "max_uses": 16
       },
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:shears",
-          "count": 26
+          "count": 1
         },
-        "price": 74000,
+        "price": 500,
         "max_uses": 16
       }
     ],

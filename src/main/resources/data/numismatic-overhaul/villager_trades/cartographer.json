@@ -9,16 +9,16 @@
           "count": 24
         },
         "price": 74000,
-		"max_uses": 16
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:empty_map",
+          "item": "minecraft:map",
           "count": 1
         },
         "price": 640,
-		"max_uses": 12
+        "max_uses": 12
       }
     ],
     "apprentice": [
@@ -29,16 +29,16 @@
           "count": 11
         },
         "price": 74000,
-		"max_uses": 16
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:monument",
         "price": 2550,
         "maxUses": 12
       }
     ],
-	"journeyman": [
+    "journeyman": [
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
@@ -46,61 +46,196 @@
           "count": 1
         },
         "price": 74000,
-		"max_uses": 12
+        "max_uses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:mansion",
-        "price": 5,
+        "price": 10000,
         "maxUses": 2550
       }
     ],
-	"expert": [
+    "expert": [
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:item_frame",
-          "count": 7,
+          "count": 7
         },
-        "price": 5,
+        "price": 100,
         "maxUses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:banner",
-          "count": 3,
+          "item": "black_banner",
+          "count": 3
         },
-        "price": 5,
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "red_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "green_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "brown_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "blue_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "purple_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "cyan_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "light_gray_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "gray_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "pink_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "lime_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "yellow_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "light_blue_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "magenta_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "orange_banner",
+          "count": 3
+        },
+        "price": 4000,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "white_banner",
+          "count": 3
+        },
+        "price": 4000,
         "maxUses": 12
       }
     ],
-	"master": [
+    "master": [
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:flower_banner_pattern",
-          "count": 1,
+          "count": 1
         },
-        "price": 5,
+        "price": 20000,
         "maxUses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:field_masoned_banner_pattern",
-          "count": 1,
+          "item": "minecraft:globe_banner_pattern",
+          "count": 1
         },
-        "price": 5,
+        "price": 20000,
         "maxUses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:bordure_indented_banner_pattern",
-          "count": 1,
+          "item": "minecraft:mojang_banner_pattern",
+          "count": 1
         },
-        "price": 5,
+        "price": 100000,
         "maxUses": 12
       }
     ]

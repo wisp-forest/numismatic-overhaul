@@ -14,7 +14,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:leather_pants",
+          "item": "minecraft:leather_leggings",
           "count": 26
         },
         "price": 74000,
@@ -23,7 +23,7 @@
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:leather_tunic",
+          "item": "minecraft:leather_chestplate",
           "count": 22
         },
         "price": 74000,
