@@ -173,7 +173,7 @@ public class ShopScreenHandler extends ScreenHandler {
 
         @Override
         @Environment(EnvType.CLIENT)
-        public boolean doDrawHoveringEffect() {
+        public boolean isEnabled() {
             if (!(MinecraftClient.getInstance().currentScreen instanceof ShopScreen)) return true;
             if (hide) {
                 return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() != targetTab;

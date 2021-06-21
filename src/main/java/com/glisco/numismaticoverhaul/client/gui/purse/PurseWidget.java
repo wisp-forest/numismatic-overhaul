@@ -70,7 +70,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
 
         //Draw over items in the crafting interface
         RenderSystem.disableDepthTest();
-        client.getTextureManager().bindTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         drawTexture(matrices, x, y, 0, 0, 37, 60);
 
         for (ButtonWidget button : buttons) {

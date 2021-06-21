@@ -5,7 +5,7 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 
@@ -25,12 +25,12 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag) {
+    public void readFromNbt(NbtCompound tag) {
         value = tag.getInt("Value");
     }
 
     @Override
-    public void writeToNbt(CompoundTag tag) {
+    public void writeToNbt(NbtCompound tag) {
         tag.putInt("Value", value);
     }
 

@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListen
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.util.registry.DynamicRegistryManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,8 +20,8 @@ public class ServerResourceManagerMixin {
     private ReloadableResourceManager resourceManager;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void onReload(CommandManager.RegistrationEnvironment registrationEnvironment, int i, CallbackInfo ci) {
-        resourceManager.registerListener(new VillagerTradesResourceListener());
+    public void onReload(DynamicRegistryManager registryManager, CommandManager.RegistrationEnvironment commandEnvironment, int functionPermissionLevel, CallbackInfo ci) {
+        resourceManager.registerReloader(new VillagerTradesResourceListener());
     }
 
 }

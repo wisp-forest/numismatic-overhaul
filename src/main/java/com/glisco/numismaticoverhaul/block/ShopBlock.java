@@ -1,11 +1,14 @@
 package com.glisco.numismaticoverhaul.block;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -37,12 +40,6 @@ public class ShopBlock extends BlockWithEntity {
 
     public ShopBlock() {
         super(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).nonOpaque().hardness(5.0f));
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ShopBlockEntity();
     }
 
     @Override
@@ -107,5 +104,17 @@ public class ShopBlock extends BlockWithEntity {
 
             super.onStateReplaced(state, world, pos, newState, moved);
         }
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new ShopBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, NumismaticOverhaul.SHOP_BLOCK_ENTITY, ShopBlockEntity::tick);
     }
 }

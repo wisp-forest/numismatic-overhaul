@@ -3,9 +3,9 @@ package com.glisco.numismaticoverhaul.block;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.village.TradeOffer;
 
 import java.util.List;
@@ -46,16 +46,16 @@ public class ShopOffer {
         return sell.copy();
     }
 
-    public static CompoundTag toTag(CompoundTag tag, List<ShopOffer> offers) {
+    public static NbtCompound toTag(NbtCompound tag, List<ShopOffer> offers) {
 
-        ListTag offerList = new ListTag();
+        NbtList offerList = new NbtList();
 
         for (ShopOffer offer : offers) {
-            CompoundTag offerTag = new CompoundTag();
+            NbtCompound offerTag = new NbtCompound();
             offerTag.putInt("Price", offer.getPrice());
 
-            CompoundTag item = new CompoundTag();
-            offer.getSellStack().toTag(item);
+            NbtCompound item = new NbtCompound();
+            offer.getSellStack().writeNbt(item);
 
             offerTag.put("Item", item);
 
@@ -67,19 +67,19 @@ public class ShopOffer {
         return tag;
     }
 
-    public static void fromTag(CompoundTag tag, List<ShopOffer> offers) {
+    public static void fromTag(NbtCompound tag, List<ShopOffer> offers) {
 
         offers.clear();
 
-        ListTag offerList = tag.getList("Offers", 10);
+        NbtList offerList = tag.getList("Offers", 10);
 
-        for (Tag offerTag : offerList) {
+        for (NbtElement offerTag : offerList) {
 
-            CompoundTag offer = (CompoundTag) offerTag;
+            NbtCompound offer = (NbtCompound) offerTag;
 
             int price = offer.getInt("Price");
 
-            ItemStack sell = ItemStack.fromTag(offer.getCompound("Item"));
+            ItemStack sell = ItemStack.fromNbt(offer.getCompound("Item"));
 
             offers.add(new ShopOffer(sell, price));
         }

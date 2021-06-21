@@ -7,7 +7,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -73,10 +73,10 @@ public class VillagerJsonHelper {
         if (json.has("tag")) {
 
             String toParse = json.get("tag").getAsJsonObject().toString();
-            CompoundTag stackTag = null;
+            NbtCompound stackTag = null;
 
             try {
-                stackTag = new StringNbtReader(new StringReader(toParse)).parseCompoundTag();
+                stackTag = new StringNbtReader(new StringReader(toParse)).parseCompound();
             } catch (CommandSyntaxException e) {
                 VillagerTradesHandler.addLoadingException(new DeserializationException("Tag parsing error: " + e.getMessage()));
             }

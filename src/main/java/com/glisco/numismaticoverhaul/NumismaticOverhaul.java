@@ -12,6 +12,7 @@ import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
@@ -55,7 +56,7 @@ public class NumismaticOverhaul implements ModInitializer {
 
         Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "shop"), SHOP_BLOCK);
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "shop"), new BlockItem(SHOP_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
-        SHOP_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "shop"), BlockEntityType.Builder.create(ShopBlockEntity::new, SHOP_BLOCK).build(null));
+        SHOP_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "shop"), FabricBlockEntityTypeBuilder.create(ShopBlockEntity::new, SHOP_BLOCK).build(null));
 
         ServerPlayNetworking.registerGlobalReceiver(RequestPurseActionC2SPacket.ID, RequestPurseActionC2SPacket::onPacket);
         ServerPlayNetworking.registerGlobalReceiver(ShopScreenHandlerRequestC2SPacket.ID, ShopScreenHandlerRequestC2SPacket::onPacket);

@@ -23,9 +23,7 @@ public class ShopScreenHandlerRequestC2SPacket {
         ShopScreenHandlerRequestC2SPacket.Action action = ShopScreenHandlerRequestC2SPacket.Action.values()[values[0]];
 
         server.execute(() -> {
-            if (player.currentScreenHandler instanceof ShopScreenHandler) {
-
-                ShopScreenHandler shopHandler = (ShopScreenHandler) player.currentScreenHandler;
+            if (player.currentScreenHandler instanceof ShopScreenHandler shopHandler) {
 
                 if (action == Action.LOAD_OFFER) {
                     shopHandler.loadOffer(values[1]);

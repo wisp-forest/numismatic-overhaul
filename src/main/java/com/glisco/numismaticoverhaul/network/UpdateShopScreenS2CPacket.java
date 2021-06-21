@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
@@ -23,7 +23,7 @@ public class UpdateShopScreenS2CPacket {
     public static void onPacket(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buffer, PacketSender sender) {
 
         List<ShopOffer> offers = new ArrayList<>();
-        ShopOffer.fromTag(buffer.readCompoundTag(), offers);
+        ShopOffer.fromTag(buffer.readNbt(), offers);
 
         int storedCurrency = buffer.readVarInt();
 
@@ -38,8 +38,8 @@ public class UpdateShopScreenS2CPacket {
     public static Packet<?> create(List<ShopOffer> offers, int storedCurrency) {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 
-        CompoundTag tag = ShopOffer.toTag(new CompoundTag(), offers);
-        buffer.writeCompoundTag(tag);
+        NbtCompound tag = ShopOffer.toTag(new NbtCompound(), offers);
+        buffer.writeNbt(tag);
         buffer.writeVarInt(storedCurrency);
 
         return ServerPlayNetworking.createS2CPacket(ID, buffer);

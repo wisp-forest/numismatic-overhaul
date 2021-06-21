@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.client.gui.shop;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
@@ -38,7 +39,7 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if (!active) return;
-        client.getTextureManager().bindTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         drawTexture(matrices, x, y, 146, 169, 34, 54);
         CONFIRM_BUTTON.render(matrices, mouseX, mouseY, delta);
 

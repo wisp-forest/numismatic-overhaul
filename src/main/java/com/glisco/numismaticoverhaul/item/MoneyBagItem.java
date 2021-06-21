@@ -59,11 +59,11 @@ public class MoneyBagItem extends Item {
         if (!(entity instanceof PlayerEntity)) return;
 
         PlayerEntity player = (PlayerEntity) entity;
-        player.inventory.removeOne(stack);
+        player.getInventory().removeOne(stack);
 
         CurrencyStack currencyStack = new CurrencyStack(getValue(stack));
         for (ItemStack toOffer : CurrencyStack.splitAtMaxCount(currencyStack.getAsItemStackList())) {
-            player.inventory.offerOrDrop(world, toOffer);
+            player.getInventory().offerOrDrop(toOffer);
         }
     }
 }

@@ -1,10 +1,10 @@
 plugins {
-    id 'fabric-loom' version '0.7-SNAPSHOT'
+    id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -31,8 +31,8 @@ dependencies {
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-    modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+    modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
@@ -41,19 +41,11 @@ dependencies {
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
     }
 }
 
-// ensure that the encoding is set to UTF-8, no matter what the system default is
-// this fixes some edge cases with special characters not displaying correctly
-// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
@@ -68,25 +60,4 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
     from "LICENSE"
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-        }
-    }
-
-    // select the repositories you want to publish to
-    repositories {
-        // uncomment to publish to the local maven
-        // mavenLocal()
-    }
 }

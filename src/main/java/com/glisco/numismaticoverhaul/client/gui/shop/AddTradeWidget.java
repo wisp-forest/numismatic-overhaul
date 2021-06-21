@@ -89,7 +89,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if (!active) return;
 
-        client.getTextureManager().bindTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
         drawTexture(matrices, x, y, 15, 169, 98, 54);
 
         for (ButtonWidget button : buttons) {
@@ -105,7 +105,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         renderText(matrices, String.valueOf(values[2]), x + 76, y + 6, 7f, 0x8b8b8b);
 
         PRICE_FIELD.render(matrices, mouseX, mouseY, delta);
-        RenderSystem.color4f(255.0f, 255.0f, 255.0f, 255.0f);
+        //RenderSystem.color4f(255.0f, 255.0f, 255.0f, 255.0f);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         @Override
         public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             MinecraftClient minecraftClient = MinecraftClient.getInstance();
-            minecraftClient.getTextureManager().bindTexture(this.texture);
+            RenderSystem.setShaderTexture(0, this.texture);
             int i = this.v;
 
             if (this.active) {

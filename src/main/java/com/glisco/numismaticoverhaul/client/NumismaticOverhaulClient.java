@@ -19,9 +19,9 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
     public void onInitializeClient() {
         ScreenRegistry.register(NumismaticOverhaul.SHOP_SCREEN_HANDLER_TYPE, ShopScreen::new);
 
-        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.BRONZE_COIN, new Identifier("coins"), (stack, world, entity) -> stack.getCount() / 100.0f);
-        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.SILVER_COIN, new Identifier("coins"), (stack, world, entity) -> stack.getCount() / 100.0f);
-        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.GOLD_COIN, new Identifier("coins"), (stack, world, entity) -> stack.getCount() / 100.0f);
+        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.BRONZE_COIN, new Identifier("coins"), (stack, world, entity, seed) -> stack.getCount() / 100.0f);
+        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.SILVER_COIN, new Identifier("coins"), (stack, world, entity, seed) -> stack.getCount() / 100.0f);
+        FabricModelPredicateProviderRegistry.register(NumismaticOverhaul.GOLD_COIN, new Identifier("coins"), (stack, world, entity, seed) -> stack.getCount() / 100.0f);
 
         ClientPlayNetworking.registerGlobalReceiver(UpdateShopScreenS2CPacket.ID, UpdateShopScreenS2CPacket::onPacket);
 

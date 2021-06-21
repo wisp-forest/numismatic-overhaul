@@ -30,7 +30,7 @@ public class AlwaysOnTopTexturedButtonWidget extends TexturedButtonWidget {
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        minecraftClient.getTextureManager().bindTexture(texture);
+        RenderSystem.setShaderTexture(0, texture);
         int i = this.v;
         if (this.isHovered()) {
             i += this.hoveredVOffset;

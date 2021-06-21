@@ -21,13 +21,13 @@ public class CurrencyHelper {
 
         int value = 0;
 
-        for (int i = 0; i < player.inventory.size(); i++) {
-            ItemStack stack = player.inventory.getStack(i);
+        for (int i = 0; i < player.getInventory().size(); i++) {
+            ItemStack stack = player.getInventory().getStack(i);
             if (!(stack.getItem() instanceof CoinItem)) continue;
 
             value += ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
 
-            if (remove) player.inventory.removeOne(stack);
+            if (remove) player.getInventory().removeOne(stack);
         }
 
         return value;
@@ -50,7 +50,7 @@ public class CurrencyHelper {
 
     public static void offerAsCoins(PlayerEntity player, CurrencyStack stack) {
         for (ItemStack itemStack : CurrencyStack.splitAtMaxCount(stack.getAsItemStackList())) {
-            player.inventory.offerOrDrop(player.world, itemStack);
+            player.getInventory().offerOrDrop(itemStack);
         }
     }
 

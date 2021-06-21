@@ -29,7 +29,7 @@ public class TradeButtonWidget extends ButtonWidget {
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderButton(matrices, mouseX, mouseY, delta);
 
-        MinecraftClient.getInstance().getTextureManager().bindTexture(ShopScreen.TEXTURE);
+        RenderSystem.setShaderTexture(0, ShopScreen.TEXTURE);
         RenderSystem.enableDepthTest();
         drawTexture(matrices, x + 22, y + 3, 0, 168, 7, 12);
 

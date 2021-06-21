@@ -7,7 +7,6 @@ import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -20,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin extends AbstractInventoryScreen<PlayerScreenHandler> {
-
     public InventoryScreenMixin(PlayerScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
         super(screenHandler, playerInventory, text);
     }
@@ -33,7 +31,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(method = "init", at = @At("TAIL"))
     public void addButton(CallbackInfo ci) {
-        purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(playerInventory.player));
+        purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(client.player));
 
         button = new PurseButton(this.x + 158, this.y + 67, button -> {
             if (Screen.hasShiftDown()) {
@@ -41,17 +39,17 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
             } else {
                 purse.toggleActive();
             }
-        }, this.playerInventory.player, this);
+        }, client.player, this);
 
-        this.addButton(button);
+        this.addDrawable(button);
     }
 
-    //Incredibly beautiful lambda mixin
-    @Inject(method = "method_19891", at = @At("TAIL"))
-    private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
-        this.button.setPos(this.x + 158, this.y + 67);
-        this.purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(playerInventory.player));
-    }
+//    //Incredibly beautiful lambda mixin
+//    @Inject(method = "method_19891", at = @At("TAIL"))
+//    private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
+//        this.button.setPos(this.x + 158, this.y + 67);
+//        this.purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(playerInventory.player));
+//    }
 
     @Inject(method = "render", at = @At("TAIL"))
     public void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {

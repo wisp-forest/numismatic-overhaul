@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -51,7 +52,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 
-        client.getTextureManager().bindTexture(selected_tab == 0 ? TEXTURE : TRADES_TEXTURE);
+        RenderSystem.setShaderTexture(0, selected_tab == 0 ? TEXTURE : TRADES_TEXTURE);
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
@@ -62,7 +63,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     }
 
     private void drawTab(MatrixStack matrices, int index, boolean selected) {
-        client.getTextureManager().bindTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURE);
 
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;

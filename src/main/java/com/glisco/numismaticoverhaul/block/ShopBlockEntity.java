@@ -12,15 +12,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.village.Merchant;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory, BlockEntityClientSerializable, Tickable {
+public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory, BlockEntityClientSerializable {
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
@@ -38,8 +39,8 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     private int tradeIndex;
 
-    public ShopBlockEntity() {
-        super(NumismaticOverhaul.SHOP_BLOCK_ENTITY);
+    public ShopBlockEntity(BlockPos pos, BlockState state) {
+        super(NumismaticOverhaul.SHOP_BLOCK_ENTITY, pos, state);
         this.merchant = new ShopMerchant(this);
         this.offers = new ArrayList<>();
         this.storedCurrency = 0;
@@ -94,9 +95,9 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
-        Inventories.toTag(tag, INVENTORY);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
+        Inventories.writeNbt(tag, INVENTORY);
         ShopOffer.toTag(tag, offers);
         tag.putInt("StoredCurrency", storedCurrency);
         if (owner != null) {
@@ -106,9 +107,9 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
-        Inventories.fromTag(tag, INVENTORY);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
+        Inventories.readNbt(tag, INVENTORY);
         ShopOffer.fromTag(tag, offers);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
@@ -148,7 +149,10 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         this.markDirty();
     }
 
-    @Override
+    public static void tick(World world, BlockPos pos, BlockState state, ShopBlockEntity blockEntity) {
+        blockEntity.tick();
+    }
+
     public void tick() {
         if (world.getTime() % 60 == 0) tradeIndex++;
     }
@@ -166,8 +170,8 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
-        fromTag(getCachedState(), tag);
+    public void fromClientTag(NbtCompound tag) {
+        readNbt(tag);
     }
 
     public UUID getOwner() {
@@ -180,8 +184,8 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
-        toTag(tag);
+    public NbtCompound toClientTag(NbtCompound tag) {
+        writeNbt(tag);
         tag.remove("Items");
         tag.remove("StoredCurrency");
         return tag;

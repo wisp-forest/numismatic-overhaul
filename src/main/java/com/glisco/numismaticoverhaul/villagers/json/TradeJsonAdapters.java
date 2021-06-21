@@ -88,7 +88,7 @@ public class TradeJsonAdapters {
                 if (blockPos != null) {
                     ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
                     FilledMapItem.fillExplorationMap(serverWorld, itemStack);
-                    MapState.addDecorationsTag(itemStack, blockPos, "+", this.iconType);
+                    MapState.addDecorationsNbt(itemStack, blockPos, "+", this.iconType);
                     itemStack.setCustomName(new TranslatableText("filled_map." + this.structure.getName().toLowerCase(Locale.ROOT)));
                     return new TradeOffer(CurrencyHelper.getAsStacks(price, 1).get(0), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
                 } else {

@@ -56,7 +56,7 @@ public class ShopMerchant implements Merchant {
         shop.getItems().forEach(itemStack -> {
             ItemStack comparisonStack = itemStack.copy();
             comparisonStack.setCount(1);
-            if (!ItemStack.areEqual(comparisonStack, offer.getSellItem())) return;
+            if (!ItemStack.areEqual(comparisonStack, offer.copySellItem())) return;
             itemStack.decrement(1);
         });
 

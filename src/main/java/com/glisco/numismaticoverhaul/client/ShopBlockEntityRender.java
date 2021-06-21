@@ -7,16 +7,17 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3f;
 
-public class ShopBlockEntityRender extends BlockEntityRenderer<ShopBlockEntity> {
+public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntity> {
 
-    public ShopBlockEntityRender(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public ShopBlockEntityRender(BlockEntityRendererFactory.Context context) {
+        super();
     }
 
     @Override
@@ -37,9 +38,9 @@ public class ShopBlockEntityRender extends BlockEntityRenderer<ShopBlockEntity> 
         float scale = isBlockItem ? 0.95f : 0.85f;
         matrices.scale(scale, scale, scale);
 
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) (System.currentTimeMillis() / 20d % 360d)));
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((float) (System.currentTimeMillis() / 20d % 360d)));
 
-        client.getItemRenderer().renderItem(toRender, ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        client.getItemRenderer().renderItem(toRender, ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 
         matrices.pop();
 
