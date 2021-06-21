@@ -113,28 +113,37 @@
           "item": "minecraft:diamond",
           "count": 1
         },
-        "price": 30000,
-        "max_uses": 3
+        "price": 800,
+        "max_uses": 2
       },
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:diamond_shovel",
-          "count": 9
+          "count": 1
         },
-        "price": 74000,
-        "max_uses": 12
+        "price": 2500,
+        "max_uses": 4
       }
     ],
     "master": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
           "item": "minecraft:diamond_pickaxe",
-          "count": 22
+          "count": 1
         },
-        "price": 74000,
-        "max_uses": 12
+        "price": 10000,
+        "max_uses": 4
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:diamond_axe",
+          "count": 1
+        },
+        "price": 10000,
+        "max_uses": 4
       }
     ]
   }

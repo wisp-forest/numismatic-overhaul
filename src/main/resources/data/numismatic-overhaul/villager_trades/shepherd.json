@@ -26,58 +26,68 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:white_dye",
-          "count": 6
+          "count": 15
         },
-        "price": 74000,
+        "price": 120,
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
+        "type": "numismatic-overhaul:buy_stack",
         "sell": {
           "item": "minecraft:white_wool",
           "count": 4
         },
-        "price": 640,
+        "price": 150,
         "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:white_carpet",
-          "count": 8
+          "count": 6
         },
-        "price": 640,
+        "price": 310,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:oak_fence",
+          "count": 4
+        },
+        "price": 500,
         "max_uses": 16
       }
+
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:sell_stack",
         "buy": {
-          "item": "minecraft:white_dye",
+          "item": "minecraft:brown_dye",
           "count": 4
         },
-        "price": 74000,
+        "price": 1600,
         "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:white_bed",
-          "count": 18
+          "count": 1
         },
-        "price": 640,
-        "max_uses": 12
+        "price": 800,
+        "max_uses": 7
       }
     ],
     "expert": [
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:white_dye",
-          "count": 1
+          "item": "minecraft:lime_dye",
+          "count": 2
         },
-        "price": 640,
+        "price": 400,
         "max_uses": 12
       },
       {
@@ -86,7 +96,7 @@
           "item": "minecraft:white_banner",
           "count": 1
         },
-        "price": 640,
+        "price": 500,
         "max_uses": 12
       }
     ],
@@ -95,9 +105,18 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:painting",
-          "count": 3
+          "count": 4
         },
-        "price": 640,
+        "price": 1000,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:painting",
+          "count": 4
+        },
+        "price": 1000,
         "max_uses": 12
       }
     ]

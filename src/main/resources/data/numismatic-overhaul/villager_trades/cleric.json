@@ -8,16 +8,16 @@
           "item": "minecraft:rotten_flesh",
           "count": 32
         },
-        "price": 74000,
+        "price": 64,
 		"max_uses": 16
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:redstone",
-          "count": 2
+          "count": 4
         },
-        "price": 640,
+        "price": 80,
 		"max_uses": 12
       }
     ],
@@ -28,16 +28,16 @@
           "item": "minecraft:gold_ingot",
           "count": 3
         },
-        "price": 74000,
+        "price": 200,
 		"max_uses": 12
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:lapis_lazuli",
-          "count": 1
+          "count": 4
         },
-        "price": 640,
+        "price": 800,
 		"max_uses": 12
       }
     ],
@@ -48,28 +48,38 @@
           "item": "minecraft:rabbit_foot",
           "count": 2
         },
-        "price": 74000,
+        "price": 200,
 		"max_uses": 12
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:glowstone_dust",
-          "count": 1
+          "count": 3
         },
-        "price": 640,
+        "price": 900,
 		"max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:glowstone_dust",
+          "count": 4
+        },
+        "price": 600,
+        "max_uses": 12,
+        "dimension": "minecraft:the_nether"
       }
     ],
 	"expert": [
       {
         "type": "numismatic-overhaul:buy_item",
-        "buy": {
+        "sell": {
           "item": "minecraft:scute",
-          "count": 4
+          "count": 1
         },
-        "price": 74000,
-		"max_uses": 12
+        "price": 100,
+        "max_uses": 12
       },
 	  {
         "type": "numismatic-overhaul:buy_item",
@@ -77,7 +87,7 @@
           "item": "minecraft:glass_bottle",
           "count": 9
         },
-        "price": 74000,
+        "price": 100,
 		"max_uses": 12
       },
 	  {
@@ -86,7 +96,7 @@
           "item": "minecraft:ender_pearl",
           "count": 5
         },
-        "price": 640,
+        "price": 1500,
 		"max_uses": 12
       }
     ],
@@ -95,18 +105,18 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:nether_wart",
-          "count": 22
+          "count": 8
         },
-        "price": 74000,
+        "price": 500,
 		"max_uses": 12
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:experience_bottle",
-          "count": 3
+          "count": 4
         },
-        "price": 640,
+        "price": 1200,
 		"max_uses": 12
       }
     ]
