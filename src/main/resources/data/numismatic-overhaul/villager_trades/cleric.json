@@ -74,7 +74,7 @@
 	"expert": [
       {
         "type": "numismatic-overhaul:buy_item",
-        "sell": {
+        "buy": {
           "item": "minecraft:scute",
           "count": 1
         },

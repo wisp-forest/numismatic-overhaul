@@ -21,7 +21,7 @@
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:buy_stack",
+        "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:sand",
           "count": 15
@@ -50,7 +50,7 @@
           "count": 16
         },
         "buy": {
-          "item": "minecraft:chiseled_stone",
+          "item": "minecraft:chiseled_stone_bricks",
           "count": 10
         },
         "price": 300
@@ -58,7 +58,7 @@
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_stack",
+        "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:gravel",
           "count": 15
