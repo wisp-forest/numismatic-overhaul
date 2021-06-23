@@ -223,7 +223,7 @@ public class TradeJsonAdapters {
             int enchantmentLevel = MathHelper.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
 
             ItemStack itemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(enchantment, enchantmentLevel));
-            int cost = 2 + random.nextInt(5 + enchantmentLevel * 10) + 3 * enchantmentLevel;
+            int cost = 100 * enchantmentLevel + random.nextInt(50) * enchantmentLevel * enchantmentLevel ;
             if (enchantment.isTreasure()) {
                 cost *= 2;
             }
