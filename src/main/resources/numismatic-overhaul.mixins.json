@@ -8,7 +8,6 @@
     "MerchantScreenHandlerMixin",
     "MerchantScreenMixin",
     "ServerPlayNetworkHandlerMixin",
-    "ServerResourceManagerMixin",
     "ServerWorldMixin"
   ],
   "client": [

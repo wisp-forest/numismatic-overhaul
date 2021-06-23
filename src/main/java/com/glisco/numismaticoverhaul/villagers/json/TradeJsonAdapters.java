@@ -202,6 +202,7 @@ public class TradeJsonAdapters {
             loadDefaultStats(json, false);
             return new SellSingleEnchantmentFactory(max_uses, villager_experience, price_multiplier);
         }
+
     }
 
     private static class SellSingleEnchantmentFactory implements TradeOffers.Factory {

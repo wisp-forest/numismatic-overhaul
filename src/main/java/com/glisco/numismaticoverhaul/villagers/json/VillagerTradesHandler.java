@@ -5,7 +5,6 @@ import com.glisco.numismaticoverhaul.villagers.data.NumismaticVillagerTradesRegi
 import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationContext;
 import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.google.gson.*;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
@@ -18,12 +17,10 @@ import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class VillagerTradesHandler {
@@ -55,55 +52,29 @@ public class VillagerTradesHandler {
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "buy_item"), new TradeJsonAdapters.BuyItem());
     }
 
-    public static void registerTrades() throws IOException {
+    public static void loadProfession(Identifier fileId, JsonObject jsonRoot) {
 
-        NumismaticVillagerTradesRegistry.clearRegistries();
+        //Clear context
+        DeserializationContext.clear();
 
-        Iterator<Path> tradeFiles = Files.walk(FabricLoader.getInstance().getModContainer("numismatic-overhaul").get().getRootPath().resolve("data/numismatic-overhaul/villager_trades/")).iterator();
+        String fileName = "§a" + fileId.getNamespace() + "§f:§6" + fileId.getPath();
+        Identifier professionId = Identifier.tryParse(jsonRoot.get("profession").getAsString());
 
-        while (tradeFiles.hasNext()) {
+        //Push path to context
+        DeserializationContext.setFile(fileName);
 
-            //Clear context
-            DeserializationContext.clear();
+        //Push profession to context
+        DeserializationContext.setProfession(professionId.getPath());
 
-            File tradesFile = new File(tradeFiles.next().toString());
-            if (!tradesFile.getPath().endsWith(".json")) continue;
-
-            String fileName = "§a" + tradesFile.getParentFile().getParentFile().getName() + "§f:§6" + tradesFile.getName();
-
-            //Push path to context
-            DeserializationContext.setFile(fileName);
-
-            JsonObject jsonRoot;
-            Identifier professionId;
-
-            try {
-                jsonRoot = GSON.fromJson(new FileReader(tradesFile), JsonObject.class);
-                professionId = Identifier.tryParse(jsonRoot.get("profession").getAsString());
-            } catch (Exception e) {
-                addLoadingException(new DeserializationException(e.getMessage()));
-                continue;
+        try {
+            if (professionId.getPath().equals("wandering_trader")) {
+                deserializeTrades(jsonRoot, NumismaticVillagerTradesRegistry::registerWanderingTraderTrade);
+            } else {
+                VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(professionId);
+                deserializeTrades(jsonRoot, (integer, factory) -> NumismaticVillagerTradesRegistry.registerVillagerTrade(profession, integer, factory));
             }
-
-            if (professionId == null) {
-                addLoadingException(new DeserializationException("Could not parse profession id \"" + jsonRoot.get("profession").getAsString() + "\""));
-                continue;
-            }
-
-            //Push profession to context
-            DeserializationContext.setProfession(professionId.getPath());
-
-            try {
-                if (professionId.getPath().equals("wandering_trader")) {
-                    deserializeTrades(jsonRoot, NumismaticVillagerTradesRegistry::registerWanderingTraderTrade);
-                } else {
-                    VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(professionId);
-                    deserializeTrades(jsonRoot, (integer, factory) -> NumismaticVillagerTradesRegistry.registerVillagerTrade(profession, integer, factory));
-                }
-            } catch (DeserializationException e) {
-                addLoadingException(e);
-            }
-
+        } catch (DeserializationException e) {
+            addLoadingException(e);
         }
 
     }
