@@ -32,7 +32,7 @@
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:buy_stack",
+        "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:white_wool",
           "count": 4
@@ -63,7 +63,7 @@
     "journeyman": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "buy": {
+        "sell": {
           "item": "minecraft:brown_dye",
           "count": 4
         },
