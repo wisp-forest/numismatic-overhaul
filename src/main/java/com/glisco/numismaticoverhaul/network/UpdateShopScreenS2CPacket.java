@@ -28,8 +28,8 @@ public class UpdateShopScreenS2CPacket {
         int storedCurrency = buffer.readVarInt();
 
         client.execute(() -> {
-            if (MinecraftClient.getInstance().currentScreen instanceof ShopScreen) {
-                ShopScreen screen = (ShopScreen) MinecraftClient.getInstance().currentScreen;
+            if (client.currentScreen instanceof ShopScreen) {
+                ShopScreen screen = (ShopScreen) client.currentScreen;
                 screen.updateScreen(offers, storedCurrency);
             }
         });
