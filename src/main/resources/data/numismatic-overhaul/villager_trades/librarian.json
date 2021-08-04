@@ -12,19 +12,32 @@
         "max_uses": 16
       },
       {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:bookshelf",
+          "count": 1
+        },
+        "price": 800,
+        "max_uses": 15
+      },
+      {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:bookshelf",
           "count": 1
         },
-        "price": 800,
-        "max_uses": 16
+        "price": 100,
+        "max_uses": 18
       },
       {
         "type": "numismatic-overhaul:enchant_item",
         "level": 10,
         "allow_treasure": false,
         "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_single_enchantment",
+        "price_multiplier": 1.25
       }
     ],
     "apprentice": [
@@ -51,6 +64,10 @@
         "level": 15,
         "allow_treasure": true,
         "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_single_enchantment",
+        "price_multiplier": 1.1
       }
     ],
     "journeyman": [
@@ -77,6 +94,10 @@
         "level": 20,
         "allow_treasure": true,
         "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_single_enchantment",
+        "price_multiplier": 1.0
       }
     ],
     "expert": [

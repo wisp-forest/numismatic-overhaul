@@ -80,10 +80,9 @@ public class TradeJsonAdapters {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            if (!(entity.world instanceof ServerWorld)) {
+            if (!(entity.world instanceof ServerWorld serverWorld)) {
                 return null;
             } else {
-                ServerWorld serverWorld = (ServerWorld) entity.world;
                 BlockPos blockPos = serverWorld.locateStructure(this.structure, entity.getBlockPos(), 100, true);
                 if (blockPos != null) {
                     ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
@@ -223,7 +222,7 @@ public class TradeJsonAdapters {
             int enchantmentLevel = MathHelper.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
 
             ItemStack itemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(enchantment, enchantmentLevel));
-            int cost = 100 * enchantmentLevel + random.nextInt(50) * enchantmentLevel * enchantmentLevel ;
+            int cost = 100 * (10 / enchantment.getRarity().getWeight()) + (random.nextInt(50) + enchantmentLevel) * enchantmentLevel * enchantmentLevel * (10 / enchantment.getRarity().getWeight());
             if (enchantment.isTreasure()) {
                 cost *= 2;
             }
@@ -272,10 +271,10 @@ public class TradeJsonAdapters {
             ItemStack itemStack = toEnchant.copy();
             itemStack = EnchantmentHelper.enchant(random, itemStack, level, allowTreasure);
 
-            int price = 8;
+            int price = 150;
 
             for (Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.get(itemStack).entrySet()) {
-                price += entry.getKey().isTreasure() ? 1.0f : 2.0f * ((float) entry.getValue() / (float) entry.getKey().getMaxLevel()) * 12.0f * 0.5f * (10.0f / (float) entry.getKey().getRarity().getWeight());
+                price *= (entry.getKey().isTreasure() ? 2f : 1f) * (MathHelper.nextFloat(random, entry.getValue(), entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
             }
 
             return new TradeOffer(CurrencyHelper.getAsStacks(new CurrencyStack(price), 1).get(0), toEnchant, itemStack, maxUses, this.experience, multiplier);

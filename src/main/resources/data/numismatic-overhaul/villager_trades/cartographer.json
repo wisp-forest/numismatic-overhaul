@@ -52,7 +52,13 @@
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:mansion",
         "price": 10000,
-        "maxUses": 15
+        "maxUses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_map",
+        "structure": "minecraft:endcity",
+        "price": 20000,
+        "maxUses": 3
       }
     ],
     "expert": [

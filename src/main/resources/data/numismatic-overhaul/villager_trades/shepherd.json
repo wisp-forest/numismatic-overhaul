@@ -12,8 +12,8 @@
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
           "item": "minecraft:shears",
           "count": 1
         },
@@ -68,7 +68,7 @@
           "count": 4
         },
         "price": 1600,
-        "max_uses": 12
+        "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -85,10 +85,19 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:lime_dye",
-          "count": 2
+          "count": 3
         },
         "price": 400,
-        "max_uses": 12
+        "max_uses": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:green_dye",
+          "count": 4
+        },
+        "price": 2000,
+        "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
