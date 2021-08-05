@@ -8,7 +8,8 @@
     "MerchantScreenHandlerMixin",
     "MerchantScreenMixin",
     "ServerPlayNetworkHandlerMixin",
-    "ServerWorldMixin"
+    "ServerWorldMixin",
+    "TradeOfferInternalsMixin"
   ],
   "client": [
     "InventoryScreenMixin"

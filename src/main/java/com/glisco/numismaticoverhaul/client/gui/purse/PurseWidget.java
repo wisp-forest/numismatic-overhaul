@@ -9,7 +9,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -19,7 +21,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurseWidget extends DrawableHelper implements Drawable, Element {
+public class PurseWidget extends DrawableHelper implements Drawable, Element, Selectable {
 
     public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/purse_widget.png");
     private final MinecraftClient client;
@@ -168,6 +170,16 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element {
         modifyInBounds(goldAmount, oldGoldAmount, true, CurrencyResolver.Currency.GOLD);
         modifyInBounds(silverAmount, oldSilverAmount, true, CurrencyResolver.Currency.SILVER);
         modifyInBounds(bronzeAmount, oldBronzeAmount, true, CurrencyResolver.Currency.BRONZE);
+    }
+
+    @Override
+    public SelectionType getType() {
+        return SelectionType.FOCUSED;
+    }
+
+    @Override
+    public void appendNarrations(NarrationMessageBuilder builder) {
+
     }
 
     /**

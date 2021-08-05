@@ -53,12 +53,13 @@ public class ShopMerchant implements Merchant {
     public void trade(TradeOffer offer) {
         offer.use();
 
-        shop.getItems().forEach(itemStack -> {
+        for (ItemStack itemStack : shop.getItems()) {
             ItemStack comparisonStack = itemStack.copy();
             comparisonStack.setCount(1);
-            if (!ItemStack.areEqual(comparisonStack, offer.copySellItem())) return;
+            if (!ItemStack.areEqual(comparisonStack, offer.copySellItem())) continue;
             itemStack.decrement(1);
-        });
+            break;
+        }
 
         shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }

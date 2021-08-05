@@ -7,6 +7,7 @@ import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -41,15 +42,16 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
             }
         }, client.player, this);
 
-        this.addDrawable(button);
+        this.addDrawableChild(button);
     }
 
-//    //Incredibly beautiful lambda mixin
-//    @Inject(method = "method_19891", at = @At("TAIL"))
-//    private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
-//        this.button.setPos(this.x + 158, this.y + 67);
-//        this.purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(playerInventory.player));
-//    }
+    //Incredibly beautiful lambda mixin
+    @SuppressWarnings("UnresolvedMixinReference")
+    @Inject(method = "method_19891", at = @At("TAIL"))
+    private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
+        this.button.setPos(this.x + 158, this.y + 67);
+        this.purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(client.player));
+    }
 
     @Inject(method = "render", at = @At("TAIL"))
     public void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {

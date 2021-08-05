@@ -70,7 +70,7 @@ public class VillagerTradesHandler {
             if (professionId.getPath().equals("wandering_trader")) {
                 deserializeTrades(jsonRoot, NumismaticVillagerTradesRegistry::registerWanderingTraderTrade);
             } else {
-                VillagerProfession profession = Registry.VILLAGER_PROFESSION.get(professionId);
+                VillagerProfession profession = Registry.VILLAGER_PROFESSION.getOrEmpty(professionId).orElseThrow(() -> new DeserializationException("Invalid profession"));
                 deserializeTrades(jsonRoot, (integer, factory) -> NumismaticVillagerTradesRegistry.registerVillagerTrade(profession, integer, factory));
             }
         } catch (DeserializationException e) {
@@ -81,14 +81,16 @@ public class VillagerTradesHandler {
 
     private static void deserializeTrades(@NotNull JsonObject jsonRoot, BiConsumer<Integer, TradeOffers.Factory> tradeConsumer) {
 
-        if (!jsonRoot.get("trades").isJsonObject()) throw new DeserializationException(jsonRoot.get("trades") + " is not a JsonObject");
+        if (!jsonRoot.get("trades").isJsonObject())
+            throw new DeserializationException(jsonRoot.get("trades") + " is not a JsonObject");
 
         //Iterate villager levels
         for (Map.Entry<String, JsonElement> entry : jsonRoot.get("trades").getAsJsonObject().entrySet()) {
 
             int level = professionKeys.get(entry.getKey());
 
-            if (!entry.getValue().isJsonArray()) throw new DeserializationException(entry.getValue() + " is not a JsonArray");
+            if (!entry.getValue().isJsonArray())
+                throw new DeserializationException(entry.getValue() + " is not a JsonArray");
             JsonArray tradesArray = entry.getValue().getAsJsonArray();
 
             //Iterate trades in that level
