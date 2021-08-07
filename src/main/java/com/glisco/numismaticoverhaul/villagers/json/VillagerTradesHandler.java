@@ -40,7 +40,7 @@ public class VillagerTradesHandler {
         professionKeys.put("master", 5);
     }
 
-    public static void init() {
+    public static void registerDefaultAdapters() {
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_stack"), new TradeJsonAdapters.SellStack());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "dimension_sell_stack"), new TradeJsonAdapters.DimensionAwareSellStack());
         tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_map"), new TradeJsonAdapters.SellMap());
