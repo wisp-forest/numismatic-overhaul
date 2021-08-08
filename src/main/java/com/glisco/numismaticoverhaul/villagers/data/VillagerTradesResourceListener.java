@@ -15,7 +15,6 @@ import net.minecraft.util.profiler.Profiler;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

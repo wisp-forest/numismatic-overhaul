@@ -88,15 +88,21 @@ public class NumismaticOverhaul implements ModInitializer {
         LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
 
             if (anyMatch(id, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST)) {
-                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(500, 2000).build()).conditionally(RandomChanceLootCondition.builder(0.75f)).build());
+                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(500, 2000).build()).conditionally(RandomChanceLootCondition.builder(0.75f))
+                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
+                        .build());
             } else if (anyMatch(id, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST, LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST)) {
-                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(1500, 4000).build()).conditionally(RandomChanceLootCondition.builder(0.75f)).build());
+                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(1500, 4000).build()).conditionally(RandomChanceLootCondition.builder(0.75f))
+                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
+                        .build());
             } else if (anyMatch(id, LootTables.STRONGHOLD_LIBRARY_CHEST)) {
-                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(2000, 6000).build()).conditionally(RandomChanceLootCondition.builder(0.85f)).build());
+                supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(2000, 6000).build()).conditionally(RandomChanceLootCondition.builder(0.85f))
+                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
+                        .build());
             } else if (id.equals(new Identifier("entities/pillager"))) {
                 supplier.withPool(FabricLootPoolBuilder.builder()
-                        .withEntry(ItemEntry.builder(BRONZE_COIN).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(10, 35))).build())
-                        .withEntry(ItemEntry.builder(SILVER_COIN).conditionally(RandomChanceLootCondition.builder(0.5f)).build())
+                        .withEntry(ItemEntry.builder(BRONZE_COIN).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(9, 34))).build())
+                        .withEntry(ItemEntry.builder(SILVER_COIN).conditionally(RandomChanceLootCondition.builder(0.4f)).build())
                         .conditionally(RandomChanceLootCondition.builder(0.5f))
                         .build());
             }

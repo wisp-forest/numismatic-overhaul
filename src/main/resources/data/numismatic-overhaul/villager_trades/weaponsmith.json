@@ -72,24 +72,26 @@
         "max_uses": 3
       },
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:diamond_axe",
-          "count": 1
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 20,
+        "allow_treasure": false,
+        "item": {
+          "item": "minecraft:diamond_axe"
         },
         "price": 20003,
-        "max_uses": 12
+        "max_uses": 3
       }
     ],
     "master": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:diamond_sword",
-          "count": 1
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 25,
+        "allow_treasure": true,
+        "item": {
+          "item": "minecraft:diamond_sword"
         },
         "price": 15003,
-        "max_uses": 12
+        "max_uses": 3
       }
     ]
   }
