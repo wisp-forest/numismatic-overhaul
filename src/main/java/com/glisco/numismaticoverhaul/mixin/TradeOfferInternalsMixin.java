@@ -17,6 +17,7 @@ public class TradeOfferInternalsMixin {
 
     /**
      * Redirect Fabric API trade helper to integrate with NO
+     *
      * @author glisco
      */
     @Overwrite(remap = false)
@@ -29,6 +30,7 @@ public class TradeOfferInternalsMixin {
 
     /**
      * Redirect Fabric API trade helper to integrate with NO
+     *
      * @author glisco
      */
     @Overwrite(remap = false)
@@ -41,8 +43,9 @@ public class TradeOfferInternalsMixin {
 
     /**
      * Disable registering trades completely to make sure that no one ever interferes with the NO system
+     *
      * @author glisco
      */
     @Overwrite(remap = false)
-    private static void registerOffers(Int2ObjectMap<TradeOffers.Factory[]> leveledTradeMap, int level, Consumer<List<TradeOffers.Factory>> factory){ }
+    private static void registerOffers(Int2ObjectMap<TradeOffers.Factory[]> leveledTradeMap, int level, Consumer<List<TradeOffers.Factory>> factory) {}
 }
