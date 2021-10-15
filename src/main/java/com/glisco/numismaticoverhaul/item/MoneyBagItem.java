@@ -38,6 +38,18 @@ public class MoneyBagItem extends Item {
         return stack.getOrCreateTag().getInt("Value");
     }
 
+    public static void setBefore(ItemStack stack, int before) {
+        stack.getOrCreateTag().putInt("ValueBefore", before);
+    }
+
+    public static int getBefore(ItemStack stack) {
+        return stack.getOrCreateTag().getInt("ValueBefore");
+    }
+
+    public static boolean hasBefore(ItemStack stack) {
+        return stack.getOrCreateTag().contains("ValueBefore");
+    }
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.clear();

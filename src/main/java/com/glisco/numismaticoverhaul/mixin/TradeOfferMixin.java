@@ -1,5 +1,6 @@
 package com.glisco.numismaticoverhaul.mixin;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.item.CoinItem;
@@ -52,7 +53,11 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
         if (!(this.firstBuyItem.getItem() instanceof CoinItem || this.firstBuyItem.getItem() instanceof MoneyBagItem)) return;
 
         int value = CurrencyHelper.getValue(Collections.singletonList(this.firstBuyItem));
-        cir.setReturnValue(CurrencyHelper.getAsStacks(new CurrencyStack(value * Math.abs(numismatic$reputation)), 1).get(0));
+        int adjustedValue = (int) (value - numismatic$reputation * (Math.abs(value) * .0075));
+
+        final var stack = CurrencyHelper.getAsStacks(new CurrencyStack(adjustedValue), 1).get(0);
+        if (stack.isOf(NumismaticOverhaul.MONEY_BAG)) MoneyBagItem.setBefore(stack, value);
+        cir.setReturnValue(stack);
     }
 
 }

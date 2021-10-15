@@ -25,16 +25,16 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
     @Inject(method = "prepareOffersFor", at = @At("TAIL"))
     private void captureReputation(PlayerEntity player, CallbackInfo ci) {
-        final int reputation = this.getReputation(player) == 0 ? 1 : this.getReputation(player);
+        final int reputation = this.getReputation(player);
 
-        this.getOffers().forEach(offer -> ((NumismaticTradeOfferExtensions) offer).numismatic$setReputation(
-                (int) (reputation *
-                        (player.hasStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE) ?
-                                (1 + player.getStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE).getAmplifier() * 0.1)
-                                :
-                                1))
-        ));
+        final int adjustedReputation = (reputation + (player.hasStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE) ?
+                ((player.getStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE).getAmplifier() + 1) * 10)
+                :
+                0));
 
+        System.out.println("Base reputation " + reputation + ", adjusted " + adjustedReputation);
+
+        this.getOffers().forEach(offer -> ((NumismaticTradeOfferExtensions) offer).numismatic$setReputation(adjustedReputation));
     }
 
 }
