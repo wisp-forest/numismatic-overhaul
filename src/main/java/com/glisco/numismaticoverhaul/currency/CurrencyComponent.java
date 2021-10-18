@@ -65,7 +65,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
 
         int tempValue = value < 0 ? -value : value;
 
-        List<ItemStack> transactionStacks = new CurrencyStack(tempValue).getAsItemStackList();
+        List<ItemStack> transactionStacks = CurrencyConverter.getAsItemStackList(tempValue);
         if (transactionStacks.isEmpty()) return;
 
         MutableText message = value < 0 ? new LiteralText("§c- ") : new LiteralText("§a+ ");
@@ -115,9 +115,5 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
     public void commitTransactions() {
         this.modify(this.transactions.stream().mapToInt(Integer::intValue).sum());
         this.transactions.clear();
-    }
-
-    public CurrencyStack getCurrencyStack() {
-        return new CurrencyStack(value);
     }
 }

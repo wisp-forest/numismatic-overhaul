@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.block;
 
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
+import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -26,8 +26,7 @@ public class ShopOffer {
 
     public TradeOffer toTradeOffer(ShopBlockEntity shop) {
 
-        CurrencyStack priceStack = new CurrencyStack(price);
-        ItemStack buy = priceStack.getRequiredCurrencyTypes() == 1 ? priceStack.getAsItemStackList().get(0) : MoneyBagItem.create(price);
+        ItemStack buy = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
 
         int maxUses = shop.getItems().stream().filter(stack -> {
             ItemStack comparisonStack = stack.copy();

@@ -27,9 +27,9 @@ public class PurseButton extends TexturedButtonWidget {
     }
 
     @Override
-    public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
+    public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY) {
         CurrencyTooltipRenderer.renderTooltip(
-                currencyStorage.getCurrencyStack(),
+                currencyStorage.getValue(),
                 matrices, parent,
                 TOOLTIP_TITLE,
                 x + 14, y + 5);

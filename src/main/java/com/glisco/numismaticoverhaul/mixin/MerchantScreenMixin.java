@@ -3,7 +3,6 @@ package com.glisco.numismaticoverhaul.mixin;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.MerchantScreen;
@@ -57,9 +56,9 @@ public abstract class MerchantScreenMixin extends Screen {
         }
 
         if (CurrencyItem.hasOriginalValue(stack)) {
-            CurrencyTooltipRenderer.renderTooltip(new CurrencyStack(currencyItem.getValue(stack)), new CurrencyStack(CurrencyItem.getOriginalValue(stack)), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
+            CurrencyTooltipRenderer.renderTooltip(currencyItem.getValue(stack), CurrencyItem.getOriginalValue(stack), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
         } else if (currencyItem == NumismaticOverhaul.MONEY_BAG) {
-            CurrencyTooltipRenderer.renderTooltip(new CurrencyStack(currencyItem.getValue(stack)), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
+            CurrencyTooltipRenderer.renderTooltip(currencyItem.getValue(stack), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
         } else {
             super.renderTooltip(matrices, stack, x, y);
         }

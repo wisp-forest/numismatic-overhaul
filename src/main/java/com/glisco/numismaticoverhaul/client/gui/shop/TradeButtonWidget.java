@@ -2,7 +2,6 @@ package com.glisco.numismaticoverhaul.client.gui.shop;
 
 import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -39,12 +38,12 @@ public class TradeButtonWidget extends ButtonWidget {
     }
 
     @Override
-    public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
+    public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY) {
         Screen screen = MinecraftClient.getInstance().currentScreen;
         if (mouseX > x && mouseX < x + 22) {
             screen.renderTooltip(matrices, screen.getTooltipFromItem(renderItem), mouseX, mouseY);
         } else if (mouseX > x + 26 && mouseX < x + 65) {
-            CurrencyTooltipRenderer.renderTooltip(new CurrencyStack(price), matrices, screen, PRICE_TITLE, mouseX, mouseY);
+            CurrencyTooltipRenderer.renderTooltip(price, matrices, screen, PRICE_TITLE, mouseX, mouseY);
         }
 
     }

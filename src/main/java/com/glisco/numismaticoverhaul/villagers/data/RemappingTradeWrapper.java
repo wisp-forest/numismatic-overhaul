@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul.villagers.data;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -42,6 +41,6 @@ public class RemappingTradeWrapper implements TradeOffers.Factory {
 
         final int moneyWorth = stack.getCount() * 69;
 
-        return CurrencyHelper.getAsStacks(new CurrencyStack(moneyWorth), 1).get(0);
+        return CurrencyHelper.getClosest(moneyWorth);
     }
 }

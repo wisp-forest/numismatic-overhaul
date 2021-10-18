@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul.villagers.json;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -51,7 +50,7 @@ public class TradeJsonAdapters {
                 throw new DeserializationException("Structure " + json.get("structure").getAsString() + " not found");
             }
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
 
             MapIcon.Type iconType = MapIcon.Type.TARGET_POINT;
             if (feature == StructureFeature.MONUMENT) iconType = MapIcon.Type.MONUMENT;
@@ -62,14 +61,14 @@ public class TradeJsonAdapters {
     }
 
     private static class SellMapFactory implements TradeOffers.Factory {
-        private final CurrencyStack price;
+        private final int price;
         private final StructureFeature<?> structure;
         private final MapIcon.Type iconType;
         private final int maxUses;
         private final int experience;
         private final float multiplier;
 
-        public SellMapFactory(CurrencyStack price, StructureFeature<?> feature, MapIcon.Type iconType, int maxUses, int experience, float multiplier) {
+        public SellMapFactory(int price, StructureFeature<?> feature, MapIcon.Type iconType, int maxUses, int experience, float multiplier) {
             this.price = price;
             this.structure = feature;
             this.iconType = iconType;
@@ -89,7 +88,7 @@ public class TradeJsonAdapters {
                     FilledMapItem.fillExplorationMap(serverWorld, itemStack);
                     MapState.addDecorationsNbt(itemStack, blockPos, "+", this.iconType);
                     itemStack.setCustomName(new TranslatableText("filled_map." + this.structure.getName().toLowerCase(Locale.ROOT)));
-                    return new TradeOffer(CurrencyHelper.round(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
+                    return new TradeOffer(CurrencyHelper.getClosest(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
                 } else {
                     return null;
                 }
@@ -108,7 +107,7 @@ public class TradeJsonAdapters {
             VillagerJsonHelper.assertJsonObject(json, "sell");
 
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
 
             return new SellStackFactory(sell, price, max_uses, villager_experience, price_multiplier);
         }
@@ -118,10 +117,10 @@ public class TradeJsonAdapters {
         private final ItemStack sell;
         private final int maxUses;
         private final int experience;
-        private final CurrencyStack price;
+        private final int price;
         private final float multiplier;
 
-        public SellStackFactory(ItemStack sell, CurrencyStack price, int maxUses, int experience, float multiplier) {
+        public SellStackFactory(ItemStack sell, int price, int maxUses, int experience, float multiplier) {
             this.sell = sell;
             this.maxUses = maxUses;
             this.experience = experience;
@@ -130,7 +129,7 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(CurrencyHelper.round(price), sell, this.maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), sell, this.maxUses, this.experience, multiplier);
         }
     }
 
@@ -148,7 +147,7 @@ public class TradeJsonAdapters {
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
             String dimension = json.get("dimension").getAsString();
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
 
             return new DimensionAwareSellStackFactory(sell, price, dimension, max_uses, villager_experience, price_multiplier);
         }
@@ -158,11 +157,11 @@ public class TradeJsonAdapters {
         private final ItemStack sell;
         private final int maxUses;
         private final int experience;
-        private final CurrencyStack price;
+        private final int price;
         private final float multiplier;
         private final String targetDimensionId;
 
-        public DimensionAwareSellStackFactory(ItemStack sell, CurrencyStack price, String targetDimensionId, int maxUses, int experience, float multiplier) {
+        public DimensionAwareSellStackFactory(ItemStack sell, int price, String targetDimensionId, int maxUses, int experience, float multiplier) {
             this.sell = sell;
             this.maxUses = maxUses;
             this.experience = experience;
@@ -174,7 +173,7 @@ public class TradeJsonAdapters {
         public TradeOffer create(Entity entity, Random random) {
             if (!entity.world.getRegistryKey().getValue().toString().equals(targetDimensionId)) return null;
 
-            return new TradeOffer(CurrencyHelper.round(price), sell, this.maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), sell, this.maxUses, this.experience, multiplier);
         }
     }
 
@@ -212,7 +211,7 @@ public class TradeJsonAdapters {
                 cost *= 2;
             }
 
-            return new TradeOffer(CurrencyHelper.round(new CurrencyStack(cost)), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(cost), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, multiplier);
         }
     }
 
@@ -262,7 +261,7 @@ public class TradeJsonAdapters {
                 price *= (entry.getKey().isTreasure() ? 2f : 1f) * (MathHelper.nextFloat(random, entry.getValue(), entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
             }
 
-            return new TradeOffer(CurrencyHelper.round(new CurrencyStack(price)), toEnchant, itemStack, maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), toEnchant, itemStack, maxUses, this.experience, multiplier);
         }
     }
 
@@ -281,7 +280,7 @@ public class TradeJsonAdapters {
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
             ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
 
             return new ProcessItemFactory(buy, sell, price, max_uses, villager_experience, price_multiplier);
         }
@@ -289,13 +288,13 @@ public class TradeJsonAdapters {
 
     private static class ProcessItemFactory implements TradeOffers.Factory {
         private final ItemStack buy;
-        private final CurrencyStack price;
+        private final int price;
         private final ItemStack sell;
         private final int maxUses;
         private final int experience;
         private final float multiplier;
 
-        public ProcessItemFactory(ItemStack buy, ItemStack sell, CurrencyStack price, int maxUses, int experience, float multiplier) {
+        public ProcessItemFactory(ItemStack buy, ItemStack sell, int price, int maxUses, int experience, float multiplier) {
             this.buy = buy;
             this.price = price;
             this.sell = sell;
@@ -306,7 +305,7 @@ public class TradeJsonAdapters {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(CurrencyHelper.round(price), buy, sell, this.maxUses, this.experience, this.multiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), buy, sell, this.maxUses, this.experience, this.multiplier);
         }
     }
 
@@ -320,7 +319,7 @@ public class TradeJsonAdapters {
 
             VillagerJsonHelper.assertString(json, "item");
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
             Item item = VillagerJsonHelper.getItemFromID(json.get("item").getAsString());
 
             return new SellDyedArmorFactory(item, price, max_uses, villager_experience, price_multiplier);
@@ -329,12 +328,12 @@ public class TradeJsonAdapters {
 
     private static class SellDyedArmorFactory implements TradeOffers.Factory {
         private final Item sell;
-        private final CurrencyStack price;
+        private final int price;
         private final int maxUses;
         private final int experience;
         private final float priceMultiplier;
 
-        public SellDyedArmorFactory(Item item, CurrencyStack price, int maxUses, int experience, float priceMultiplier) {
+        public SellDyedArmorFactory(Item item, int price, int maxUses, int experience, float priceMultiplier) {
             this.sell = item;
             this.price = price;
             this.maxUses = maxUses;
@@ -358,7 +357,7 @@ public class TradeJsonAdapters {
                 itemStack2 = DyeableItem.blendAndSetColor(itemStack2, list);
             }
 
-            return new TradeOffer(CurrencyHelper.round(price), itemStack2, this.maxUses, this.experience, priceMultiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), itemStack2, this.maxUses, this.experience, priceMultiplier);
 
         }
 
@@ -378,7 +377,7 @@ public class TradeJsonAdapters {
             VillagerJsonHelper.assertJsonObject(json, "container_item");
             VillagerJsonHelper.assertJsonObject(json, "buy_item");
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
             ItemStack container_item = VillagerJsonHelper.getItemStackFromJson(json.get("container_item").getAsJsonObject());
             ItemStack buy_item = VillagerJsonHelper.getItemStackFromJson(json.get("buy_item").getAsJsonObject());
 
@@ -390,13 +389,13 @@ public class TradeJsonAdapters {
         private final ItemStack containerItem;
         private final ItemStack buyItem;
 
-        private final CurrencyStack price;
+        private final int price;
         private final int maxUses;
         private final int experience;
 
         private final float priceMultiplier;
 
-        public SellPotionHoldingItemFactory(ItemStack containerItem, ItemStack buyItem, CurrencyStack price, int maxUses, int experience, float priceMultiplier) {
+        public SellPotionHoldingItemFactory(ItemStack containerItem, ItemStack buyItem, int price, int maxUses, int experience, float priceMultiplier) {
             this.containerItem = containerItem;
             this.buyItem = buyItem;
             this.price = price;
@@ -410,7 +409,7 @@ public class TradeJsonAdapters {
 
             Potion potion = list.get(random.nextInt(list.size()));
             ItemStack itemStack2 = PotionUtil.setPotion(containerItem.copy(), potion);
-            return new TradeOffer(CurrencyHelper.round(price), buyItem, itemStack2, this.maxUses, this.experience, this.priceMultiplier);
+            return new TradeOffer(CurrencyHelper.getClosest(price), buyItem, itemStack2, this.maxUses, this.experience, this.priceMultiplier);
         }
     }
 
@@ -424,7 +423,7 @@ public class TradeJsonAdapters {
 
             VillagerJsonHelper.assertJsonObject(json, "buy");
 
-            CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
+            int price = json.get("price").getAsInt();
             ItemStack buy = VillagerJsonHelper.getItemStackFromJson(json.get("buy").getAsJsonObject());
 
             return new BuyItemFactory(buy, price, max_uses, villager_experience, price_multiplier);
@@ -433,12 +432,12 @@ public class TradeJsonAdapters {
 
     private static class BuyItemFactory implements TradeOffers.Factory {
         private final ItemStack buy;
-        private final CurrencyStack price;
+        private final int price;
         private final int maxUses;
         private final int experience;
         private final float multiplier;
 
-        public BuyItemFactory(ItemStack buy, CurrencyStack price, int maxUses, int experience, float multiplier) {
+        public BuyItemFactory(ItemStack buy, int price, int maxUses, int experience, float multiplier) {
             this.buy = buy;
             this.price = price;
             this.maxUses = maxUses;
@@ -447,7 +446,7 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(buy, CurrencyHelper.round(price), this.maxUses, this.experience, this.multiplier);
+            return new TradeOffer(buy, CurrencyHelper.getClosest(price), this.maxUses, this.experience, this.multiplier);
         }
     }
 

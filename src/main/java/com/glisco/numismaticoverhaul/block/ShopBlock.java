@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
+import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -99,8 +99,8 @@ public class ShopBlock extends BlockWithEntity {
         if (state.getBlock() != newState.getBlock()) {
             ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
 
-            CurrencyStack.splitAtMaxCount(new CurrencyStack(shop.getStoredCurrency()).getAsItemStackList()).forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
-            ItemScatterer.spawn(shop.getWorld(), pos, shop);
+            CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
+                    .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
 
             super.onStateReplaced(state, world, pos, newState, moved);
         }

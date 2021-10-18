@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CurrencyHelper {
@@ -50,8 +49,8 @@ public class CurrencyHelper {
         }).sum();
     }
 
-    public static void offerAsCoins(PlayerEntity player, CurrencyStack stack) {
-        for (ItemStack itemStack : CurrencyStack.splitAtMaxCount(stack.getAsItemStackList())) {
+    public static void offerAsCoins(PlayerEntity player, int value) {
+        for (ItemStack itemStack : CurrencyConverter.getAsValidStacks(value)) {
             player.getInventory().offerOrDrop(itemStack);
         }
     }
@@ -62,33 +61,34 @@ public class CurrencyHelper {
 
         getMoneyInInventory(player, true);
 
-        offerAsCoins(player, new CurrencyStack(presentInInventory - value));
+        offerAsCoins(player, presentInInventory - value);
         return true;
     }
 
     /**
-     * Converts a {@link CurrencyStack} to a list of {@link ItemStack}, prefers {@link CoinItem} but may fall back to {@link MoneyBagItem}
+     * Converts an amount of currency to a list of {@link ItemStack},
+     * prefers {@link CoinItem} but may fall back to {@link MoneyBagItem}
      *
-     * @param stack     The {@link CurrencyStack} to convert
+     * @param value     The currency value to convert
      * @param maxStacks The maximum amount of stacks the result may have
      * @return The List of {@link ItemStack}
      */
-    public static List<ItemStack> getAsStacks(CurrencyStack stack, int maxStacks) {
+    public static List<ItemStack> getAsStacks(int value, int maxStacks) {
 
         List<ItemStack> stacks = new ArrayList<>();
-        List<ItemStack> rawStacks = CurrencyStack.splitAtMaxCount(stack.getAsItemStackList());
+        List<ItemStack> rawStacks = CurrencyConverter.getAsValidStacks(value);
 
         if (rawStacks.size() <= maxStacks) {
             stacks.addAll(rawStacks);
         } else {
-            stacks.add(MoneyBagItem.create(stack.getRawValue()));
+            stacks.add(MoneyBagItem.create(value));
         }
 
         return stacks;
     }
 
-    public static ItemStack round(CurrencyStack stack) {
-        var values = CurrencyResolver.splitValues(stack.getRawValue());
+    public static ItemStack getClosest(int value) {
+        var values = CurrencyResolver.splitValues(value);
 
         for (int i = 0; i < 2; i++) {
             if (values[i + 1] == 0) break;
@@ -96,7 +96,7 @@ public class CurrencyHelper {
             values[i] = 0;
         }
 
-        return getAsStacks(new CurrencyStack(CurrencyResolver.combineValues(values)), 1).get(0);
+        return CurrencyConverter.getAsItemStackList(CurrencyResolver.combineValues(values)).get(0);
     }
 
 }

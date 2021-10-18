@@ -2,8 +2,8 @@ package com.glisco.numismaticoverhaul.network;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -36,13 +36,12 @@ public class RequestPurseActionC2SPacket {
                     //Check if we can actually extract this much money to prevent cheeky packet forgery
                     if (ModComponents.CURRENCY.get(player).getValue() < values[1]) return;
 
-                    CurrencyStack currencyStack = new CurrencyStack(values[1]);
-                    currencyStack.getAsItemStackList().forEach(itemStack -> player.getInventory().offerOrDrop(itemStack));
+                    CurrencyConverter.getAsItemStackList(values[1]).forEach(stack -> player.getInventory().offerOrDrop(stack));
 
                     ModComponents.CURRENCY.get(player).modify(-values[1]);
                 } else if (action == Action.EXTRACT_ALL) {
-                    CurrencyStack currencyStack = new CurrencyStack(ModComponents.CURRENCY.get(player).getValue());
-                    CurrencyStack.splitAtMaxCount(currencyStack.getAsItemStackList()).forEach(itemStack -> player.getInventory().offerOrDrop(itemStack));
+                    CurrencyConverter.getAsValidStacks(ModComponents.CURRENCY.get(player).getValue())
+                            .forEach(stack -> player.getInventory().offerOrDrop(stack));
 
                     ModComponents.CURRENCY.get(player).modify(-ModComponents.CURRENCY.get(player).getValue());
                 }

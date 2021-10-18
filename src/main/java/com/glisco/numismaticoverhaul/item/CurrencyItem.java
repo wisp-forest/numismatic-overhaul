@@ -5,15 +5,15 @@ import net.minecraft.item.ItemStack;
 public interface CurrencyItem {
 
     static void setOriginalValue(ItemStack stack, int value) {
-        stack.getOrCreateTag().putInt("OriginalValue", value);
+        stack.getOrCreateNbt().putInt("OriginalValue", value);
     }
 
     static int getOriginalValue(ItemStack stack) {
-        return stack.getOrCreateTag().getInt("OriginalValue");
+        return stack.getOrCreateNbt().getInt("OriginalValue");
     }
 
     static boolean hasOriginalValue(ItemStack stack) {
-        return stack.getOrCreateTag().contains("OriginalValue");
+        return stack.getOrCreateNbt().contains("OriginalValue");
     }
 
     boolean wasAdjusted(ItemStack other);

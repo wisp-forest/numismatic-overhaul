@@ -187,7 +187,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
             RenderSystem.enableDepthTest();
             drawTexture(matrices, this.x, this.y, (float) this.u, (float) i, this.width, this.height, 256, 256);
             if (this.isHovered()) {
-                this.renderToolTip(matrices, mouseX, mouseY);
+                this.renderTooltip(matrices, mouseX, mouseY);
             }
         }
     }

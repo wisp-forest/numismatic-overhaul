@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
-import com.glisco.numismaticoverhaul.currency.CurrencyStack;
+import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -20,19 +20,19 @@ import java.util.List;
 
 public class CurrencyTooltipRenderer {
 
-    public static void renderTooltip(CurrencyStack stack, MatrixStack matrices, Screen screen, Text title, int x, int y) {
-        renderTooltip(stack, null, matrices, screen, title, x, y);
+    public static void renderTooltip(int value, MatrixStack matrices, Screen screen, Text title, int x, int y) {
+        renderTooltip(value, null, matrices, screen, title, x, y);
     }
 
-    public static void renderTooltip(CurrencyStack stack, @Nullable CurrencyStack before, MatrixStack matrices, Screen screen, Text title, int x, int y) {
+    public static void renderTooltip(int value, @Nullable Integer before, MatrixStack matrices, Screen screen, Text title, int x, int y) {
 
         List<Text> tooltip = new ArrayList<>();
         tooltip.add(title);
 
         y += 10;
 
-        List<ItemStack> coinsBefore = before != null ? before.getAsItemStackList() : Collections.emptyList();
-        List<ItemStack> coins = stack.getAsItemStackList();
+        List<ItemStack> coinsBefore = before != null ? CurrencyConverter.getAsItemStackList(before) : Collections.emptyList();
+        List<ItemStack> coins = CurrencyConverter.getAsItemStackList(value);
 
         MinecraftClient.getInstance().getItemRenderer().zOffset = 700.0f;
 
