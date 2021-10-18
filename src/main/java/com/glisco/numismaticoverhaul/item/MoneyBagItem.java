@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MoneyBagItem extends Item {
+public class MoneyBagItem extends Item implements CurrencyItem {
 
     public MoneyBagItem() {
         super(new Settings().group(ItemGroup.MISC).maxCount(1));
@@ -34,7 +34,7 @@ public class MoneyBagItem extends Item {
         return stack;
     }
 
-    public static int getValue(ItemStack stack) {
+    public int getValue(ItemStack stack) {
         return stack.getOrCreateTag().getInt("Value");
     }
 
@@ -77,5 +77,10 @@ public class MoneyBagItem extends Item {
         for (ItemStack toOffer : CurrencyStack.splitAtMaxCount(currencyStack.getAsItemStackList())) {
             player.getInventory().offerOrDrop(toOffer);
         }
+    }
+
+    @Override
+    public boolean wasAdjusted(ItemStack other) {
+        return true;
     }
 }

@@ -43,7 +43,7 @@ public class CurrencyTooltipRenderer {
         if (!coinsBefore.isEmpty()) tooltip.add(Text.of(" "));
 
         for (int i = 0; i < coins.size(); i++) {
-            renderStack(matrices, coins.get(i), tooltip, i + coinsBefore.size() + 1, x, y, screen.getZOffset() + 1000, false);
+            renderStack(matrices, coins.get(i), tooltip, i + (coinsBefore.isEmpty() ? 0 : coinsBefore.size() + 1), x, y, screen.getZOffset() + 1000, false);
         }
 
         if (tooltip.size() == 1) {

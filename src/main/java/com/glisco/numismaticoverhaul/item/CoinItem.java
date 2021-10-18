@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class CoinItem extends Item {
+public class CoinItem extends Item implements CurrencyItem {
 
     public final CurrencyResolver.Currency currency;
 
@@ -48,5 +48,15 @@ public class CoinItem extends Item {
     @Override
     public Text getName(ItemStack stack) {
         return super.getName(stack).copy().setStyle(NAME_STYLE);
+    }
+
+    @Override
+    public boolean wasAdjusted(ItemStack other) {
+        return other.getItem() != this;
+    }
+
+    @Override
+    public int getValue(ItemStack stack) {
+        return this.currency.getRawValue(stack.getCount());
     }
 }

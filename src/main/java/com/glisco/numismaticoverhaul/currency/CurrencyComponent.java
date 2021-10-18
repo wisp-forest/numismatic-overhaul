@@ -95,7 +95,6 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      * @param value The value this component should be modified by
      */
     public void pushTransaction(int value) {
-        System.out.println("Pushing " + value);
         this.transactions.add(value);
     }
 

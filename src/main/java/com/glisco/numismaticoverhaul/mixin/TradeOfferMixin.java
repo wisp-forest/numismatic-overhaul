@@ -1,9 +1,9 @@
 package com.glisco.numismaticoverhaul.mixin;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.currency.CurrencyStack;
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.villagers.data.NumismaticTradeOfferExtensions;
 import net.minecraft.item.ItemStack;
@@ -53,10 +53,14 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
         if (!(this.firstBuyItem.getItem() instanceof CoinItem || this.firstBuyItem.getItem() instanceof MoneyBagItem)) return;
 
         int value = CurrencyHelper.getValue(Collections.singletonList(this.firstBuyItem));
-        int adjustedValue = (int) (value - numismatic$reputation * (Math.abs(value) * .0075));
+        int adjustedValue = numismatic$reputation < 0 ?
+                (int) (value + numismatic$reputation * (Math.abs(value) * .325))
+                :
+                (int) Math.max(1, value - Math.abs(value) * (numismatic$reputation / (numismatic$reputation + 100f)));
 
-        final var stack = CurrencyHelper.getAsStacks(new CurrencyStack(adjustedValue), 1).get(0);
-        if (stack.isOf(NumismaticOverhaul.MONEY_BAG)) MoneyBagItem.setBefore(stack, value);
+        final var stack = CurrencyHelper.round(new CurrencyStack(adjustedValue));
+        if (value != CurrencyHelper.getValue(Collections.singletonList(stack)) && !stack.isOf(this.firstBuyItem.getItem()))
+            CurrencyItem.setOriginalValue(stack, value);
         cir.setReturnValue(stack);
     }
 

@@ -46,8 +46,6 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
         if (!registry.getRight().isEmpty()) {
             TradeOffers.WANDERING_TRADER_TRADES.clear();
             TradeOffers.WANDERING_TRADER_TRADES.putAll(registry.getRight());
-
-            System.out.println(TradeOffers.WANDERING_TRADER_TRADES);
         }
 
     }

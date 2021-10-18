@@ -1,11 +1,13 @@
 package com.glisco.numismaticoverhaul.currency;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CurrencyHelper {
@@ -40,8 +42,8 @@ public class CurrencyHelper {
 
             if (stack.getItem() instanceof CoinItem) {
                 return ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
-            } else if (stack.getItem() instanceof MoneyBagItem) {
-                return MoneyBagItem.getValue(stack);
+            } else if (stack.isOf(NumismaticOverhaul.MONEY_BAG)) {
+                return NumismaticOverhaul.MONEY_BAG.getValue(stack);
             } else {
                 return 0;
             }
@@ -83,6 +85,18 @@ public class CurrencyHelper {
         }
 
         return stacks;
+    }
+
+    public static ItemStack round(CurrencyStack stack) {
+        var values = CurrencyResolver.splitValues(stack.getRawValue());
+
+        for (int i = 0; i < 2; i++) {
+            if (values[i + 1] == 0) break;
+            values[i + 1] += Math.round(values[i] / 100f);
+            values[i] = 0;
+        }
+
+        return getAsStacks(new CurrencyStack(CurrencyResolver.combineValues(values)), 1).get(0);
     }
 
 }

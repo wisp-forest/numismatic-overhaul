@@ -89,7 +89,7 @@ public class TradeJsonAdapters {
                     FilledMapItem.fillExplorationMap(serverWorld, itemStack);
                     MapState.addDecorationsNbt(itemStack, blockPos, "+", this.iconType);
                     itemStack.setCustomName(new TranslatableText("filled_map." + this.structure.getName().toLowerCase(Locale.ROOT)));
-                    return new TradeOffer(CurrencyHelper.getAsStacks(price, 1).get(0), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
+                    return new TradeOffer(CurrencyHelper.round(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
                 } else {
                     return null;
                 }
@@ -108,7 +108,6 @@ public class TradeJsonAdapters {
             VillagerJsonHelper.assertJsonObject(json, "sell");
 
             ItemStack sell = VillagerJsonHelper.getItemStackFromJson(json.get("sell").getAsJsonObject());
-
             CurrencyStack price = new CurrencyStack(json.get("price").getAsInt());
 
             return new SellStackFactory(sell, price, max_uses, villager_experience, price_multiplier);
@@ -131,14 +130,7 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-
-            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
-
-            if (priceStacks.size() > 1) {
-                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), sell, this.maxUses, this.experience, multiplier);
-            } else {
-                return new TradeOffer(priceStacks.get(0), sell, this.maxUses, this.experience, multiplier);
-            }
+            return new TradeOffer(CurrencyHelper.round(price), sell, this.maxUses, this.experience, multiplier);
         }
     }
 
@@ -180,16 +172,9 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-
             if (!entity.world.getRegistryKey().getValue().toString().equals(targetDimensionId)) return null;
 
-            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
-
-            if (priceStacks.size() > 1) {
-                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), sell, this.maxUses, this.experience, multiplier);
-            } else {
-                return new TradeOffer(priceStacks.get(0), sell, this.maxUses, this.experience, multiplier);
-            }
+            return new TradeOffer(CurrencyHelper.round(price), sell, this.maxUses, this.experience, multiplier);
         }
     }
 
@@ -227,7 +212,7 @@ public class TradeJsonAdapters {
                 cost *= 2;
             }
 
-            return new TradeOffer(CurrencyHelper.getAsStacks(new CurrencyStack(cost), 1).get(0), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.round(new CurrencyStack(cost)), new ItemStack(Items.BOOK), itemStack, maxUses, this.experience, multiplier);
         }
     }
 
@@ -277,7 +262,7 @@ public class TradeJsonAdapters {
                 price *= (entry.getKey().isTreasure() ? 2f : 1f) * (MathHelper.nextFloat(random, entry.getValue(), entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
             }
 
-            return new TradeOffer(CurrencyHelper.getAsStacks(new CurrencyStack(price), 1).get(0), toEnchant, itemStack, maxUses, this.experience, multiplier);
+            return new TradeOffer(CurrencyHelper.round(new CurrencyStack(price)), toEnchant, itemStack, maxUses, this.experience, multiplier);
         }
     }
 
@@ -321,7 +306,7 @@ public class TradeJsonAdapters {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(CurrencyHelper.getAsStacks(price, 1).get(0), buy, sell, this.maxUses, this.experience, this.multiplier);
+            return new TradeOffer(CurrencyHelper.round(price), buy, sell, this.maxUses, this.experience, this.multiplier);
         }
     }
 
@@ -373,13 +358,7 @@ public class TradeJsonAdapters {
                 itemStack2 = DyeableItem.blendAndSetColor(itemStack2, list);
             }
 
-            List<ItemStack> priceStacks = CurrencyHelper.getAsStacks(price, 2);
-
-            if (priceStacks.size() > 1) {
-                return new TradeOffer(priceStacks.get(0), priceStacks.get(1), itemStack2, this.maxUses, this.experience, priceMultiplier);
-            } else {
-                return new TradeOffer(priceStacks.get(0), itemStack2, this.maxUses, this.experience, priceMultiplier);
-            }
+            return new TradeOffer(CurrencyHelper.round(price), itemStack2, this.maxUses, this.experience, priceMultiplier);
 
         }
 
@@ -427,13 +406,11 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            ItemStack priceStack = CurrencyHelper.getAsStacks(price, 1).get(0);
-
             List<Potion> list = Registry.POTION.stream().filter((potionx) -> !potionx.getEffects().isEmpty() && BrewingRecipeRegistry.isBrewable(potionx)).collect(Collectors.toList());
 
             Potion potion = list.get(random.nextInt(list.size()));
             ItemStack itemStack2 = PotionUtil.setPotion(containerItem.copy(), potion);
-            return new TradeOffer(priceStack, buyItem, itemStack2, this.maxUses, this.experience, this.priceMultiplier);
+            return new TradeOffer(CurrencyHelper.round(price), buyItem, itemStack2, this.maxUses, this.experience, this.priceMultiplier);
         }
     }
 
@@ -470,7 +447,7 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            return new TradeOffer(buy, CurrencyHelper.getAsStacks(price, 1).get(0), this.maxUses, this.experience, this.multiplier);
+            return new TradeOffer(buy, CurrencyHelper.round(price), this.maxUses, this.experience, this.multiplier);
         }
     }
 

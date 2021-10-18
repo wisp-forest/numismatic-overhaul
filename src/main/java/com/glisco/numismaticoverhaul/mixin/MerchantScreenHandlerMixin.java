@@ -1,13 +1,9 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
-import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
-import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.MerchantScreenHandler;
@@ -34,15 +30,15 @@ public class MerchantScreenHandlerMixin {
         CurrencyComponent playerBalance = ModComponents.CURRENCY.get(((PlayerInventory) handler.getSlot(3).inventory).player);
 
         if (stack.getItem() instanceof CoinItem) {
-            autofillWithCoins(slot, stack, handler, playerBalance);
-        } else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
+            numismatic$autofillWithCoins(slot, stack, handler, playerBalance);
+        }/*else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
             autofillWithMoneyBag(slot, stack, handler, playerBalance);
-        }
+        }*/
 
         if (slot == 1) playerBalance.commitTransactions();
     }
 
-    private static void autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
+    private static void numismatic$autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
         //See how much is required and how much was already autofilled
         int requiredCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
         int presentCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(handler.getSlot(slot).getStack().getCount());
@@ -60,12 +56,12 @@ public class MerchantScreenHandlerMixin {
         handler.slots.get(slot).setStack(stack.copy());
     }
 
-    private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
+    /*private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
 
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 
         //See how much is required and how much in present in the player's inventory
-        int requiredCurrency = MoneyBagItem.getValue(stack);
+        int requiredCurrency = NumismaticOverhaul.MONEY_BAG.getValue(stack);
         int availableCurrencyInPlayerInventory = CurrencyHelper.getMoneyInInventory(player, false);
 
         //Find out how much we still need to fill
@@ -82,7 +78,7 @@ public class MerchantScreenHandlerMixin {
         }
 
         handler.slots.get(slot).setStack(stack.copy());
-    }
+    }*/
 
     @Inject(method = "playYesSound", at = @At("HEAD"), cancellable = true)
     public void checkForEntityOnYes(CallbackInfo ci) {

@@ -17,6 +17,8 @@ repositories {
     }
 
     maven { url "https://maven.shedaniel.me/" }
+
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -33,6 +35,10 @@ dependencies {
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+
+    modRuntime "com.ptsmods:devlogin:1.2"
+
+    modImplementation "com.github.glisco03:owo-lib:${project.owo_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

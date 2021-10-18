@@ -11,6 +11,7 @@ import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
+import com.glisco.owo.ops.LootOps;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
@@ -26,10 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LootPoolEntryType;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -45,7 +43,7 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final Item SILVER_COIN = new CoinItem(CurrencyResolver.Currency.SILVER);
     public static final Item GOLD_COIN = new CoinItem(CurrencyResolver.Currency.GOLD);
 
-    public static final Item MONEY_BAG = new MoneyBagItem();
+    public static final MoneyBagItem MONEY_BAG = new MoneyBagItem();
 
     public static final Block SHOP_BLOCK = new ShopBlock();
     public static BlockEntityType<ShopBlockEntity> SHOP_BLOCK_ENTITY;
@@ -84,25 +82,21 @@ public class NumismaticOverhaul implements ModInitializer {
             VillagerTradesHandler.broadcastErrors(server);
         });
 
-        LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
+        LootOps.injectItem(GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
+                LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST);
 
+        LootOps.injectItemWithCount(BRONZE_COIN, .5f, 9, 34, new Identifier("entities/pillager"));
+        LootOps.injectItem(SILVER_COIN, .2f, new Identifier("entities/pillager"));
+
+        LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
             if (anyMatch(id, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST)) {
                 supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(500, 2000).build()).conditionally(RandomChanceLootCondition.builder(0.75f))
-                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
                         .build());
             } else if (anyMatch(id, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST, LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST)) {
                 supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(1500, 4000).build()).conditionally(RandomChanceLootCondition.builder(0.75f))
-                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
                         .build());
             } else if (anyMatch(id, LootTables.STRONGHOLD_LIBRARY_CHEST)) {
                 supplier.withPool(FabricLootPoolBuilder.builder().withEntry(MoneyBagLootEntry.builder(2000, 6000).build()).conditionally(RandomChanceLootCondition.builder(0.85f))
-                        .withEntry(ItemEntry.builder(GOLD_COIN).conditionally(RandomChanceLootCondition.builder(0.01f)).build())
-                        .build());
-            } else if (id.equals(new Identifier("entities/pillager"))) {
-                supplier.withPool(FabricLootPoolBuilder.builder()
-                        .withEntry(ItemEntry.builder(BRONZE_COIN).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(9, 34))).build())
-                        .withEntry(ItemEntry.builder(SILVER_COIN).conditionally(RandomChanceLootCondition.builder(0.4f)).build())
-                        .conditionally(RandomChanceLootCondition.builder(0.5f))
                         .build());
             }
         });
