@@ -2,19 +2,19 @@ package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
-import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.*;
-import net.minecraft.util.Formatting;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.Text;
+import net.minecraft.util.ClickType;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Optional;
 
 public class MoneyBagItem extends Item implements CurrencyItem {
 
@@ -35,41 +35,56 @@ public class MoneyBagItem extends Item implements CurrencyItem {
         return stack;
     }
 
+    public static ItemStack create(int value, boolean carriable) {
+        ItemStack stack = create(value);
+        stack.getOrCreateNbt().putBoolean("Carriable", carriable);
+        return stack;
+    }
+
     public int getValue(ItemStack stack) {
         return stack.getOrCreateNbt().getInt("Value");
     }
 
-    public static void setBefore(ItemStack stack, int before) {
-        stack.getOrCreateNbt().putInt("ValueBefore", before);
-    }
-
-    public static int getBefore(ItemStack stack) {
-        return stack.getOrCreateNbt().getInt("ValueBefore");
-    }
-
-    public static boolean hasBefore(ItemStack stack) {
-        return stack.getOrCreateNbt().contains("ValueBefore");
+    public void setValue(ItemStack stack, int value) {
+        stack.getOrCreateNbt().putInt("Value", value);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.clear();
+    public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+        if (clickType == ClickType.RIGHT && clickedStack.getItem() == this && otherStack.isEmpty()) {
+            final var coinStack = CurrencyConverter.getAsValidStacks(getValue(clickedStack)).get(0);
+            cursorStackReference.set(coinStack);
 
-        if (getValue(stack) == 0) {
-            tooltip.add(new TranslatableText("numismatic-overhaul.empty").formatted(Formatting.GRAY));
-            return;
+            final var newValue = getValue(clickedStack) - ((CoinItem) coinStack.getItem()).currency.getRawValue(coinStack.getCount());
+
+            if (CurrencyConverter.getAsValidStacks(newValue).size() == 1) {
+                slot.setStack(CurrencyConverter.getAsValidStacks(newValue).get(0));
+            } else {
+                setValue(clickedStack, newValue);
+            }
+
+        } else if (clickType == ClickType.LEFT) {
+            if (!(otherStack.getItem() instanceof CurrencyItem currencyItem)) return false;
+
+            int value = currencyItem.getValue(otherStack) + getValue(clickedStack);
+            slot.setStack(MoneyBagItem.create(value, true));
+
+            cursorStackReference.set(ItemStack.EMPTY);
         }
 
-        for (ItemStack coin : CurrencyConverter.getAsItemStackList(getValue(stack))) {
-            tooltip.add(new LiteralText(coin.getCount() + " " + coin.getName().getString().split(" ")[0]).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(((CoinItem) coin.getItem()).currency.getNameColor()))));
-        }
+        return true;
+    }
+
+    @Override
+    public Optional<TooltipData> getTooltipData(ItemStack stack) {
+        return Optional.of(new CurrencyTooltipData(this.getValue(stack), CurrencyItem.hasOriginalValue(stack) ? CurrencyItem.getOriginalValue(stack) : -1));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!(entity instanceof PlayerEntity)) return;
+        if (stack.getOrCreateNbt().getBoolean("Carriable")) return;
+        if (!(entity instanceof PlayerEntity player)) return;
 
-        PlayerEntity player = (PlayerEntity) entity;
         player.getInventory().removeOne(stack);
 
         for (ItemStack toOffer : CurrencyConverter.getAsValidStacks(getValue(stack))) {
@@ -81,4 +96,10 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     public boolean wasAdjusted(ItemStack other) {
         return true;
     }
+
+    @Override
+    public Text getName() {
+        return super.getName().copy().setStyle(NumismaticOverhaul.SILVER_COIN.NAME_STYLE);
+    }
+
 }

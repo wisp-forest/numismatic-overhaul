@@ -47,20 +47,4 @@ public abstract class MerchantScreenMixin extends Screen {
             return original;
         }
     }
-
-    @Override
-    protected void renderTooltip(MatrixStack matrices, ItemStack stack, int x, int y) {
-        if (!(stack.getItem() instanceof CurrencyItem currencyItem)) {
-            super.renderTooltip(matrices, stack, x, y);
-            return;
-        }
-
-        if (CurrencyItem.hasOriginalValue(stack)) {
-            CurrencyTooltipRenderer.renderTooltip(currencyItem.getValue(stack), CurrencyItem.getOriginalValue(stack), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
-        } else if (currencyItem == NumismaticOverhaul.MONEY_BAG) {
-            CurrencyTooltipRenderer.renderTooltip(currencyItem.getValue(stack), matrices, this, new TranslatableText(stack.getTranslationKey()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.SILVER.getNameColor()))), x, y);
-        } else {
-            super.renderTooltip(matrices, stack, x, y);
-        }
-    }
 }

@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import com.glisco.numismaticoverhaul.villagers.data.NumismaticTradeOfferExtensions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -24,6 +25,7 @@ public class ShopOffer {
         this.price = price;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public TradeOffer toTradeOffer(ShopBlockEntity shop) {
 
         ItemStack buy = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
@@ -34,7 +36,9 @@ public class ShopOffer {
             return ItemStack.areEqual(comparisonStack, sell);
         }).mapToInt(ItemStack::getCount).sum();
 
-        return new TradeOffer(buy, sell, maxUses, 0, 0);
+        final var tradeOffer = new TradeOffer(buy, sell, maxUses, 0, 0);
+        ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(-69420);
+        return tradeOffer;
     }
 
     public int getPrice() {

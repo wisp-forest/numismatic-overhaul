@@ -1,9 +1,12 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.MerchantScreenHandler;
@@ -31,9 +34,9 @@ public class MerchantScreenHandlerMixin {
 
         if (stack.getItem() instanceof CoinItem) {
             numismatic$autofillWithCoins(slot, stack, handler, playerBalance);
-        }/*else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
+        } else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
             autofillWithMoneyBag(slot, stack, handler, playerBalance);
-        }*/
+        }
 
         if (slot == 1) playerBalance.commitTransactions();
     }
@@ -56,7 +59,7 @@ public class MerchantScreenHandlerMixin {
         handler.slots.get(slot).setStack(stack.copy());
     }
 
-    /*private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
+    private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
 
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 
@@ -78,7 +81,7 @@ public class MerchantScreenHandlerMixin {
         }
 
         handler.slots.get(slot).setStack(stack.copy());
-    }*/
+    }
 
     @Inject(method = "playYesSound", at = @At("HEAD"), cancellable = true)
     public void checkForEntityOnYes(CallbackInfo ci) {

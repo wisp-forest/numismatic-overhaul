@@ -7,6 +7,7 @@
     "InventoryMixin",
     "MerchantScreenHandlerMixin",
     "MerchantScreenMixin",
+    "ScreenMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "TradeOfferInternalsMixin",

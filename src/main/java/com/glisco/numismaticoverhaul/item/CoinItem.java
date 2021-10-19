@@ -2,27 +2,44 @@ package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class CoinItem extends Item implements CurrencyItem {
 
     public final CurrencyResolver.Currency currency;
-
-    private final Style NAME_STYLE;
+    public final Style NAME_STYLE;
 
     public CoinItem(CurrencyResolver.Currency currency) {
         super(new Settings().group(ItemGroup.MISC).maxCount(99));
         this.currency = currency;
         this.NAME_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(currency.getNameColor()));
+    }
+
+    @Override
+    public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+        if (clickType != ClickType.LEFT) return false;
+        if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem)) return false;
+
+        int value = this.currency.getRawValue(clickedStack.getCount()) + currencyItem.getValue(otherStack);
+        slot.setStack(MoneyBagItem.create(value, true));
+
+        cursorStackReference.set(ItemStack.EMPTY);
+        return true;
     }
 
     @Override
@@ -38,6 +55,11 @@ public class CoinItem extends Item implements CurrencyItem {
         }
 
         return TypedActionResult.success(clickedStack);
+    }
+
+    @Override
+    public Optional<TooltipData> getTooltipData(ItemStack stack) {
+        return Optional.of(new CurrencyTooltipData(this.currency.getRawValue(stack.getCount()), CurrencyItem.hasOriginalValue(stack) ? CurrencyItem.getOriginalValue(stack) : -1));
     }
 
     @Override

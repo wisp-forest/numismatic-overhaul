@@ -1,5 +1,6 @@
 package com.glisco.numismaticoverhaul.mixin;
 
+import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.CurrencyItem;
@@ -49,11 +50,13 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
 
     @Inject(method = "getAdjustedFirstBuyItem", at = @At("HEAD"), cancellable = true)
     private void adjustFirstStack(CallbackInfoReturnable<ItemStack> cir) {
+        if (this.numismatic$reputation == -69420) return;
+
         if (!(this.firstBuyItem.getItem() instanceof CoinItem || this.firstBuyItem.getItem() instanceof MoneyBagItem)) return;
 
         int value = CurrencyHelper.getValue(Collections.singletonList(this.firstBuyItem));
         int adjustedValue = numismatic$reputation < 0 ?
-                (int) (value + numismatic$reputation * (Math.abs(value) * .325))
+                (int) (value + Math.abs(numismatic$reputation) * (Math.abs(value) * .02))
                 :
                 (int) Math.max(1, value - Math.abs(value) * (numismatic$reputation / (numismatic$reputation + 100f)));
 

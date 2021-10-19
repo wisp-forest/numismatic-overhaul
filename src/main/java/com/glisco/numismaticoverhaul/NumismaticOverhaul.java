@@ -39,9 +39,9 @@ public class NumismaticOverhaul implements ModInitializer {
 
     public static final String MOD_ID = "numismatic-overhaul";
 
-    public static final Item BRONZE_COIN = new CoinItem(CurrencyResolver.Currency.BRONZE);
-    public static final Item SILVER_COIN = new CoinItem(CurrencyResolver.Currency.SILVER);
-    public static final Item GOLD_COIN = new CoinItem(CurrencyResolver.Currency.GOLD);
+    public static final CoinItem BRONZE_COIN = new CoinItem(CurrencyResolver.Currency.BRONZE);
+    public static final CoinItem SILVER_COIN = new CoinItem(CurrencyResolver.Currency.SILVER);
+    public static final CoinItem GOLD_COIN = new CoinItem(CurrencyResolver.Currency.GOLD);
 
     public static final MoneyBagItem MONEY_BAG = new MoneyBagItem();
 
