@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(TradeOfferList.class)
 public class TradeOfferListMixin {
 
-    @Inject(method = "toPacket", at = @At(value = "INVOKE", ordinal = 4, target = "Lnet/minecraft/network/PacketByteBuf;writeInt(I)Lio/netty/buffer/ByteBuf;"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "toPacket", at = @At(value = "INVOKE", ordinal = 4, target = "Lnet/minecraft/network/PacketByteBuf;writeInt(I)Lio/netty/buffer/ByteBuf;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
     private void writeReputation(PacketByteBuf buf, CallbackInfo ci, int i, TradeOffer offer) {
         buf.writeVarInt(((NumismaticTradeOfferExtensions)offer).numismatic$getReputation());
     }

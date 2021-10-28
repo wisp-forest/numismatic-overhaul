@@ -6,8 +6,6 @@
   "mixins": [
     "InventoryMixin",
     "MerchantScreenHandlerMixin",
-    "MerchantScreenMixin",
-    "ScreenMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "TradeOfferInternalsMixin",
@@ -16,6 +14,7 @@
     "VillagerEntityMixin"
   ],
   "client": [
+    "MerchantScreenMixin",
     "InventoryScreenMixin"
   ],
   "injectors": {
