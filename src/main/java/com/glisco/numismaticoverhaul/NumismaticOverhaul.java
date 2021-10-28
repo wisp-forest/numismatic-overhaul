@@ -3,7 +3,7 @@ package com.glisco.numismaticoverhaul;
 import com.glisco.numismaticoverhaul.block.ShopBlock;
 import com.glisco.numismaticoverhaul.block.ShopBlockEntity;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
-import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
@@ -39,9 +39,9 @@ public class NumismaticOverhaul implements ModInitializer {
 
     public static final String MOD_ID = "numismatic-overhaul";
 
-    public static final CoinItem BRONZE_COIN = new CoinItem(CurrencyResolver.Currency.BRONZE);
-    public static final CoinItem SILVER_COIN = new CoinItem(CurrencyResolver.Currency.SILVER);
-    public static final CoinItem GOLD_COIN = new CoinItem(CurrencyResolver.Currency.GOLD);
+    public static final CoinItem BRONZE_COIN = new CoinItem(Currency.BRONZE);
+    public static final CoinItem SILVER_COIN = new CoinItem(Currency.SILVER);
+    public static final CoinItem GOLD_COIN = new CoinItem(Currency.GOLD);
 
     public static final MoneyBagItem MONEY_BAG = new MoneyBagItem();
 

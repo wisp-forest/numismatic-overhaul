@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
@@ -21,10 +21,10 @@ import java.util.Optional;
 
 public class CoinItem extends Item implements CurrencyItem {
 
-    public final CurrencyResolver.Currency currency;
+    public final Currency currency;
     public final Style NAME_STYLE;
 
-    public CoinItem(CurrencyResolver.Currency currency) {
+    public CoinItem(Currency currency) {
         super(new Settings().group(ItemGroup.MISC).maxCount(99));
         this.currency = currency;
         this.NAME_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(currency.getNameColor()));
@@ -33,10 +33,13 @@ public class CoinItem extends Item implements CurrencyItem {
     @Override
     public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (clickType != ClickType.LEFT) return false;
-        if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem)) return false;
+        if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem))
+            return false;
 
-        int value = this.currency.getRawValue(clickedStack.getCount()) + currencyItem.getValue(otherStack);
-        slot.setStack(MoneyBagItem.create(value, true));
+        int[] values = currencyItem.getCombinedValue(otherStack);
+        values[this.currency.ordinal()] += clickedStack.getCount();
+
+        slot.setStack(MoneyBagItem.createCombined(values));
 
         cursorStackReference.set(ItemStack.EMPTY);
         return true;
@@ -80,5 +83,12 @@ public class CoinItem extends Item implements CurrencyItem {
     @Override
     public int getValue(ItemStack stack) {
         return this.currency.getRawValue(stack.getCount());
+    }
+
+    @Override
+    public int[] getCombinedValue(ItemStack stack) {
+        final var values = new int[3];
+        values[this.currency.ordinal()] = stack.getCount();
+        return values;
     }
 }

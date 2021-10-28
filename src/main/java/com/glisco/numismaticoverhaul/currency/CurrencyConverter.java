@@ -40,6 +40,22 @@ public class CurrencyConverter {
     }
 
     /**
+     * Wrapper for {@link #getAsItemStackArray(int)} that only includes non-zero {@link ItemStack}
+     *
+     * @return A list of {@link ItemStack}, stack sizes can exceed 99
+     */
+    public static List<ItemStack> getAsItemStackList(int[] values) {
+        List<ItemStack> list = new ArrayList<>();
+
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] <= 0) continue;
+            list.add(0, new ItemStack(Currency.values()[i], values[i]));
+        }
+
+        return list;
+    }
+
+    /**
      * @return The amount of currency types required to represent this stack's raw value
      */
     public static int getRequiredCurrencyTypes(int value) {
@@ -76,6 +92,10 @@ public class CurrencyConverter {
 
     public static List<ItemStack> getAsValidStacks(int value) {
         return splitAtMaxCount(getAsItemStackList(value));
+    }
+
+    public static List<ItemStack> getAsValidStacks(int[] values) {
+        return splitAtMaxCount(getAsItemStackList(values));
     }
 
 }

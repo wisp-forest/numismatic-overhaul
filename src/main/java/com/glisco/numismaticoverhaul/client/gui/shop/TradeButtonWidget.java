@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.client.gui.shop;
 
 import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
-import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -14,7 +14,7 @@ public class TradeButtonWidget extends ButtonWidget {
 
     private final ItemStack renderItem;
     private final int price;
-    private final Text PRICE_TITLE = new TranslatableText("gui.numismatic-overhaul.shop.price").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(CurrencyResolver.Currency.GOLD.getNameColor())));
+    private final Text PRICE_TITLE = new TranslatableText("gui.numismatic-overhaul.shop.price").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
 
     public TradeButtonWidget(int x, int y, int price, ItemStack item, int index) {
         super(x, y, 78, 20, new LiteralText(""), button -> {

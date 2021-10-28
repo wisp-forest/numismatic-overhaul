@@ -40,41 +40,4 @@ public class CurrencyResolver {
         return values[0] + values[1] * 100 + values[2] * 10000;
     }
 
-    public enum Currency {
-        BRONZE {
-            @Override
-            public int getNameColor() {
-                return 0xae5b3c;
-            }
-
-            @Override
-            public int getRawValue(int amount) {
-                return amount;
-            }
-        }, SILVER {
-            @Override
-            public int getNameColor() {
-                return 0x617174;
-            }
-
-            @Override
-            public int getRawValue(int amount) {
-                return amount * 100;
-            }
-        }, GOLD {
-            @Override
-            public int getNameColor() {
-                return 0xbd9838;
-            }
-
-            @Override
-            public int getRawValue(int amount) {
-                return amount * 10000;
-            }
-        };
-
-        public abstract int getNameColor();
-
-        public abstract int getRawValue(int amount);
-    }
 }

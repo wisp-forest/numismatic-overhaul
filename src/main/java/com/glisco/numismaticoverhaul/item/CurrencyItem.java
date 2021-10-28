@@ -20,4 +20,6 @@ public interface CurrencyItem {
 
     int getValue(ItemStack stack);
 
+    int[] getCombinedValue(ItemStack stack);
+
 }

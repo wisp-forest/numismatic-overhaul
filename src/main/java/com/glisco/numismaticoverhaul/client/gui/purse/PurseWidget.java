@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.client.gui.purse;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
@@ -43,14 +44,14 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
         this.x = x;
         this.y = y;
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 5, button -> modifyInBounds(goldAmount, true, CurrencyResolver.Currency.GOLD), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 11, button -> modifyInBounds(goldAmount, false, CurrencyResolver.Currency.GOLD), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 5, button -> modifyInBounds(goldAmount, true, Currency.GOLD), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 11, button -> modifyInBounds(goldAmount, false, Currency.GOLD), false));
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 17, button -> modifyInBounds(silverAmount, true, CurrencyResolver.Currency.SILVER), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 23, button -> modifyInBounds(silverAmount, false, CurrencyResolver.Currency.SILVER), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 17, button -> modifyInBounds(silverAmount, true, Currency.SILVER), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 23, button -> modifyInBounds(silverAmount, false, Currency.SILVER), false));
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 29, button -> modifyInBounds(bronzeAmount, true, CurrencyResolver.Currency.BRONZE), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 35, button -> modifyInBounds(bronzeAmount, false, CurrencyResolver.Currency.BRONZE), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 29, button -> modifyInBounds(bronzeAmount, true, Currency.BRONZE), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 35, button -> modifyInBounds(bronzeAmount, false, Currency.BRONZE), false));
 
         buttons.add(new AlwaysOnTopTexturedButtonWidget(x + 3, y + 41, 24, 8, 37, 0, 16, TEXTURE, button -> {
             if (Screen.hasShiftDown() && Screen.hasControlDown()) {
@@ -106,9 +107,9 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
     /**
      * Modifies a value by either 1 or 10 depending on whether or not SHIFT is held
      * <br>
-     * Shortcut for {@link PurseWidget#modifyInBounds(MutableInt, int, boolean, CurrencyResolver.Currency)}
+     * Shortcut for {@link PurseWidget#modifyInBounds(MutableInt, int, boolean, Currency)}
      */
-    private void modifyInBounds(MutableInt value, boolean add, CurrencyResolver.Currency currency) {
+    private void modifyInBounds(MutableInt value, boolean add, Currency currency) {
         modifyInBounds(value, Screen.hasShiftDown() ? 10 : 1, add, currency);
     }
 
@@ -123,7 +124,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
      * @param add      Whether to add or subtract
      * @param currency The currency this selector is for
      */
-    private void modifyInBounds(MutableInt value, int modifyBy, boolean add, CurrencyResolver.Currency currency) {
+    private void modifyInBounds(MutableInt value, int modifyBy, boolean add, Currency currency) {
 
         //Get the step size of this selector
         int stepSize = currency.getRawValue(1);
@@ -167,9 +168,9 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
         bronzeAmount.setValue(0);
         silverAmount.setValue(0);
 
-        modifyInBounds(goldAmount, oldGoldAmount, true, CurrencyResolver.Currency.GOLD);
-        modifyInBounds(silverAmount, oldSilverAmount, true, CurrencyResolver.Currency.SILVER);
-        modifyInBounds(bronzeAmount, oldBronzeAmount, true, CurrencyResolver.Currency.BRONZE);
+        modifyInBounds(goldAmount, oldGoldAmount, true, Currency.GOLD);
+        modifyInBounds(silverAmount, oldSilverAmount, true, Currency.SILVER);
+        modifyInBounds(bronzeAmount, oldBronzeAmount, true, Currency.BRONZE);
     }
 
     @Override

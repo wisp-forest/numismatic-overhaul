@@ -33,7 +33,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         this.data = data;
         this.text = new ArrayList<>();
 
-        if (data.original() != -1) {
+        if (data.original()[0] != -1) {
             CurrencyConverter.getAsItemStackList(data.original()).forEach(stack -> text.add(createPlaceholder(stack.getCount())));
             text.add(Text.of(" "));
         }
@@ -68,7 +68,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
 
     @Override
     public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z, TextureManager textureManager) {
-        List<ItemStack> originalCoins = data.original() != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
+        List<ItemStack> originalCoins = data.original()[0] != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(data.value());
 
         RenderSystem.setShaderTexture(0, new Identifier("textures/gui/container/villager2.png"));
