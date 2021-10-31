@@ -568,6 +568,42 @@
         },
         "price": 2999,
         "maxUses": 4
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:azalea",
+          "count": 1
+        },
+        "price": 2000,
+        "maxUses": 9
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:flowering_azalea",
+          "count": 1
+        },
+        "price": 2400,
+        "maxUses": 9
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pointed_dripstone",
+          "count": 2
+        },
+        "price": 450,
+        "maxUses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:dripstone_block",
+          "count": 1
+        },
+        "price": 360,
+        "maxUses": 16
       }
     ],
     "apprentice": [
@@ -645,6 +681,15 @@
         },
         "price": 2500,
         "maxUses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:sculk_sensor",
+          "count": 1
+        },
+        "price": 10000,
+        "maxUses": 2
       }
     ]
   }
