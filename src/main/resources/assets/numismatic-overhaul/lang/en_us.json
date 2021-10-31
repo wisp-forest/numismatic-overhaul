@@ -8,5 +8,8 @@
   "gui.numismatic-overhaul.shop.inventory_title": "Shop Inventory",
   "gui.numismatic-overhaul.shop.merchant_title": "Shop",
   "gui.numismatic-overhaul.purse_title": "Purse",
-  "numismatic-overhaul.empty": "Empty"
+  "numismatic-overhaul.empty": "Empty",
+  "currency.numismatic-overhaul.bronze": "Bronze",
+  "currency.numismatic-overhaul.silver": "Silver",
+  "currency.numismatic-overhaul.gold": "Gold"
 }

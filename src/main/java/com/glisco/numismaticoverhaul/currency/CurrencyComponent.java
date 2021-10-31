@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.currency;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.item.CoinItem;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +55,6 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         }
     }
 
-    //TODO make this return false if would go into debt
-
     /**
      * Modifies this component, displays a message in the action bar
      *
@@ -72,7 +72,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         message.append(new LiteralText("§7["));
         for (ItemStack stack : transactionStacks) {
             message.append(new LiteralText("§b" + stack.getCount() + " "));
-            message.append(stack.getName().getString().split(" ")[0]);
+            message.append(new TranslatableText("currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase()));
             if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) message.append(new LiteralText(", "));
         }
         message.append(new LiteralText("§7]"));

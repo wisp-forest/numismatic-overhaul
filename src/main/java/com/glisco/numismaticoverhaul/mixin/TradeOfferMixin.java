@@ -1,10 +1,7 @@
 package com.glisco.numismaticoverhaul.mixin;
 
-import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.CurrencyItem;
-import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.villagers.data.NumismaticTradeOfferExtensions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -26,7 +23,7 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
     @Shadow
     @Final
     private ItemStack firstBuyItem;
-    private int numismatic$reputation = 1;
+    private int numismatic$reputation = 0;
 
     @Override
     public void numismatic$setReputation(int reputation) {
@@ -52,18 +49,18 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
     private void adjustFirstStack(CallbackInfoReturnable<ItemStack> cir) {
         if (this.numismatic$reputation == -69420) return;
 
-        if (!(this.firstBuyItem.getItem() instanceof CoinItem || this.firstBuyItem.getItem() instanceof MoneyBagItem)) return;
+        if (!(this.firstBuyItem.getItem() instanceof CurrencyItem currencyItem)) return;
 
-        int value = CurrencyHelper.getValue(Collections.singletonList(this.firstBuyItem));
+        int originalValue = currencyItem.getValue(this.firstBuyItem);
         int adjustedValue = numismatic$reputation < 0 ?
-                (int) (value + Math.abs(numismatic$reputation) * (Math.abs(value) * .02))
+                (int) (originalValue + Math.abs(numismatic$reputation) * (Math.abs(originalValue) * .02))
                 :
-                (int) Math.max(1, value - Math.abs(value) * (numismatic$reputation / (numismatic$reputation + 100f)));
+                (int) Math.max(1, originalValue - Math.abs(originalValue) * (numismatic$reputation / (numismatic$reputation + 100f)));
 
-        final var stack = CurrencyHelper.getClosest(adjustedValue);
-        if (value != CurrencyHelper.getValue(Collections.singletonList(stack)) && !stack.isOf(this.firstBuyItem.getItem()))
-            CurrencyItem.setOriginalValue(stack, value);
-        cir.setReturnValue(stack);
+        final var roundedStack = CurrencyHelper.getClosest(adjustedValue);
+        if (originalValue != CurrencyHelper.getValue(Collections.singletonList(roundedStack)) && !roundedStack.isOf(this.firstBuyItem.getItem()))
+            CurrencyItem.setOriginalValue(roundedStack, originalValue);
+        cir.setReturnValue(roundedStack);
     }
 
 }
