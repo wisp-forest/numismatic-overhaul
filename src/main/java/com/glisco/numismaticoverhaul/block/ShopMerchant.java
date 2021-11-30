@@ -5,10 +5,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -70,11 +70,6 @@ public class ShopMerchant implements Merchant {
     }
 
     @Override
-    public World getMerchantWorld() {
-        return shop.getWorld();
-    }
-
-    @Override
     public int getExperience() {
         return 0;
     }
@@ -92,5 +87,23 @@ public class ShopMerchant implements Merchant {
     @Override
     public SoundEvent getYesSound() {
         return SoundEvents.ENTITY_VILLAGER_YES;
+    }
+    //TODO - Look at the new methods and see if they cause any issues
+    // new
+    @Override
+    public boolean canRefreshTrades() {
+        return Merchant.super.canRefreshTrades();
+    }
+
+    // new
+    @Override
+    public void sendOffers(PlayerEntity player, Text test, int levelProgress) {
+        Merchant.super.sendOffers(player, test, levelProgress);
+    }
+
+    // new
+    @Override
+    public boolean isClient() {
+        return false;
     }
 }

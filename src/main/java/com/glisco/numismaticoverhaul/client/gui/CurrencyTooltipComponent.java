@@ -2,8 +2,8 @@ package com.glisco.numismaticoverhaul.client.gui;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
-import com.glisco.owo.ops.ItemOps;
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.wispforest.owo.ops.ItemOps;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -67,7 +67,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z, TextureManager textureManager) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
         List<ItemStack> originalCoins = data.original()[0] != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(data.value());
 

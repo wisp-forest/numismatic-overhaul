@@ -18,6 +18,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
@@ -229,8 +230,9 @@ public class TradeJsonAdapters {
 
             int level = json.get("level").getAsInt();
             ItemStack item = VillagerJsonHelper.ItemStack_getOrDefault(json, "item", new ItemStack(Items.BOOK));
+            int base_price = JsonHelper.getInt(json, "base_price", 200);
 
-            return new EnchantItemFactory(item, max_uses, villager_experience, level, allow_treasure, price_multiplier);
+            return new EnchantItemFactory(item, max_uses, villager_experience, level, allow_treasure, price_multiplier, base_price);
         }
     }
 
@@ -241,24 +243,29 @@ public class TradeJsonAdapters {
         private final boolean allowTreasure;
         private final ItemStack toEnchant;
         private final float multiplier;
+        private final int basePrice;
 
-        public EnchantItemFactory(ItemStack item, int maxUses, int experience, int level, boolean allowTreasure, float multiplier) {
+        public EnchantItemFactory(ItemStack item, int maxUses, int experience, int level, boolean allowTreasure, float multiplier, int basePrice) {
             this.experience = experience;
             this.maxUses = maxUses;
             this.level = level;
             this.allowTreasure = allowTreasure;
             this.toEnchant = item;
             this.multiplier = multiplier;
+            this.basePrice = basePrice;
         }
-
         public TradeOffer create(Entity entity, Random random) {
             ItemStack itemStack = toEnchant.copy();
             itemStack = EnchantmentHelper.enchant(random, itemStack, level, allowTreasure);
 
-            int price = 150;
-
+            int price = basePrice;
+            // TODO - Make algorithm return smaller values + decrease toolsmith and weaponsmith prices
             for (Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.get(itemStack).entrySet()) {
-                price *= (entry.getKey().isTreasure() ? 2f : 1f) * (MathHelper.nextFloat(random, entry.getValue(), entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
+                price *= (entry.getKey().isTreasure() ? 2f : 1f) *
+                        (MathHelper.nextFloat(
+                                random,
+                                entry.getValue(),
+                                entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
             }
 
             return new TradeOffer(CurrencyHelper.getClosest(price), toEnchant, itemStack, maxUses, this.experience, multiplier);

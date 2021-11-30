@@ -2,9 +2,9 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.ImplementedInventory;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import io.wispforest.owo.ops.WorldOps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,8 +28,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory, BlockEntityClientSerializable {
+//TODO - Look over the new methods from this, and see if any need changing
+public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
@@ -95,7 +95,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
         ShopOffer.toTag(tag, offers);
@@ -103,7 +103,6 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         if (owner != null) {
             tag.putUuid("Owner", owner);
         }
-        return tag;
     }
 
     @Override
@@ -170,8 +169,12 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public void fromClientTag(NbtCompound tag) {
-        readNbt(tag);
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound tag = new NbtCompound();
+        this.writeNbt(tag);
+        tag.remove("Items");
+        tag.remove("StoredCurrency");
+        return tag;
     }
 
     public UUID getOwner() {
@@ -184,16 +187,8 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        writeNbt(tag);
-        tag.remove("Items");
-        tag.remove("StoredCurrency");
-        return tag;
-    }
-
-    @Override
     public void markDirty() {
         super.markDirty();
-        if (!world.isClient()) this.sync();
+        WorldOps.updateIfOnServer(world, this.getPos());
     }
 }

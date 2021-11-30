@@ -78,7 +78,7 @@
         "item": {
           "item": "minecraft:diamond_axe"
         },
-        "price": 20003,
+        "base_price": 2000,
         "max_uses": 3
       }
     ],
@@ -90,7 +90,7 @@
         "item": {
           "item": "minecraft:diamond_sword"
         },
-        "price": 15003,
+        "base_price": 1500,
         "max_uses": 3
       }
     ]

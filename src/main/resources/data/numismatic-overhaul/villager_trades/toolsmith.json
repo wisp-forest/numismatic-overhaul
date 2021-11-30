@@ -56,7 +56,7 @@
           "count": 4
         },
         "price": 100,
-        "max_uses": 10
+        "max_uses": 14
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -114,7 +114,7 @@
           "count": 1
         },
         "price": 1000,
-        "max_uses": 2
+        "max_uses": 4
       },
       {
         "type": "numismatic-overhaul:enchant_item",
@@ -123,17 +123,17 @@
         "item": {
           "item": "minecraft:diamond_shovel"
         },
-        "price": 20003,
+        "base_price": 1330,
         "max_uses": 3
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 20,
+        "level": 24,
         "allow_treasure": false,
         "item": {
           "item": "minecraft:diamond_axe"
         },
-        "price": 20003,
+        "base_price": 1200,
         "max_uses": 3
       }
     ],
@@ -145,7 +145,7 @@
         "item": {
           "item": "minecraft:diamond_pickaxe"
         },
-        "price": 21000,
+        "base_price": 1800,
         "max_uses": 3
       }
     ]

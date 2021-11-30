@@ -36,6 +36,13 @@
         "max_uses": 8
       },
       {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 25,
+        "allow_treasure": true,
+        "max_uses": 2,
+        "base_price": 800
+      },
+      {
         "type": "numismatic-overhaul:sell_single_enchantment",
         "price_multiplier": 1.25
       }
@@ -66,6 +73,13 @@
         "max_uses": 8
       },
       {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 35,
+        "allow_treasure": true,
+        "max_uses": 3,
+        "base_price": 400
+      },
+      {
         "type": "numismatic-overhaul:sell_single_enchantment",
         "price_multiplier": 1.1
       }
@@ -91,9 +105,16 @@
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 20,
+        "level": 25,
         "allow_treasure": true,
         "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 50,
+        "allow_treasure": true,
+        "max_uses": 4,
+        "base_price": 300
       },
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
@@ -130,7 +151,7 @@
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 30,
+        "level": 60,
         "allow_treasure": true,
         "max_uses": 8
       }
@@ -147,9 +168,10 @@
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 40,
+        "level": 75,
         "allow_treasure": true,
-        "max_uses": 9
+        "max_uses": 5,
+        "base_price": 300
       }
     ]
   }

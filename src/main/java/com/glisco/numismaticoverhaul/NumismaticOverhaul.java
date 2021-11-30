@@ -11,7 +11,7 @@ import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
-import com.glisco.owo.ops.LootOps;
+import io.wispforest.owo.ops.LootOps;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
