@@ -73,7 +73,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
 
         RenderSystem.setShaderTexture(0, new Identifier("textures/gui/container/villager2.png"));
         for (int i = 0; i < originalCoins.size(); i++) {
-            DrawableHelper.drawTexture(matrices, x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, z, 0, 176, 9, 2, 256, 512);
+            DrawableHelper.drawTexture(matrices, x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, z, 0, 176, 9, 2, 512, 256);
             itemRenderer.renderGuiItemIcon(ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
         }
 

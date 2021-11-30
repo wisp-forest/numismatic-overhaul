@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
 import net.minecraft.item.map.MapIcon;
@@ -254,18 +255,16 @@ public class TradeJsonAdapters {
             this.multiplier = multiplier;
             this.basePrice = basePrice;
         }
+
         public TradeOffer create(Entity entity, Random random) {
             ItemStack itemStack = toEnchant.copy();
             itemStack = EnchantmentHelper.enchant(random, itemStack, level, allowTreasure);
 
             int price = basePrice;
-            // TODO - Make algorithm return smaller values + decrease toolsmith and weaponsmith prices
             for (Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.get(itemStack).entrySet()) {
-                price *= (entry.getKey().isTreasure() ? 2f : 1f) *
-                        (MathHelper.nextFloat(
-                                random,
-                                entry.getValue(),
-                                entry.getKey().getMaxLevel())) * (5f / (float) entry.getKey().getRarity().getWeight());
+                price += price * 0.10f + basePrice * (entry.getKey().isTreasure() ? 2f : 1f) *
+                        entry.getValue() * MathHelper.nextFloat(random, .8f, 1.2f)
+                        * (5f / (float) entry.getKey().getRarity().getWeight());
             }
 
             return new TradeOffer(CurrencyHelper.getClosest(price), toEnchant, itemStack, maxUses, this.experience, multiplier);

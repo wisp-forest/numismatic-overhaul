@@ -123,7 +123,7 @@
         "item": {
           "item": "minecraft:diamond_shovel"
         },
-        "base_price": 1330,
+        "base_price": 330,
         "max_uses": 3
       },
       {
@@ -133,7 +133,7 @@
         "item": {
           "item": "minecraft:diamond_axe"
         },
-        "base_price": 1200,
+        "base_price": 400,
         "max_uses": 3
       }
     ],
@@ -145,7 +145,7 @@
         "item": {
           "item": "minecraft:diamond_pickaxe"
         },
-        "base_price": 1800,
+        "base_price": 750,
         "max_uses": 3
       }
     ]
