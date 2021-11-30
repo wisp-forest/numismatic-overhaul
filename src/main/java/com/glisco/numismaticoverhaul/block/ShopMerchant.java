@@ -88,20 +88,7 @@ public class ShopMerchant implements Merchant {
     public SoundEvent getYesSound() {
         return SoundEvents.ENTITY_VILLAGER_YES;
     }
-    //TODO - Look at the new methods and see if they cause any issues
-    // new
-    @Override
-    public boolean canRefreshTrades() {
-        return Merchant.super.canRefreshTrades();
-    }
 
-    // new
-    @Override
-    public void sendOffers(PlayerEntity player, Text test, int levelProgress) {
-        Merchant.super.sendOffers(player, test, levelProgress);
-    }
-
-    // new
     @Override
     public boolean isClient() {
         return false;
