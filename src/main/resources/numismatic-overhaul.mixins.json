@@ -6,7 +6,6 @@
   "mixins": [
     "InventoryMixin",
     "MerchantScreenHandlerMixin",
-    "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "TradeOfferInternalsMixin",
     "TradeOfferListMixin",
