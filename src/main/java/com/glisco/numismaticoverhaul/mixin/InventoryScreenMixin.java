@@ -32,9 +32,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(method = "init", at = @At("TAIL"))
     public void addButton(CallbackInfo ci) {
-        purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(client.player));
+        purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
 
-        button = new PurseButton(this.x + 158, this.y + 67, button -> {
+        button = new PurseButton(this.x + 158, this.y + 6, button -> {
             if (Screen.hasShiftDown()) {
                 client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.STORE_ALL));
             } else {
@@ -46,11 +46,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     }
 
     //Incredibly beautiful lambda mixin
-    @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "method_19891", at = @At("TAIL"))
     private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
-        this.button.setPos(this.x + 158, this.y + 67);
-        this.purse = new PurseWidget(this.x + 129, this.y + 6, client, ModComponents.CURRENCY.get(client.player));
+        this.button.setPos(this.x + 158, this.y + 6);
+        this.purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
     }
 
     @Inject(method = "render", at = @At("TAIL"))

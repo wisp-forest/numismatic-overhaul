@@ -9,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.screen.slot.Slot;
@@ -75,17 +74,21 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     @Override
     public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (clickType == ClickType.RIGHT && clickedStack.getItem() == this && otherStack.isEmpty()) {
-            final var coinStack = CurrencyConverter.getAsValidStacks(getCombinedValue(clickedStack)).get(0);
+            final var stackRepresentation = CurrencyConverter.getAsValidStacks(getCombinedValue(clickedStack));
+            if (stackRepresentation.isEmpty()) return false;
+
+            final var coinStack = stackRepresentation.get(0);
             cursorStackReference.set(coinStack);
 
             final var values = getCombinedValue(clickedStack);
             values[((CoinItem) coinStack.getItem()).currency.ordinal()] -= coinStack.getCount();
 
             final var newValue = CurrencyResolver.combineValues(values);
+            final boolean canBeCompacted = values[0] < 100 && values[1] < 100 && values[2] < 100;
 
             if (newValue == 0) {
                 slot.setStack(ItemStack.EMPTY);
-            } else if (CurrencyConverter.getAsValidStacks(newValue).size() == 1) {
+            } else if (canBeCompacted && CurrencyConverter.getAsValidStacks(newValue).size() == 1) {
                 slot.setStack(CurrencyConverter.getAsValidStacks(newValue).get(0));
             } else {
                 setCombinedValue(clickedStack, values);

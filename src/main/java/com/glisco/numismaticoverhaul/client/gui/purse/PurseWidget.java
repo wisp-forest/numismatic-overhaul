@@ -44,16 +44,16 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
         this.x = x;
         this.y = y;
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 5, button -> modifyInBounds(goldAmount, true, Currency.GOLD), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 11, button -> modifyInBounds(goldAmount, false, Currency.GOLD), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 10, button -> modifyInBounds(goldAmount, true, Currency.GOLD), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 16, button -> modifyInBounds(goldAmount, false, Currency.GOLD), false));
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 17, button -> modifyInBounds(silverAmount, true, Currency.SILVER), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 23, button -> modifyInBounds(silverAmount, false, Currency.SILVER), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 22, button -> modifyInBounds(silverAmount, true, Currency.SILVER), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 28, button -> modifyInBounds(silverAmount, false, Currency.SILVER), false));
 
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 29, button -> modifyInBounds(bronzeAmount, true, Currency.BRONZE), true));
-        buttons.add(new SmallPurseAdjustButton(x + 18, y + 35, button -> modifyInBounds(bronzeAmount, false, Currency.BRONZE), false));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 34, button -> modifyInBounds(bronzeAmount, true, Currency.BRONZE), true));
+        buttons.add(new SmallPurseAdjustButton(x + 18, y + 40, button -> modifyInBounds(bronzeAmount, false, Currency.BRONZE), false));
 
-        buttons.add(new AlwaysOnTopTexturedButtonWidget(x + 3, y + 41, 24, 8, 37, 0, 16, TEXTURE, button -> {
+        buttons.add(new AlwaysOnTopTexturedButtonWidget(x + 3, y + 46, 24, 8, 37, 0, 16, TEXTURE, button -> {
             if (Screen.hasShiftDown() && Screen.hasControlDown()) {
                 client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.EXTRACT_ALL));
             } else {
@@ -80,13 +80,15 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
             button.render(matrices, mouseX, mouseY, delta);
         }
 
-        client.textRenderer.draw(matrices, new LiteralText("" + goldAmount), x + 5, y + 7, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + silverAmount), x + 5, y + 19, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + bronzeAmount), x + 5, y + 31, 16777215);
+        client.textRenderer.draw(matrices, new LiteralText("" + goldAmount), x + 5, y + 12, 16777215);
+        client.textRenderer.draw(matrices, new LiteralText("" + silverAmount), x + 5, y + 24, 16777215);
+        client.textRenderer.draw(matrices, new LiteralText("" + bronzeAmount), x + 5, y + 36, 16777215);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (!this.active) return false;
+
         for (ButtonWidget buttonWidget : buttons) {
             if (buttonWidget.mouseClicked(mouseX, mouseY, button)) return true;
         }

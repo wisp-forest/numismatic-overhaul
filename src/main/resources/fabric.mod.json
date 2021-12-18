@@ -3,10 +3,11 @@
   "id": "numismatic-overhaul",
   "version": "${version}",
   "name": "Numismatic Overhaul",
-  "description": "Adds a Terraria-style currency system into Minecraft!",
+  "description": "Adds a Terraria-style currency system into Minecraft",
   "authors": [
     "glisco",
-    "Pois1x"
+    "Pois1x",
+    "Noaaan"
   ],
   "contact": {},
   "license": "GPL-3.0",
