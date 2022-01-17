@@ -3,14 +3,14 @@
   "id": "numismatic-overhaul",
   "version": "${version}",
   "name": "Numismatic Overhaul",
-  "description": "Adds a Terraria-style currency system into Minecraft",
+  "description": "Terraria-style currency in Minecraft",
   "authors": [
     "glisco",
     "Pois1x",
     "Noaaan"
   ],
   "contact": {},
-  "license": "GPL-3.0",
+  "license": "MIT",
   "icon": "assets/numismatic-overhaul/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -35,7 +35,8 @@
     "fabric": "*",
     "minecraft": ">=1.17",
     "cardinal-components-base": "*",
-    "cardinal-components-entity": "*"
+    "cardinal-components-entity": "*",
+    "owo": ">=0.3.14"
   },
   "custom": {
     "cardinal-components": [
