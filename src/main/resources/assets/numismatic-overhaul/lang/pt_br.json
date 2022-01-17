@@ -1,0 +1,15 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "Moeda de bronze",
+  "item.numismatic-overhaul.silver_coin": "Moeda de prata",
+  "item.numismatic-overhaul.gold_coin": "Moeda de ouro",
+  "item.numismatic-overhaul.money_bag": "Bolsa de moedas",
+  "block.numismatic-overhaul.shop": "Mercado",
+  "gui.numismatic-overhaul.shop.price": "Preço",
+  "gui.numismatic-overhaul.shop.inventory_title": "Inventário do mercado",
+  "gui.numismatic-overhaul.shop.merchant_title": "Mercado",
+  "gui.numismatic-overhaul.purse_title": "Bolsa",
+  "numismatic-overhaul.empty": "Vazio",
+  "currency.numismatic-overhaul.bronze": "Bronze",
+  "currency.numismatic-overhaul.silver": "Prata",
+  "currency.numismatic-overhaul.gold": "Ouro"
+}
