@@ -4,6 +4,7 @@
   "package": "com.glisco.numismaticoverhaul.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "BundleItemMixin",
     "LivingEntityMixin",
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
