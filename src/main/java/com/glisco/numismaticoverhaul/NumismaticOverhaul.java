@@ -1,92 +1,78 @@
 package com.glisco.numismaticoverhaul;
 
-import com.glisco.numismaticoverhaul.block.ShopBlock;
-import com.glisco.numismaticoverhaul.block.ShopBlockEntity;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
-import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
-import com.glisco.numismaticoverhaul.item.CoinItem;
-import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
+import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
+import io.wispforest.owo.network.OwoNetChannel;
 import io.wispforest.owo.ops.LootOps;
+import io.wispforest.owo.registration.reflect.FieldRegistrationHandler;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.fabricmc.fabric.api.tag.TagFactory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.GameRules;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class NumismaticOverhaul implements ModInitializer {
 
     public static final String MOD_ID = "numismatic-overhaul";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public static final CoinItem BRONZE_COIN = new CoinItem(Currency.BRONZE);
-    public static final CoinItem SILVER_COIN = new CoinItem(Currency.SILVER);
-    public static final CoinItem GOLD_COIN = new CoinItem(Currency.GOLD);
+    public static final OwoNetChannel CHANNEL = OwoNetChannel.create(id("main"));
 
-    public static final MoneyBagItem MONEY_BAG = new MoneyBagItem();
-
-    public static final Block SHOP_BLOCK = new ShopBlock();
-    public static BlockEntityType<ShopBlockEntity> SHOP_BLOCK_ENTITY;
-    public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE;
-
+    public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(id("shop"), ShopScreenHandler::new);
     public static final LootPoolEntryType MONEY_BAG_ENTRY = new LootPoolEntryType(new MoneyBagLootEntry.Serializer());
+    public static final Tag<EntityType<?>> THE_BOURGEOISIE = TagFactory.ENTITY_TYPE.create(id("the_bourgeoisie"));
 
-    static {
-        SHOP_SCREEN_HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(new Identifier(MOD_ID, "shop"), ShopScreenHandler::new);
-    }
-
-    public static final Logger LOGGER = LogManager.getLogger("numismatic-overhaul");
+    public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
+            = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.DROPS, GameRuleFactory.createIntRule(10, 0, 100));
 
     @Override
     public void onInitialize() {
 
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "bronze_coin"), BRONZE_COIN);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "silver_coin"), SILVER_COIN);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "gold_coin"), GOLD_COIN);
+        FieldRegistrationHandler.register(NumismaticOverhaulItems.class, MOD_ID, false);
+        FieldRegistrationHandler.register(NumismaticOverhaulBlocks.class, MOD_ID, false);
+        FieldRegistrationHandler.register(NumismaticOverhaulBlocks.Entities.class, MOD_ID, false);
 
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "money_bag"), MONEY_BAG);
+        Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, id("money_bag"), MONEY_BAG_ENTRY);
 
-        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "shop"), SHOP_BLOCK);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "shop"), new BlockItem(SHOP_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
-        SHOP_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "shop"), FabricBlockEntityTypeBuilder.create(ShopBlockEntity::new, SHOP_BLOCK).build(null));
-
-        Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new Identifier(MOD_ID, "money_bag"), MONEY_BAG_ENTRY);
-
-        ServerPlayNetworking.registerGlobalReceiver(RequestPurseActionC2SPacket.ID, RequestPurseActionC2SPacket::onPacket);
-        ServerPlayNetworking.registerGlobalReceiver(ShopScreenHandlerRequestC2SPacket.ID, ShopScreenHandlerRequestC2SPacket::onPacket);
+        CHANNEL.registerServerbound(RequestPurseActionC2SPacket.class, RequestPurseActionC2SPacket::handle);
+        CHANNEL.registerServerbound(ShopScreenHandlerRequestC2SPacket.class, ShopScreenHandlerRequestC2SPacket::handle);
+        UpdateShopScreenS2CPacket.register();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new VillagerTradesResourceListener());
         VillagerTradesHandler.registerDefaultAdapters();
+
+        CommandRegistrationCallback.EVENT.register(NumismaticCommand::register);
 
         ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, serverResourceManager, success) -> {
             VillagerTradesHandler.broadcastErrors(server);
         });
 
-        LootOps.injectItem(GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
+        LootOps.injectItem(NumismaticOverhaulItems.GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
                 LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST);
-
-        LootOps.injectItemWithCount(BRONZE_COIN, .5f, 9, 34, new Identifier("entities/pillager"));
-        LootOps.injectItem(SILVER_COIN, .2f, new Identifier("entities/pillager"));
 
         LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
             if (anyMatch(id, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST)) {
@@ -107,5 +93,9 @@ public class NumismaticOverhaul implements ModInitializer {
             if (target.equals(comparison)) return true;
         }
         return false;
+    }
+
+    public static Identifier id(String path) {
+        return new Identifier(MOD_ID, path);
     }
 }

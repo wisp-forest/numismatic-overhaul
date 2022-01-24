@@ -3,45 +3,25 @@ package com.glisco.numismaticoverhaul.network;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.client.gui.shop.ShopScreen;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
+import io.wispforest.owo.network.ClientAccess;
+import io.wispforest.owo.network.annotations.ElementType;
+import io.wispforest.owo.network.serialization.PacketBufSerializer;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateShopScreenS2CPacket {
+public record UpdateShopScreenS2CPacket(@ElementType(ShopOffer.class) List<ShopOffer> offers, int storedCurrency) {
 
-    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "update-shop-screen");
-
-    public static void onPacket(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buffer, PacketSender sender) {
-
-        List<ShopOffer> offers = new ArrayList<>();
-        ShopOffer.fromTag(buffer.readNbt(), offers);
-
-        int storedCurrency = buffer.readVarInt();
-
-        client.execute(() -> {
-            if (client.currentScreen instanceof ShopScreen) {
-                ShopScreen screen = (ShopScreen) client.currentScreen;
-                screen.updateScreen(offers, storedCurrency);
-            }
-        });
+    public static void handle(UpdateShopScreenS2CPacket message, ClientAccess access) {
+        if (!(access.runtime().currentScreen instanceof ShopScreen screen)) return;
+        screen.updateScreen(message.offers(), message.storedCurrency());
     }
 
-    public static Packet<?> create(List<ShopOffer> offers, int storedCurrency) {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+    public static void register() {
+        //noinspection ConstantConditions
+        PacketBufSerializer.register(ShopOffer.class, (buf, shopOffer) -> {
+            buf.writeNbt(shopOffer.toNbt());
+        }, buf -> ShopOffer.fromNbt(buf.readNbt()));
 
-        NbtCompound tag = ShopOffer.toTag(new NbtCompound(), offers);
-        buffer.writeNbt(tag);
-        buffer.writeVarInt(storedCurrency);
-
-        return ServerPlayNetworking.createS2CPacket(ID, buffer);
+        NumismaticOverhaul.CHANNEL.registerClientbound(UpdateShopScreenS2CPacket.class, UpdateShopScreenS2CPacket::handle);
     }
 }

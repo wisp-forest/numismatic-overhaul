@@ -37,9 +37,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
     private final MutableInt bronzeAmount = new MutableInt(0);
     private final CurrencyComponent currencyStorage;
 
-    @SuppressWarnings("ConstantConditions")
     public PurseWidget(int x, int y, MinecraftClient client, CurrencyComponent currencyStorage) {
-
         this.client = client;
         this.x = x;
         this.y = y;
@@ -55,12 +53,10 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
 
         buttons.add(new AlwaysOnTopTexturedButtonWidget(x + 3, y + 46, 24, 8, 37, 0, 16, TEXTURE, button -> {
             if (Screen.hasShiftDown() && Screen.hasControlDown()) {
-                client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.EXTRACT_ALL));
-            } else {
-                if (getCurrentSelectedValue() > 0) {
-                    client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.EXTRACT, getCurrentSelectedValue()));
-                    resetSelectedValue();
-                }
+                NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.extractAll());
+            } else if (selectedValue() > 0) {
+                NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.extract(selectedValue()));
+                resetSelectedValue();
             }
         }));
 
@@ -132,7 +128,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
         int stepSize = currency.getRawValue(1);
 
         //Calculate possible steps using the difference between the player's worth and the currently selected values added together
-        int possibleSteps = (currencyStorage.getValue() - getCurrentSelectedValue()) / stepSize;
+        int possibleSteps = (currencyStorage.getValue() - selectedValue()) / stepSize;
 
         //Upper bound is either 99 or the the current value of this selector plus the possible steps
         int upperBound = Math.min(value.intValue() + possibleSteps, 99);
@@ -149,7 +145,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
      *
      * @return The raw value of all selectors added with respect to their different worths
      */
-    private int getCurrentSelectedValue() {
+    private int selectedValue() {
         return CurrencyResolver.combineValues(new int[]{bronzeAmount.getValue(), silverAmount.getValue(), goldAmount.getValue()});
     }
 
@@ -160,7 +156,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
     private void resetSelectedValue() {
 
         //Silently modify client cache because this runs before the sync packet is received
-        currencyStorage.silentModify(-getCurrentSelectedValue());
+        currencyStorage.silentModify(-selectedValue());
 
         int oldGoldAmount = goldAmount.intValue();
         int oldSilverAmount = silverAmount.intValue();

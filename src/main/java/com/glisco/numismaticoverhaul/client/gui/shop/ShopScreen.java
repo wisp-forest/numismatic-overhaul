@@ -158,7 +158,8 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
     public void loadOffer(int index) {
         TRADE_WIDGET.setText(String.valueOf(offers.get(index).getPrice()));
-        client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createLOAD(index));
+        NumismaticOverhaul.CHANNEL.clientHandle()
+                .send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.LOAD_OFFER, index));
     }
 
     private void selectTab(int tab, boolean clickSound) {

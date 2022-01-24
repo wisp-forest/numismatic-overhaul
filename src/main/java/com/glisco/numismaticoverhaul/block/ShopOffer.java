@@ -49,20 +49,12 @@ public class ShopOffer {
         return sell.copy();
     }
 
-    public static NbtCompound toTag(NbtCompound tag, List<ShopOffer> offers) {
+    public static NbtCompound writeAll(NbtCompound tag, List<ShopOffer> offers) {
 
         NbtList offerList = new NbtList();
 
         for (ShopOffer offer : offers) {
-            NbtCompound offerTag = new NbtCompound();
-            offerTag.putInt("Price", offer.getPrice());
-
-            NbtCompound item = new NbtCompound();
-            offer.getSellStack().writeNbt(item);
-
-            offerTag.put("Item", item);
-
-            offerList.add(offerTag);
+            offerList.add(offer.toNbt());
         }
 
         tag.put("Offers", offerList);
@@ -70,22 +62,30 @@ public class ShopOffer {
         return tag;
     }
 
-    public static void fromTag(NbtCompound tag, List<ShopOffer> offers) {
-
+    public static void readAll(NbtCompound tag, List<ShopOffer> offers) {
         offers.clear();
 
-        NbtList offerList = tag.getList("Offers", 10);
+        NbtList offerList = tag.getList("Offers", NbtElement.COMPOUND_TYPE);
 
         for (NbtElement offerTag : offerList) {
-
-            NbtCompound offer = (NbtCompound) offerTag;
-
-            int price = offer.getInt("Price");
-
-            ItemStack sell = ItemStack.fromNbt(offer.getCompound("Item"));
-
-            offers.add(new ShopOffer(sell, price));
+            offers.add(fromNbt((NbtCompound) offerTag));
         }
+    }
+
+    public NbtCompound toNbt() {
+        var nbt = new NbtCompound();
+        nbt.putInt("Price", this.price);
+
+        var itemNbt = new NbtCompound();
+        this.sell.writeNbt(itemNbt);
+
+        nbt.put("Item", itemNbt);
+        return nbt;
+    }
+
+    public static ShopOffer fromNbt(NbtCompound nbt) {
+        var item = ItemStack.fromNbt(nbt.getCompound("Item"));
+        return new ShopOffer(item, nbt.getInt("Price"));
     }
 
     @Override

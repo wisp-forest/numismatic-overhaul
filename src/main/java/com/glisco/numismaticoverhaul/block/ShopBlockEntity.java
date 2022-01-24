@@ -43,7 +43,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     private int tradeIndex;
 
     public ShopBlockEntity(BlockPos pos, BlockState state) {
-        super(NumismaticOverhaul.SHOP_BLOCK_ENTITY, pos, state);
+        super(NumismaticOverhaulBlocks.Entities.SHOP, pos, state);
         this.merchant = new ShopMerchant(this);
         this.offers = new ArrayList<>();
         this.storedCurrency = 0;
@@ -101,7 +101,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
-        ShopOffer.toTag(tag, offers);
+        ShopOffer.writeAll(tag, offers);
         tag.putInt("StoredCurrency", storedCurrency);
         if (owner != null) {
             tag.putUuid("Owner", owner);
@@ -112,7 +112,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         Inventories.readNbt(tag, INVENTORY);
-        ShopOffer.fromTag(tag, offers);
+        ShopOffer.readAll(tag, offers);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }

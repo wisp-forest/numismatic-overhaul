@@ -1,8 +1,8 @@
 package com.glisco.numismaticoverhaul.currency;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
@@ -41,8 +41,8 @@ public class CurrencyHelper {
 
             if (stack.getItem() instanceof CoinItem) {
                 return ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
-            } else if (stack.isOf(NumismaticOverhaul.MONEY_BAG)) {
-                return NumismaticOverhaul.MONEY_BAG.getValue(stack);
+            } else if (stack.isOf(NumismaticOverhaulItems.MONEY_BAG)) {
+                return NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
             } else {
                 return 0;
             }

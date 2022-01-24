@@ -14,7 +14,6 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,13 +115,13 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void createOffer(int price) {
         shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
-        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
     }
 
     public void extractCurrency() {
         ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
         shop.setStoredCurrency(0);
-        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
     }
 
     public ItemStack getBufferStack() {
@@ -131,7 +130,7 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void deleteOffer() {
         shop.deleteOffer(BUFFER_INVENTORY.getStack(0));
-        ((ServerPlayerEntity) owner).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
     }
 
     // Shift + Player Inv Slot

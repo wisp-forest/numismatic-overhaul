@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.currency;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ public class CurrencyConverter {
 
         int[] values = CurrencyResolver.splitValues(value);
 
-        output[2] = new ItemStack(NumismaticOverhaul.GOLD_COIN, values[2]);
-        output[1] = new ItemStack(NumismaticOverhaul.SILVER_COIN, values[1]);
-        output[0] = new ItemStack(NumismaticOverhaul.BRONZE_COIN, values[0]);
+        output[2] = new ItemStack(NumismaticOverhaulItems.GOLD_COIN, values[2]);
+        output[1] = new ItemStack(NumismaticOverhaulItems.SILVER_COIN, values[1]);
+        output[0] = new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, values[0]);
 
         return output;
     }

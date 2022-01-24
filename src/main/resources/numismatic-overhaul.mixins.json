@@ -4,8 +4,9 @@
   "package": "com.glisco.numismaticoverhaul.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "InventoryMixin",
+    "LivingEntityMixin",
     "MerchantScreenHandlerMixin",
+    "ServerPlayerEntityMixin",
     "ServerWorldMixin",
     "TradeOfferInternalsMixin",
     "TradeOfferListMixin",
@@ -13,8 +14,8 @@
     "VillagerEntityMixin"
   ],
   "client": [
-    "MerchantScreenMixin",
-    "InventoryScreenMixin"
+    "InventoryScreenMixin",
+    "MerchantScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

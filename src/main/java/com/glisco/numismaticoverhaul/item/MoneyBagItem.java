@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import net.minecraft.client.item.TooltipData;
@@ -34,13 +33,13 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     }
 
     public static ItemStack create(int value) {
-        ItemStack stack = new ItemStack(NumismaticOverhaul.MONEY_BAG);
+        ItemStack stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
         stack.getOrCreateNbt().putInt("Value", value);
         return stack;
     }
 
     public static ItemStack createCombined(int[] values) {
-        ItemStack stack = new ItemStack(NumismaticOverhaul.MONEY_BAG);
+        ItemStack stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
         stack.getOrCreateNbt().putIntArray("Values", values);
         stack.getOrCreateNbt().putBoolean("Combined", true);
         return stack;
@@ -142,7 +141,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public Text getName() {
-        return super.getName().copy().setStyle(NumismaticOverhaul.SILVER_COIN.NAME_STYLE);
+        return super.getName().copy().setStyle(NumismaticOverhaulItems.SILVER_COIN.NAME_STYLE);
     }
 
 }

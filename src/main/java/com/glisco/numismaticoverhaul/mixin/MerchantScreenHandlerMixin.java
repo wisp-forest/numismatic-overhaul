@@ -1,10 +1,10 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -34,7 +34,7 @@ public class MerchantScreenHandlerMixin {
 
         if (stack.getItem() instanceof CoinItem) {
             numismatic$autofillWithCoins(slot, stack, handler, playerBalance);
-        } else if (stack.getItem() == NumismaticOverhaul.MONEY_BAG) {
+        } else if (stack.getItem() == NumismaticOverhaulItems.MONEY_BAG) {
             autofillWithMoneyBag(slot, stack, handler, playerBalance);
         }
 
@@ -64,7 +64,7 @@ public class MerchantScreenHandlerMixin {
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 
         //See how much is required and how much in present in the player's inventory
-        int requiredCurrency = NumismaticOverhaul.MONEY_BAG.getValue(stack);
+        int requiredCurrency = NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
         int availableCurrencyInPlayerInventory = CurrencyHelper.getMoneyInInventory(player, false);
 
         //Find out how much we still need to fill

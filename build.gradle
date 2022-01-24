@@ -1,16 +1,23 @@
+buildscript {
+    dependencies {
+        classpath 'net.fabricmc:tiny-remapper:0.8.1'
+    }
+}
+
 plugins {
     id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'maven-publish'
+    id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
 }
 
 version = "${project.mod_version}+${project.minecraft_base_version}"
 group = project.maven_group
 
 repositories {
-    maven { url = "https://ladysnake.jfrog.io/artifactory/mods"}
+    maven { url = "https://ladysnake.jfrog.io/artifactory/mods" }
     maven { url = "https://maven.shedaniel.me/" }
-    maven { url = "https://maven.wispforest.io/"}
-    maven { url = uri("https://storage.googleapis.com/devan-maven/")}
+    maven { url = "https://maven.wispforest.io/" }
+    maven { url = uri("https://storage.googleapis.com/devan-maven/") }
 }
 
 dependencies {
@@ -21,8 +28,8 @@ dependencies {
     // Fabric API
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
-    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}"
+    modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}")
+    modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}")
 
     // REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
@@ -32,10 +39,11 @@ dependencies {
     modLocalRuntime "com.ptsmods:devlogin:1.2.1"
 
     // Stacc
-    modRuntimeOnly(include("net.devtech:Stacc:1.3.0"))
+    modRuntimeOnly include("net.devtech:Stacc:1.3.0")
 
     // OwO
     modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+    modCompileOnly include("io.wispforest:owo-sentinel:${project.owo_version}")
 }
 
 processResources {

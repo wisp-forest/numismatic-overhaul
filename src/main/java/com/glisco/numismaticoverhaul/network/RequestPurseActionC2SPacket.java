@@ -1,66 +1,47 @@
 package com.glisco.numismaticoverhaul.network;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
+import io.wispforest.owo.network.ServerAccess;
 import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
 
-public class RequestPurseActionC2SPacket {
+public record RequestPurseActionC2SPacket(Action action, int value) {
 
-    public static final Identifier ID = new Identifier(NumismaticOverhaul.MOD_ID, "request-purse-action");
+    public static void handle(RequestPurseActionC2SPacket message, ServerAccess access) {
+        final var player = access.player();
+        final int value = message.value();
 
-    public static void onPacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buffer, PacketSender sender) {
-
-        int[] values = buffer.readIntArray();
-
-        Action action = Action.values()[values[0]];
-
-        server.execute(() -> {
-            if (player.currentScreenHandler instanceof PlayerScreenHandler) {
-                if (action == Action.STORE_ALL) {
-
-                    ModComponents.CURRENCY.get(player).modify(CurrencyHelper.getMoneyInInventory(player, true));
-
-                } else if (action == Action.EXTRACT) {
-
+        if (player.currentScreenHandler instanceof PlayerScreenHandler) {
+            switch (message.action()) {
+                case STORE_ALL -> ModComponents.CURRENCY.get(player).modify(CurrencyHelper.getMoneyInInventory(player, true));
+                case EXTRACT -> {
                     //Check if we can actually extract this much money to prevent cheeky packet forgery
-                    if (ModComponents.CURRENCY.get(player).getValue() < values[1]) return;
+                    if (ModComponents.CURRENCY.get(player).getValue() < value) return;
 
-                    CurrencyConverter.getAsItemStackList(values[1]).forEach(stack -> player.getInventory().offerOrDrop(stack));
-
-                    ModComponents.CURRENCY.get(player).modify(-values[1]);
-                } else if (action == Action.EXTRACT_ALL) {
+                    CurrencyConverter.getAsItemStackList(value).forEach(stack -> player.getInventory().offerOrDrop(stack));
+                    ModComponents.CURRENCY.get(player).modify(-value);
+                }
+                case EXTRACT_ALL -> {
                     CurrencyConverter.getAsValidStacks(ModComponents.CURRENCY.get(player).getValue())
                             .forEach(stack -> player.getInventory().offerOrDrop(stack));
 
                     ModComponents.CURRENCY.get(player).modify(-ModComponents.CURRENCY.get(player).getValue());
                 }
             }
-        });
+        }
     }
 
-    public static Packet<?> create(Action action) {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        int[] values = new int[]{action.ordinal()};
-        buffer.writeIntArray(values);
-        return ClientPlayNetworking.createC2SPacket(ID, buffer);
+    public static RequestPurseActionC2SPacket storeAll() {
+        return new RequestPurseActionC2SPacket(Action.STORE_ALL, 0);
     }
 
-    public static Packet<?> create(Action action, int value) {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        int[] values = new int[]{action.ordinal(), value};
-        buffer.writeIntArray(values);
-        return ClientPlayNetworking.createC2SPacket(ID, buffer);
+    public static RequestPurseActionC2SPacket extractAll() {
+        return new RequestPurseActionC2SPacket(Action.EXTRACT_ALL, 0);
+    }
+
+    public static RequestPurseActionC2SPacket extract(int amount) {
+        return new RequestPurseActionC2SPacket(Action.EXTRACT, amount);
     }
 
     public enum Action {

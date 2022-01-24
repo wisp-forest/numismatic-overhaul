@@ -41,11 +41,13 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         this.parent = parent;
 
         buttons.add(new TradeWidgetButton(x + 7, y + 36, button -> {
-            client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createCREATE(Integer.parseInt(PRICE_FIELD.getText())));
+            NumismaticOverhaul.CHANNEL.clientHandle()
+                    .send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.CREATE_OFFER, Integer.parseInt(PRICE_FIELD.getText())));
         }, true));
 
         buttons.add(new TradeWidgetButton(x + 50, y + 36, button -> {
-            client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createDELETE());
+            NumismaticOverhaul.CHANNEL.clientHandle()
+                    .send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.DELETE_OFFER));
         }, false));
 
         client.keyboard.setRepeatEvents(true);

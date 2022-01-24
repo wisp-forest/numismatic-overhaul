@@ -32,7 +32,8 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
         this.y = y;
         this.active = true;
         this.CONFIRM_BUTTON = new CurrencyRetrieveButton(x + 4, y + 41, button -> {
-            client.getNetworkHandler().sendPacket(ShopScreenHandlerRequestC2SPacket.createEXTRACT());
+            NumismaticOverhaul.CHANNEL.clientHandle()
+                    .send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.EXTRACT_CURRENCY));
         });
     }
 

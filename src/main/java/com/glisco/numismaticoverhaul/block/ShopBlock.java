@@ -4,7 +4,6 @@ import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -39,7 +38,7 @@ public class ShopBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE = VoxelShapes.union(MAIN_PILLAR, PLATE, PILLAR_1, PILLAR_2, PILLAR_3, PILLAR_4);
 
     public ShopBlock() {
-        super(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).nonOpaque().hardness(5.0f));
+        super(FabricBlockSettings.of(Material.STONE).nonOpaque().hardness(5.0f));
     }
 
     @Override
@@ -63,7 +62,7 @@ public class ShopBlock extends BlockWithEntity {
                     return openShopMerchant(player, shop);
                 } else {
                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                    ((ServerPlayerEntity) player).networkHandler.sendPacket(UpdateShopScreenS2CPacket.create(shop.getOffers(), shop.getStoredCurrency()));
+                    NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
                 }
             } else {
                 return openShopMerchant(player, shop);
@@ -97,11 +96,10 @@ public class ShopBlock extends BlockWithEntity {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
-            ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
-
-            CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
-                    .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
-
+            if (world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
+                CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
+                        .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+            }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
@@ -115,6 +113,6 @@ public class ShopBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, NumismaticOverhaul.SHOP_BLOCK_ENTITY, ShopBlockEntity::tick);
+        return checkType(type, NumismaticOverhaulBlocks.Entities.SHOP, ShopBlockEntity::tick);
     }
 }

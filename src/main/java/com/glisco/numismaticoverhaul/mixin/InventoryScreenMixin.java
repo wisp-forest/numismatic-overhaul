@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.client.gui.purse.PurseButton;
 import com.glisco.numismaticoverhaul.client.gui.purse.PurseWidget;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
@@ -36,7 +37,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
         button = new PurseButton(this.x + 158, this.y + 6, button -> {
             if (Screen.hasShiftDown()) {
-                client.getNetworkHandler().sendPacket(RequestPurseActionC2SPacket.create(RequestPurseActionC2SPacket.Action.STORE_ALL));
+                NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.storeAll());
             } else {
                 purse.toggleActive();
             }
