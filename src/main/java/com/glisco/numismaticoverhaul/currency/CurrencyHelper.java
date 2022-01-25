@@ -1,10 +1,11 @@
 package com.glisco.numismaticoverhaul.currency;
 
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
-import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,10 @@ public class CurrencyHelper {
 
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
-            if (!(stack.getItem() instanceof CoinItem)) continue;
+            if (stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) continue;
+            if (!(stack.getItem() instanceof CurrencyItem currencyItem)) continue;
 
-            value += ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
+            value += currencyItem.getValue(stack);
 
             if (remove) player.getInventory().removeOne(stack);
         }
@@ -36,16 +38,11 @@ public class CurrencyHelper {
 
     public static int getValue(List<ItemStack> stacks) {
         return stacks.stream().mapToInt(stack -> {
-
             if (stack == null) return 0;
 
-            if (stack.getItem() instanceof CoinItem) {
-                return ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
-            } else if (stack.isOf(NumismaticOverhaulItems.MONEY_BAG)) {
-                return NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
-            } else {
-                return 0;
-            }
+            if (stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) return 0;
+            if (!(stack.getItem() instanceof CurrencyItem currencyItem)) return 0;
+            return currencyItem.getValue(stack);
         }).sum();
     }
 

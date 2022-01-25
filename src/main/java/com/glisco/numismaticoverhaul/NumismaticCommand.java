@@ -20,7 +20,7 @@ public class NumismaticCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean b) {
 
         dispatcher.register(literal("numismatic")
-                .then(literal("balance").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4))
+                .then(literal("balance").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                         .then(argument("player", EntityArgumentType.player())
                                 .then(literal("get").executes(NumismaticCommand::get))
                                 .then(literal("set")

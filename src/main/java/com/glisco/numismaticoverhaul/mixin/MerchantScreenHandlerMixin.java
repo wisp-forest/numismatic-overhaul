@@ -60,7 +60,7 @@ public class MerchantScreenHandlerMixin {
     }
 
     private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
-
+        if (ItemStack.canCombine(stack, handler.getSlot(slot).getStack())) return;
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 
         //See how much is required and how much in present in the player's inventory

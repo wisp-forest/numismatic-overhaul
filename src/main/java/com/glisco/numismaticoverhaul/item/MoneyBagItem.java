@@ -46,6 +46,8 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     }
 
     public int getValue(ItemStack stack) {
+        if (stack.getItem() != NumismaticOverhaulItems.MONEY_BAG) return 0;
+
         if (!stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) {
             return stack.getOrCreateNbt().getInt("Value");
         } else {
