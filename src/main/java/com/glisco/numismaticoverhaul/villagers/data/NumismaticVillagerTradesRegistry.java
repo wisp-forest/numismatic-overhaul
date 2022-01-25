@@ -6,10 +6,8 @@ import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NumismaticVillagerTradesRegistry {
 
@@ -18,6 +16,8 @@ public class NumismaticVillagerTradesRegistry {
 
     private static final HashMap<VillagerProfession, Int2ObjectOpenHashMap<List<TradeOffers.Factory>>> REMAPPED_FABRIC_TRADES = new HashMap<>();
     private static final Int2ObjectOpenHashMap<List<TradeOffers.Factory>> REMAPPED_FABRIC_WANDERING_TRADER_TRADES = new Int2ObjectOpenHashMap<>();
+
+    private static final AtomicBoolean MOD_VILLAGERS_WRAPPED = new AtomicBoolean(false);
 
     // -- Fabric API trades - these are stored persistently --
 
@@ -40,6 +40,19 @@ public class NumismaticVillagerTradesRegistry {
     }
 
     // -- Helper Methods --
+
+    public static void wrapModVillagers() {
+        if (MOD_VILLAGERS_WRAPPED.get()) return;
+
+        TradeOffers.PROFESSION_TO_LEVELED_TRADE.forEach((profession, int2TradesMap) -> {
+            if (TRADES_REGISTRY.containsKey(profession)) return;
+            int2TradesMap.forEach((integer, factories) -> {
+                registerFabricVillagerTrades(profession, integer, Arrays.asList(factories));
+            });
+        });
+
+        MOD_VILLAGERS_WRAPPED.set(true);
+    }
 
     private static List<TradeOffers.Factory> getVillagerTradeList(HashMap<VillagerProfession, Int2ObjectOpenHashMap<List<TradeOffers.Factory>>> registry, VillagerProfession profession, int level) {
         Int2ObjectOpenHashMap<List<TradeOffers.Factory>> villagerMap = getOrDefaultAndAdd(registry, profession, new Int2ObjectOpenHashMap<>());

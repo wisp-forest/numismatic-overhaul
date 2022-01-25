@@ -57,7 +57,7 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
                 :
                 (int) Math.max(1, originalValue - Math.abs(originalValue) * (numismatic$reputation / (numismatic$reputation + 100f)));
 
-        adjustedValue = Math.max(adjustedValue, 990000);
+        adjustedValue = Math.min(adjustedValue, 990000);
 
         final var roundedStack = CurrencyHelper.getClosest(adjustedValue);
         if (originalValue != CurrencyHelper.getValue(Collections.singletonList(roundedStack)) && !roundedStack.isOf(this.firstBuyItem.getItem()))

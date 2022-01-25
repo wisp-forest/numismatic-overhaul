@@ -40,6 +40,8 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
             VillagerTradesHandler.loadProfession(identifier, root);
         });
 
+        NumismaticVillagerTradesRegistry.wrapModVillagers();
+
         final Pair<HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>>, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> registry = NumismaticVillagerTradesRegistry.getRegistryForLoading();
         registry.getLeft().forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
 

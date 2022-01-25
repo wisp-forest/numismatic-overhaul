@@ -39,7 +39,7 @@ public class RemappingTradeWrapper implements TradeOffers.Factory {
     private static ItemStack remap(ItemStack stack) {
         if (stack.getItem() != Items.EMERALD) return stack;
 
-        final int moneyWorth = stack.getCount() * 69;
+        final int moneyWorth = stack.getCount() * 125;
 
         return CurrencyHelper.getClosest(moneyWorth);
     }
