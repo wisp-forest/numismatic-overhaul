@@ -1,0 +1,15 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "铜币",
+  "item.numismatic-overhaul.silver_coin": "银币",
+  "item.numismatic-overhaul.gold_coin": "金币",
+  "item.numismatic-overhaul.money_bag": "钱袋",
+  "block.numismatic-overhaul.shop": "商店",
+  "gui.numismatic-overhaul.shop.price": "价格",
+  "gui.numismatic-overhaul.shop.inventory_title": "商店物品栏",
+  "gui.numismatic-overhaul.shop.merchant_title": "商店",
+  "gui.numismatic-overhaul.purse_title": "钱包",
+  "numismatic-overhaul.empty": "空",
+  "currency.numismatic-overhaul.bronze": "铜",
+  "currency.numismatic-overhaul.silver": "银",
+  "currency.numismatic-overhaul.gold": "金"
+}
