@@ -11,5 +11,6 @@
   "numismatic-overhaul.empty": "Empty",
   "currency.numismatic-overhaul.bronze": "Bronze",
   "currency.numismatic-overhaul.silver": "Silver",
-  "currency.numismatic-overhaul.gold": "Gold"
+  "currency.numismatic-overhaul.gold": "Gold",
+  "entity.numismatic-overhaul.tax_collector": "Tax Collector"
 }

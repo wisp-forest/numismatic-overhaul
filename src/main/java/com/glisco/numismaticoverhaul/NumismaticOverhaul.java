@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul;
 import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
+import com.glisco.numismaticoverhaul.entity.TaxCollectorEntity;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
@@ -19,10 +20,14 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.tag.TagFactory;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.LootPoolEntryType;
@@ -42,6 +47,14 @@ public class NumismaticOverhaul implements ModInitializer {
 
     public static final OwoNetChannel CHANNEL = OwoNetChannel.create(id("main"));
 
+    public static final EntityType<TaxCollectorEntity> TAX_COLLECTOR = FabricEntityTypeBuilder
+            .<TaxCollectorEntity>createMob()
+            .entityFactory(TaxCollectorEntity::new)
+            .defaultAttributes(TaxCollectorEntity::createHostileAttributes)
+            .dimensions(new EntityDimensions(.6f, 1.95f, false))
+            .build();
+
+
     public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(id("shop"), ShopScreenHandler::new);
     public static final LootPoolEntryType MONEY_BAG_ENTRY = new LootPoolEntryType(new MoneyBagLootEntry.Serializer());
     public static final Tag<EntityType<?>> THE_BOURGEOISIE = TagFactory.ENTITY_TYPE.create(id("the_bourgeoisie"));
@@ -57,6 +70,7 @@ public class NumismaticOverhaul implements ModInitializer {
         FieldRegistrationHandler.register(NumismaticOverhaulBlocks.Entities.class, MOD_ID, false);
 
         Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, id("money_bag"), MONEY_BAG_ENTRY);
+        Registry.register(Registry.ENTITY_TYPE, id("tax_collector"), TAX_COLLECTOR);
 
         CHANNEL.registerServerbound(RequestPurseActionC2SPacket.class, RequestPurseActionC2SPacket::handle);
         CHANNEL.registerServerbound(ShopScreenHandlerRequestC2SPacket.class, ShopScreenHandlerRequestC2SPacket::handle);
