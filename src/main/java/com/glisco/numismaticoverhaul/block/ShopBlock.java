@@ -99,6 +99,8 @@ public class ShopBlock extends BlockWithEntity {
             if (world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
                 CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
                         .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+
+                ItemScatterer.spawn(world, pos, shop);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
