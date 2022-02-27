@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.villagers.json;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import net.minecraft.enchantment.Enchantment;
@@ -19,12 +19,12 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,34 +45,23 @@ public class TradeJsonAdapters {
             loadDefaultStats(json, true);
 
             VillagerJsonHelper.assertString(json, "structure");
-
-            StructureFeature<?> feature = Registry.STRUCTURE_FEATURE.get(new Identifier(json.get("structure").getAsString()));
-            if (feature == null) {
-                throw new DeserializationException("Structure " + json.get("structure").getAsString() + " not found");
-            }
-
             int price = json.get("price").getAsInt();
 
-            MapIcon.Type iconType = MapIcon.Type.TARGET_POINT;
-            if (feature == StructureFeature.MONUMENT) iconType = MapIcon.Type.MONUMENT;
-            if (feature == StructureFeature.MANSION) iconType = MapIcon.Type.MANSION;
-
-            return new SellMapFactory(price, feature, iconType, max_uses, villager_experience, price_multiplier);
+            final var structure = new Identifier(JsonHelper.getString(json, "structure"));
+            return new SellMapFactory(price, structure, max_uses, villager_experience, price_multiplier);
         }
     }
 
     private static class SellMapFactory implements TradeOffers.Factory {
         private final int price;
-        private final StructureFeature<?> structure;
-        private final MapIcon.Type iconType;
+        private final Identifier structureId;
         private final int maxUses;
         private final int experience;
         private final float multiplier;
 
-        public SellMapFactory(int price, StructureFeature<?> feature, MapIcon.Type iconType, int maxUses, int experience, float multiplier) {
+        public SellMapFactory(int price, Identifier feature, int maxUses, int experience, float multiplier) {
             this.price = price;
-            this.structure = feature;
-            this.iconType = iconType;
+            this.structureId = feature;
             this.maxUses = maxUses;
             this.experience = experience;
             this.multiplier = multiplier;
@@ -80,20 +69,32 @@ public class TradeJsonAdapters {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            if (!(entity.world instanceof ServerWorld serverWorld)) {
+            if (!(entity.world instanceof ServerWorld serverWorld)) return null;
+
+            final var registry = serverWorld.getRegistryManager().get(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY);
+            final var feature = registry.getEntry(registry.getKey(
+                    registry.get(this.structureId)).get()).orElse(null);
+
+            if (feature == null) {
+                NumismaticOverhaul.LOGGER.error("Tried to create map to invalid structure " + this.structureId);
                 return null;
-            } else {
-                BlockPos blockPos = serverWorld.locateStructure(this.structure, entity.getBlockPos(), 100, true);
-                if (blockPos != null) {
-                    ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
-                    FilledMapItem.fillExplorationMap(serverWorld, itemStack);
-                    MapState.addDecorationsNbt(itemStack, blockPos, "+", this.iconType);
-                    itemStack.setCustomName(new TranslatableText("filled_map." + this.structure.getName().toLowerCase(Locale.ROOT)));
-                    return new TradeOffer(CurrencyHelper.getClosest(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
-                } else {
-                    return null;
-                }
             }
+
+            final var result = serverWorld.getChunkManager().getChunkGenerator().locateStructure(serverWorld, RegistryEntryList.of(feature),
+                    entity.getBlockPos(), 100, true);
+
+            if (result == null) return null;
+            final var blockPos = result.getFirst();
+
+            var iconType = MapIcon.Type.TARGET_POINT;
+            if (feature.matchesId(ConfiguredStructureFeatures.MONUMENT.getKey().get().getValue())) iconType = MapIcon.Type.MONUMENT;
+            if (feature.matchesId(ConfiguredStructureFeatures.MANSION.getKey().get().getValue())) iconType = MapIcon.Type.MANSION;
+
+            ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
+            FilledMapItem.fillExplorationMap(serverWorld, itemStack);
+            MapState.addDecorationsNbt(itemStack, blockPos, "+", iconType);
+            itemStack.setCustomName(new TranslatableText("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
+            return new TradeOffer(CurrencyHelper.getClosest(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
         }
     }
 
