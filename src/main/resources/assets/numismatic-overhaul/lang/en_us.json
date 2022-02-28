@@ -11,5 +11,7 @@
   "numismatic-overhaul.empty": "Empty",
   "currency.numismatic-overhaul.bronze": "Bronze",
   "currency.numismatic-overhaul.silver": "Silver",
-  "currency.numismatic-overhaul.gold": "Gold"
+  "currency.numismatic-overhaul.gold": "Gold",
+  "gamerule.moneyDropPercentage": "Money drop percentage",
+  "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }

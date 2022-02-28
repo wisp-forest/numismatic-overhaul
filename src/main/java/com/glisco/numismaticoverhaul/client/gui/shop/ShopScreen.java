@@ -168,7 +168,8 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         TRADE_WIDGET.setActive(tab != 0);
         CURRENCY_WIDGET.setY(tab == 0 ? y : y + 60);
         this.titleY = tab == 0 ? 6 : 6000;
-        if (clickSound) client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        if (clickSound)
+            client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 
     public int getSelectedTab() {

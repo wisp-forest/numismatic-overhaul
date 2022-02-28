@@ -87,8 +87,10 @@ public class TradeJsonAdapters {
             final var blockPos = result.getFirst();
 
             var iconType = MapIcon.Type.TARGET_POINT;
-            if (feature.matchesId(ConfiguredStructureFeatures.MONUMENT.getKey().get().getValue())) iconType = MapIcon.Type.MONUMENT;
-            if (feature.matchesId(ConfiguredStructureFeatures.MANSION.getKey().get().getValue())) iconType = MapIcon.Type.MANSION;
+            if (feature.matchesId(ConfiguredStructureFeatures.MONUMENT.getKey().get().getValue()))
+                iconType = MapIcon.Type.MONUMENT;
+            if (feature.matchesId(ConfiguredStructureFeatures.MANSION.getKey().get().getValue()))
+                iconType = MapIcon.Type.MANSION;
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);

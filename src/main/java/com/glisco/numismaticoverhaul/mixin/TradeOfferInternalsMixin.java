@@ -47,5 +47,6 @@ public class TradeOfferInternalsMixin {
      * @author glisco
      */
     @Overwrite(remap = false)
-    private static void registerOffers(Int2ObjectMap<TradeOffers.Factory[]> leveledTradeMap, int level, Consumer<List<TradeOffers.Factory>> factory) {}
+    private static void registerOffers(Int2ObjectMap<TradeOffers.Factory[]> leveledTradeMap, int level, Consumer<List<TradeOffers.Factory>> factory) {
+    }
 }

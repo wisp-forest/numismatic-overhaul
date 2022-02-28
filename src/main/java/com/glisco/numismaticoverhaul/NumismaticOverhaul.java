@@ -27,7 +27,6 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -47,7 +46,7 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final TagKey<EntityType<?>> THE_BOURGEOISIE = TagKey.of(Registry.ENTITY_TYPE_KEY, id("the_bourgeoisie"));
 
     public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
-            = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.DROPS, GameRuleFactory.createIntRule(10, 0, 100));
+            = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(10, 0, 100));
 
     @Override
     public void onInitialize() {
