@@ -13,4 +13,7 @@
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
   "entity.numismatic-overhaul.tax_collector": "Tax Collector"
+  "currency.numismatic-overhaul.gold": "Gold",
+  "gamerule.moneyDropPercentage": "Money drop percentage",
+  "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }

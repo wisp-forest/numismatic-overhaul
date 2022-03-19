@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.TradeOutputSlot;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -32,7 +33,9 @@ public class CoinItem extends Item implements CurrencyItem {
 
     @Override
     public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+        if (slot instanceof TradeOutputSlot) return false;
         if (clickType != ClickType.LEFT) return false;
+
         if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem))
             return false;
 

@@ -25,7 +25,8 @@ public class VillagerJsonHelper {
         assertElement(object, key);
 
         if (!object.get(key).isJsonPrimitive()) throw new DeserializationException("Not an integer " + key);
-        if (!object.get(key).getAsJsonPrimitive().isNumber()) throw new DeserializationException("Not an integer " + key);
+        if (!object.get(key).getAsJsonPrimitive().isNumber())
+            throw new DeserializationException("Not an integer " + key);
 
         try {
             Integer.parseInt(object.get(key).getAsString());

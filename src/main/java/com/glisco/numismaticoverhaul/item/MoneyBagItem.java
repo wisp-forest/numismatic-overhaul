@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.TradeOutputSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
@@ -74,6 +75,8 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+        if (slot instanceof TradeOutputSlot) return false;
+
         if (clickType == ClickType.RIGHT && clickedStack.getItem() == this && otherStack.isEmpty()) {
             final var stackRepresentation = CurrencyConverter.getAsValidStacks(getCombinedValue(clickedStack));
             if (stackRepresentation.isEmpty()) return false;

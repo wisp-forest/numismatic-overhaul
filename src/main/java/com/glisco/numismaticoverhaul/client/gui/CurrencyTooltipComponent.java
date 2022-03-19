@@ -19,6 +19,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CurrencyTooltipComponent implements TooltipComponent {
@@ -48,12 +49,8 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     @Override
     public int getWidth(TextRenderer textRenderer) {
         if (widthCache == -1) {
-            widthCache = textRenderer.getWidth(text.stream().max((o1, o2) -> {
-                int l1 = textRenderer.getWidth(o1);
-                int l2 = textRenderer.getWidth(o2);
-                if (l1 == l2) return 0;
-                return l1 > l2 ? 1 : -1;
-            }).orElse(Text.of("")));
+            widthCache = textRenderer.getWidth(text.stream()
+                    .max(Comparator.comparingInt(textRenderer::getWidth)).orElse(Text.of("")));
         }
         return widthCache;
     }

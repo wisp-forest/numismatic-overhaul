@@ -83,7 +83,7 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!this.active) return false;
+        if (!this.active || client.player.isSpectator()) return false;
 
         for (ButtonWidget buttonWidget : buttons) {
             if (buttonWidget.mouseClicked(mouseX, mouseY, button)) return true;

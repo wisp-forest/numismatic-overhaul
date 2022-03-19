@@ -72,10 +72,10 @@ public class ShopBlock extends BlockWithEntity {
     }
 
     private ActionResult openShopMerchant(PlayerEntity player, ShopBlockEntity shop) {
-        if (shop.getMerchant().getCurrentCustomer() != null) return ActionResult.SUCCESS;
+        if (shop.getMerchant().getCustomer() != null) return ActionResult.SUCCESS;
 
         ((ShopMerchant) shop.getMerchant()).updateTrades();
-        shop.getMerchant().setCurrentCustomer(player);
+        shop.getMerchant().setCustomer(player);
         shop.getMerchant().sendOffers(player, new TranslatableText("gui.numismatic-overhaul.shop.merchant_title"), 0);
 
         return ActionResult.SUCCESS;
@@ -99,6 +99,8 @@ public class ShopBlock extends BlockWithEntity {
             if (world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
                 CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
                         .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+
+                ItemScatterer.spawn(world, pos, shop);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }

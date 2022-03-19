@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -24,6 +25,12 @@ public class PurseButton extends TexturedButtonWidget {
         this.currencyStorage = ModComponents.CURRENCY.get(player);
         this.parent = parent;
         this.TOOLTIP_TITLE = new TranslatableText("gui.numismatic-overhaul.purse_title").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (MinecraftClient.getInstance().player.isSpectator()) return false;
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override

@@ -28,13 +28,13 @@ public class ShopMerchant implements Merchant {
     }
 
     @Override
-    public void setCurrentCustomer(@Nullable PlayerEntity customer) {
+    public void setCustomer(@Nullable PlayerEntity customer) {
         this.customer = customer;
     }
 
     @Nullable
     @Override
-    public PlayerEntity getCurrentCustomer() {
+    public PlayerEntity getCustomer() {
         return customer;
     }
 

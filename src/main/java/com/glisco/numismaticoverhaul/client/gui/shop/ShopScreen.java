@@ -95,7 +95,6 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-
         if (mouseX >= x - 27 && mouseX <= x) {
             for (int i = 0; i < tabs; i++) {
                 if (mouseY >= y + 14 + i * 32 && mouseY <= y + 42 + i * 32) {
@@ -104,6 +103,8 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
                 }
             }
         }
+
+        if (client.player.isSpectator()) return false;
 
         if (selected_tab != 0) {
             int offset = (selected_tab - 1) * 6;
@@ -167,7 +168,8 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         TRADE_WIDGET.setActive(tab != 0);
         CURRENCY_WIDGET.setY(tab == 0 ? y : y + 60);
         this.titleY = tab == 0 ? 6 : 6000;
-        if (clickSound) client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        if (clickSound)
+            client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 
     public int getSelectedTab() {
