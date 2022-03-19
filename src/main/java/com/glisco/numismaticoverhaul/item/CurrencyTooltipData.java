@@ -5,28 +5,28 @@ import net.minecraft.client.item.TooltipData;
 
 public final class CurrencyTooltipData implements TooltipData {
 
-    private final int[] value;
-    private final int[] original;
+    private final long[] value;
+    private final long[] original;
 
-    public CurrencyTooltipData(int[] value, int[] original) {
+    public CurrencyTooltipData(long[] value, long[] original) {
         this.value = value;
         this.original = original;
     }
 
-    public CurrencyTooltipData(int value, int original) {
+    public CurrencyTooltipData(long value, long original) {
         this.value = CurrencyResolver.splitValues(value);
         if (original == -1) {
-            this.original = new int[]{-1};
+            this.original = new long[]{-1};
         } else {
             this.original = CurrencyResolver.splitValues(original);
         }
     }
 
-    public int[] original() {
+    public long[] original() {
         return original;
     }
 
-    public int[] value() {
+    public long[] value() {
         return value;
     }
 }

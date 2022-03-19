@@ -14,9 +14,9 @@ import java.util.List;
 public class ShopOffer {
 
     private final ItemStack sell;
-    private final int price;
+    private final long price;
 
-    public ShopOffer(ItemStack sell, int price) {
+    public ShopOffer(ItemStack sell, long price) {
 
         if (sell.isEmpty()) throw new IllegalArgumentException("Sell Stack must not be empty");
         if (price == 0) throw new IllegalArgumentException("Price must not be null");
@@ -41,7 +41,7 @@ public class ShopOffer {
         return tradeOffer;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -74,7 +74,7 @@ public class ShopOffer {
 
     public NbtCompound toNbt() {
         var nbt = new NbtCompound();
-        nbt.putInt("Price", this.price);
+        nbt.putLong("Price", this.price);
 
         var itemNbt = new NbtCompound();
         this.sell.writeNbt(itemNbt);
@@ -85,7 +85,7 @@ public class ShopOffer {
 
     public static ShopOffer fromNbt(NbtCompound nbt) {
         var item = ItemStack.fromNbt(nbt.getCompound("Item"));
-        return new ShopOffer(item, nbt.getInt("Price"));
+        return new ShopOffer(item, nbt.getLong("Price"));
     }
 
     @Override

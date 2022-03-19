@@ -100,7 +100,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
 
         drawTexture(matrices, x + 28, y + 16, 0, 168, 7, 12);
 
-        int[] values = CurrencyResolver.splitValues(isEnteredTextValid() ? Integer.parseInt(PRICE_FIELD.getText()) : 0);
+        long[] values = CurrencyResolver.splitValues(isEnteredTextValid() ? Integer.parseInt(PRICE_FIELD.getText()) : 0);
 
         renderText(matrices, String.valueOf(values[0]), x + 36, y + 6, 7f, 0x8b8b8b);
         renderText(matrices, String.valueOf(values[1]), x + 56, y + 6, 7f, 0x8b8b8b);

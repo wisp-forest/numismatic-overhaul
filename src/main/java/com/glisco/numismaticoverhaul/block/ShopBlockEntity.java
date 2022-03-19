@@ -1,8 +1,8 @@
 package com.glisco.numismaticoverhaul.block;
 
-import com.glisco.numismaticoverhaul.ImplementedInventory;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import io.wispforest.owo.ops.WorldOps;
+import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -37,7 +37,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private final Merchant merchant;
     private final List<ShopOffer> offers;
-    private int storedCurrency;
+    private long storedCurrency;
     private UUID owner;
 
     private int tradeIndex;
@@ -83,16 +83,16 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         return offers;
     }
 
-    public int getStoredCurrency() {
+    public long getStoredCurrency() {
         return storedCurrency;
     }
 
-    public void setStoredCurrency(int storedCurrency) {
+    public void setStoredCurrency(long storedCurrency) {
         this.storedCurrency = storedCurrency;
         markDirty();
     }
 
-    public void addCurrency(int value) {
+    public void addCurrency(long value) {
         this.storedCurrency += value;
         markDirty();
     }
@@ -102,7 +102,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
         ShopOffer.writeAll(tag, offers);
-        tag.putInt("StoredCurrency", storedCurrency);
+        tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
             tag.putUuid("Owner", owner);
         }
@@ -116,7 +116,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }
-        this.storedCurrency = tag.getInt("StoredCurrency");
+        this.storedCurrency = tag.getLong("StoredCurrency");
     }
 
     public void addOrReplaceOffer(ShopOffer offer) {

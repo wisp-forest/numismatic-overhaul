@@ -138,7 +138,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         this.TRADE_WIDGET.updateButtonActiveState();
     }
 
-    public void updateScreen(List<ShopOffer> offers, int storedCurrency) {
+    public void updateScreen(List<ShopOffer> offers, long storedCurrency) {
 
         tradeButtons.clear();
         this.offers = offers;

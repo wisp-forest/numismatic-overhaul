@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.client.gui.purse;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
+import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -125,13 +126,13 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
     private void modifyInBounds(MutableInt value, int modifyBy, boolean add, Currency currency) {
 
         //Get the step size of this selector
-        int stepSize = currency.getRawValue(1);
+        long stepSize = currency.getRawValue(1);
 
         //Calculate possible steps using the difference between the player's worth and the currently selected values added together
-        int possibleSteps = (currencyStorage.getValue() - selectedValue()) / stepSize;
+        long possibleSteps = (currencyStorage.getValue() - selectedValue()) / stepSize;
 
-        //Upper bound is either 99 or the the current value of this selector plus the possible steps
-        int upperBound = Math.min(value.intValue() + possibleSteps, 99);
+        //Upper bound is either 99 or the current value of this selector plus the possible steps
+        int upperBound = CurrencyConverter.asInt(Math.min(value.intValue() + possibleSteps, 99));
 
         if (add) value.add(modifyBy);
         else value.subtract(modifyBy);
@@ -145,8 +146,8 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
      *
      * @return The raw value of all selectors added with respect to their different worths
      */
-    private int selectedValue() {
-        return CurrencyResolver.combineValues(new int[]{bronzeAmount.getValue(), silverAmount.getValue(), goldAmount.getValue()});
+    private long selectedValue() {
+        return CurrencyResolver.combineValues(new long[]{bronzeAmount.getValue(), silverAmount.getValue(), goldAmount.getValue()});
     }
 
     /**

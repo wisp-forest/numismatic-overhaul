@@ -6,11 +6,11 @@ import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import io.wispforest.owo.network.ServerAccess;
 import net.minecraft.screen.PlayerScreenHandler;
 
-public record RequestPurseActionC2SPacket(Action action, int value) {
+public record RequestPurseActionC2SPacket(Action action, long value) {
 
     public static void handle(RequestPurseActionC2SPacket message, ServerAccess access) {
         final var player = access.player();
-        final int value = message.value();
+        final long value = message.value();
 
         if (player.currentScreenHandler instanceof PlayerScreenHandler) {
             switch (message.action()) {
@@ -40,7 +40,7 @@ public record RequestPurseActionC2SPacket(Action action, int value) {
         return new RequestPurseActionC2SPacket(Action.EXTRACT_ALL, 0);
     }
 
-    public static RequestPurseActionC2SPacket extract(int amount) {
+    public static RequestPurseActionC2SPacket extract(long amount) {
         return new RequestPurseActionC2SPacket(Action.EXTRACT, amount);
     }
 

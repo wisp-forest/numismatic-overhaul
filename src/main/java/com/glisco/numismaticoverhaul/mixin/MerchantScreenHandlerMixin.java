@@ -43,13 +43,13 @@ public class MerchantScreenHandlerMixin {
 
     private static void numismatic$autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
         //See how much is required and how much was already autofilled
-        int requiredCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
-        int presentCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(handler.getSlot(slot).getStack().getCount());
+        long requiredCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
+        long presentCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(handler.getSlot(slot).getStack().getCount());
 
         if (requiredCurrency <= presentCurrency) return;
 
         //Find out how much we still need to fill
-        int neededCurrency = requiredCurrency - presentCurrency;
+        long neededCurrency = requiredCurrency - presentCurrency;
 
         //Is that even possible?
         if (!(neededCurrency <= playerBalance.getValue())) return;
@@ -64,11 +64,11 @@ public class MerchantScreenHandlerMixin {
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 
         //See how much is required and how much in present in the player's inventory
-        int requiredCurrency = NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
-        int availableCurrencyInPlayerInventory = CurrencyHelper.getMoneyInInventory(player, false);
+        long requiredCurrency = NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
+        long availableCurrencyInPlayerInventory = CurrencyHelper.getMoneyInInventory(player, false);
 
         //Find out how much we still need to fill
-        int neededCurrency = requiredCurrency - availableCurrencyInPlayerInventory;
+        long neededCurrency = requiredCurrency - availableCurrencyInPlayerInventory;
 
         //Is that even possible?
         if (neededCurrency > playerBalance.getValue()) return;

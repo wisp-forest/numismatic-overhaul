@@ -9,7 +9,7 @@ import io.wispforest.owo.network.serialization.PacketBufSerializer;
 
 import java.util.List;
 
-public record UpdateShopScreenS2CPacket(@ElementType(ShopOffer.class) List<ShopOffer> offers, int storedCurrency) {
+public record UpdateShopScreenS2CPacket(@ElementType(ShopOffer.class) List<ShopOffer> offers, long storedCurrency) {
 
     public static void handle(UpdateShopScreenS2CPacket message, ClientAccess access) {
         if (!(access.runtime().currentScreen instanceof ShopScreen screen)) return;

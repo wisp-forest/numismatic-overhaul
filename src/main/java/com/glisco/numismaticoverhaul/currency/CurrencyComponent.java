@@ -16,37 +16,37 @@ import java.util.List;
 
 public class CurrencyComponent implements Component, AutoSyncedComponent {
 
-    private int value;
+    private long value;
     private final PlayerEntity provider;
 
-    private final List<Integer> transactions;
+    private final List<Long> transactions;
 
     public CurrencyComponent(PlayerEntity provider) {
         this.provider = provider;
-        this.transactions = new ArrayList<>();
+        this.transactions = new ArrayList<Long>();
     }
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        value = tag.getInt("Value");
+        value = tag.getLong("Value");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putInt("Value", value);
+        tag.putLong("Value", value);
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
     /**
      * This is only to be used in specific edge cases
      * <br>
-     * Use {@link CurrencyComponent#modify(int)} or the transaction system wherever possible
+     * Use {@link CurrencyComponent#modify(long)} or the transaction system wherever possible
      */
     @Deprecated
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
 
         //Update Client
@@ -60,10 +60,10 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      *
      * @param value The value to modify by
      */
-    public void modify(int value) {
+    public void modify(long value) {
         setValue(this.value + value);
 
-        int tempValue = value < 0 ? -value : value;
+        long tempValue = value < 0 ? -value : value;
 
         List<ItemStack> transactionStacks = CurrencyConverter.getAsItemStackList(tempValue);
         if (transactionStacks.isEmpty()) return;
@@ -81,11 +81,11 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
     }
 
     /**
-     * Same as {@link CurrencyComponent#modify(int)}, but doesn't show a message in the action bar
+     * Same as {@link CurrencyComponent#modify(long)}, but doesn't show a message in the action bar
      *
      * @param value The value to modify by
      */
-    public void silentModify(int value) {
+    public void silentModify(long value) {
         setValue(this.value + value);
     }
 
@@ -94,7 +94,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      *
      * @param value The value this component should be modified by
      */
-    public void pushTransaction(int value) {
+    public void pushTransaction(long value) {
         this.transactions.add(value);
     }
 
@@ -103,7 +103,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      *
      * @return The transaction that was popped
      */
-    public int popTransaction() {
+    public Long popTransaction() {
         return this.transactions.remove(this.transactions.size() - 1);
     }
 
@@ -113,7 +113,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      * Displays one accumulated action bar message
      */
     public void commitTransactions() {
-        this.modify(this.transactions.stream().mapToInt(Integer::intValue).sum());
+        this.modify(this.transactions.stream().mapToLong(Long::longValue).sum());
         this.transactions.clear();
     }
 }

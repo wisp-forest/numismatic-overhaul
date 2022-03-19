@@ -12,7 +12,7 @@ public enum Currency implements ItemConvertible {
         }
 
         @Override
-        public int getRawValue(int amount) {
+        public long getRawValue(long amount) {
             return amount;
         }
 
@@ -27,7 +27,7 @@ public enum Currency implements ItemConvertible {
         }
 
         @Override
-        public int getRawValue(int amount) {
+        public long getRawValue(long amount) {
             return amount * 100;
         }
 
@@ -42,7 +42,7 @@ public enum Currency implements ItemConvertible {
         }
 
         @Override
-        public int getRawValue(int amount) {
+        public long getRawValue(long amount) {
             return amount * 10000;
         }
 
@@ -54,5 +54,5 @@ public enum Currency implements ItemConvertible {
 
     public abstract int getNameColor();
 
-    public abstract int getRawValue(int amount);
+    public abstract long getRawValue(long amount);
 }

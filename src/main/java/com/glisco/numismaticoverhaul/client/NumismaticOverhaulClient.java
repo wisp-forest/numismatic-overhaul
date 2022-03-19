@@ -29,7 +29,9 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         FabricModelPredicateProviderRegistry.register(NumismaticOverhaulItems.GOLD_COIN, new Identifier("coins"), (stack, world, entity, seed) -> stack.getCount() / 100.0f);
 
         FabricModelPredicateProviderRegistry.register(NumismaticOverhaulItems.MONEY_BAG, new Identifier("size"), (stack, world, entity, seed) -> {
-            int[] values = NumismaticOverhaulItems.MONEY_BAG.getCombinedValue(stack);
+            long[] values = NumismaticOverhaulItems.MONEY_BAG.getCombinedValue(stack);
+            if (values.length < 3) return 0;
+
             if (values[2] > 0) return 1;
             if (values[1] > 0) return .5f;
 

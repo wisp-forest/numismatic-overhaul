@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
@@ -29,48 +30,48 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     @Override
     public ItemStack getDefaultStack() {
         ItemStack defaultStack = super.getDefaultStack();
-        defaultStack.getOrCreateNbt().putInt("Value", 0);
+        defaultStack.getOrCreateNbt().putLong("Value", 0);
         return defaultStack;
     }
 
-    public static ItemStack create(int value) {
+    public static ItemStack create(long value) {
         ItemStack stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.getOrCreateNbt().putInt("Value", value);
+        stack.getOrCreateNbt().putLong("Value", value);
         return stack;
     }
 
-    public static ItemStack createCombined(int[] values) {
+    public static ItemStack createCombined(long[] values) {
         ItemStack stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.getOrCreateNbt().putIntArray("Values", values);
+        stack.getOrCreateNbt().putLongArray("Values", values);
         stack.getOrCreateNbt().putBoolean("Combined", true);
         return stack;
     }
 
-    public int getValue(ItemStack stack) {
+    public long getValue(ItemStack stack) {
         if (stack.getItem() != NumismaticOverhaulItems.MONEY_BAG) return 0;
 
         if (!stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) {
-            return stack.getOrCreateNbt().getInt("Value");
+            return stack.getOrCreateNbt().getLong("Value");
         } else {
-            return CurrencyResolver.combineValues(stack.getOrCreateNbt().getIntArray("Values"));
+            return CurrencyResolver.combineValues(CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values"));
         }
     }
 
     @Override
-    public int[] getCombinedValue(ItemStack stack) {
+    public long[] getCombinedValue(ItemStack stack) {
         if (!stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) {
-            return CurrencyResolver.splitValues(stack.getOrCreateNbt().getInt("Value"));
+            return CurrencyResolver.splitValues(stack.getOrCreateNbt().getLong("Value"));
         } else {
-            return stack.getOrCreateNbt().getIntArray("Values");
+            return CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values");
         }
     }
 
-    public void setValue(ItemStack stack, int value) {
-        stack.getOrCreateNbt().putInt("Value", value);
+    public void setValue(ItemStack stack, long value) {
+        stack.getOrCreateNbt().putLong("Value", value);
     }
 
-    public void setCombinedValue(ItemStack stack, int[] values) {
-        stack.getOrCreateNbt().putIntArray("Values", values);
+    public void setCombinedValue(ItemStack stack, long[] values) {
+        stack.getOrCreateNbt().putLongArray("Values", values);
     }
 
     @Override
@@ -84,10 +85,10 @@ public class MoneyBagItem extends Item implements CurrencyItem {
             final var coinStack = stackRepresentation.get(0);
             cursorStackReference.set(coinStack);
 
-            final var values = getCombinedValue(clickedStack);
+            final long[] values = getCombinedValue(clickedStack);
             values[((CoinItem) coinStack.getItem()).currency.ordinal()] -= coinStack.getCount();
 
-            final var newValue = CurrencyResolver.combineValues(values);
+            final long newValue = CurrencyResolver.combineValues(values);
             final boolean canBeCompacted = values[0] < 100 && values[1] < 100 && values[2] < 100;
 
             if (newValue == 0) {
@@ -101,8 +102,8 @@ public class MoneyBagItem extends Item implements CurrencyItem {
         } else if (clickType == ClickType.LEFT) {
             if (!(otherStack.getItem() instanceof CurrencyItem currencyItem)) return false;
 
-            int[] clickedValues = getCombinedValue(clickedStack);
-            int[] otherValues = currencyItem.getCombinedValue(otherStack);
+            long[] clickedValues = getCombinedValue(clickedStack);
+            long[] otherValues = currencyItem.getCombinedValue(otherStack);
 
             for (int i = 0; i < clickedValues.length; i++) clickedValues[i] += otherValues[i];
 
@@ -117,7 +118,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     @Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         return Optional.of(new CurrencyTooltipData(this.getCombinedValue(stack),
-                CurrencyItem.hasOriginalValue(stack) ? CurrencyResolver.splitValues(CurrencyItem.getOriginalValue(stack)) : new int[]{-1}));
+                CurrencyItem.hasOriginalValue(stack) ? CurrencyResolver.splitValues(CurrencyItem.getOriginalValue(stack)) : new long[]{-1}));
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ public class CurrencyHelper {
      * @param remove Whether to remove all coins from the player in the process
      * @return The amount of currency contained in the player's inventory
      */
-    public static int getMoneyInInventory(PlayerEntity player, boolean remove) {
+    public static long getMoneyInInventory(PlayerEntity player, boolean remove) {
 
-        int value = 0;
+        long value = 0;
 
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
@@ -42,18 +43,18 @@ public class CurrencyHelper {
 
             if (stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) return 0;
             if (!(stack.getItem() instanceof CurrencyItem currencyItem)) return 0;
-            return currencyItem.getValue(stack);
+            return (int) currencyItem.getValue(stack);
         }).sum();
     }
 
-    public static void offerAsCoins(PlayerEntity player, int value) {
+    public static void offerAsCoins(PlayerEntity player, long value) {
         for (ItemStack itemStack : CurrencyConverter.getAsValidStacks(value)) {
             player.getInventory().offerOrDrop(itemStack);
         }
     }
 
-    public static boolean deduceFromInventory(PlayerEntity player, int value) {
-        int presentInInventory = getMoneyInInventory(player, false);
+    public static boolean deduceFromInventory(PlayerEntity player, long value) {
+        long presentInInventory = getMoneyInInventory(player, false);
         if (presentInInventory < value) return false;
 
         getMoneyInInventory(player, true);
@@ -70,7 +71,7 @@ public class CurrencyHelper {
      * @param maxStacks The maximum amount of stacks the result may have
      * @return The List of {@link ItemStack}
      */
-    public static List<ItemStack> getAsStacks(int value, int maxStacks) {
+    public static List<ItemStack> getAsStacks(long value, int maxStacks) {
 
         List<ItemStack> stacks = new ArrayList<>();
         List<ItemStack> rawStacks = CurrencyConverter.getAsValidStacks(value);
@@ -84,8 +85,8 @@ public class CurrencyHelper {
         return stacks;
     }
 
-    public static ItemStack getClosest(int value) {
-        var values = CurrencyResolver.splitValues(value);
+    public static ItemStack getClosest(long value) {
+        long[] values = CurrencyResolver.splitValues(value);
 
         for (int i = 0; i < 2; i++) {
             if (values[i + 1] == 0) break;
@@ -94,6 +95,19 @@ public class CurrencyHelper {
         }
 
         return CurrencyConverter.getAsItemStackList(CurrencyResolver.combineValues(values)).get(0);
+    }
+
+    public static long[] getFromNbt(NbtCompound nbt, String key) {
+        if (nbt.contains(key, NbtElement.LONG_ARRAY_TYPE)) return nbt.getLongArray(key);
+        if (!nbt.contains(key, NbtElement.INT_ARRAY_TYPE)) return new long[0];
+
+        var intArray = nbt.getIntArray(key);
+        var longArray = new long[intArray.length];
+        for (int i = 0; i < intArray.length; i++) {
+            longArray[i] = intArray[i];
+        }
+
+        return longArray;
     }
 
 }

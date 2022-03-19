@@ -12,24 +12,24 @@ public class CurrencyConverter {
     /**
      * @return An array of 3 {@link ItemStack}, format ItemStack[]{BRONZE, SILVER, GOLD}, stack sizes can exceed 99
      */
-    public static ItemStack[] getAsItemStackArray(int value) {
+    public static ItemStack[] getAsItemStackArray(long value) {
         ItemStack[] output = new ItemStack[]{null, null, null};
 
-        int[] values = CurrencyResolver.splitValues(value);
+        long[] values = CurrencyResolver.splitValues(value);
 
-        output[2] = new ItemStack(NumismaticOverhaulItems.GOLD_COIN, values[2]);
-        output[1] = new ItemStack(NumismaticOverhaulItems.SILVER_COIN, values[1]);
-        output[0] = new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, values[0]);
+        output[2] = new ItemStack(NumismaticOverhaulItems.GOLD_COIN, asInt(values[2]));
+        output[1] = new ItemStack(NumismaticOverhaulItems.SILVER_COIN, asInt(values[1]));
+        output[0] = new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, asInt(values[0]));
 
         return output;
     }
 
     /**
-     * Wrapper for {@link #getAsItemStackArray(int)} that only includes non-zero {@link ItemStack}
+     * Wrapper for {@link #getAsItemStackArray(long)} that only includes non-zero {@link ItemStack}
      *
      * @return A list of {@link ItemStack}, stack sizes can exceed 99
      */
-    public static List<ItemStack> getAsItemStackList(int value) {
+    public static List<ItemStack> getAsItemStackList(long value) {
         List<ItemStack> list = new ArrayList<>();
 
         Arrays.stream(getAsItemStackArray(value)).forEach(itemStack -> {
@@ -40,16 +40,16 @@ public class CurrencyConverter {
     }
 
     /**
-     * Wrapper for {@link #getAsItemStackArray(int)} that only includes non-zero {@link ItemStack}
+     * Wrapper for {@link #getAsItemStackArray(long)} that only includes non-zero {@link ItemStack}
      *
      * @return A list of {@link ItemStack}, stack sizes can exceed 99
      */
-    public static List<ItemStack> getAsItemStackList(int[] values) {
+    public static List<ItemStack> getAsItemStackList(long[] values) {
         List<ItemStack> list = new ArrayList<>();
 
         for (int i = 0; i < values.length; i++) {
             if (values[i] <= 0) continue;
-            list.add(0, new ItemStack(Currency.values()[i], values[i]));
+            list.add(0, new ItemStack(Currency.values()[i], asInt(values[i])));
         }
 
         return list;
@@ -58,7 +58,7 @@ public class CurrencyConverter {
     /**
      * @return The amount of currency types required to represent this stack's raw value
      */
-    public static int getRequiredCurrencyTypes(int value) {
+    public static int getRequiredCurrencyTypes(long value) {
         return splitAtMaxCount(getAsItemStackList(value)).size();
     }
 
@@ -90,12 +90,16 @@ public class CurrencyConverter {
         return output;
     }
 
-    public static List<ItemStack> getAsValidStacks(int value) {
+    public static List<ItemStack> getAsValidStacks(long value) {
         return splitAtMaxCount(getAsItemStackList(value));
     }
 
-    public static List<ItemStack> getAsValidStacks(int[] values) {
+    public static List<ItemStack> getAsValidStacks(long[] values) {
         return splitAtMaxCount(getAsItemStackList(values));
+    }
+
+    public static int asInt(long value) {
+        return value > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) value;
     }
 
 }

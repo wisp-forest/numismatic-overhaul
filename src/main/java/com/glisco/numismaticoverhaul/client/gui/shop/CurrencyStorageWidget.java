@@ -22,7 +22,7 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
     private int y;
     private boolean active;
 
-    private int currencyStorage;
+    private long currencyStorage;
 
     private final TexturedButtonWidget CONFIRM_BUTTON;
 
@@ -44,7 +44,7 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
         drawTexture(matrices, x, y, 146, 169, 34, 54);
         CONFIRM_BUTTON.render(matrices, mouseX, mouseY, delta);
 
-        int[] values = CurrencyResolver.splitValues(currencyStorage);
+        long[] values = CurrencyResolver.splitValues(currencyStorage);
 
         client.textRenderer.draw(matrices, new LiteralText("" + values[2]), x + 5, y + 7, 16777215);
         client.textRenderer.draw(matrices, new LiteralText("" + values[1]), x + 5, y + 19, 16777215);
@@ -61,7 +61,7 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
         this.CONFIRM_BUTTON.setPos(this.CONFIRM_BUTTON.x, y + 41);
     }
 
-    public void setCurrencyStorage(int currencyStorage) {
+    public void setCurrencyStorage(long currencyStorage) {
         this.currencyStorage = currencyStorage;
     }
 

@@ -39,7 +39,7 @@ public class CoinItem extends Item implements CurrencyItem {
         if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem))
             return false;
 
-        int[] values = currencyItem.getCombinedValue(otherStack);
+        long[] values = currencyItem.getCombinedValue(otherStack);
         values[this.currency.ordinal()] += clickedStack.getCount();
 
         slot.setStack(MoneyBagItem.createCombined(values));
@@ -52,7 +52,7 @@ public class CoinItem extends Item implements CurrencyItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
         ItemStack clickedStack = user.getStackInHand(hand);
-        int rawValue = ((CoinItem) clickedStack.getItem()).currency.getRawValue(clickedStack.getCount());
+        long rawValue = ((CoinItem) clickedStack.getItem()).currency.getRawValue(clickedStack.getCount());
 
         if (!world.isClient) {
             ModComponents.CURRENCY.get(user).modify(rawValue);
@@ -65,7 +65,8 @@ public class CoinItem extends Item implements CurrencyItem {
 
     @Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
-        return Optional.of(new CurrencyTooltipData(this.currency.getRawValue(stack.getCount()), CurrencyItem.hasOriginalValue(stack) ? CurrencyItem.getOriginalValue(stack) : -1));
+        return Optional.of(new CurrencyTooltipData(this.currency.getRawValue(stack.getCount()),
+                CurrencyItem.hasOriginalValue(stack) ? CurrencyItem.getOriginalValue(stack) : -1));
     }
 
     @Override
@@ -84,13 +85,13 @@ public class CoinItem extends Item implements CurrencyItem {
     }
 
     @Override
-    public int getValue(ItemStack stack) {
+    public long getValue(ItemStack stack) {
         return this.currency.getRawValue(stack.getCount());
     }
 
     @Override
-    public int[] getCombinedValue(ItemStack stack) {
-        final var values = new int[3];
+    public long[] getCombinedValue(ItemStack stack) {
+        final long[] values = new long[3];
         values[this.currency.ordinal()] = stack.getCount();
         return values;
     }

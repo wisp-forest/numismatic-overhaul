@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.client.gui.shop.ShopScreen;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
+import io.wispforest.owo.client.screens.ScreenUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -61,16 +62,7 @@ public class ShopScreenHandler extends ScreenHandler {
             }
         }
 
-        //The player inventory
-        for (m = 0; m < 3; ++m) {
-            for (l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 86 + m * 18));
-            }
-        }
-        //The player Hotbar
-        for (m = 0; m < 9; ++m) {
-            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 144));
-        }
+        ScreenUtils.generatePlayerSlots(8, 86, playerInventory, this::addSlot);
 
         //Trade Buffer Slot
         this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 15, 0, true) {
@@ -113,7 +105,7 @@ public class ShopScreenHandler extends ScreenHandler {
         BUFFER_INVENTORY.setStack(0, offer.getSellStack());
     }
 
-    public void createOffer(int price) {
+    public void createOffer(long price) {
         shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
         NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
     }
@@ -136,27 +128,7 @@ public class ShopScreenHandler extends ScreenHandler {
     // Shift + Player Inv Slot
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
-        ItemStack newStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(invSlot);
-        if (slot != null && slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
-            newStack = originalStack.copy();
-            if (invSlot < this.shopInventory.size()) {
-                if (!this.insertItem(originalStack, this.shopInventory.size(), this.slots.size() - 1, true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.insertItem(originalStack, 0, this.shopInventory.size(), false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
-            } else {
-                slot.markDirty();
-            }
-        }
-
-        return newStack;
+        return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());
     }
 
     private static class AutoHidingSlot extends Slot {
