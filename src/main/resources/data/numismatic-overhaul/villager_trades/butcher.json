@@ -9,34 +9,34 @@
           "count": 14
         },
         "price": 420,
-		"max_uses": 16
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:rabbit",
           "count": 4
         },
-        "price": 100,
-		"max_uses": 16
+        "price": 200,
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:porkchop",
-          "count": 7
+          "count": 11
         },
-        "price": 280,
-		"max_uses": 16
+        "price": 300,
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:rabbit_stew",
           "count": 1
         },
-        "price": 410,
-		"max_uses": 12
+        "price": 500,
+        "max_uses": 3
       }
     ],
     "apprentice": [
@@ -47,46 +47,46 @@
           "count": 15
         },
         "price": 1200,
-		"max_uses": 16
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cooked_rabbit",
-          "count": 5
+          "count": 4
         },
-        "price": 175,
-		"max_uses": 16
+        "price": 400,
+        "max_uses": 8
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cooked_chicken",
-          "count": 8
+          "count": 6
         },
-        "price": 320,
-		"max_uses": 16
+        "price": 400,
+        "max_uses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cooked_porkchop",
           "count": 5
         },
-        "price": 250,
-		"max_uses": 16
+        "price": 400,
+        "max_uses": 15
       },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cooked_mutton",
-          "count": 4
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:mutton",
+          "count": 10
         },
-        "price": 160,
-		"max_uses": 16
+        "price": 350,
+        "max_uses": 16
       }
     ],
-	"journeyman": [
+    "journeyman": [
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
@@ -94,7 +94,7 @@
           "count": 10
         },
         "price": 400,
-		"max_uses": 16
+        "max_uses": 16
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -102,29 +102,29 @@
           "item": "minecraft:campfire",
           "count": 1
         },
-        "price": 640,
-        "max_uses": 16
+        "price": 500,
+        "max_uses": 8
       },
-	  {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:mutton",
-          "count": 7
-        },
-        "price": 210,
-		"max_uses": 16
-      },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cooked_beef",
-          "count": 3
+          "count": 4
         },
-        "price": 150,
-		"max_uses": 16
+        "price": 300,
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cooked_mutton",
+          "count": 6
+        },
+        "price": 500,
+        "max_uses": 12
       }
     ],
-	"expert": [
+    "expert": [
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
@@ -132,7 +132,7 @@
           "count": 10
         },
         "price": 700,
-		"max_uses": 12
+        "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:buy_item",
@@ -142,16 +142,25 @@
         },
         "price": 600,
         "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:mutton",
+          "count": 10
+        },
+        "price": 200,
+        "max_uses": 16
       }
     ],
-	"master": [
+    "master": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
           "item": "minecraft:diamond_axe",
-          "count": 9
+          "count": 1
         },
-        "price": 100000,
+        "price": 10000,
         "max_uses": 12
       }
     ]

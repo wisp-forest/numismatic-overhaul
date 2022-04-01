@@ -6,10 +6,28 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:white_wool",
-          "count": 20
+          "count": 18
         },
-        "price": 100,
+        "price": 220,
         "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:brown_wool",
+          "count": 18
+        },
+        "price": 230,
+        "max_uses": 12
+      },
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:black_wool",
+          "count": 18
+        },
+        "price": 230,
+        "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -23,31 +41,292 @@
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:white_dye",
-          "count": 15
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:black_wool",
+          "count": 1
         },
-        "price": 120,
-        "max_uses": 12
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:red_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:green_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:brown_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:blue_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:purple_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cyan_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_gray_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:gray_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pink_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:lime_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:yellow_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_blue_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:magenta_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:orange_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:white_wool",
+          "count": 1
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:black_carpet",
           "count": 4
         },
-        "price": 150,
-        "max_uses": 12
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:red_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:green_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:brown_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:blue_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:purple_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cyan_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_gray_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:gray_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pink_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:lime_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:yellow_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_blue_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:magenta_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:orange_carpet",
+          "count": 4
+        },
+        "price": 300,
+        "maxUses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:white_carpet",
-          "count": 6
+          "count": 4
         },
-        "price": 310,
-        "max_uses": 16
+        "price": 300,
+        "maxUses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -64,11 +343,283 @@
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
+          "item": "minecraft:red_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:white_dye",
+          "count": 4
+        },
+        "price": 800,
+        "max_uses": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_gray_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pink_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:yellow_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:orange_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:black_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      }
+    ],
+    "expert": [
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:green_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
           "item": "minecraft:brown_dye",
           "count": 4
         },
         "price": 1600,
-        "max_uses": 10
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:blue_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:purple_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cyan_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:magenta_dye",
+          "count": 4
+        },
+        "price": 1600,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:black_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:red_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:green_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:brown_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:blue_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:purple_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:cyan_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_gray_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:gray_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:pink_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:lime_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:yellow_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:light_blue_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:magenta_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:orange_bed",
+          "count": 1
+        },
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -76,49 +627,12 @@
           "item": "minecraft:white_bed",
           "count": 1
         },
-        "price": 800,
-        "max_uses": 7
-      }
-    ],
-    "expert": [
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:lime_dye",
-          "count": 3
-        },
-        "price": 400,
-        "max_uses": 10
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:green_dye",
-          "count": 4
-        },
-        "price": 2000,
-        "max_uses": 10
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:white_banner",
-          "count": 1
-        },
-        "price": 500,
-        "max_uses": 12
+        "price": 1000,
+        "maxUses": 12,
+        "villager_experience": 10
       }
     ],
     "master": [
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:painting",
-          "count": 4
-        },
-        "price": 1000,
-        "max_uses": 12
-      },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {

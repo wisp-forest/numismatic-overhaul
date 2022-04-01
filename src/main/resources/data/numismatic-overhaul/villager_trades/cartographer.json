@@ -8,7 +8,7 @@
           "item": "minecraft:paper",
           "count": 24
         },
-        "price": 72,
+        "price": 96,
         "max_uses": 16
       },
       {
@@ -17,8 +17,8 @@
           "item": "minecraft:map",
           "count": 1
         },
-        "price": 640,
-        "max_uses": 12
+        "price": 500,
+        "max_uses": 9
       }
     ],
     "apprentice": [
@@ -34,8 +34,8 @@
       {
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:monument",
-        "price": 2550,
-        "maxUses": 12
+        "price": 3000,
+        "maxUses": 2
       }
     ],
     "journeyman": [
@@ -52,13 +52,13 @@
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:mansion",
         "price": 10000,
-        "maxUses": 3
+        "maxUses": 2
       },
       {
         "type": "numismatic-overhaul:sell_map",
         "structure": "minecraft:endcity",
         "price": 20000,
-        "maxUses": 3
+        "maxUses": 2
       }
     ],
     "expert": [
@@ -66,10 +66,19 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:item_frame",
-          "count": 5
+          "count": 4
         },
-        "price": 200,
-        "maxUses": 12
+        "price": 1000,
+        "maxUses": 5
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:glow_item_frame",
+          "count": 3
+        },
+        "price": 1200,
+        "maxUses": 4
       },
       {
         "type": "numismatic-overhaul:sell_stack",

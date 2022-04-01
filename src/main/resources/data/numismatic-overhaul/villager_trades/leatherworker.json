@@ -6,19 +6,24 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:leather",
-          "count": 10
+          "count": 7
         },
-        "price": 800,
+        "price": 500,
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:leather_boots",
-          "count": 1
-        },
-        "price": 300,
-        "max_uses": 10
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_chestplate",
+        "price": 1000,
+        "max_uses": 10,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_boots",
+        "price": 700,
+        "max_uses": 10,
+        "villager_experience": 10
       }
     ],
     "apprentice": [
@@ -26,28 +31,23 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:flint",
-          "count": 8
+          "count": 16
         },
         "price": 240,
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:leather_chestplate",
-          "count": 1
-        },
-        "price": 200,
-        "max_uses": 10
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_helmet",
+        "price": 180,
+        "max_uses": 12,
+        "villager_experience": 10
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:leather_helmet",
-          "count": 1
-        },
-        "price": 180,
-        "max_uses": 12
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_leggings",
+        "price": 450,
+        "villager_experience": 10
       }
     ],
     "journeyman": [
@@ -61,9 +61,13 @@
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:sell_dyed_armor",
-        "item": "minecraft:leather_chestplate",
-        "price": 450
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:leather",
+          "count": 4
+        },
+        "price": 800,
+        "max_uses": 8
       }
     ],
     "expert": [
@@ -80,7 +84,8 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:leather_horse_armor",
-          "count": 1
+          "count": 1,
+          "villager_experience": 10
         },
         "price": 800,
         "max_uses": 12
@@ -88,33 +93,20 @@
     ],
     "master": [
       {
-        "type": "numismatic-overhaul:sell_dyed_armor",
-        "item": "minecraft:leather_helmet",
-        "price": 300
-      },
-      {
-        "type": "numismatic-overhaul:sell_dyed_armor",
-        "item": "minecraft:leather_chestplate",
-        "price": 400
-      },
-      {
-        "type": "numismatic-overhaul:sell_dyed_armor",
-        "item": "minecraft:leather_leggings",
-        "price": 350
-      },
-      {
-        "type": "numismatic-overhaul:sell_dyed_armor",
-        "item": "minecraft:leather_boots",
-        "price": 300
-      },
-      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:saddle",
           "count": 1
         },
+        "price": 2200,
+        "max_uses": 6,
+        "villager_experience": 10
+      },
+      {
+        "type": "numismatic-overhaul:sell_dyed_armor",
+        "item": "minecraft:leather_horse_armor",
         "price": 1000,
-        "max_uses": 6
+        "villager_experience": 10
       }
     ]
   }

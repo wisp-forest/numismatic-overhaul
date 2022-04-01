@@ -6,9 +6,9 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:wheat",
-          "count": 10
+          "count": 15
         },
-        "price": 50,
+        "price": 40,
 		"max_uses": 16
       },
 	  {
@@ -17,7 +17,7 @@
           "item": "minecraft:potato",
           "count": 25
         },
-        "price": 50,
+        "price": 40,
 		"max_uses": 16
       },
 	  {
@@ -26,7 +26,7 @@
           "item": "minecraft:carrot",
           "count": 25
         },
-        "price": 55,
+        "price": 40,
 		"max_uses": 16
       },
 	  {
@@ -50,8 +50,8 @@
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
           "item": "minecraft:pumpkin",
           "count": 10
         },
@@ -73,8 +73,8 @@
           "item": "minecraft:apple",
           "count": 8
         },
-        "price": 640,
-		"max_uses": 16
+        "price": 700,
+		"max_uses": 4
       }
     ],
 	"journeyman": [
@@ -91,9 +91,9 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:cookie",
-          "count": 19
+          "count": 16
         },
-        "price": 76,
+        "price": 96,
 		"max_uses": 12
       }
 	],
@@ -102,10 +102,103 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:suspicious_stew",
-          "count": 1
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 15,
+                "EffectDuration": 160
+              }
+            ]
+          }
         },
-        "price": 640,
-		"max_uses": 12
+        "price": 800,
+		"max_uses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:suspicious_stew",
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 8,
+                "EffectDuration": 120
+              }
+            ]
+          }
+        },
+        "price": 800,
+        "max_uses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:suspicious_stew",
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 16,
+                "EffectDuration": 100
+              }
+            ]
+          }
+        },
+        "price": 800,
+        "max_uses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:suspicious_stew",
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 19,
+                "EffectDuration": 240
+              }
+            ]
+          }
+        },
+        "price": 800,
+        "max_uses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:suspicious_stew",
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 23,
+                "EffectDuration": 7
+              }
+            ]
+          }
+        },
+        "price": 800,
+        "max_uses": 3
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:suspicious_stew",
+          "count": 1,
+          "tag": {
+            "Effects": [
+              {
+                "EffectId": 18,
+                "EffectDuration": 180
+              }
+            ]
+          }
+        },
+        "price": 800,
+        "max_uses": 3
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
@@ -113,7 +206,7 @@
           "item": "minecraft:cake",
           "count": 1
         },
-        "price": 640,
+        "price": 1500,
 		"max_uses": 12
       }
 	],
@@ -124,7 +217,7 @@
           "item": "minecraft:golden_carrot",
           "count": 3
         },
-        "price": 120,
+        "price": 600,
 		"max_uses": 12
       },
 	  {
@@ -133,7 +226,7 @@
           "item": "minecraft:glistering_melon_slice",
           "count": 4
         },
-        "price": 400,
+        "price": 800,
 		"max_uses": 12
       }
 	]

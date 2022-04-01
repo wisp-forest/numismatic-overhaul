@@ -5,85 +5,83 @@
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:chainmail_helmet",
+          "item": "minecraft:iron_helmet",
           "count": 1
         },
-        "price": 800,
-		"max_uses": 4
+        "price": 2500,
+        "max_uses": 8,
+        "villager_experience": 15
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:chainmail_chestplate",
+          "item": "minecraft:iron_chestplate",
           "count": 1
         },
-        "price": 1280,
-		"max_uses": 4
+        "price": 3200,
+        "max_uses": 8,
+        "villager_experience": 20
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:chainmail_leggings",
+          "item": "minecraft:iron_leggings",
           "count": 1
         },
-        "price": 1120,
-		"max_uses": 4
+        "price": 2800,
+        "max_uses": 8,
+        "villager_experience": 20
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:chainmail_boots",
+          "item": "minecraft:iron_boots",
           "count": 1
         },
-        "price": 640,
-		"max_uses": 4
+        "price": 2250,
+        "max_uses": 8,
+        "villager_experience": 15
       }
     ],
     "apprentice": [
+      {
+        "type": "numismatic-overhaul:buy_item",
+        "buy": {
+          "item": "minecraft:iron_ingot",
+          "count": 4
+        },
+        "price": 200,
+        "max_uses": 12
+      },
 	  {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:bell",
           "count": 1
         },
-        "price": 1800,
-		"max_uses": 12
+        "price": 3000,
+		"max_uses": 12,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:iron_helmet",
+          "item": "minecraft:chainmail_leggings",
           "count": 1
         },
-        "price": 1800,
-		"max_uses": 12
+        "price": 1250,
+        "max_uses": 8,
+        "villager_experience": 15
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:iron_chestplate",
+          "item": "minecraft:chainmail_boots",
           "count": 1
         },
-        "price": 2880,
-		"max_uses": 12
-      },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:iron_leggings",
-          "count": 1
-        },
-        "price": 2520,
-		"max_uses": 12
-      },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:iron_boots",
-          "count": 1
-        },
-        "price": 1440,
-		"max_uses": 12
+        "price": 1100,
+        "max_uses": 8,
+        "villager_experience": 10
       }
     ],
 	"journeyman": [
@@ -93,84 +91,77 @@
           "item": "minecraft:shield",
           "count": 1
         },
-        "price": 390,
-		"max_uses": 4
+        "price": 900,
+		"max_uses": 8,
+        "villager_experience": 10
       },
-	  {
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "sell": {
+          "item": "minecraft:chainmail_helmet",
+          "count": 1
+        },
+        "price": 1200,
+        "max_uses": 4,
+        "villager_experience": 10
+      },
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:chainmail_chestplate",
           "count": 1
         },
-        "price": 1280,
-		"max_uses": 12
+        "price": 1500,
+        "max_uses": 4,
+        "villager_experience": 15
       }
     ],
 	"expert": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:diamond_chestplate",
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 25,
+        "item": {
+          "item": "minecraft:diamond_leggings",
           "count": 1
         },
-        "price": 16000,
-		"max_uses": 12
+        "base_price": 1500,
+		"max_uses": 4,
+        "villager_experience": 30
       },
 	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:iron_chestplate",
-          "count": 1
-        },
-        "price": 2880,
-		"max_uses": 12
-      },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 25,
+        "item": {
           "item": "minecraft:diamond_boots",
           "count": 1
         },
-        "price": 8000,
-		"max_uses": 12
+        "base_price": 1100,
+		"max_uses": 4,
+        "villager_experience": 30
       }
     ],
 	"master": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 30,
+        "item": {
           "item": "minecraft:diamond_helmet",
           "count": 1
         },
-        "price": 10000,
-		"max_uses": 12
+        "base_price": 1250,
+		"max_uses": 4,
+        "villager_experience": 30
       },
 	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 30,
+        "item": {
           "item": "minecraft:diamond_chestplate",
           "count": 1
         },
-        "price": 16000,
-		"max_uses": 12
-      },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:diamond_leggings",
-          "count": 1
-        },
-        "price": 14000,
-		"max_uses": 12
-      },
-	  {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:diamond_boots",
-          "count": 1
-        },
-        "price": 8000,
-		"max_uses": 12
+        "base_price": 2000,
+		"max_uses": 4,
+        "villager_experience": 30
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
@@ -178,8 +169,9 @@
           "item": "minecraft:totem_of_undying",
           "count": 1
         },
-        "price": 25000,
-		"max_uses": 2
+        "price": 40000,
+		"max_uses": 1,
+        "villager_experience": 30
       }
     ]
   }

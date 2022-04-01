@@ -9,7 +9,7 @@
           "count": 32
         },
         "price": 320,
-        "max_uses": 16
+        "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -53,9 +53,9 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:iron_ingot",
-          "count": 4
+          "count": 7
         },
-        "price": 100,
+        "price": 200,
         "max_uses": 14
       },
       {
@@ -64,37 +64,44 @@
           "item": "minecraft:bell",
           "count": 1
         },
-        "price": 640,
-        "max_uses": 12
+        "price": 3000,
+        "max_uses": 12,
+        "villager_experience": 10
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 15,
+        "item": {
           "item": "minecraft:iron_axe",
           "count": 1
         },
-        "price": 1240,
-        "max_uses": 4
+        "base_price": 200,
+        "max_uses": 4,
+        "villager_experience": 15
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 15,
+        "item": {
           "item": "minecraft:iron_pickaxe",
           "count": 1
         },
-        "price": 1240,
-        "max_uses": 4
+        "base_price": 300,
+        "max_uses": 4,
+        "villager_experience": 15
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 15,
+        "item": {
           "item": "minecraft:iron_shovel",
           "count": 1
         },
-        "price": 1240,
-        "max_uses": 4
+        "base_price": 300,
+        "max_uses": 4,
+        "villager_experience": 15
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -103,18 +110,20 @@
           "count": 1
         },
         "price": 5540,
-        "max_uses": 1
+        "max_uses": 1,
+        "villager_experience": 20
       }
     ],
     "expert": [
       {
         "type": "numismatic-overhaul:buy_item",
         "buy": {
-          "item": "minecraft:diamond",
+          "item": "minecraft:emerald",
           "count": 1
         },
         "price": 1000,
-        "max_uses": 4
+        "max_uses": 4,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:enchant_item",
@@ -123,8 +132,9 @@
         "item": {
           "item": "minecraft:diamond_shovel"
         },
-        "base_price": 330,
-        "max_uses": 3
+        "base_price": 400,
+        "max_uses": 3,
+        "villager_experience": 20
       },
       {
         "type": "numismatic-overhaul:enchant_item",
@@ -133,8 +143,9 @@
         "item": {
           "item": "minecraft:diamond_axe"
         },
-        "base_price": 400,
-        "max_uses": 3
+        "base_price": 420,
+        "max_uses": 3,
+        "villager_experience": 20
       }
     ],
     "master": [
@@ -146,7 +157,8 @@
           "item": "minecraft:diamond_pickaxe"
         },
         "base_price": 750,
-        "max_uses": 3
+        "max_uses": 3,
+        "villager_experience": 20
       }
     ]
   }

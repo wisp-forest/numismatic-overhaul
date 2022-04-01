@@ -8,8 +8,8 @@
           "item": "minecraft:coal",
           "count": 15
         },
-        "price": 90,
-        "max_uses": 4
+        "price": 150,
+        "max_uses": 12
       },
       {
         "type": "numismatic-overhaul:sell_stack",
@@ -17,8 +17,9 @@
           "item": "minecraft:iron_axe",
           "count": 1
         },
-        "price": 1083,
-        "max_uses": 4
+        "price": 1280,
+        "max_uses": 8,
+        "villager_experience": 10
       }
     ],
     "apprentice": [
@@ -26,19 +27,21 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:iron_ingot",
-          "count": 3
+          "count": 7
         },
-        "price": 360,
+        "price": 200,
         "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
+        "type": "numismatic-overhaul:enchant_item",
+        "level": 15,
+        "item": {
           "item": "minecraft:iron_sword",
           "count": 1
         },
-        "price": 723,
-        "max_uses": 12
+        "base_price": 200,
+        "max_uses": 4,
+        "villager_experience": 10
       }
     ],
     "journeyman": [
@@ -46,9 +49,9 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:flint",
-          "count": 2
+          "count": 12
         },
-        "price": 84,
+        "price": 180,
         "max_uses": 12
       },
       {
@@ -57,8 +60,9 @@
           "item": "minecraft:bell",
           "count": 1
         },
-        "price": 1080,
-        "max_uses": 12
+        "price": 3000,
+        "max_uses": 12,
+        "villager_experience": 10
       }
     ],
     "expert": [
@@ -68,18 +72,19 @@
           "item": "minecraft:diamond",
           "count": 1
         },
-        "price": 10000,
+        "price": 3000,
         "max_uses": 3
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 20,
+        "level": 25,
         "allow_treasure": false,
         "item": {
           "item": "minecraft:diamond_axe"
         },
-        "base_price": 2000,
-        "max_uses": 3
+        "base_price": 1600,
+        "max_uses": 3,
+        "villager_experience": 20
       }
     ],
     "master": [
@@ -90,8 +95,9 @@
         "item": {
           "item": "minecraft:diamond_sword"
         },
-        "base_price": 1500,
-        "max_uses": 3
+        "base_price": 1800,
+        "max_uses": 3,
+        "villager_experience": 20
       }
     ]
   }

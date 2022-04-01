@@ -51,17 +51,17 @@
         "price": 200,
 		"max_uses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:glowstone_dust",
           "count": 3
         },
         "price": 900,
-		"max_uses": 12
+        "max_uses": 12
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
+        "type": "numismatic-overhaul:dimension_sell_stack",
         "sell": {
           "item": "minecraft:glowstone_dust",
           "count": 4
@@ -94,10 +94,10 @@
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:ender_pearl",
-          "count": 5
+          "count": 3
         },
         "price": 1500,
-		"max_uses": 12
+		"max_uses": 7
       }
     ],
 	"master": [
@@ -105,10 +105,10 @@
         "type": "numismatic-overhaul:buy_item",
         "buy": {
           "item": "minecraft:nether_wart",
-          "count": 8
+          "count": 10
         },
-        "price": 500,
-		"max_uses": 12
+        "price": 300,
+		"max_uses": 8
       },
 	  {
         "type": "numismatic-overhaul:sell_stack",
@@ -117,7 +117,7 @@
           "count": 4
         },
         "price": 1200,
-		"max_uses": 12
+		"max_uses": 8
       }
     ]
   }

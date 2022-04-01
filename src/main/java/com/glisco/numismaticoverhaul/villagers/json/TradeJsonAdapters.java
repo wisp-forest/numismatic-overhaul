@@ -351,7 +351,7 @@ public class TradeJsonAdapters {
 
         public TradeOffer create(Entity entity, Random random) {
             ItemStack itemStack2 = new ItemStack(this.sell);
-            if (this.sell instanceof DyeableArmorItem) {
+            if (this.sell instanceof DyeableItem) {
                 List<DyeItem> list = Lists.newArrayList();
                 list.add(getDye(random));
                 if (random.nextFloat() > 0.7F) {
