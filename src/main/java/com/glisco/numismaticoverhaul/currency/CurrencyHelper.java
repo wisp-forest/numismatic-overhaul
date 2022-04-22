@@ -26,7 +26,7 @@ public class CurrencyHelper {
 
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
-            if (stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) continue;
+            if (isCombined(stack)) continue;
             if (!(stack.getItem() instanceof CurrencyItem currencyItem)) continue;
 
             value += currencyItem.getValue(stack);
@@ -41,7 +41,7 @@ public class CurrencyHelper {
         return stacks.stream().mapToInt(stack -> {
             if (stack == null) return 0;
 
-            if (stack.getOrCreateNbt().contains("Combined", NbtElement.BYTE_TYPE)) return 0;
+            if (isCombined(stack)) return 0;
             if (!(stack.getItem() instanceof CurrencyItem currencyItem)) return 0;
             return (int) currencyItem.getValue(stack);
         }).sum();
@@ -108,6 +108,10 @@ public class CurrencyHelper {
         }
 
         return longArray;
+    }
+
+    private static boolean isCombined(ItemStack stack) {
+        return stack.hasNbt() && stack.getNbt().contains("Combined", NbtElement.BYTE_TYPE);
     }
 
 }

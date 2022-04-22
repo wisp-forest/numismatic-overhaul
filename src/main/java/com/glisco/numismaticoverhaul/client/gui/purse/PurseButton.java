@@ -41,6 +41,4 @@ public class PurseButton extends TexturedButtonWidget {
                 TOOLTIP_TITLE,
                 x + 14, y + 5);
     }
-
-
 }

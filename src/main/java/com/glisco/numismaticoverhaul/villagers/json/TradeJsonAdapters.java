@@ -413,7 +413,7 @@ public class TradeJsonAdapters {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            List<Potion> list = Registry.POTION.stream().filter((potionx) -> !potionx.getEffects().isEmpty() && BrewingRecipeRegistry.isBrewable(potionx)).collect(Collectors.toList());
+            List<Potion> list = Registry.POTION.stream().filter((potion) -> !potion.getEffects().isEmpty() && BrewingRecipeRegistry.isBrewable(potion)).toList();
 
             Potion potion = list.get(random.nextInt(list.size()));
             ItemStack itemStack2 = PotionUtil.setPotion(containerItem.copy(), potion);
