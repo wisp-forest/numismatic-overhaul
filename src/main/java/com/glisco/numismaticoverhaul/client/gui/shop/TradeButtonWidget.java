@@ -34,6 +34,7 @@ public class TradeButtonWidget extends ButtonWidget {
 
         MinecraftClient.getInstance().getItemRenderer().zOffset = 0.0f;
         MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(renderItem, x + 4, y + 2);
+        MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, renderItem, x + 4, y + 2);
         MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, String.valueOf(price), x + 30, y + 6, 0xffffff);
     }
 

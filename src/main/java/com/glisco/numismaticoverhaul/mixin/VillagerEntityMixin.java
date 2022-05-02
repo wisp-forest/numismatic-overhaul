@@ -32,8 +32,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
                 :
                 0));
 
-//        System.out.println("Base reputation " + reputation + ", adjusted " + adjustedReputation);
-
         this.getOffers().forEach(offer -> ((NumismaticTradeOfferExtensions) offer).numismatic$setReputation(adjustedReputation));
     }
 

@@ -12,6 +12,8 @@ import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import io.wispforest.owo.network.OwoNetChannel;
 import io.wispforest.owo.ops.LootOps;
 import io.wispforest.owo.registration.reflect.FieldRegistrationHandler;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -48,8 +50,13 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
             = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(10, 0, 100));
 
+    private static NumismaticOverhaulConfig CONFIG;
+
     @Override
     public void onInitialize() {
+
+        AutoConfig.register(NumismaticOverhaulConfig.class, JanksonConfigSerializer::new);
+        CONFIG = AutoConfig.getConfigHolder(NumismaticOverhaulConfig.class).getConfig();
 
         FieldRegistrationHandler.register(NumismaticOverhaulItems.class, MOD_ID, false);
         FieldRegistrationHandler.register(NumismaticOverhaulBlocks.class, MOD_ID, false);
@@ -85,6 +92,10 @@ public class NumismaticOverhaul implements ModInitializer {
                         .build());
             }
         });
+    }
+
+    public static NumismaticOverhaulConfig getConfig() {
+        return CONFIG;
     }
 
     private static boolean anyMatch(Identifier target, Identifier... comparisons) {

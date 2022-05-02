@@ -2,10 +2,12 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.glisco.numismaticoverhaul.mixin",
+  "plugin": "com.glisco.numismaticoverhaul.mixin.NOMixinPlugin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "BundleItemMixin",
     "LivingEntityMixin",
+    "MCAVillageMixin",
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
     "ServerWorldMixin",

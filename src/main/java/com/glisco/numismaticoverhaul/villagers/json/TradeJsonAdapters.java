@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
+import io.wispforest.owo.util.RegistryAccess;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -72,8 +73,7 @@ public class TradeJsonAdapters {
             if (!(entity.world instanceof ServerWorld serverWorld)) return null;
 
             final var registry = serverWorld.getRegistryManager().get(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY);
-            final var feature = registry.getEntry(registry.getKey(
-                    registry.get(this.structureId)).get()).orElse(null);
+            final var feature = RegistryAccess.getEntry(registry, this.structureId);
 
             if (feature == null) {
                 NumismaticOverhaul.LOGGER.error("Tried to create map to invalid structure " + this.structureId);

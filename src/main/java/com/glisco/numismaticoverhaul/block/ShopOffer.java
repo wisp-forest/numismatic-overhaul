@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.village.TradeOffer;
 
 import java.util.List;
@@ -30,11 +31,7 @@ public class ShopOffer {
 
         ItemStack buy = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
 
-        int maxUses = shop.getItems().stream().filter(stack -> {
-            ItemStack comparisonStack = stack.copy();
-            comparisonStack.setCount(1);
-            return ItemStack.areEqual(comparisonStack, sell);
-        }).mapToInt(ItemStack::getCount).sum();
+        int maxUses = count(shop.getItems(), sell) / sell.getCount();
 
         final var tradeOffer = new TradeOffer(buy, sell, maxUses, 0, 0);
         ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(-69420);
@@ -86,6 +83,29 @@ public class ShopOffer {
     public static ShopOffer fromNbt(NbtCompound nbt) {
         var item = ItemStack.fromNbt(nbt.getCompound("Item"));
         return new ShopOffer(item, nbt.getLong("Price"));
+    }
+
+    public static int count(DefaultedList<ItemStack> stacks, ItemStack testStack) {
+        int count = 0;
+        for (var stack : stacks) {
+            if (!ItemStack.canCombine(stack, testStack)) continue;
+            count += stack.getCount();
+        }
+        return count;
+    }
+
+    public static int remove(DefaultedList<ItemStack> stacks, ItemStack removeStack) {
+        int toRemove = removeStack.getCount();
+        for (var stack : stacks) {
+            if (!ItemStack.canCombine(stack, removeStack)) continue;
+
+            int removed = stack.getCount();
+            stack.decrement(toRemove);
+
+            toRemove -= removed;
+            if (toRemove < 1) break;
+        }
+        return removeStack.getCount() - toRemove;
     }
 
     @Override

@@ -32,6 +32,8 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
 
     @Override
     protected void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, Profiler profiler) {
+        if (!NumismaticOverhaul.getConfig().enableVillagerTrading) return;
+
         NumismaticVillagerTradesRegistry.clearRegistries();
 
         loader.forEach((identifier, jsonElement) -> {

@@ -24,8 +24,9 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui.png");
     public static final Identifier TRADES_TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui_trades.png");
 
-    private AddTradeWidget TRADE_WIDGET;
-    private CurrencyStorageWidget CURRENCY_WIDGET;
+    private AddTradeWidget tradeWidget;
+    private CurrencyStorageWidget currencyWidget;
+    private ToggleTransferWidget transferWidget;
 
     int selected_tab = 0;
     private int tabs = 1;
@@ -42,9 +43,11 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     @Override
     protected void init() {
         super.init();
-        this.TRADE_WIDGET = new AddTradeWidget(x + 178, y, client, this);
-        this.CURRENCY_WIDGET = new CurrencyStorageWidget(x + 178, y + 60, client);
-        updateScreen(offers, 0);
+        this.tradeWidget = new AddTradeWidget(x + 178, y, client, this);
+        this.currencyWidget = new CurrencyStorageWidget(x + 178, y + 60, client);
+        this.transferWidget = new ToggleTransferWidget(x + 178, y + 58);
+
+        updateScreen(offers, 0, false);
         selectTab(selected_tab, false);
     }
 
@@ -76,8 +79,9 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
 
-        TRADE_WIDGET.render(matrices, mouseX, mouseY, delta);
-        CURRENCY_WIDGET.render(matrices, mouseX, mouseY, delta);
+        tradeWidget.render(matrices, mouseX, mouseY, delta);
+        currencyWidget.render(matrices, mouseX, mouseY, delta);
+        transferWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
         if (selected_tab != 0) {
@@ -97,7 +101,7 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (mouseX >= x - 27 && mouseX <= x) {
             for (int i = 0; i < tabs; i++) {
-                if (mouseY >= y + 14 + i * 32 && mouseY <= y + 42 + i * 32) {
+                if (mouseY >= y + 4 + i * 32 && mouseY <= y + 34 + i * 32) {
                     selectTab(i, true);
                     return true;
                 }
@@ -115,30 +119,34 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
             }
         }
 
-        return CURRENCY_WIDGET.mouseClicked(mouseX, mouseY, button) || TRADE_WIDGET.mouseClicked(mouseX, mouseY, button) || super.mouseClicked(mouseX, mouseY, button);
+        return currencyWidget.mouseClicked(mouseX, mouseY, button)
+                || tradeWidget.mouseClicked(mouseX, mouseY, button)
+                || transferWidget.mouseClicked(mouseX, mouseY, button)
+                || super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
-        return TRADE_WIDGET.isMouseOver(mouseX, mouseY) || super.isMouseOver(mouseX, mouseY);
+        return tradeWidget.isMouseOver(mouseX, mouseY)
+                || transferWidget.isMouseOver(mouseX, mouseY)
+                || super.isMouseOver(mouseX, mouseY);
     }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        return this.TRADE_WIDGET.keyPressed(keyCode, scanCode, modifiers) || super.keyPressed(keyCode, scanCode, modifiers);
+        return this.tradeWidget.keyPressed(keyCode, scanCode, modifiers) || super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        return this.TRADE_WIDGET.charTyped(chr, modifiers);
+        return this.tradeWidget.charTyped(chr, modifiers);
     }
-
 
     public void updateTradeWidget() {
-        this.TRADE_WIDGET.updateButtonActiveState();
+        this.tradeWidget.updateButtonActiveState();
     }
 
-    public void updateScreen(List<ShopOffer> offers, long storedCurrency) {
+    public void updateScreen(List<ShopOffer> offers, long storedCurrency, boolean transferEnabled) {
 
         tradeButtons.clear();
         this.offers = offers;
@@ -154,19 +162,21 @@ public class ShopScreen extends HandledScreen<ShopScreenHandler> {
         trySelectTab();
         updateTradeWidget();
 
-        CURRENCY_WIDGET.setCurrencyStorage(storedCurrency);
+        currencyWidget.setCurrencyStorage(storedCurrency);
+        transferWidget.transferEnabled = transferEnabled;
     }
 
     public void loadOffer(int index) {
-        TRADE_WIDGET.setText(String.valueOf(offers.get(index).getPrice()));
+        tradeWidget.setText(String.valueOf(offers.get(index).getPrice()));
         NumismaticOverhaul.CHANNEL.clientHandle()
                 .send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.LOAD_OFFER, index));
     }
 
     private void selectTab(int tab, boolean clickSound) {
         selected_tab = tab;
-        TRADE_WIDGET.setActive(tab != 0);
-        CURRENCY_WIDGET.setY(tab == 0 ? y : y + 60);
+        transferWidget.active = tab == 0;
+        tradeWidget.setActive(tab != 0);
+        currencyWidget.setY(tab == 0 ? y : y + 60);
         this.titleY = tab == 0 ? 6 : 6000;
         if (clickSound)
             client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));

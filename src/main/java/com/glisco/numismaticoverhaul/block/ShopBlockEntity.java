@@ -31,14 +31,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
 
+    private static final int[] SLOTS = IntStream.range(0, 27).toArray();
+    private static final int[] NO_SLOTS = new int[0];
+
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
+
     private final Merchant merchant;
     private final List<ShopOffer> offers;
     private long storedCurrency;
     private UUID owner;
+    private boolean allowsTransfer = false;
 
     private int tradeIndex;
 
@@ -56,12 +62,12 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     @Override
     public int[] getAvailableSlots(Direction side) {
-        return new int[0];
+        return allowsTransfer ? SLOTS : NO_SLOTS;
     }
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return false;
+        return allowsTransfer;
     }
 
     @Override
@@ -87,6 +93,14 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         return storedCurrency;
     }
 
+    public boolean isTransferEnabled() {
+        return allowsTransfer;
+    }
+
+    public void toggleTransfer() {
+        this.allowsTransfer = !this.allowsTransfer;
+    }
+
     public void setStoredCurrency(long storedCurrency) {
         this.storedCurrency = storedCurrency;
         markDirty();
@@ -102,6 +116,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
         ShopOffer.writeAll(tag, offers);
+        tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
             tag.putUuid("Owner", owner);
@@ -116,6 +131,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }
+        this.allowsTransfer = tag.getBoolean("AllowsTransfer");
         this.storedCurrency = tag.getLong("StoredCurrency");
     }
 
@@ -169,6 +185,11 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new ShopScreenHandler(syncId, inv, this);
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        return player.getUuid().equals(this.owner);
     }
 
     @Override

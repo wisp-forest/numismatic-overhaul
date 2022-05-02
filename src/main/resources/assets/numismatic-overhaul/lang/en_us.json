@@ -12,6 +12,8 @@
   "currency.numismatic-overhaul.bronze": "Bronze",
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
+  "text.autoconfig.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
+  "text.autoconfig.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }

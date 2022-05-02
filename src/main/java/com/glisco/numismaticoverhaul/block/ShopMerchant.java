@@ -51,15 +51,7 @@ public class ShopMerchant implements Merchant {
     @Override
     public void trade(TradeOffer offer) {
         offer.use();
-
-        for (ItemStack itemStack : shop.getItems()) {
-            ItemStack comparisonStack = itemStack.copy();
-            comparisonStack.setCount(1);
-            if (!ItemStack.areEqual(comparisonStack, offer.copySellItem())) continue;
-            itemStack.decrement(1);
-            break;
-        }
-
+        ShopOffer.remove(shop.getItems(), offer.getSellItem());
         shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }
 

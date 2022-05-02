@@ -62,7 +62,7 @@ public class ShopBlock extends BlockWithEntity {
                     return openShopMerchant(player, shop);
                 } else {
                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                    NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
+                    NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
                 }
             } else {
                 return openShopMerchant(player, shop);

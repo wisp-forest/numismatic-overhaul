@@ -69,7 +69,6 @@ public class ShopScreenHandler extends ScreenHandler {
             @Override
             public boolean canInsert(ItemStack stack) {
                 ItemStack shadow = stack.copy();
-                shadow.setCount(1);
                 this.setStack(shadow);
                 return false;
             }
@@ -107,25 +106,33 @@ public class ShopScreenHandler extends ScreenHandler {
 
     public void createOffer(long price) {
         shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
-        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
+        sendUpdate();
     }
 
     public void extractCurrency() {
         ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
         shop.setStoredCurrency(0);
-        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
+        sendUpdate();
+    }
+
+    public void deleteOffer() {
+        shop.deleteOffer(BUFFER_INVENTORY.getStack(0));
+        sendUpdate();
+    }
+
+    public void toggleTransfer() {
+        this.shop.toggleTransfer();
+        sendUpdate();
+    }
+
+    private void sendUpdate() {
+        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop));
     }
 
     public ItemStack getBufferStack() {
         return BUFFER_INVENTORY.getStack(0);
     }
 
-    public void deleteOffer() {
-        shop.deleteOffer(BUFFER_INVENTORY.getStack(0));
-        NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop.getOffers(), shop.getStoredCurrency()));
-    }
-
-    // Shift + Player Inv Slot
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
         return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());

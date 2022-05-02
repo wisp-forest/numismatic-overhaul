@@ -25,6 +25,9 @@
     ],
     "rei_plugins": [
       "com.glisco.numismaticoverhaul.compat.rei.NOReiPlugin"
+    ],
+    "modmenu": [
+      "com.glisco.numismaticoverhaul.compat.modmenu.NOModMenuHook"
     ]
   },
   "mixins": [
@@ -36,7 +39,8 @@
     "minecraft": ">=1.18.2",
     "cardinal-components-base": "*",
     "cardinal-components-entity": "*",
-    "owo": ">=0.5.0"
+    "owo": ">=0.7.0",
+    "cloth-config": ">=6.0.0"
   },
   "custom": {
     "cardinal-components": [
