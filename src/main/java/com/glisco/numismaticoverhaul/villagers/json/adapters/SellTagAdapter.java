@@ -1,13 +1,16 @@
 package com.glisco.numismaticoverhaul.villagers.json.adapters;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.villagers.json.TradeJsonAdapter;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerJsonHelper;
 import com.google.gson.JsonObject;
+import io.wispforest.owo.ops.TextOps;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
@@ -57,6 +60,13 @@ public class SellTagAdapter extends TradeJsonAdapter {
 
             if (entries == null) {
                 NumismaticOverhaul.LOGGER.warn("Could not generate trade for tag '" + sellTag + "', as it does not exist");
+
+                final var player = entity.world.getClosestPlayer(entity, 15);
+                if (player != null) {
+                    player.sendMessage(TextOps.withColor("numismatic §> there has been a problem generating trades, check the log for details",
+                            Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+                }
+
                 return null;
             }
 

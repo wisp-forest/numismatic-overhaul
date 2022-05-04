@@ -13,16 +13,6 @@
         "villager_experience": 15
       },
       {
-        "type": "numismatic-overhaul:sell_tag",
-        "sell": {
-          "tag": "numismatic-overhaul:money",
-          "count": 69
-        },
-        "price": 2500,
-        "max_uses": 8,
-        "villager_experience": 15
-      },
-      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:iron_chestplate",
