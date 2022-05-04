@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class BuyItemAdapter extends TradeJsonAdapter {
+public class BuyStackAdapter extends TradeJsonAdapter {
 
     @Override
     @NotNull

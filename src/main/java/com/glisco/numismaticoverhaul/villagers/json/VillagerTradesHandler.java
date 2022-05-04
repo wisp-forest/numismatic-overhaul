@@ -51,7 +51,8 @@ public class VillagerTradesHandler {
         tradeTypesRegistry.put(NumismaticOverhaul.id("process_item"), new ProcessItemAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_dyed_armor"), new SellDyedArmorAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_potion_container"), new SellPotionContainerItemAdapter());
-        tradeTypesRegistry.put(NumismaticOverhaul.id("buy_item"), new BuyItemAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("buy_item"), new BuyStackAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("buy_stack"), new BuyStackAdapter());
     }
 
     public static void loadProfession(Identifier fileId, JsonObject jsonRoot) {
