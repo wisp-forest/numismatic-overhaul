@@ -12,7 +12,7 @@ public abstract class TradeJsonAdapter {
     protected float price_multiplier;
 
     @NotNull
-    abstract TradeOffers.Factory deserialize(JsonObject json);
+    public abstract TradeOffers.Factory deserialize(JsonObject json);
 
     protected void loadDefaultStats(JsonObject jsonObject, boolean verifyPrice) {
 
