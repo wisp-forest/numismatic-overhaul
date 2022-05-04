@@ -21,8 +21,8 @@ import java.util.List;
 
 public class ShopScreen extends HandledScreen<ShopScreenHandler> {
 
-    public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui.png");
-    public static final Identifier TRADES_TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui_trades.png");
+    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui.png");
+    public static final Identifier TRADES_TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui_trades.png");
 
     private AddTradeWidget tradeWidget;
     private CurrencyStorageWidget currencyWidget;

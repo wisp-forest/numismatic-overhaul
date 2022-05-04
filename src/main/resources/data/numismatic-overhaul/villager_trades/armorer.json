@@ -13,6 +13,16 @@
         "villager_experience": 15
       },
       {
+        "type": "numismatic-overhaul:sell_tag",
+        "sell": {
+          "tag": "numismatic-overhaul:money",
+          "count": 69
+        },
+        "price": 2500,
+        "max_uses": 8,
+        "villager_experience": 15
+      },
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:iron_chestplate",
@@ -53,14 +63,14 @@
         "price": 200,
         "max_uses": 12
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:bell",
           "count": 1
         },
         "price": 3000,
-		"max_uses": 12,
+        "max_uses": 12,
         "villager_experience": 10
       },
       {
@@ -84,7 +94,7 @@
         "villager_experience": 10
       }
     ],
-	"journeyman": [
+    "journeyman": [
       {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
@@ -92,7 +102,7 @@
           "count": 1
         },
         "price": 900,
-		"max_uses": 8,
+        "max_uses": 8,
         "villager_experience": 10
       },
       {
@@ -116,7 +126,7 @@
         "villager_experience": 15
       }
     ],
-	"expert": [
+    "expert": [
       {
         "type": "numismatic-overhaul:enchant_item",
         "level": 25,
@@ -125,10 +135,10 @@
           "count": 1
         },
         "base_price": 1500,
-		"max_uses": 4,
+        "max_uses": 4,
         "villager_experience": 30
       },
-	  {
+      {
         "type": "numismatic-overhaul:enchant_item",
         "level": 25,
         "item": {
@@ -136,11 +146,11 @@
           "count": 1
         },
         "base_price": 1100,
-		"max_uses": 4,
+        "max_uses": 4,
         "villager_experience": 30
       }
     ],
-	"master": [
+    "master": [
       {
         "type": "numismatic-overhaul:enchant_item",
         "level": 30,
@@ -149,10 +159,10 @@
           "count": 1
         },
         "base_price": 1250,
-		"max_uses": 4,
+        "max_uses": 4,
         "villager_experience": 30
       },
-	  {
+      {
         "type": "numismatic-overhaul:enchant_item",
         "level": 30,
         "item": {
@@ -160,17 +170,17 @@
           "count": 1
         },
         "base_price": 2000,
-		"max_uses": 4,
+        "max_uses": 4,
         "villager_experience": 30
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
         "sell": {
           "item": "minecraft:totem_of_undying",
           "count": 1
         },
         "price": 40000,
-		"max_uses": 1,
+        "max_uses": 1,
         "villager_experience": 30
       }
     ]

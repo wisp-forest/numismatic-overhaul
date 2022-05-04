@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 
 public class CurrencyStorageWidget extends DrawableHelper implements Drawable, Element {
 
-    public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/shop_gui.png");
+    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui.png");
 
     private final MinecraftClient client;
     private final int x;

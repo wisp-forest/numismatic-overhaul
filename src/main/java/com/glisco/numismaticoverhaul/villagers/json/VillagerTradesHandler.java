@@ -28,8 +28,8 @@ public class VillagerTradesHandler {
 
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final HashMap<String, Integer> professionKeys = new HashMap<>();
-    public static final HashMap<Identifier, TradeJsonAdapter> tradeTypesRegistry = new HashMap<>();
+    public static final Map<String, Integer> professionKeys = new HashMap<>();
+    public static final Map<Identifier, TradeJsonAdapter> tradeTypesRegistry = new HashMap<>();
 
     private static final List<DeserializationException> EXCEPTIONS_DURING_LOADING = new ArrayList<>();
 
@@ -42,15 +42,16 @@ public class VillagerTradesHandler {
     }
 
     public static void registerDefaultAdapters() {
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_stack"), new SellStackAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "dimension_sell_stack"), new DimensionAwareSellStackAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_map"), new SellMapAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_single_enchantment"), new SellSingleEnchantmentAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "enchant_item"), new EnchantItemAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "process_item"), new ProcessItemAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_dyed_armor"), new SellDyedArmorAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "sell_potion_container"), new SellPotionContainerItemAdapter());
-        tradeTypesRegistry.put(new Identifier("numismatic-overhaul", "buy_item"), new BuyItemAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_stack"), new SellStackAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_tag"), new SellTagAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("dimension_sell_stack"), new DimensionAwareSellStackAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_map"), new SellMapAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_single_enchantment"), new SellSingleEnchantmentAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("enchant_item"), new EnchantItemAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("process_item"), new ProcessItemAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_dyed_armor"), new SellDyedArmorAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_potion_container"), new SellPotionContainerItemAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("buy_item"), new BuyItemAdapter());
     }
 
     public static void loadProfession(Identifier fileId, JsonObject jsonRoot) {

@@ -27,7 +27,7 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier(NumismaticOverhaul.MOD_ID, "villager_data_loader");
+        return NumismaticOverhaul.id("villager_data_loader");
     }
 
     @Override

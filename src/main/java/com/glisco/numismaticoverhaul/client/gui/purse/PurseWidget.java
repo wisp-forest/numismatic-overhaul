@@ -25,7 +25,7 @@ import java.util.List;
 
 public class PurseWidget extends DrawableHelper implements Drawable, Element, Selectable {
 
-    public static final Identifier TEXTURE = new Identifier(NumismaticOverhaul.MOD_ID, "textures/gui/purse_widget.png");
+    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/purse_widget.png");
     private final MinecraftClient client;
     private final int x;
     private final int y;
