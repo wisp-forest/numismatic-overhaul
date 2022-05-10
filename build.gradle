@@ -8,11 +8,12 @@ version = "${project.mod_version}+${project.minecraft_base_version}"
 group = project.maven_group
 
 repositories {
-    maven { url "https://maven.terraformersmc.com/" }
-    maven { url = "https://ladysnake.jfrog.io/artifactory/mods" }
-    maven { url = "https://maven.shedaniel.me/" }
-    maven { url = "https://maven.wispforest.io/" }
-    maven { url = "https://storage.googleapis.com/devan-maven/" }
+    maven   { url "https://maven.terraformersmc.com/" }
+    maven   { url = "https://ladysnake.jfrog.io/artifactory/mods" }
+    maven   { url = "https://maven.shedaniel.me/" }
+    maven   { url = "https://maven.wispforest.io/" }
+    maven   { url = "https://storage.googleapis.com/devan-maven/" }
+    flatDir { dir("libs") }
 
     mavenLocal()
 }
@@ -48,6 +49,9 @@ dependencies {
     // oωo
     modImplementation "io.wispforest:owo-lib:${project.owo_version}"
     modCompileOnly include("io.wispforest:owo-sentinel:${project.owo_version}")
+
+    // inventorio
+    modImplementation ("me.lizardofoz.inventorio:inventorio-1.18-fabric-1.7.0")
 }
 
 processResources {

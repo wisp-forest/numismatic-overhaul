@@ -21,6 +21,9 @@ public class NOMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        if (FabricLoader.getInstance().isModLoaded("inventorio") && !mixinClassName.contains("InventorioScreenMixin")) {
+            return true;
+        }
         return FabricLoader.getInstance().isModLoaded("mca") || !mixinClassName.contains("MCAVillageMixin");
     }
 

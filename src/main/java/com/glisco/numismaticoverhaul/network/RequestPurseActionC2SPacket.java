@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import io.wispforest.owo.network.ServerAccess;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.screen.PlayerScreenHandler;
 
 public record RequestPurseActionC2SPacket(Action action, long value) {
@@ -12,7 +13,7 @@ public record RequestPurseActionC2SPacket(Action action, long value) {
         final var player = access.player();
         final long value = message.value();
 
-        if (player.currentScreenHandler instanceof PlayerScreenHandler) {
+        if (player.currentScreenHandler instanceof PlayerScreenHandler || FabricLoader.getInstance().isModLoaded("inventorio") && player.currentScreenHandler.getClass().getName().equals("me.lizardofoz.inventorio.player.InventorioScreenHandler")) {
             switch (message.action()) {
                 case STORE_ALL -> ModComponents.CURRENCY.get(player).modify(CurrencyHelper.getMoneyInInventory(player, true));
                 case EXTRACT -> {

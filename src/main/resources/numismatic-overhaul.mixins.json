@@ -17,6 +17,7 @@
     "VillagerEntityMixin"
   ],
   "client": [
+    "InventorioScreenMixin",
     "InventoryScreenMixin",
     "MerchantScreenMixin"
   ],
