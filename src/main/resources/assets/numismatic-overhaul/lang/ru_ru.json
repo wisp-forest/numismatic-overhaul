@@ -1,0 +1,15 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "Бронзовая монета",
+  "item.numismatic-overhaul.silver_coin": "Серебрянная монета",
+  "item.numismatic-overhaul.gold_coin": "Золота монета",
+  "item.numismatic-overhaul.money_bag": "Кошель",
+  "block.numismatic-overhaul.shop": "Магазин",
+  "gui.numismatic-overhaul.shop.price": "Цена",
+  "gui.numismatic-overhaul.shop.inventory_title": "Инвентарь магазина",
+  "gui.numismatic-overhaul.shop.merchant_title": "Магазин",
+  "gui.numismatic-overhaul.purse_title": "Кошель",
+  "numismatic-overhaul.empty": "Пусто",
+  "currency.numismatic-overhaul.bronze": "Бронза",
+  "currency.numismatic-overhaul.silver": "Серебро",
+  "currency.numismatic-overhaul.gold": "Золото"
+}
