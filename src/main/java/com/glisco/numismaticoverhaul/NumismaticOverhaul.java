@@ -71,6 +71,8 @@ public class NumismaticOverhaul implements ModInitializer {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new VillagerTradesResourceListener());
         VillagerTradesHandler.registerDefaultAdapters();
 
+
+
         CommandRegistrationCallback.EVENT.register(NumismaticCommand::register);
 
         ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, serverResourceManager, success) -> {
