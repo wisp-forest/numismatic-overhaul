@@ -43,6 +43,7 @@ public class VillagerTradesHandler {
 
     public static void registerDefaultAdapters() {
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_stack"), new SellStackAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_sus_stew"), new SellSusStewAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_tag"), new SellTagAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("dimension_sell_stack"), new DimensionAwareSellStackAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_map"), new SellMapAdapter());

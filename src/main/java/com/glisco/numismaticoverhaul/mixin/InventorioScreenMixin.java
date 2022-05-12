@@ -51,12 +51,11 @@ public abstract class InventorioScreenMixin extends AbstractInventoryScreen<Scre
         this.addDrawableChild(button);
     }
 
-    // it used to be a lambda mixin, not it's French bread
+    // it used to be a lambda mixin, now it's French bread
     @Inject(method = "findLeftEdge", at = @At("TAIL"), remap = false)
     private void updateWidgetPosition(RecipeBookWidget recipeBook, int width, int parentWidth, CallbackInfoReturnable<Integer> ci) {
         final int x = ci.getReturnValueI();
-        purse = new PurseWidget(x + 134, y + 20,
-                MinecraftClient.getInstance(), ModComponents.CURRENCY.get(MinecraftClient.getInstance().player));
+        purse = new PurseWidget(x + 134, y + 20, MinecraftClient.getInstance(), ModComponents.CURRENCY.get(MinecraftClient.getInstance().player));
         button.setPos(x + 163, y + 6);
     }
 
