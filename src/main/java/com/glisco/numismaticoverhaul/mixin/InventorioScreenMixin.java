@@ -34,7 +34,7 @@ public abstract class InventorioScreenMixin extends AbstractInventoryScreen<Scre
     public PurseButton button;
 
     //The purse is injected via mixin instead of event because I need special callbacks in render(...) and mouseClicked(...) to handle
-    //the non-button widget anyways, so I can just inject them here
+    //the non-button widget anyway, so I can just inject them here
 
     @Inject(method = "method_25426", at = @At(value = "FIELD", target = "me.lizardofoz.inventorio.client.ui.InventorioScreen.open:Z", opcode = Opcodes.PUTFIELD), remap = false)
     public void addButton(CallbackInfo ci) {
