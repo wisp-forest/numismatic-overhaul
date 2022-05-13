@@ -11,5 +11,9 @@
   "numismatic-overhaul.empty": "Пусто",
   "currency.numismatic-overhaul.bronze": "Бронза",
   "currency.numismatic-overhaul.silver": "Серебро",
-  "currency.numismatic-overhaul.gold": "Золото"
+  "currency.numismatic-overhaul.gold": "Золото",
+  "text.autoconfig.numismatic-overhaul.option.enableVillagerTrading": "Включить торговлю с жителями",
+  "text.autoconfig.numismatic-overhaul.option.enableMcaCompatibility": "Включить совместимость с МСА",
+  "gamerule.moneyDropPercentage": "Процент выпадения денег",
+  "gamerule.moneyDropPercentage.description": "Контролирует, сколько денег выпадает с игрока, когда он умирает, учитывая, что keepInventory имеет значение false."
 }
