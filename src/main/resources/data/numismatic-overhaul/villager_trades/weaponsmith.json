@@ -3,86 +3,82 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:coal",
-          "count": 15
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 150,
-        "max_uses": 12
+        "buy": {
+          "item": "coal",
+          "count": 15
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1280,
         "sell": {
-          "item": "minecraft:iron_axe",
+          "item": "iron_axe",
           "count": 1
         },
-        "price": 1280,
         "max_uses": 8,
         "villager_experience": 10
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:iron_ingot",
-          "count": 7
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 200,
-        "max_uses": 12
+        "buy": {
+          "item": "iron_ingot",
+          "count": 7
+        }
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 200,
+        "allow_treasure": false,
         "level": 15,
         "item": {
-          "item": "minecraft:iron_sword",
-          "count": 1
+          "item": "iron_sword"
         },
-        "base_price": 200,
         "max_uses": 4,
         "villager_experience": 10
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:flint",
-          "count": 12
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 180,
-        "max_uses": 12
+        "buy": {
+          "item": "flint",
+          "count": 12
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 3000,
         "sell": {
-          "item": "minecraft:bell",
+          "item": "bell",
           "count": 1
         },
-        "price": 3000,
-        "max_uses": 12,
         "villager_experience": 10
       }
     ],
     "expert": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 3000,
         "buy": {
-          "item": "minecraft:diamond",
+          "item": "diamond",
           "count": 1
         },
-        "price": 3000,
         "max_uses": 3
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 25,
-        "allow_treasure": false,
-        "item": {
-          "item": "minecraft:diamond_axe"
-        },
         "base_price": 1600,
+        "allow_treasure": false,
+        "level": 25,
+        "item": {
+          "item": "diamond_axe"
+        },
         "max_uses": 3,
         "villager_experience": 20
       }
@@ -90,12 +86,12 @@
     "master": [
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 25,
-        "allow_treasure": true,
-        "item": {
-          "item": "minecraft:diamond_sword"
-        },
         "base_price": 1800,
+        "allow_treasure": false,
+        "level": 25,
+        "item": {
+          "item": "diamond_sword"
+        },
         "max_uses": 3,
         "villager_experience": 20
       }

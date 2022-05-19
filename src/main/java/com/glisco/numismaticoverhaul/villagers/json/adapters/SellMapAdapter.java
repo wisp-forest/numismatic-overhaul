@@ -75,11 +75,13 @@ public class SellMapAdapter extends TradeJsonAdapter {
             if (result == null) return null;
             final var blockPos = result.getFirst();
 
-            var iconType = MapIcon.Type.TARGET_POINT;
+            var iconType = MapIcon.Type.TARGET_X;
             if (feature.matchesId(ConfiguredStructureFeatures.MONUMENT.getKey().get().getValue()))
                 iconType = MapIcon.Type.MONUMENT;
             if (feature.matchesId(ConfiguredStructureFeatures.MANSION.getKey().get().getValue()))
                 iconType = MapIcon.Type.MANSION;
+            if (feature.matchesId(ConfiguredStructureFeatures.PILLAGER_OUTPOST.getKey().get().getValue()))
+                iconType = MapIcon.Type.TARGET_POINT;
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);

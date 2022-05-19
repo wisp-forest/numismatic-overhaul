@@ -3,570 +3,146 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 48,
         "buy": {
-          "item": "minecraft:clay_ball",
+          "item": "clay_ball",
           "count": 24
         },
-        "price": 48,
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:brick",
-          "count": 12
-        },
-        "price": 99,
-        "max_uses": 12
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 60,
+        "buy": {
+          "item": "sand",
+          "count": 25
+        }
       },
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:sand",
-          "count": 25
-        },
-        "price": 60,
-        "max_uses": 12
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 99,
+        "sell": {
+          "item": "brick",
+          "count": 12
+        }
       }
     ],
     "apprentice": [
       {
         "type": "numismatic-overhaul:process_item",
-        "sell": {
-          "item": "minecraft:brick",
-          "count": 12
-        },
+        "price": 200,
         "buy": {
-          "item": "minecraft:clay_ball",
+          "item": "clay_ball",
           "count": 16
         },
-        "price": 200,
+        "sell": {
+          "item": "brick",
+          "count": 12
+        },
         "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:process_item",
-        "sell": {
-          "item": "minecraft:chiseled_stone_bricks",
-          "count": 10
-        },
+        "price": 300,
         "buy": {
-          "item": "minecraft:cobblestone",
+          "item": "cobblestone",
           "count": 16
         },
-        "price": 300,
+        "sell": {
+          "item": "chiseled_stone_bricks",
+          "count": 10
+        },
         "villager_experience": 10
       }
     ],
     "journeyman": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:polished_andesite",
-          "count": 4
-        },
         "price": 300,
-        "max_uses": 12
+        "sell": {
+          "item": "polished_andesite",
+          "count": 4
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:polished_diorite",
-          "count": 4
-        },
         "price": 300,
-        "max_uses": 12
+        "sell": {
+          "item": "polished_diorite",
+          "count": 4
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:polished_granite",
-          "count": 4
-        },
         "price": 300,
-        "max_uses": 12
+        "sell": {
+          "item": "polished_granite",
+          "count": 4
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:dripstone_block",
-          "count": 4
-        },
         "price": 300,
-        "max_uses": 12
+        "sell": {
+          "item": "dripstone_block",
+          "count": 4
+        }
       }
     ],
     "expert": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 300,
         "buy": {
-          "item": "minecraft:quartz",
+          "item": "quartz",
           "count": 12
         },
-        "price": 300,
-        "max_uses": 12,
         "villager_experience": 10
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
+        "type": "numismatic-overhaul:sell_tag",
+        "price": 250,
         "sell": {
-          "item": "minecraft:terracotta",
+          "tag": "numismatic-overhaul:terracotta",
           "count": 4
         },
-        "price": 250,
         "max_uses": 24
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "white_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "orange_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "magenta_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_blue_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "yellow_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "lime_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "pink_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "gray_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_gray_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "cyan_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "purple_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "blue_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "brown_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "green_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "red_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "black_terracotta",
-          "count": 4
-        },
-        "price": 300,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "white_concrete",
-          "count": 4
-        },
+        "type": "numismatic-overhaul:sell_tag",
         "price": 400,
+        "sell": {
+          "tag": "numismatic-overhaul:concrete",
+          "count": 4
+        },
         "max_uses": 20
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "orange_concrete",
-          "count": 4
-        },
+        "type": "numismatic-overhaul:sell_tag",
         "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "magenta_concrete",
+          "tag": "numismatic-overhaul:glazed_terracotta",
           "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_blue_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "yellow_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "lime_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "pink_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "gray_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_gray_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "cyan_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "purple_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "blue_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "brown_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "green_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "red_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "black_concrete",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 20
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "white_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "orange_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "magenta_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_blue_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "yellow_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "lime_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "pink_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "gray_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "light_gray_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "cyan_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "purple_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "blue_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "brown_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "green_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "red_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "black_glazed_terracotta",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 12
+        }
       }
     ],
     "master": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:quartz_block",
-          "count": 1
-        },
         "price": 550,
-        "max_uses": 12
+        "sell": {
+          "item": "quartz_block",
+          "count": 1
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:quartz_pillar",
-          "count": 1
-        },
         "price": 800,
-        "max_uses": 12
+        "sell": {
+          "item": "quartz_pillar",
+          "count": 1
+        }
       }
     ]
   }

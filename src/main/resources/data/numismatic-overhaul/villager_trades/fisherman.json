@@ -3,149 +3,105 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 100,
         "buy": {
-          "item": "minecraft:string",
+          "item": "string",
           "count": 20
         },
-        "price": 100,
         "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 700,
         "sell": {
-          "item": "minecraft:cod_bucket",
+          "item": "cod_bucket",
           "count": 1
         },
-        "price": 700,
-        "max_uses": 5
+        "max_uses": 5,
+        "villager_experience": 8
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:cod",
-          "count": 8
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 160,
-        "max_uses": 12
+        "buy": {
+          "item": "cod",
+          "count": 8
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 600,
         "sell": {
-          "item": "minecraft:cooked_salmon",
+          "item": "cooked_salmon",
           "count": 8
         },
-        "price": 600,
         "max_uses": 7
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 180,
         "buy": {
-          "item": "minecraft:salmon",
+          "item": "salmon",
           "count": 8
         },
-        "price": 180,
         "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 800,
         "sell": {
-          "item": "minecraft:fishing_rod",
+          "item": "fishing_rod",
           "count": 1
         },
-        "price": 800,
-        "max_uses": 5
+        "max_uses": 5,
+        "villager_experience": 10
       }
     ],
     "expert": [
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 400,
         "sell": {
-          "item": "minecraft:tropical_fish",
+          "item": "tropical_fish",
           "count": 1
         },
-        "price": 400,
         "max_uses": 7
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
+        "type": "numismatic-overhaul:sell_tag",
+        "price": 400,
         "sell": {
-          "item": "minecraft:oak_boat",
+          "tag": "numismatic-overhaul:boats",
           "count": 1
         },
-        "price": 400,
-        "max_uses": 3
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:spruce_boat",
-          "count": 1
-        },
-        "price": 400,
-        "max_uses": 3
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:jungle_boat",
-          "count": 1
-        },
-        "price": 400,
-        "max_uses": 3
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:acacia_boat",
-          "count": 1
-        },
-        "price": 400,
-        "max_uses": 3
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:dark_oak_boat",
-          "count": 1
-        },
-        "price": 400,
-        "max_uses": 3
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:birch_boat",
-          "count": 1
-        },
-        "price": 400,
         "max_uses": 3
       }
     ],
     "master": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 200,
         "buy": {
-          "item": "minecraft:pufferfish",
+          "item": "pufferfish",
           "count": 4
         },
-        "price": 200,
         "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 25,
-        "allow_treasure": true,
-        "item": {
-          "item": "minecraft:fishing_rod",
-          "count": 1
-        },
         "base_price": 500,
-        "max_uses": 2
+        "allow_treasure": false,
+        "level": 25,
+        "item": {
+          "item": "fishing_rod"
+        },
+        "max_uses": 2,
+        "villager_experience": 10
       }
     ]
   }

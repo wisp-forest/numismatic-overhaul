@@ -4,692 +4,632 @@
     "novice": [
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1600,
         "sell": {
-          "item": "minecraft:allium",
+          "item": "acacia_sapling",
           "count": 1
         },
-        "price": 120,
-        "maxUses": 12
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:azure_bluet",
-          "count": 1
-        },
         "price": 120,
-        "maxUses": 12
+        "sell": {
+          "item": "allium",
+          "count": 1
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 2000,
         "sell": {
-          "item": "minecraft:beetroot_seeds",
+          "item": "azalea",
+          "count": 1
+        },
+        "max_uses": 9
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "azure_bluet",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "beetroot_seeds",
           "count": 2
-        },
-        "price": 120,
-        "maxUses": 12
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1600,
         "sell": {
-          "item": "minecraft:black_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:blue_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:brown_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:brown_mushroom",
+          "item": "birch_sapling",
           "count": 1
         },
-        "price": 120,
-        "maxUses": 12
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cornflower",
-          "count": 1
-        },
         "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:cyan_dye",
+          "item": "black_dye",
           "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:dandelion",
-          "count": 1
-        },
         "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:dandelion",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:fern",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:gray_dye",
+          "item": "blue_dye",
           "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:green_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:light_blue_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:light_gray_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:lime_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:magenta_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:melon_seeds",
-          "count": 2
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:orange_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:orange_tulip",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:oxeye_daisy",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pink_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pink_tulip",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:poppy",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pumpkin_seeds",
-          "count": 2
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:purple_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:red_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:red_mushroom",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:red_tulip",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:vine",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:wheat_seeds",
-          "count": 2
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:white_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:white_tulip",
-          "count": 1
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:yellow_dye",
-          "count": 3
-        },
-        "price": 120,
-        "maxUses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:blue_orchid",
-          "count": 1
-        },
         "price": 160,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:lily_of_the_valley",
+          "item": "blue_orchid",
           "count": 1
         },
-        "price": 160,
-        "maxUses": 8
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
         "sell": {
-          "item": "minecraft:red_sand",
+          "item": "brain_coral_block",
           "count": 1
         },
-        "price": 160,
-        "maxUses": 8
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
         "sell": {
-          "item": "minecraft:sand",
+          "item": "brown_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "brown_mushroom",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
+        "sell": {
+          "item": "bubble_coral_block",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 2999,
+        "sell": {
+          "item": "bundle",
+          "count": 1
+        },
+        "max_uses": 4
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
+        "sell": {
+          "item": "cactus",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "cornflower",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "cyan_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "dandelion",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 1600,
+        "sell": {
+          "item": "dark_oak_sapling",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 360,
+        "sell": {
+          "item": "dripstone_block",
+          "count": 1
+        },
+        "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "fern",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
+        "sell": {
+          "item": "fire_coral_block",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 2400,
+        "sell": {
+          "item": "flowering_azalea",
+          "count": 1
+        },
+        "max_uses": 9
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 8000,
+        "sell": {
+          "item": "glowstone",
+          "count": 2
+        },
+        "max_uses": 5
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "gray_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "green_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
+        "sell": {
+          "item": "horn_coral_block",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 1600,
+        "sell": {
+          "item": "jungle_sapling",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "light_blue_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "light_gray_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 160,
+        "sell": {
+          "item": "lily_of_the_valley",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
+        "sell": {
+          "item": "lily_pad",
+          "count": 2
+        },
+        "max_uses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "lime_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "magenta_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "melon_seeds",
+          "count": 2
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
+        "sell": {
+          "item": "moss_block",
+          "count": 2
+        },
+        "max_uses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 2000,
+        "sell": {
+          "item": "nautilus_shell",
+          "count": 1
+        },
+        "max_uses": 5
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 1600,
+        "sell": {
+          "item": "oak_sapling",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "orange_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "orange_tulip",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "oxeye_daisy",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "pink_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "pink_tulip",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
+        "sell": {
+          "item": "pointed_dripstone",
+          "count": 2
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "poppy",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
+        "sell": {
+          "item": "pumpkin",
+          "count": 2
+        },
+        "max_uses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "pumpkin_seeds",
+          "count": 2
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "purple_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "red_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "red_mushroom",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 160,
+        "sell": {
+          "item": "red_sand",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "red_tulip",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
+        "sell": {
+          "item": "rooted_dirt",
+          "count": 2
+        },
+        "max_uses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 160,
+        "sell": {
+          "item": "sand",
           "count": 8
         },
-        "price": 160,
-        "maxUses": 8
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:lily_pad",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:moss_block",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pointed_dripstone",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:spore_blossom",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pumpkin",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:rooted_dirt",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:small_dripleaf",
-          "count": 2
-        },
-        "price": 200,
-        "maxUses": 6
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:glowstone",
-          "count": 2
-        },
-        "price": 800,
-        "maxUses": 5
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:sea_pickle",
-          "count": 1
-        },
         "price": 420,
-        "maxUses": 5
+        "sell": {
+          "item": "sea_pickle",
+          "count": 1
+        },
+        "max_uses": 5
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:brain_coral_block",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:bubble_coral_block",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:fire_coral_block",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:horn_coral_block",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:tube_coral_block",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cactus",
-          "count": 1
-        },
-        "price": 849,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:slime_ball",
-          "count": 1
-        },
         "price": 1200,
-        "maxUses": 5
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:oak_sapling",
+          "item": "slime_ball",
           "count": 1
         },
-        "price": 1600,
-        "maxUses": 8
+        "max_uses": 5
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
         "sell": {
-          "item": "minecraft:spruce_sapling",
-          "count": 1
-        },
-        "price": 1600,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:birch_sapling",
-          "count": 1
-        },
-        "price": 1600,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:jungle_sapling",
-          "count": 1
-        },
-        "price": 1600,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:acacia_sapling",
-          "count": 1
-        },
-        "price": 1600,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:dark_oak_sapling",
-          "count": 1
-        },
-        "price": 1600,
-        "maxUses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:nautilus_shell",
-          "count": 1
-        },
-        "price": 2000,
-        "maxUses": 5
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:bundle",
-          "count": 1
-        },
-        "price": 2999,
-        "maxUses": 4
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:azalea",
-          "count": 1
-        },
-        "price": 2000,
-        "maxUses": 9
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:flowering_azalea",
-          "count": 1
-        },
-        "price": 2400,
-        "maxUses": 9
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pointed_dripstone",
+          "item": "small_dripleaf",
           "count": 2
         },
-        "price": 450,
-        "maxUses": 8
+        "max_uses": 6
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
         "sell": {
-          "item": "minecraft:dripstone_block",
+          "item": "spore_blossom",
+          "count": 2
+        },
+        "max_uses": 6
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 849,
+        "sell": {
+          "item": "tube_coral_block",
           "count": 1
         },
-        "price": 360,
-        "maxUses": 16
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "vine",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "wheat_seeds",
+          "count": 2
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "white_dye",
+          "count": 3
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "white_tulip",
+          "count": 1
+        }
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 120,
+        "sell": {
+          "item": "yellow_dye",
+          "count": 3
+        }
       }
     ],
     "apprentice": [
       {
         "type": "numismatic-overhaul:process_item",
-        "sell": {
-          "item": "minecraft:diamond"
-        },
+        "price": 5000,
         "buy": {
-          "item": "minecraft:emerald"
-        },
-        "price": 2000
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:gunpowder",
+          "item": "emerald",
           "count": 1
         },
-        "price": 200,
-        "maxUses": 8
+        "sell": {
+          "item": "diamond",
+          "count": 1
+        },
+        "max_uses": 4
       },
-
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 200,
         "sell": {
-          "item": "minecraft:podzol",
+          "item": "gunpowder",
+          "count": 1
+        },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 600,
+        "sell": {
+          "item": "podzol",
           "count": 3
         },
-        "price": 600,
-        "maxUses": 8
+        "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:packed_ice",
-          "count": 1
-        },
         "price": 500,
-        "maxUses": 8
-      },
-
-      {
-        "type": "numismatic-overhaul:sell_stack",
         "sell": {
-          "item": "minecraft:axolotl_bucket",
+          "item": "packed_ice",
           "count": 1
         },
+        "max_uses": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
         "price": 1500,
-        "maxUses": 4
+        "sell": {
+          "item": "axolotl_bucket",
+          "count": 1
+        },
+        "max_uses": 4
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:pufferfish_bucket",
-          "count": 1
-        },
         "price": 1500,
-        "maxUses": 4
+        "sell": {
+          "item": "pufferfish_bucket",
+          "count": 1
+        },
+        "max_uses": 4
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:tropical_fish_bucket",
-          "count": 1
-        },
         "price": 1500,
-        "maxUses": 4
+        "sell": {
+          "item": "tropical_fish_bucket",
+          "count": 1
+        },
+        "max_uses": 4
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:blue_ice",
-          "count": 1
-        },
         "price": 2500,
-        "maxUses": 6
+        "sell": {
+          "item": "blue_ice",
+          "count": 1
+        },
+        "max_uses": 6
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 10000,
         "sell": {
-          "item": "minecraft:sculk_sensor",
+          "item": "sculk_sensor",
           "count": 1
         },
-        "price": 10000,
-        "maxUses": 2
+        "max_uses": 2
       }
     ]
   }

@@ -3,75 +3,73 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 40,
         "buy": {
-          "item": "minecraft:stick",
+          "item": "stick",
           "count": 40
         },
-        "price": 12,
         "max_uses": 10
       },
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 60,
         "buy": {
-          "item": "minecraft:flint",
+          "item": "flint",
           "count": 10
         },
-        "price": 60,
         "max_uses": 10
       },
       {
         "type": "numismatic-overhaul:process_item",
-        "sell": {
-          "item": "minecraft:flint",
-          "count": 4
-        },
+        "price": 200,
         "buy": {
-          "item": "minecraft:gravel",
+          "item": "gravel",
           "count": 8
         },
-        "price": 200,
+        "sell": {
+          "item": "flint",
+          "count": 4
+        },
         "max_uses": 10
       }
     ],
     "apprentice": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:arrow",
-          "count": 16
-        },
         "price": 100,
-        "max_uses": 12
+        "sell": {
+          "item": "arrow",
+          "count": 16
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 2000,
         "sell": {
-          "item": "minecraft:bow",
+          "item": "bow",
           "count": 1
         },
-        "price": 2000,
         "max_uses": 8,
         "villager_experience": 8
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:string",
-          "count": 16
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 80,
-        "max_uses": 12
+        "buy": {
+          "item": "string",
+          "count": 16
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1200,
         "sell": {
-          "item": "minecraft:crossbow",
+          "item": "crossbow",
           "count": 1
         },
-        "price": 1200,
         "max_uses": 4,
         "villager_experience": 8
       }
@@ -79,21 +77,20 @@
     "expert": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:feather",
-          "count": 15
-        },
         "price": 1500,
-        "max_uses": 12
+        "sell": {
+          "item": "feather",
+          "count": 15
+        }
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 300,
+        "allow_treasure": false,
         "level": 20,
         "item": {
-          "item": "minecraft:bow",
-          "count": 1
+          "item": "bow"
         },
-        "base_price": 300,
         "max_uses": 2,
         "villager_experience": 10
       }
@@ -101,49 +98,47 @@
     "master": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:tripwire_hook",
-          "count": 4
-        },
         "price": 400,
-        "max_uses": 12
+        "sell": {
+          "item": "tripwire_hook",
+          "count": 4
+        }
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 300,
+        "allow_treasure": false,
         "level": 20,
         "item": {
-          "item": "minecraft:crossbow",
-          "count": 1
+          "item": "crossbow"
         },
-        "allow_treasure": false,
-        "base_price": 300,
         "max_uses": 2,
         "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_potion_container",
-        "container_item": {
-          "item": "minecraft:tipped_arrow",
-          "count": 8
-        },
-        "buy_item": {
-          "item": "minecraft:arrow",
-          "count": 8
-        },
         "price": 1600,
+        "buy_item": {
+          "item": "arrow",
+          "count": 8
+        },
+        "container_item": {
+          "item": "tipped_arrow",
+          "count": 8
+        },
         "max_uses": 8
       },
       {
         "type": "numismatic-overhaul:sell_potion_container",
-        "container_item": {
-          "item": "minecraft:tipped_arrow",
-          "count": 8
-        },
-        "buy_item": {
-          "item": "minecraft:arrow",
-          "count": 8
-        },
         "price": 1600,
+        "buy_item": {
+          "item": "arrow",
+          "count": 8
+        },
+        "container_item": {
+          "item": "tipped_arrow",
+          "count": 8
+        },
         "max_uses": 8
       }
     ]

@@ -3,175 +3,211 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:paper",
-          "count": 20
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 45,
-        "max_uses": 16
+        "buy": {
+          "item": "paper",
+          "count": 20
+        }
+      },
+      {
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 100,
+        "buy": {
+          "item": "bookshelf",
+          "count": 10
+        },
+        "max_uses": 10,
+        "villager_experience": 6
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:bookshelf",
-          "count": 1
-        },
         "price": 800,
-        "max_uses": 15
-      },
-      {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:bookshelf",
+        "sell": {
+          "item": "bookshelf",
           "count": 1
         },
-        "price": 100,
-        "max_uses": 18
+        "max_uses": 10,
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:enchant_item",
-        "level": 10,
+        "base_price": 200,
         "allow_treasure": false,
-        "max_uses": 8
+        "level": 10,
+        "item": {
+          "item": "book"
+        },
+        "max_uses": 8,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 200,
+        "allow_treasure": false,
         "level": 25,
-        "allow_treasure": true,
+        "item": {
+          "item": "book"
+        },
         "max_uses": 2,
-        "base_price": 800
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
-        "price_multiplier": 1.25
+        "price_multiplier": 1.25,
+        "villager_experience": 10
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:book",
-          "count": 3
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 60,
-        "max_uses": 12
+        "buy": {
+          "item": "book",
+          "count": 3
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 700,
         "sell": {
-          "item": "minecraft:lantern",
+          "item": "lantern",
           "count": 4
         },
-        "price": 700,
-        "max_uses": 12
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 200,
+        "allow_treasure": false,
         "level": 15,
-        "allow_treasure": true,
-        "max_uses": 8
+        "item": {
+          "item": "book"
+        },
+        "max_uses": 8,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 400,
+        "allow_treasure": false,
         "level": 35,
-        "allow_treasure": true,
+        "item": {
+          "item": "book"
+        },
         "max_uses": 3,
-        "base_price": 400
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
-        "price_multiplier": 1.1
+        "price_multiplier": 1.1,
+        "villager_experience": 10
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:ink_sac",
-          "count": 4
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 200,
-        "max_uses": 12
+        "buy": {
+          "item": "ink_sac",
+          "count": 4
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:glass",
-          "count": 10
-        },
         "price": 640,
-        "max_uses": 12
+        "sell": {
+          "item": "glass",
+          "count": 10
+        }
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 200,
+        "allow_treasure": false,
         "level": 25,
-        "allow_treasure": true,
-        "max_uses": 8
+        "item": {
+          "item": "book"
+        },
+        "max_uses": 8,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 300,
+        "allow_treasure": false,
         "level": 50,
-        "allow_treasure": true,
+        "item": {
+          "item": "book"
+        },
         "max_uses": 4,
-        "base_price": 300
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_single_enchantment",
-        "price_multiplier": 1.0
+        "price_multiplier": 1,
+        "villager_experience": 10
       }
     ],
     "expert": [
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:writable_book",
-          "count": 1
-        },
         "price": 890,
-        "max_uses": 12
+        "sell": {
+          "item": "writable_book",
+          "count": 1
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:compass",
-          "count": 1
-        },
         "price": 700,
-        "max_uses": 12
+        "sell": {
+          "item": "compass",
+          "count": 1
+        },
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 900,
         "sell": {
-          "item": "minecraft:clock",
+          "item": "clock",
           "count": 1
         },
-        "price": 900,
-        "max_uses": 12
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 200,
+        "allow_treasure": false,
         "level": 60,
-        "allow_treasure": true,
-        "max_uses": 8
+        "item": {
+          "item": "book"
+        },
+        "max_uses": 8,
+        "villager_experience": 10
       }
     ],
     "master": [
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 800,
         "sell": {
-          "item": "minecraft:name_tag",
+          "item": "name_tag",
           "count": 2
         },
-        "price": 800,
-        "max_uses": 12
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:enchant_item",
+        "base_price": 300,
+        "allow_treasure": false,
         "level": 75,
-        "allow_treasure": true,
+        "item": {
+          "item": "book"
+        },
         "max_uses": 5,
-        "base_price": 300
+        "villager_experience": 15
       }
     ]
   }

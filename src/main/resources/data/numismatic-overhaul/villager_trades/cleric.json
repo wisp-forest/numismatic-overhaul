@@ -3,121 +3,113 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 64,
         "buy": {
-          "item": "minecraft:rotten_flesh",
+          "item": "rotten_flesh",
           "count": 32
         },
-        "price": 64,
-		"max_uses": 16
+        "max_uses": 16
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:redstone",
-          "count": 4
-        },
         "price": 80,
-		"max_uses": 12
+        "sell": {
+          "item": "redstone",
+          "count": 4
+        }
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:gold_ingot",
-          "count": 3
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 200,
-		"max_uses": 12
+        "buy": {
+          "item": "gold_ingot",
+          "count": 3
+        }
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:lapis_lazuli",
-          "count": 4
-        },
         "price": 800,
-		"max_uses": 12
+        "sell": {
+          "item": "lapis_lazuli",
+          "count": 4
+        }
       }
     ],
-	"journeyman": [
+    "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:rabbit_foot",
-          "count": 2
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 200,
-		"max_uses": 12
+        "buy": {
+          "item": "rabbit_foot",
+          "count": 2
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:glowstone_dust",
-          "count": 3
-        },
         "price": 900,
-        "max_uses": 12
+        "sell": {
+          "item": "glowstone_dust",
+          "count": 3
+        }
       },
       {
         "type": "numismatic-overhaul:dimension_sell_stack",
-        "sell": {
-          "item": "minecraft:glowstone_dust",
-          "count": 4
-        },
         "price": 600,
-        "max_uses": 12,
-        "dimension": "minecraft:the_nether"
+        "dimension": "the_nether\r",
+        "sell": {
+          "item": "glowstone_dust",
+          "count": 4
+        }
       }
     ],
-	"expert": [
+    "expert": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 100,
         "buy": {
-          "item": "minecraft:scute",
+          "item": "scute",
           "count": 1
-        },
-        "price": 100,
-        "max_uses": 12
+        }
       },
-	  {
-        "type": "numismatic-overhaul:buy_item",
+      {
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 100,
         "buy": {
-          "item": "minecraft:glass_bottle",
+          "item": "glass_bottle",
           "count": 9
-        },
-        "price": 100,
-		"max_uses": 12
+        }
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1500,
         "sell": {
-          "item": "minecraft:ender_pearl",
+          "item": "ender_pearl",
           "count": 3
         },
-        "price": 1500,
-		"max_uses": 7
+        "max_uses": 7
       }
     ],
-	"master": [
+    "master": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 300,
         "buy": {
-          "item": "minecraft:nether_wart",
+          "item": "nether_wart",
           "count": 10
         },
-        "price": 300,
-		"max_uses": 8
+        "max_uses": 8
       },
-	  {
+      {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 1200,
         "sell": {
-          "item": "minecraft:experience_bottle",
+          "item": "experience_bottle",
           "count": 4
         },
-        "price": 1200,
-		"max_uses": 8
+        "max_uses": 8
       }
     ]
   }

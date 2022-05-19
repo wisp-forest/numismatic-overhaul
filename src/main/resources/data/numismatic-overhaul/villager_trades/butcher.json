@@ -3,165 +3,171 @@
   "trades": {
     "novice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 420,
         "buy": {
-          "item": "minecraft:chicken",
+          "item": "chicken",
           "count": 14
         },
-        "price": 420,
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 200,
         "buy": {
-          "item": "minecraft:rabbit",
+          "item": "rabbit",
           "count": 4
         },
-        "price": 200,
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 300,
         "buy": {
-          "item": "minecraft:porkchop",
+          "item": "porkchop",
           "count": 11
         },
-        "price": 300,
         "max_uses": 16
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 500,
         "sell": {
-          "item": "minecraft:rabbit_stew",
+          "item": "rabbit_stew",
           "count": 1
         },
-        "price": 500,
-        "max_uses": 3
+        "max_uses": 3,
+        "villager_experience": 10
       }
     ],
     "apprentice": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 150,
         "buy": {
-          "item": "minecraft:coal",
+          "item": "coal",
           "count": 15
         },
-        "price": 1200,
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cooked_rabbit",
-          "count": 4
-        },
-        "price": 400,
-        "max_uses": 8
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cooked_chicken",
-          "count": 6
-        },
-        "price": 400,
-        "max_uses": 12
-      },
-      {
-        "type": "numismatic-overhaul:sell_stack",
-        "sell": {
-          "item": "minecraft:cooked_porkchop",
-          "count": 5
-        },
-        "price": 400,
-        "max_uses": 15
-      },
-      {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 200,
         "buy": {
-          "item": "minecraft:mutton",
+          "item": "mutton",
           "count": 10
         },
-        "price": 350,
         "max_uses": 16
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 400,
+        "sell": {
+          "item": "cooked_rabbit",
+          "count": 4
+        },
+        "max_uses": 8,
+        "villager_experience": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 400,
+        "sell": {
+          "item": "cooked_chicken",
+          "count": 6
+        },
+        "villager_experience": 8
+      },
+      {
+        "type": "numismatic-overhaul:sell_stack",
+        "price": 400,
+        "sell": {
+          "item": "cooked_porkchop",
+          "count": 5
+        },
+        "max_uses": 15,
+        "villager_experience": 8
       }
     ],
     "journeyman": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 400,
         "buy": {
-          "item": "minecraft:beef",
+          "item": "beef",
           "count": 10
         },
-        "price": 400,
-        "max_uses": 16
+        "max_uses": 16,
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 500,
         "sell": {
-          "item": "minecraft:campfire",
+          "item": "campfire",
           "count": 1
         },
-        "price": 500,
-        "max_uses": 8
+        "max_uses": 8,
+        "villager_experience": 10
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 300,
         "sell": {
-          "item": "minecraft:cooked_beef",
+          "item": "cooked_beef",
           "count": 4
         },
-        "price": 300,
-        "max_uses": 16
+        "max_uses": 16,
+        "villager_experience": 8
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 500,
         "sell": {
-          "item": "minecraft:cooked_mutton",
+          "item": "cooked_mutton",
           "count": 6
         },
-        "price": 500,
-        "max_uses": 12
+        "villager_experience": 8
       }
     ],
     "expert": [
       {
-        "type": "numismatic-overhaul:buy_item",
+        "type": "numismatic-overhaul:buy_stack",
+        "price": 700,
         "buy": {
-          "item": "minecraft:dried_kelp_block",
+          "item": "dried_kelp_block",
           "count": 10
         },
-        "price": 700,
-        "max_uses": 12
+        "villager_experience": 8
       },
       {
-        "type": "numismatic-overhaul:buy_item",
-        "buy": {
-          "item": "minecraft:sweet_berries",
-          "count": 10
-        },
+        "type": "numismatic-overhaul:buy_stack",
         "price": 600,
-        "max_uses": 12
+        "buy": {
+          "item": "sweet_berries",
+          "count": 10
+        }
       },
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 400,
         "sell": {
-          "item": "minecraft:mutton",
+          "item": "mutton",
           "count": 10
         },
-        "price": 200,
-        "max_uses": 16
+        "max_uses": 16,
+        "villager_experience": 8
       }
     ],
     "master": [
       {
         "type": "numismatic-overhaul:sell_stack",
+        "price": 10000,
         "sell": {
-          "item": "minecraft:diamond_axe",
+          "item": "diamond_axe",
           "count": 1
         },
-        "price": 10000,
-        "max_uses": 12
+        "villager_experience": 10
       }
     ]
   }
