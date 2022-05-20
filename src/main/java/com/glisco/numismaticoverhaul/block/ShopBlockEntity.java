@@ -19,7 +19,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -77,7 +76,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("gui.numismatic-overhaul.shop.inventory_title");
+        return Text.translatable("gui.numismatic-overhaul.shop.inventory_title");
     }
 
     @NotNull

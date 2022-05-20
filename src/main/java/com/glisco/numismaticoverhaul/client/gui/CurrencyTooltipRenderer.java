@@ -6,7 +6,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class CurrencyTooltipRenderer {
         }
 
         if (tooltip.size() == 1) {
-            tooltip.add(new TranslatableText("numismatic-overhaul.empty").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("numismatic-overhaul.empty").formatted(Formatting.GRAY));
         }
 
         screen.renderTooltip(matrices, tooltip, x, y - 15);

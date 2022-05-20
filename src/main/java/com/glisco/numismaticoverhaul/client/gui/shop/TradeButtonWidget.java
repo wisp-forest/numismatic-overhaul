@@ -14,10 +14,10 @@ public class TradeButtonWidget extends ButtonWidget {
 
     private final ItemStack renderItem;
     private final long price;
-    private final Text PRICE_TITLE = new TranslatableText("gui.numismatic-overhaul.shop.price").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
+    private final Text PRICE_TITLE = Text.translatable("gui.numismatic-overhaul.shop.price").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Currency.GOLD.getNameColor())));
 
     public TradeButtonWidget(int x, int y, long price, ItemStack item, int index) {
-        super(x, y, 78, 20, new LiteralText(""), button -> {
+        super(x, y, 78, 20, Text.empty(), button -> {
             ((ShopScreen) MinecraftClient.getInstance().currentScreen).loadOffer(index);
         });
         this.price = price;

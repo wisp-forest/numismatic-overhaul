@@ -13,7 +13,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,7 +51,7 @@ public class AddTradeWidget extends DrawableHelper implements Drawable, Element 
         }, false));
 
         client.keyboard.setRepeatEvents(true);
-        PRICE_FIELD = new TextFieldWidget(client.textRenderer, x + 36, y + 19, 64, 14, new LiteralText("")) {
+        PRICE_FIELD = new TextFieldWidget(client.textRenderer, x + 36, y + 19, 64, 14, Text.empty()) {
             @Override
             public void write(String string) {
                 if (!string.matches("[0-9]+")) return;

@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(TradeOfferList.class)
 public class TradeOfferListMixin {
 
-    @Inject(method = "toPacket", at = @At(value = "INVOKE", ordinal = 4, target = "Lnet/minecraft/network/PacketByteBuf;writeInt(I)Lio/netty/buffer/ByteBuf;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void writeReputation(PacketByteBuf buf, CallbackInfo ci, int i, TradeOffer offer) {
+    @Inject(method = "method_43715", at = @At(value = "INVOKE", ordinal = 4, target = "Lnet/minecraft/network/PacketByteBuf;writeInt(I)Lio/netty/buffer/ByteBuf;", shift = At.Shift.AFTER))
+    private static void writeReputation(PacketByteBuf buf, TradeOffer offer, CallbackInfo ci) {
         buf.writeVarInt(((NumismaticTradeOfferExtensions) offer).numismatic$getReputation());
     }
 
-    @Inject(method = "fromPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;setSpecialPrice(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void readReputation(PacketByteBuf buf, CallbackInfoReturnable<TradeOfferList> cir, TradeOfferList tradeOfferList, int i, int j, ItemStack itemStack, ItemStack itemStack2, ItemStack itemStack3, boolean bl, int k, int l, int m, int n, float f, int o, TradeOffer tradeOffer) {
+    @Inject(method = "method_43716", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;setSpecialPrice(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private static void readReputation(PacketByteBuf buf, CallbackInfoReturnable<TradeOffer> cir, ItemStack itemStack, ItemStack itemStack2, ItemStack itemStack3, boolean bl, int i, int j, int k, int l, float f, int m, TradeOffer tradeOffer) {
         ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(buf.readVarInt());
     }
 

@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin extends Entity {
     public void injectCoins(DamageSource source, boolean causedByPlayer, CallbackInfo ci) {
         if (!this.getType().isIn(NumismaticOverhaul.THE_BOURGEOISIE)) return;
         if (random.nextFloat() > .5f)
-            dropStack(new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, random.nextInt(9, 35)));
+            dropStack(new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, random.nextBetween(9, 35)));
         if (random.nextFloat() > .2f) dropStack(new ItemStack(NumismaticOverhaulItems.SILVER_COIN));
     }
 

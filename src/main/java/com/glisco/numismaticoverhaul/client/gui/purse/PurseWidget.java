@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -77,9 +77,9 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
             button.render(matrices, mouseX, mouseY, delta);
         }
 
-        client.textRenderer.draw(matrices, new LiteralText("" + goldAmount), x + 5, y + 12, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + silverAmount), x + 5, y + 24, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + bronzeAmount), x + 5, y + 36, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + goldAmount), x + 5, y + 12, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + silverAmount), x + 5, y + 24, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + bronzeAmount), x + 5, y + 36, 16777215);
     }
 
     @Override

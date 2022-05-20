@@ -10,7 +10,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class CurrencyStorageWidget extends DrawableHelper implements Drawable, Element {
@@ -46,9 +46,9 @@ public class CurrencyStorageWidget extends DrawableHelper implements Drawable, E
 
         long[] values = CurrencyResolver.splitValues(currencyStorage);
 
-        client.textRenderer.draw(matrices, new LiteralText("" + values[2]), x + 5, y + 7, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + values[1]), x + 5, y + 19, 16777215);
-        client.textRenderer.draw(matrices, new LiteralText("" + values[0]), x + 5, y + 31, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + values[2]), x + 5, y + 7, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + values[1]), x + 5, y + 19, 16777215);
+        client.textRenderer.draw(matrices, Text.literal("" + values[0]), x + 5, y + 31, 16777215);
     }
 
     @Override

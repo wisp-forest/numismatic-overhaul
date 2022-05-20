@@ -9,9 +9,9 @@ import com.google.gson.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
@@ -149,18 +149,18 @@ public class VillagerTradesHandler {
     public static void broadcastErrors(List<ServerPlayerEntity> players) {
         if (!EXCEPTIONS_DURING_LOADING.isEmpty()) {
             players.forEach(playerEntity -> {
-                playerEntity.sendMessage(new LiteralText("§cThe following errors have occurred during numismatic-overhaul reload:"), false);
-                playerEntity.sendMessage(new LiteralText(""), false);
+                playerEntity.sendMessage(Text.literal("§cThe following errors have occurred during numismatic-overhaul reload:"), false);
+                playerEntity.sendMessage(Text.empty(), false);
                 EXCEPTIONS_DURING_LOADING.forEach(e -> {
 
-                    MutableText message = new LiteralText("§7-> " + e.getMessage() + " §8(hover for more info)");
+                    MutableText message = Text.literal("§7-> " + e.getMessage() + " §8(hover for more info)");
 
-                    MutableText hoverText = new LiteralText("");
-                    hoverText.append(new LiteralText("File: §7" + e.getContext().file + "\n\n"));
-                    hoverText.append(new LiteralText("Profession: §a" + e.getContext().profession + "\n"));
-                    hoverText.append(new LiteralText("Level: §6" + e.getContext().level + "\n\n"));
+                    MutableText hoverText = Text.literal("");
+                    hoverText.append(Text.literal("File: §7" + e.getContext().file + "\n\n"));
+                    hoverText.append(Text.literal("Profession: §a" + e.getContext().profession + "\n"));
+                    hoverText.append(Text.literal("Level: §6" + e.getContext().level + "\n\n"));
 
-                    hoverText.append(new LiteralText("Problematic trade: \n§7" + GSON.toJson(e.getContext().trade)));
+                    hoverText.append(Text.literal("Problematic trade: \n§7" + GSON.toJson(e.getContext().trade)));
 
                     message.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText)));
 
