@@ -23,7 +23,7 @@
     "cardinal-components-entity": [
       "com.glisco.numismaticoverhaul.ModComponents"
     ],
-    "rei_plugins": [
+    "rei_client": [
       "com.glisco.numismaticoverhaul.compat.rei.NOReiPlugin"
     ],
     "modmenu": [
