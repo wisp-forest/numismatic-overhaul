@@ -21,8 +21,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
-import net.minecraft.world.gen.structure.StructureTypeKeys;
-import net.minecraft.world.gen.structure.StructureTypes;
+import net.minecraft.world.gen.structure.StructureKeys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,7 +64,7 @@ public class SellMapAdapter extends TradeJsonAdapter {
             final var registry = serverWorld.getRegistryManager().get(Registry.STRUCTURE_KEY);
             final var feature = RegistryAccess.getEntry(registry, this.structureId);
 
-            if (feature == null) {
+            if (feature == null || feature.getKey().isEmpty()) {
                 NumismaticOverhaul.LOGGER.error("Tried to create map to invalid structure " + this.structureId);
                 return null;
             }
@@ -77,11 +76,11 @@ public class SellMapAdapter extends TradeJsonAdapter {
             final var blockPos = result.getFirst();
 
             var iconType = MapIcon.Type.TARGET_X;
-            if (feature.matchesId(StructureTypeKeys.MONUMENT.getValue()))
+            if (feature.matchesId(StructureKeys.MONUMENT.getValue()))
                 iconType = MapIcon.Type.MONUMENT;
-            if (feature.matchesId(StructureTypeKeys.MANSION.getValue()))
+            if (feature.matchesId(StructureKeys.MANSION.getValue()))
                 iconType = MapIcon.Type.MANSION;
-            if (feature.matchesId(StructureTypeKeys.PILLAGER_OUTPOST.getValue()))
+            if (feature.matchesId(StructureKeys.PILLAGER_OUTPOST.getValue()))
                 iconType = MapIcon.Type.TARGET_POINT;
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);

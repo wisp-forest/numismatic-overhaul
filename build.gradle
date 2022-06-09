@@ -5,7 +5,6 @@ plugins {
     id 'io.github.juuxel.loom-quiltflower' version '1.7.1'
 }
 
-// TOOD fix mc dep in fmj
 version = "${project.mod_version}+${project.minecraft_base_version}"
 group = project.maven_group
 
@@ -15,8 +14,6 @@ repositories {
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
     maven   { url = "https://storage.googleapis.com/devan-maven/" }
-
-    mavenLocal()
 }
 
 dependencies {
@@ -33,7 +30,6 @@ dependencies {
     // REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
     modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modLocalRuntime "dev.architectury:architectury-fabric:5.4.14"
 
     // DevLogin
     modLocalRuntime "com.ptsmods:devlogin:1.2.1"
