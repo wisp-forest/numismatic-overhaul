@@ -56,11 +56,9 @@ public class CoinItem extends Item implements CurrencyItem {
 
         if (!world.isClient) {
             ModComponents.CURRENCY.get(user).modify(rawValue);
-
-            user.setStackInHand(hand, ItemStack.EMPTY);
         }
 
-        return TypedActionResult.success(clickedStack);
+        return TypedActionResult.success(ItemStack.EMPTY);
     }
 
     @Override
