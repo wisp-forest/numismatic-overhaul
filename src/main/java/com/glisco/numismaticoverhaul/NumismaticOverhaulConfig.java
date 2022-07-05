@@ -15,4 +15,9 @@ public class NumismaticOverhaulConfig implements ConfigData {
     @Comment("Whether taxes from Minecraft Comes Alive: Reborn should be delivered as Numismatic currency")
     public boolean enableMcaCompatibility = true;
 
+    @Comment("Where the purse in your inventory should be placed on the X axis")
+    public int pursePositionX = 129;
+
+    @Comment("Where the purse in your inventory should be placed on the Y axis")
+    public int pursePositionY = 20;
 }

@@ -33,9 +33,12 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(method = "init", at = @At("TAIL"))
     public void addButton(CallbackInfo ci) {
-        purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
+        int purseX = NumismaticOverhaul.getConfig().pursePositionX;
+        int purseY = NumismaticOverhaul.getConfig().pursePositionY;
 
-        button = new PurseButton(this.x + 158, this.y + 6, button -> {
+        purse = new PurseWidget(this.x + purseX, this.y + purseY, client, ModComponents.CURRENCY.get(client.player));
+
+        button = new PurseButton(this.x + purseX + 29, this.y + purseY - 14, button -> {
             if (Screen.hasShiftDown()) {
                 NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.storeAll());
             } else {
