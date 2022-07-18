@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public class ServerPlayerEntityMixin {
 
-    @Inject(method = "vanishCursedItems", at = @At("HEAD"))
+    @Inject(method = "vanishCursedItems", at = @At("TAIL"))
     public void onServerDeath(CallbackInfo ci) {
         var player = (PlayerEntity) (Object) this;
 

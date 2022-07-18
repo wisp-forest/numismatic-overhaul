@@ -44,7 +44,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 200,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 25,
         "item": {
           "item": "book"
@@ -79,7 +79,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 200,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 15,
         "item": {
           "item": "book"
@@ -90,7 +90,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 400,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 35,
         "item": {
           "item": "book"
@@ -124,7 +124,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 200,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 25,
         "item": {
           "item": "book"
@@ -135,7 +135,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 300,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 50,
         "item": {
           "item": "book"
@@ -179,7 +179,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 200,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 60,
         "item": {
           "item": "book"
@@ -201,7 +201,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 300,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 75,
         "item": {
           "item": "book"

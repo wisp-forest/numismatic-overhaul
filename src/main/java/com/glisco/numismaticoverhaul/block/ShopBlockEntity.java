@@ -41,6 +41,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     private final Merchant merchant;
     private final List<ShopOffer> offers;
+
     private long storedCurrency;
     private UUID owner;
     private boolean allowsTransfer = false;
@@ -49,7 +50,10 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
 
     public ShopBlockEntity(BlockPos pos, BlockState state) {
         super(NumismaticOverhaulBlocks.Entities.SHOP, pos, state);
-        this.merchant = new ShopMerchant(this);
+
+        boolean inexhaustible = (state.getBlock() instanceof ShopBlock shop) && shop.inexhaustible();
+        this.merchant = new ShopMerchant(this, inexhaustible);
+
         this.offers = new ArrayList<>();
         this.storedCurrency = 0;
     }

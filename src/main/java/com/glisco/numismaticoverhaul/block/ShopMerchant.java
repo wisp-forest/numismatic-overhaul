@@ -14,17 +14,19 @@ import java.util.Arrays;
 
 public class ShopMerchant implements Merchant {
 
-    ShopBlockEntity shop;
+    private final ShopBlockEntity shop;
+    private final boolean inexhaustible;
     private TradeOfferList recipeList = new TradeOfferList();
     private PlayerEntity customer;
 
-    public ShopMerchant(ShopBlockEntity blockEntity) {
+    public ShopMerchant(ShopBlockEntity blockEntity, boolean inexhaustible) {
         this.shop = blockEntity;
+        this.inexhaustible = inexhaustible;
     }
 
     public void updateTrades() {
         recipeList.clear();
-        shop.getOffers().forEach(offer -> recipeList.add(offer.toTradeOffer(shop)));
+        shop.getOffers().forEach(offer -> recipeList.add(offer.toTradeOffer(shop, this.inexhaustible)));
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ShopMerchant implements Merchant {
     @Override
     public void trade(TradeOffer offer) {
         offer.use();
-        ShopOffer.remove(shop.getItems(), offer.getSellItem());
+        if (!this.inexhaustible) ShopOffer.remove(shop.getItems(), offer.getSellItem());
         shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }
 

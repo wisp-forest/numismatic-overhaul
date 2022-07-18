@@ -4,6 +4,8 @@
   "item.numismatic-overhaul.gold_coin": "Gold Coin",
   "item.numismatic-overhaul.money_bag": "Money Bag",
   "block.numismatic-overhaul.shop": "Shop",
+  "block.numismatic-overhaul.inexhaustible_shop": "Inexhaustible Shop",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "Creative only - never runs out of stock",
   "gui.numismatic-overhaul.shop.price": "Price",
   "gui.numismatic-overhaul.shop.inventory_title": "Shop Inventory",
   "gui.numismatic-overhaul.shop.merchant_title": "Shop",
@@ -13,10 +15,13 @@
   "currency.numismatic-overhaul.bronze": "Bronze",
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
+
   "text.autoconfig.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
   "text.autoconfig.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
   "text.autoconfig.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
   "text.autoconfig.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
+  "text.autoconfig.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
+
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }

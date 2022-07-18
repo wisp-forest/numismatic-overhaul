@@ -95,7 +95,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 500,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 25,
         "item": {
           "item": "fishing_rod"

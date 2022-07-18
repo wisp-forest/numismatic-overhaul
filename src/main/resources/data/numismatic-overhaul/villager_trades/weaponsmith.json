@@ -87,7 +87,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 1800,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 25,
         "item": {
           "item": "diamond_sword"

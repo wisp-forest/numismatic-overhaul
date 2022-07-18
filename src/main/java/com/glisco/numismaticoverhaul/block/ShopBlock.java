@@ -37,8 +37,11 @@ public class ShopBlock extends BlockWithEntity {
 
     private static final VoxelShape SHAPE = VoxelShapes.union(MAIN_PILLAR, PLATE, PILLAR_1, PILLAR_2, PILLAR_3, PILLAR_4);
 
-    public ShopBlock() {
+    private final boolean inexhaustible;
+
+    public ShopBlock(boolean inexhaustible) {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque().hardness(5.0f));
+        this.inexhaustible = inexhaustible;
     }
 
     @Override
@@ -104,6 +107,10 @@ public class ShopBlock extends BlockWithEntity {
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
+    }
+
+    public boolean inexhaustible() {
+        return this.inexhaustible;
     }
 
     @Nullable

@@ -155,7 +155,7 @@
       {
         "type": "numismatic-overhaul:enchant_item",
         "base_price": 750,
-        "allow_treasure": false,
+        "allow_treasure": true,
         "level": 30,
         "item": {
           "item": "diamond_pickaxe"

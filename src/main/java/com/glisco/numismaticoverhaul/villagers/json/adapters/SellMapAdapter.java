@@ -70,7 +70,7 @@ public class SellMapAdapter extends TradeJsonAdapter {
             }
 
             final var result = serverWorld.getChunkManager().getChunkGenerator().locateStructure(serverWorld, RegistryEntryList.of(feature),
-                    entity.getBlockPos(), 100, true);
+                    entity.getBlockPos(), 1500, true);
 
             if (result == null) return null;
             final var blockPos = result.getFirst();

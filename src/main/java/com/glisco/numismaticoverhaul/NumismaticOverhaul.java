@@ -19,7 +19,6 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.fabricmc.fabric.api.loot.v2.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -79,18 +78,20 @@ public class NumismaticOverhaul implements ModInitializer {
             VillagerTradesHandler.broadcastErrors(server);
         });
 
-        LootOps.injectItem(NumismaticOverhaulItems.GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
-                LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST);
+        if (CONFIG.generateCurrencyInChests) {
+            LootOps.injectItem(NumismaticOverhaulItems.GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
+                    LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST);
 
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) ->  {
-            if (anyMatch(id, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST)) {
-                tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(500, 2000)).conditionally(RandomChanceLootCondition.builder(0.75f)));
-            } else if (anyMatch(id, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST, LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST)) {
-                tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(1500, 4000)).conditionally(RandomChanceLootCondition.builder(0.75f)));
-            } else if (anyMatch(id, LootTables.STRONGHOLD_LIBRARY_CHEST)) {
-                tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(2000, 6000)).conditionally(RandomChanceLootCondition.builder(0.85f)));
-            }
-        });
+            LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+                if (anyMatch(id, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST)) {
+                    tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(500, 2000)).conditionally(RandomChanceLootCondition.builder(0.75f)));
+                } else if (anyMatch(id, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST, LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST)) {
+                    tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(1500, 4000)).conditionally(RandomChanceLootCondition.builder(0.75f)));
+                } else if (anyMatch(id, LootTables.STRONGHOLD_LIBRARY_CHEST)) {
+                    tableBuilder.pool(LootPool.builder().with(MoneyBagLootEntry.builder(2000, 6000)).conditionally(RandomChanceLootCondition.builder(0.85f)));
+                }
+            });
+        }
     }
 
     public static NumismaticOverhaulConfig getConfig() {

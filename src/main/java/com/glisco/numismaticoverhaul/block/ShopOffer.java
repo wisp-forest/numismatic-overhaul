@@ -27,11 +27,9 @@ public class ShopOffer {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public TradeOffer toTradeOffer(ShopBlockEntity shop) {
-
-        ItemStack buy = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
-
-        int maxUses = count(shop.getItems(), sell) / sell.getCount();
+    public TradeOffer toTradeOffer(ShopBlockEntity shop, boolean inexhaustible) {
+        var buy = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
+        int maxUses = inexhaustible ? Integer.MAX_VALUE : count(shop.getItems(), sell) / sell.getCount();
 
         final var tradeOffer = new TradeOffer(buy, sell, maxUses, 0, 0);
         ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(-69420);
