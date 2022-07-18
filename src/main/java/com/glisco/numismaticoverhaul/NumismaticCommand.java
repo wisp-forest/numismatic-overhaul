@@ -25,7 +25,7 @@ public class NumismaticCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(literal("numismatic")
                 .then(literal("balance").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
-                        .then(argument("player", EntityArgumentType.player())
+                        .then(argument("player", EntityArgumentType.players())
                                 .then(literal("get").executes(NumismaticCommand::get))
                                 .then(longSubcommand("set", "value", NumismaticCommand::set))
                                 .then(longSubcommand("add", "amount", NumismaticCommand.modify(1)))
@@ -61,37 +61,51 @@ public class NumismaticCommand {
 
     private static int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         final var value = LongArgumentType.getLong(context, "value");
-        final var player = EntityArgumentType.getPlayer(context, "player");
+        final var players = EntityArgumentType.getPlayers(context, "player");
 
-        //noinspection deprecation
-        ModComponents.CURRENCY.get(player).setValue(value);
-        context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance set to: " + value,
-                Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+        for (var player : players) {
+            //noinspection deprecation
+            ModComponents.CURRENCY.get(player).setValue(value);
+            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + value,
+                    Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+        }
 
         return CurrencyConverter.asInt(value);
     }
 
     private static int get(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        final var player = EntityArgumentType.getPlayer(context, "player");
+        final var players = EntityArgumentType.getPlayers(context, "player");
+        long totalBalance = 0;
 
-        final long balance = ModComponents.CURRENCY.get(player).getValue();
-        context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance: " + balance,
-                Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+        for (var player : players) {
+            final long balance = ModComponents.CURRENCY.get(player).getValue();
+            totalBalance += balance;
 
-        return CurrencyConverter.asInt(balance);
+            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ":",
+                    Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+        }
+
+        return CurrencyConverter.asInt(totalBalance);
     }
 
     private static Command<ServerCommandSource> modify(long multiplier) {
         return context -> {
             final var amount = LongArgumentType.getLong(context, "amount");
-            final var player = EntityArgumentType.getPlayer(context, "player");
+            final var players = EntityArgumentType.getPlayers(context, "player");
 
-            final var currencyComponent = ModComponents.CURRENCY.get(player);
-            currencyComponent.silentModify(amount * multiplier);
-            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance set to: " + currencyComponent.getValue(),
-                    Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+            long lastValue = 0;
 
-            return CurrencyConverter.asInt(currencyComponent.getValue());
+            for (var player : players) {
+                final var currencyComponent = ModComponents.CURRENCY.get(player);
+
+                currencyComponent.silentModify(amount * multiplier);
+                lastValue = currencyComponent.getValue();
+
+                context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + currencyComponent.getValue(),
+                        Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+            }
+
+            return CurrencyConverter.asInt(lastValue);
         };
     }
 }
