@@ -15,4 +15,8 @@ public class NumismaticOverhaulConfig implements ConfigData {
     @Comment("Whether taxes from Minecraft Comes Alive: Reborn should be delivered as Numismatic currency")
     public boolean enableMcaCompatibility = true;
 
+    @ConfigEntry.Gui.RequiresRestart
+    @Comment("Whether Numismatic currency should be injected into the loot tables of loot chests")
+    public boolean generateCurrencyInChests = true;
+
 }
