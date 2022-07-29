@@ -3,6 +3,8 @@ package com.glisco.numismaticoverhaul.block;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.SetTradeOffersS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.village.Merchant;
@@ -53,7 +55,19 @@ public class ShopMerchant implements Merchant {
     @Override
     public void trade(TradeOffer offer) {
         offer.use();
-        if (!this.inexhaustible) ShopOffer.remove(shop.getItems(), offer.getSellItem());
+        if (!this.inexhaustible) {
+            ShopOffer.remove(shop.getItems(), offer.getSellItem());
+
+            this.updateTrades();
+            if (this.getCustomer() instanceof ServerPlayerEntity serverPlayer) {
+                serverPlayer.networkHandler.sendPacket(new SetTradeOffersS2CPacket(
+                        serverPlayer.currentScreenHandler.syncId,
+                        this.recipeList,
+                        0, 0, false, false
+                ));
+            }
+        }
+
         shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }
 
