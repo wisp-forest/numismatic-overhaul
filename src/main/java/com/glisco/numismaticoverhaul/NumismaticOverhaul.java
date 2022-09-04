@@ -12,8 +12,6 @@ import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import io.wispforest.owo.network.OwoNetChannel;
 import io.wispforest.owo.ops.LootOps;
 import io.wispforest.owo.registration.reflect.FieldRegistrationHandler;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -50,13 +48,10 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
             = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(10, 0, 100));
 
-    private static NumismaticOverhaulConfig CONFIG;
+    public static final com.glisco.numismaticoverhaul.NumismaticOverhaulConfig CONFIG = com.glisco.numismaticoverhaul.NumismaticOverhaulConfig.createAndLoad();
 
     @Override
     public void onInitialize() {
-
-        AutoConfig.register(NumismaticOverhaulConfig.class, JanksonConfigSerializer::new);
-        CONFIG = AutoConfig.getConfigHolder(NumismaticOverhaulConfig.class).getConfig();
 
         FieldRegistrationHandler.register(NumismaticOverhaulItems.class, MOD_ID, false);
         FieldRegistrationHandler.register(NumismaticOverhaulBlocks.class, MOD_ID, false);
@@ -78,7 +73,7 @@ public class NumismaticOverhaul implements ModInitializer {
             VillagerTradesHandler.broadcastErrors(server);
         });
 
-        if (CONFIG.generateCurrencyInChests) {
+        if (CONFIG.generateCurrencyInChests()) {
             LootOps.injectItem(NumismaticOverhaulItems.GOLD_COIN, .01f, LootTables.STRONGHOLD_LIBRARY_CHEST, LootTables.BASTION_TREASURE_CHEST, LootTables.STRONGHOLD_CORRIDOR_CHEST,
                     LootTables.PILLAGER_OUTPOST_CHEST, LootTables.BURIED_TREASURE_CHEST, LootTables.SIMPLE_DUNGEON_CHEST, LootTables.ABANDONED_MINESHAFT_CHEST);
 
@@ -92,10 +87,6 @@ public class NumismaticOverhaul implements ModInitializer {
                 }
             });
         }
-    }
-
-    public static NumismaticOverhaulConfig getConfig() {
-        return CONFIG;
     }
 
     private static boolean anyMatch(Identifier target, Identifier... comparisons) {

@@ -22,7 +22,7 @@ public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntit
     @Override
     public void render(ShopBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
-        MinecraftClient client = MinecraftClient.getInstance();
+        var client = MinecraftClient.getInstance();
 
         if (entity.getOffers().isEmpty()) return;
 

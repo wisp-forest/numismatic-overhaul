@@ -6,9 +6,20 @@
   "block.numismatic-overhaul.shop": "Shop",
   "block.numismatic-overhaul.inexhaustible_shop": "Inexhaustible Shop",
   "block.numismatic-overhaul.inexhaustible_shop.tooltip": "Creative only - never runs out of stock",
+  "block.numismatic-overhaul.piggy_bank": "Piggy Bank",
   "gui.numismatic-overhaul.shop.price": "Price",
   "gui.numismatic-overhaul.shop.inventory_title": "Shop Inventory",
   "gui.numismatic-overhaul.shop.merchant_title": "Shop",
+  "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
+    "Hoppers",
+    { "text": " can ", "color":  "#28FFBF"},
+    "insert \nitems into this shop"
+  ],
+  "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
+    "Hoppers",
+    { "text": " cannot ", "color":  "#EB1D36"},
+    "insert \nitems into this shop"
+  ],
   "gui.numismatic-overhaul.purse_title": "Purse",
   "numismatic-overhaul.empty": "Empty",
   "filled_map.end_city": "End Explorer Map",
@@ -16,11 +27,12 @@
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
 
-  "text.autoconfig.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
-  "text.autoconfig.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
-  "text.autoconfig.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
-  "text.autoconfig.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
-  "text.autoconfig.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
+  "text.config.numismatic.title": "Numismatic Overhaul Configuration",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
+  "text.config.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
+  "text.config.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
 
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"

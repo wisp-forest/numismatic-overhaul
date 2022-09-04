@@ -1,19 +1,22 @@
 package com.glisco.numismaticoverhaul.item;
 
+import io.wispforest.owo.nbt.NbtKey;
 import net.minecraft.item.ItemStack;
 
 public interface CurrencyItem {
 
+    NbtKey<Long> ORIGINAL_VALUE = new NbtKey<>("OriginalValue", NbtKey.Type.LONG);
+
     static void setOriginalValue(ItemStack stack, long value) {
-        stack.getOrCreateNbt().putLong("OriginalValue", value);
+        stack.put(ORIGINAL_VALUE, value);
     }
 
     static long getOriginalValue(ItemStack stack) {
-        return stack.getOrCreateNbt().getLong("OriginalValue");
+        return stack.get(ORIGINAL_VALUE);
     }
 
     static boolean hasOriginalValue(ItemStack stack) {
-        return stack.getOrCreateNbt().contains("OriginalValue");
+        return stack.has(ORIGINAL_VALUE);
     }
 
     boolean wasAdjusted(ItemStack other);

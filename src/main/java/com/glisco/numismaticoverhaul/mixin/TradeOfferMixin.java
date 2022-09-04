@@ -52,16 +52,16 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
         if (!(this.firstBuyItem.getItem() instanceof CurrencyItem currencyItem)) return;
 
         long originalValue = currencyItem.getValue(this.firstBuyItem);
-        long adjustedValue = numismatic$reputation < 0 ?
-                (long) (originalValue + Math.abs(numismatic$reputation) * (Math.abs(originalValue) * .02))
-                :
-                (long) Math.max(1, originalValue - Math.abs(originalValue) * (numismatic$reputation / (numismatic$reputation + 100f)));
+        long adjustedValue = numismatic$reputation < 0
+                ? (long) (originalValue + Math.abs(numismatic$reputation) * (Math.abs(originalValue) * .02))
+                : (long) Math.max(1, originalValue - Math.abs(originalValue) * (numismatic$reputation / (numismatic$reputation + 100f)));
 
         adjustedValue = Math.min(adjustedValue, 990000);
 
         final var roundedStack = CurrencyHelper.getClosest(adjustedValue);
-        if (originalValue != CurrencyHelper.getValue(Collections.singletonList(roundedStack)) && !roundedStack.isOf(this.firstBuyItem.getItem()))
+        if (originalValue != CurrencyHelper.getValue(Collections.singletonList(roundedStack)) && !roundedStack.isOf(this.firstBuyItem.getItem())) {
             CurrencyItem.setOriginalValue(roundedStack, originalValue);
+        }
         cir.setReturnValue(roundedStack);
     }
 

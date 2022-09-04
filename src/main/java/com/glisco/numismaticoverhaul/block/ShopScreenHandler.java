@@ -2,9 +2,11 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.client.gui.shop.ShopScreen;
+import com.glisco.numismaticoverhaul.client.gui.ShopScreen;
+import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.client.screens.ScreenUtils;
+import io.wispforest.owo.client.screens.SlotGenerator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -24,12 +26,7 @@ public class ShopScreenHandler extends ScreenHandler {
     private final PlayerEntity owner;
 
     private final Inventory shopInventory;
-    private final Inventory BUFFER_INVENTORY = new SimpleInventory(1) {
-        @Override
-        public void markDirty() {
-            onBufferChanged();
-        }
-    };
+    private final SimpleInventory bufferInventory = new SimpleInventory(1);
 
     private final List<ShopOffer> offers;
 
@@ -40,32 +37,28 @@ public class ShopScreenHandler extends ScreenHandler {
         this(syncId, playerInventory, new SimpleInventory(27));
     }
 
-    public ShopScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public ShopScreenHandler(int syncId, PlayerInventory playerInventory, Inventory shopInventory) {
         super(NumismaticOverhaul.SHOP_SCREEN_HANDLER_TYPE, syncId);
-        this.shopInventory = inventory;
+        this.shopInventory = shopInventory;
         this.owner = playerInventory.player;
 
-        if (!playerInventory.player.world.isClient()) {
-            this.shop = (ShopBlockEntity) inventory;
+        if (!this.owner.world.isClient) {
+            this.shop = (ShopBlockEntity) shopInventory;
             this.offers = shop.getOffers();
         } else {
             this.offers = new ArrayList<>();
         }
 
-        int m;
-        int l;
-
-        //Shop Inventory
-        for (m = 0; m < 3; ++m) {
-            for (l = 0; l < 9; ++l) {
-                this.addSlot(new AutoHidingSlot(shopInventory, l + m * 9, 8 + l * 18, 18 + m * 18, 0, false));
-            }
-        }
-
-        ScreenUtils.generatePlayerSlots(8, 86, playerInventory, this::addSlot);
+        SlotGenerator.begin(this::addSlot, 8, 17)
+                .slotFactory((inv, index, x, y) -> new AutoHidingSlot(inv, index, x, y, 0, false))
+                .grid(this.shopInventory, 0, 9, 3)
+                .slotFactory(Slot::new)
+                .moveTo(8, 85)
+                .playerInventory(playerInventory);
 
         //Trade Buffer Slot
-        this.addSlot(new AutoHidingSlot(BUFFER_INVENTORY, 0, 186, 15, 0, true) {
+        this.bufferInventory.addListener(this::onBufferChanged);
+        this.addSlot(new AutoHidingSlot(bufferInventory, 0, 186, 14, 0, true) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 ItemStack shadow = stack.copy();
@@ -79,7 +72,12 @@ public class ShopScreenHandler extends ScreenHandler {
                 return false;
             }
         });
+    }
 
+    private void onBufferChanged(Inventory inventory) {
+        if (this.owner.world.isClient && MinecraftClient.getInstance().currentScreen instanceof ShopScreen screen) {
+            screen.afterDataUpdate();
+        }
     }
 
     @Override
@@ -87,50 +85,65 @@ public class ShopScreenHandler extends ScreenHandler {
         return this.shopInventory.canPlayerUse(player);
     }
 
-    public void onBufferChanged() {
-        if (this.owner.world.isClient) {
-            ((ShopScreen) MinecraftClient.getInstance().currentScreen).updateTradeWidget();
+    public void loadOffer(long index) {
+        if (!this.owner.world.isClient) {
+            if (index > this.offers.size() - 1) {
+                NumismaticOverhaul.LOGGER.error("Player {} attempted to load invalid trade at index {}", owner.getName(), index);
+                return;
+            }
+
+            this.bufferInventory.setStack(0, this.offers.get((int) index).getSellStack());
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.LOAD_OFFER, index));
         }
-    }
-
-    public void loadOffer(int index) {
-
-        if (index > offers.size() - 1) {
-            NumismaticOverhaul.LOGGER.error("Player {} attempted to load invalid trade at index {}", owner.getName(), index);
-            return;
-        }
-
-        ShopOffer offer = offers.get(index);
-        BUFFER_INVENTORY.setStack(0, offer.getSellStack());
     }
 
     public void createOffer(long price) {
-        shop.addOrReplaceOffer(new ShopOffer(BUFFER_INVENTORY.getStack(0), price));
-        sendUpdate();
+        if (!this.owner.world.isClient) {
+            final var stack = bufferInventory.getStack(0);
+            if (stack.isEmpty()) return;
+
+            this.shop.addOrReplaceOffer(new ShopOffer(stack, price));
+            this.updateClient();
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.CREATE_OFFER, price));
+        }
     }
 
     public void extractCurrency() {
-        ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
-        shop.setStoredCurrency(0);
-        sendUpdate();
+        if (!this.owner.world.isClient) {
+            ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
+            this.shop.setStoredCurrency(0);
+            this.updateClient();
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.EXTRACT_CURRENCY));
+        }
     }
 
     public void deleteOffer() {
-        shop.deleteOffer(BUFFER_INVENTORY.getStack(0));
-        sendUpdate();
+        if (!this.owner.world.isClient) {
+            this.shop.deleteOffer(bufferInventory.getStack(0));
+            this.updateClient();
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.DELETE_OFFER));
+        }
     }
 
     public void toggleTransfer() {
-        this.shop.toggleTransfer();
-        sendUpdate();
+        if (!this.owner.world.isClient) {
+            this.shop.toggleTransfer();
+            this.updateClient();
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.TOGGLE_TRANSFER));
+        }
     }
 
-    private void sendUpdate() {
+    private void updateClient() {
         NumismaticOverhaul.CHANNEL.serverHandle(owner).send(new UpdateShopScreenS2CPacket(shop));
     }
 
     public ItemStack getBufferStack() {
-        return BUFFER_INVENTORY.getStack(0);
+        return bufferInventory.getStack(0);
     }
 
     @Override
@@ -152,12 +165,11 @@ public class ShopScreenHandler extends ScreenHandler {
         @Override
         @Environment(EnvType.CLIENT)
         public boolean isEnabled() {
-            if (!(MinecraftClient.getInstance().currentScreen instanceof ShopScreen)) return true;
-            if (hide) {
-                return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() != targetTab;
-            } else {
-                return ((ShopScreen) MinecraftClient.getInstance().currentScreen).getSelectedTab() == targetTab;
-            }
+            if (!(MinecraftClient.getInstance().currentScreen instanceof ShopScreen screen)) return true;
+            //noinspection SimplifiableConditionalExpression
+            return hide
+                    ? screen.tab() != targetTab
+                    : screen.tab() == targetTab;
         }
     }
 }

@@ -14,6 +14,8 @@ repositories {
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
     maven   { url = "https://storage.googleapis.com/devan-maven/" }
+
+    mavenLocal()
 }
 
 dependencies {
@@ -41,7 +43,7 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     // oωo
-    modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+    modImplementation annotationProcessor("io.wispforest:owo-lib:${project.owo_version}")
     modCompileOnly include("io.wispforest:owo-sentinel:${project.owo_version}")
 }
 

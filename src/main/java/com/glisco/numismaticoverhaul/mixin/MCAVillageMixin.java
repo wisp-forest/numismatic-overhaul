@@ -18,13 +18,13 @@ public class MCAVillageMixin {
     @SuppressWarnings("UnresolvedMixinReference")
     @ModifyVariable(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F", remap = true), name = "emeraldValue")
     private int removeDivisor(int value) {
-        return NumismaticOverhaul.getConfig().enableMcaCompatibility ? 1 : value;
+        return NumismaticOverhaul.CONFIG.enableMcaCompatibility() ? 1 : value;
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
     @Redirect(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, target = "Lnet/minecraft/item/Items;EMERALD:Lnet/minecraft/item/Item;", remap = true))
     private Item weWantCoins() {
-        return NumismaticOverhaul.getConfig().enableMcaCompatibility ? NumismaticOverhaulItems.BRONZE_COIN : Items.EMERALD;
+        return NumismaticOverhaul.CONFIG.enableMcaCompatibility() ? NumismaticOverhaulItems.BRONZE_COIN : Items.EMERALD;
     }
 
 }

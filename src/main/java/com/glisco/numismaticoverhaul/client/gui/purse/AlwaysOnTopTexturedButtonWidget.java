@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul.client.gui.purse;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -29,20 +28,15 @@ public class AlwaysOnTopTexturedButtonWidget extends TexturedButtonWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        MinecraftClient minecraftClient = MinecraftClient.getInstance();
         RenderSystem.setShaderTexture(0, texture);
         int i = this.v;
         if (this.isHovered()) {
             i += this.hoveredVOffset;
         }
 
-        //Layers are for pussies
         RenderSystem.disableDepthTest();
 
         drawTexture(matrices, this.x, this.y, this.u, i, this.width, this.height);
-        if (this.isHovered()) {
-            this.renderTooltip(matrices, mouseX, mouseY);
-        }
-
+        if (this.isHovered()) this.renderTooltip(matrices, mouseX, mouseY);
     }
 }

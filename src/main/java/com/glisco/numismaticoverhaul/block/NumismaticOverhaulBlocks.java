@@ -2,10 +2,12 @@ package com.glisco.numismaticoverhaul.block;
 
 import io.wispforest.owo.registration.reflect.AutoRegistryContainer;
 import io.wispforest.owo.registration.reflect.BlockRegistryContainer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -23,7 +25,7 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
     public static final Block SHOP = new ShopBlock(false);
     public static final Block INEXHAUSTIBLE_SHOP = new ShopBlock(true);
-//    public static final Block COIN_STACK = new CoinStackBlock();
+    public static final Block PIGGY_BANK = new PiggyBankBlock();
 
     @Override
     public BlockItem createBlockItem(Block block, String identifier) {
@@ -34,6 +36,8 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
                     tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip").formatted(Formatting.GRAY));
                 }
             };
+        } else if (block == PIGGY_BANK) {
+            return new BlockItem(block, new FabricItemSettings().group(ItemGroup.MISC).equipmentSlot(stack -> EquipmentSlot.HEAD));
         }
 
         return new BlockItem(block, new Item.Settings().group(ItemGroup.MISC));
@@ -43,7 +47,6 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
         public static final BlockEntityType<ShopBlockEntity> SHOP =
                 FabricBlockEntityTypeBuilder.create(ShopBlockEntity::new, NumismaticOverhaulBlocks.SHOP, NumismaticOverhaulBlocks.INEXHAUSTIBLE_SHOP).build();
-//        public static final BlockEntityType<CoinStackBlock.Entity> COIN_STACK = FabricBlockEntityTypeBuilder.create(CoinStackBlock.Entity::new, NumismaticOverhaulBlocks.SHOP).build();
 
         @Override
         public Registry<BlockEntityType<?>> getRegistry() {

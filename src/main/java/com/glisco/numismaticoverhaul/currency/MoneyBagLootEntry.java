@@ -32,7 +32,7 @@ public class MoneyBagLootEntry extends LeafEntry {
         int value = MathHelper.nextInt(context.getRandom(), min, max);
         if (value == 0) return;
 
-        lootConsumer.accept(MoneyBagItem.create(value));
+        lootConsumer.accept(MoneyBagItem.createCombined(CurrencyResolver.splitValues(value)));
     }
 
     public static LeafEntry.Builder<?> builder(int min, int max) {
