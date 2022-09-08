@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul;
 import blue.endless.jankson.Comment;
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Modmenu;
+import io.wispforest.owo.config.annotation.Nest;
 import io.wispforest.owo.config.annotation.RestartRequired;
 
 @Modmenu(modId = "numismatic-overhaul")
@@ -25,4 +26,18 @@ public class NumismaticOverhaulConfigModel {
 
     @Comment("Where the purse in your inventory should be placed on the Y axis")
     public int pursePositionY = 20;
+
+    @Nest
+    public LootOptions lootOptions = new LootOptions();
+
+    public static class LootOptions {
+        public int dungeonMinLoot = 500;
+        public int dungeonMaxLoot = 200;
+
+        public int structureMinLoot = 1500;
+        public int structureMaxLoot = 4000;
+
+        public int strongholdLibraryMinLoot = 2000;
+        public int strongholdLibraryMaxLoot = 6000;
+    }
 }

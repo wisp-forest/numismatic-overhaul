@@ -20,7 +20,7 @@ public record UpdateShopScreenS2CPacket(List<ShopOffer> offers, long storedCurre
         screen.update(message);
     }
 
-    public static void register() {
+    public static void initialize() {
         //noinspection ConstantConditions
         PacketBufSerializer.register(
                 ShopOffer.class,

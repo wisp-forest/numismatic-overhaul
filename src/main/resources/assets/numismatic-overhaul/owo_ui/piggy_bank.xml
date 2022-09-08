@@ -1,0 +1,31 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.19/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical">
+                    <children>
+                        <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-width="176" region-height="145"/>
+
+                        <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-height="16" region-width="16" u="0" v="145" id="bronze-hint">
+                            <positioning type="absolute">62,26</positioning>
+                        </texture>
+                        <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-height="16" region-width="16" u="16" v="145" id="silver-hint">
+                            <positioning type="absolute">80,26</positioning>
+                        </texture>
+                        <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-height="16" region-width="16" u="32" v="145" id="gold-hint">
+                            <positioning type="absolute">98,26</positioning>
+                        </texture>
+                    </children>
+                </flow-layout>
+            </children>
+
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+        </flow-layout>
+    </components>
+</owo-ui>

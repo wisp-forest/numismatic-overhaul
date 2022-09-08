@@ -12,12 +12,18 @@
   "gui.numismatic-overhaul.shop.merchant_title": "Shop",
   "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
     "Hoppers",
-    { "text": " can ", "color":  "#28FFBF"},
+    {
+      "text": " can ",
+      "color": "#28FFBF"
+    },
     "insert \nitems into this shop"
   ],
   "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
     "Hoppers",
-    { "text": " cannot ", "color":  "#EB1D36"},
+    {
+      "text": " cannot ",
+      "color": "#EB1D36"
+    },
     "insert \nitems into this shop"
   ],
   "gui.numismatic-overhaul.purse_title": "Purse",
@@ -27,12 +33,26 @@
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
 
-  "text.config.numismatic.title": "Numismatic Overhaul Configuration",
+  "itemGroup.numismatic-overhaul.main": "Numismatic Overhaul",
+  "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
+  "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",
+  "itemGroup.numismatic-overhaul.main.button.github": "GitHub",
+  "itemGroup.numismatic-overhaul.main.button.discord": "Discord",
+
+  "text.config.numismatic-overhaul.title": "Numismatic Overhaul Configuration",
   "text.config.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
   "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
   "text.config.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
   "text.config.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
   "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "Loot Generation",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "Dungeon Minimum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "Dungeon Maximum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "Structure Minimum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "Structure Maximum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "Stronghold Library Minimum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "Stronghold Library Maximum Loot",
 
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
