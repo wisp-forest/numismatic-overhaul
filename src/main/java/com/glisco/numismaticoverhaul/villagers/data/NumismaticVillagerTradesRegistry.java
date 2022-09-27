@@ -75,7 +75,10 @@ public class NumismaticVillagerTradesRegistry {
         final var processor = RegistryProcessor.begin();
 
         TRADES_REGISTRY.forEach(processor::processProfession);
-        REMAPPED_FABRIC_TRADES.forEach(processor::processProfession);
+        REMAPPED_FABRIC_TRADES.forEach((villagerProfession, listInt2ObjectOpenHashMap) -> {
+            if (TRADES_REGISTRY.containsKey(villagerProfession)) return;
+            processor.processProfession(villagerProfession, listInt2ObjectOpenHashMap);
+        });
 
         WANDERING_TRADER_REGISTRY.forEach(processor::processWanderingTrader);
         REMAPPED_FABRIC_WANDERING_TRADER_TRADES.forEach(processor::processWanderingTrader);
