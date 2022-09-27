@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Pseudo
-@Mixin(targets = "mca.server.world.data.Village", remap = false)
+@Mixin(targets = "fabric.net.mca.server.world.data.Village", remap = false)
 public class MCAVillageMixin {
 
     @SuppressWarnings("UnresolvedMixinReference")
