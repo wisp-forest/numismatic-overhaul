@@ -28,9 +28,9 @@ public class NumismaticOverhaulConfigModel {
     public int pursePositionY = 20;
 
     @Nest
-    public LootOptions lootOptions = new LootOptions();
+    public LootOptions_ lootOptions = new LootOptions_();
 
-    public static class LootOptions {
+    public static class LootOptions_ {
         public int dungeonMinLoot = 500;
         public int dungeonMaxLoot = 200;
 

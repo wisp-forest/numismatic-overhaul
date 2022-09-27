@@ -45,7 +45,7 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
         NumismaticVillagerTradesRegistry.wrapModVillagers();
 
         final Pair<HashMap<VillagerProfession, Int2ObjectOpenHashMap<TradeOffers.Factory[]>>, Int2ObjectOpenHashMap<TradeOffers.Factory[]>> registry = NumismaticVillagerTradesRegistry.getRegistryForLoading();
-        registry.getLeft().forEach(TradeOffers.PROFESSION_TO_LEVELED_TRADE::replace);
+        TradeOffers.PROFESSION_TO_LEVELED_TRADE.putAll(registry.getLeft());
 
         if (!registry.getRight().isEmpty()) {
             TradeOffers.WANDERING_TRADER_TRADES.clear();
