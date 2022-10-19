@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -17,6 +18,7 @@ import net.minecraft.village.VillagerProfession;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class VillagerTradesResourceListener extends JsonDataLoader implements IdentifiableResourceReloadListener {
 
@@ -39,7 +41,7 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
         loader.forEach((identifier, jsonElement) -> {
             if (!jsonElement.isJsonObject()) return;
             JsonObject root = jsonElement.getAsJsonObject();
-            VillagerTradesHandler.loadProfession(identifier, root);
+            if(!HammersAndTablesCompat(root)) VillagerTradesHandler.loadProfession(identifier, root);
         });
 
         NumismaticVillagerTradesRegistry.wrapModVillagers();
@@ -52,5 +54,14 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
             TradeOffers.WANDERING_TRADER_TRADES.putAll(registry.getRight());
         }
 
+    }
+
+    //Trade offers from json files for armorer, toolsmith and weaponsmith are disabled when Hammers and Smithing or Frycmod is installed
+    public boolean HammersAndTablesCompat(JsonObject root){
+        if(!FabricLoader.getInstance().isModLoaded("hammersandtables") && !FabricLoader.getInstance().isModLoaded("frycmod")) return false;
+
+        return Objects.equals(root.get("profession").getAsString(), "armorer") ||
+                Objects.equals(root.get("profession").getAsString(), "toolsmith") ||
+                Objects.equals(root.get("profession").getAsString(), "weaponsmith");
     }
 }
