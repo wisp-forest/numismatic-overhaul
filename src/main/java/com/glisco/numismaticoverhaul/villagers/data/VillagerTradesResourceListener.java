@@ -41,7 +41,7 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
         loader.forEach((identifier, jsonElement) -> {
             if (!jsonElement.isJsonObject()) return;
             JsonObject root = jsonElement.getAsJsonObject();
-            if(!HammersAndTablesCompat(root)) VillagerTradesHandler.loadProfession(identifier, root);
+            if(!HammersAndTablesCompat(identifier)) VillagerTradesHandler.loadProfession(identifier, root);
         });
 
         NumismaticVillagerTradesRegistry.wrapModVillagers();
@@ -57,11 +57,11 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
     }
 
     //Trade offers from json files for armorer, toolsmith and weaponsmith are disabled when Hammers and Smithing or Frycmod is installed
-    public boolean HammersAndTablesCompat(JsonObject root){
+    public boolean HammersAndTablesCompat(Identifier file){
         if(!FabricLoader.getInstance().isModLoaded("hammersandtables") && !FabricLoader.getInstance().isModLoaded("frycmod")) return false;
 
-        return Objects.equals(root.get("profession").getAsString(), "armorer") ||
-                Objects.equals(root.get("profession").getAsString(), "toolsmith") ||
-                Objects.equals(root.get("profession").getAsString(), "weaponsmith");
+        return Objects.equals(file.toString(), "numismatic-overhaul:armorer") ||
+                Objects.equals(file.toString(), "numismatic-overhaul:toolsmith") ||
+                Objects.equals(file.toString(), "numismatic-overhaul:weaponsmith");
     }
 }
