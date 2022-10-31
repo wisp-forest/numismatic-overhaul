@@ -8,10 +8,12 @@ import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.ops.TextOps;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.base.BaseUIModelScreen;
+import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.component.ItemComponent;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.container.ScrollContainer;
 import io.wispforest.owo.ui.core.Component;
 import io.wispforest.owo.ui.util.UISounds;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -76,9 +78,17 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         this.component(LabelComponent.class, "silver-count").text(Text.literal(String.valueOf(storedCurrency[1])));
         this.component(LabelComponent.class, "gold-count").text(Text.literal(String.valueOf(storedCurrency[2])));
 
+        int prevOffers = this.offers.size();
         this.offers.clear();
         this.offers.addAll(data.offers());
         this.populateTrades(this.tab);
+
+        if (this.tab == 1 && this.offers.size() > prevOffers) {
+            var offersScroll = this.component(ScrollContainer.class, "offer-container");
+            var leftColumn = offersScroll.childById(FlowLayout.class, "first-trades-column");
+
+            offersScroll.scrollTo(leftColumn.children().get(leftColumn.children().size() - 1));
+        }
 
         this.component(FlowLayout.class, "transfer-button").tooltip(
                 data.transferEnabled()
@@ -113,8 +123,8 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             this.titleY = 69420;
 
             final var editWidget = this.model.expandTemplate(FlowLayout.class, "trade-edit-widget", Map.of());
-            var submitButton = editWidget.childById(ButtonWidget.class, "submit-button");
-            var deleteButton = editWidget.childById(ButtonWidget.class, "delete-button");
+            var submitButton = editWidget.childById(ButtonComponent.class, "submit-button");
+            var deleteButton = editWidget.childById(ButtonComponent.class, "delete-button");
 
             var priceField = editWidget.childById(TextFieldWidget.class, "price-field");
             priceField.setMaxLength(7);
@@ -128,8 +138,8 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                 this.component(LabelComponent.class, "offer-gold-count").text(Text.literal(String.valueOf(price[2])));
             });
 
-            submitButton.onPress(button -> this.handler.createOffer(Integer.parseInt(priceField.getText())));
-            deleteButton.onPress(button -> this.handler.deleteOffer());
+            submitButton.onPress((ButtonComponent button) -> this.handler.createOffer(Integer.parseInt(priceField.getText())));
+            deleteButton.onPress((ButtonComponent button) -> this.handler.deleteOffer());
 
             this.priceDisplay = priceField::setText;
             this.afterDataUpdate = () -> {

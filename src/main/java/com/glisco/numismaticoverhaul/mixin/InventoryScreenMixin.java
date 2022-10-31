@@ -25,8 +25,8 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         super(screenHandler, playerInventory, text);
     }
 
-    PurseWidget purse;
-    PurseButton button;
+    private PurseWidget numismatic$purse;
+    private PurseButton numismatic$button;
 
     //The purse is injected via mixin instead of event because I need special callbacks in render(...) and mouseClicked(...) to handle
     //the non-button widget anyway, so I can just inject them here
@@ -36,39 +36,39 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         int purseX = NumismaticOverhaul.CONFIG.pursePositionX();
         int purseY = NumismaticOverhaul.CONFIG.pursePositionY();
 
-        purse = new PurseWidget(this.x + purseX, this.y + purseY, client, ModComponents.CURRENCY.get(client.player));
+        numismatic$purse = new PurseWidget(this.x + purseX, this.y + purseY, client, ModComponents.CURRENCY.get(client.player));
 
-        button = new PurseButton(this.x + purseX + 29, this.y + purseY - 14, button -> {
+        numismatic$button = new PurseButton(this.x + purseX + 29, this.y + purseY - 14, button -> {
             if (Screen.hasShiftDown()) {
                 NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.storeAll());
             } else {
-                purse.toggleActive();
+                numismatic$purse.toggleActive();
             }
         }, client.player, this);
 
-        this.addDrawableChild(button);
+        this.addDrawableChild(numismatic$button);
     }
 
     //Incredibly beautiful lambda mixin
     @Inject(method = "method_19891", at = @At("TAIL"))
     private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
-        this.button.setPos(this.x + 158, this.y + 6);
-        this.purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
+        this.numismatic$button.setPos(this.x + 158, this.y + 6);
+        this.numismatic$purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
     }
 
     @Inject(method = "render", at = @At("TAIL"))
     public void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        purse.render(matrices, mouseX, mouseY, delta);
+        numismatic$purse.render(matrices, mouseX, mouseY, delta);
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
     public void onMouse(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (purse.mouseClicked(mouseX, mouseY, button)) cir.setReturnValue(true);
+        if (numismatic$purse.mouseClicked(mouseX, mouseY, button)) cir.setReturnValue(true);
     }
 
     @Override
     protected void drawMouseoverTooltip(MatrixStack matrices, int x, int y) {
-        if (purse.isMouseOver(x, y)) return;
+        if (numismatic$purse.isMouseOver(x, y)) return;
         super.drawMouseoverTooltip(matrices, x, y);
     }
 

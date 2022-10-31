@@ -1,5 +1,5 @@
 <owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/0.8/owo-ui.xsd">
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.19/owo-ui.xsd">
     <components>
         <flow-layout direction="vertical">
             <children>
@@ -26,7 +26,7 @@
                                     <texture>numismatic-overhaul:textures/gui/shop_gui.png</texture>
                                 </template>
 
-                                <scroll direction="vertical">
+                                <scroll direction="vertical" id="offer-container">
                                     <flow-layout direction="horizontal">
                                         <children>
                                             <flow-layout direction="vertical" id="first-trades-column">
@@ -101,7 +101,6 @@
                         </flow-layout>
                     </children>
                 </flow-layout>
-
             </children>
 
             <vertical-alignment>center</vertical-alignment>
@@ -126,12 +125,21 @@
                         <positioning type="absolute">9,6</positioning>
                     </item>
 
-                    <textured-button texture="numismatic-overhaul:textures/gui/shop_gui.png" width="32" height="28" u="113" v="168" id="tab-button">
+                    <button id="tab-button">
+                        <renderer>
+                            <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" u="113" v="168" texture-width="256" texture-height="256"/>
+                        </renderer>
+
+                        <sizing>
+                            <horizontal method="fixed">32</horizontal>
+                            <vertical method="fixed">28</vertical>
+                        </sizing>
+
                         <z-index>1</z-index>
                         <margins>
                             <right>-3</right>
                         </margins>
-                    </textured-button>
+                    </button>
                 </children>
 
                 <margins>
@@ -145,16 +153,24 @@
         <trade-button>
             <flow-layout direction="horizontal">
                 <children>
+                    <button id="trade-button">
+                        <sizing>
+                            <horizontal method="fixed">78</horizontal>
+                        </sizing>
+                    </button>
+
                     <flow-layout direction="horizontal">
                         <children>
                             <item id="item-display">
                                 <show-overlay>true</show-overlay>
+                                <cursor-style>hand</cursor-style>
                             </item>
 
                             <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" region-width="5" region-height="7" u="1" v="172">
                                 <margins>
                                     <left>3</left>
                                 </margins>
+                                <cursor-style>hand</cursor-style>
                             </texture>
 
                             <label id="price-label">
@@ -163,6 +179,7 @@
                                 <margins>
                                     <left>2</left>
                                 </margins>
+                                <cursor-style>hand</cursor-style>
                             </label>
                         </children>
 
@@ -175,14 +192,9 @@
                             <left>4</left>
                         </padding>
                         <vertical-alignment>center</vertical-alignment>
-                        <z-index>1</z-index>
-                    </flow-layout>
 
-                    <button id="trade-button">
-                        <sizing>
-                            <horizontal method="fixed">78</horizontal>
-                        </sizing>
-                    </button>
+                        <cursor-style>hand</cursor-style>
+                    </flow-layout>
                 </children>
             </flow-layout>
         </trade-button>
@@ -191,14 +203,34 @@
             <flow-layout direction="horizontal" id="trade-edit-widget">
                 <children>
                     <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" region-width="98" region-height="54" u="15" v="169"/>
-                    <textured-button texture="numismatic-overhaul:textures/gui/shop_gui.png" width="41" height="11" u="15" v="223" id="submit-button">
+
+                    <button id="submit-button">
+                        <renderer>
+                            <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" u="15" v="223" texture-width="256" texture-height="256"/>
+                        </renderer>
+
+                        <sizing>
+                            <horizontal method="fixed">41</horizontal>
+                            <vertical method="fixed">11</vertical>
+                        </sizing>
+
                         <positioning type="absolute">7,36</positioning>
                         <active>false</active>
-                    </textured-button>
-                    <textured-button texture="numismatic-overhaul:textures/gui/shop_gui.png" width="41" height="11" u="56" v="223" id="delete-button">
+                    </button>
+
+                    <button id="delete-button">
+                        <renderer>
+                            <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" u="56" v="223" texture-width="256" texture-height="256"/>
+                        </renderer>
+
+                        <sizing>
+                            <horizontal method="fixed">41</horizontal>
+                            <vertical method="fixed">11</vertical>
+                        </sizing>
+
                         <positioning type="absolute">50,36</positioning>
                         <active>false</active>
-                    </textured-button>
+                    </button>
 
                     <text-box id="price-field">
                         <positioning type="absolute">35,18</positioning>
@@ -270,9 +302,18 @@
                         <positioning type="absolute">5,31</positioning>
                     </label>
 
-                    <textured-button texture="numismatic-overhaul:textures/gui/shop_gui.png" width="26" height="8" u="146" v="224" id="extract-button">
+                    <button id="extract-button">
+                        <renderer>
+                            <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" u="146" v="224" texture-width="256" texture-height="256"/>
+                        </renderer>
+
+                        <sizing>
+                            <horizontal method="fixed">26</horizontal>
+                            <vertical method="fixed">8</vertical>
+                        </sizing>
+
                         <positioning type="absolute">4,41</positioning>
-                    </textured-button>
+                    </button>
                 </children>
             </flow-layout>
         </currency-widget>
