@@ -31,9 +31,16 @@ public class NumismaticOverhaulConfigModel {
     public LootOptions_ lootOptions = new LootOptions_();
 
     public static class LootOptions_ {
+        @Comment("Affects money gained from Dungeon and Mineshaft chests")
+        public int desertMinLoot = 300;
+        @Comment("Affects money gained from Dungeon and Mineshaft chests")
+        public int desertMaxLoot = 1200;
+        @Comment("Affects money gained from Dungeon and Mineshaft chests")
         public int dungeonMinLoot = 500;
-        public int dungeonMaxLoot = 200;
+        @Comment("Affects money gained from Dungeon and Mineshaft chests")
+        public int dungeonMaxLoot = 2000;
 
+        @Comment("Affects money gained from Bastion, Stronghold, Outpost and Buried Treasure chests")
         public int structureMinLoot = 1500;
         public int structureMaxLoot = 4000;
 

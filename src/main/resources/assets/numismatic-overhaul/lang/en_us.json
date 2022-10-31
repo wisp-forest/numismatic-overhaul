@@ -47,6 +47,8 @@
   "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
 
   "text.config.numismatic-overhaul.category.lootOptions": "Loot Generation",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "Desert Temple Minimum Loot",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "Desert Temple Maximum Loot",
   "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "Dungeon Minimum Loot",
   "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "Dungeon Maximum Loot",
   "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "Structure Minimum Loot",
