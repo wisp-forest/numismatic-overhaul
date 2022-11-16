@@ -9,6 +9,8 @@
 
 Numismatic Overhaul adds a currency system into Minecraft, closely inspired from Terraria. You obtain money from trading with Villagers, exploring the world or killing Pillagers. You then keep this money in a purse built into your inventory and subsequently spend it on the shops other players have set up or, alternatively, even more villager trading.
 
+You can find an in-depth wiki [over on the Wisp Forest Docs site](https://docs.wispforest.io/numismatic-overhaul/home/)
+
 ## Credits
 - **Pois1x** for making the textures and inspiring the mod
 - **Noaaan** for helping with some villager code and doing most of the ugly JSON work
