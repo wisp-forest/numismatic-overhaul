@@ -1,5 +1,6 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.base.BaseUIModelScreen;
@@ -16,7 +17,8 @@ public class PiggyBankScreen extends BaseUIModelHandledScreen<FlowLayout, PiggyB
     private TextureComponent bronzeHint, silverHint, goldHint;
 
     public PiggyBankScreen(PiggyBankScreenHandler handler, PlayerInventory inventory, Text title) {
-        super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.file("../src/main/resources/assets/numismatic-overhaul/owo_ui/piggy_bank.xml"));
+//        super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.file("../src/main/resources/assets/numismatic-overhaul/owo_ui/piggy_bank.xml"));
+        super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.asset(NumismaticOverhaul.id("piggy_bank")));
         this.backgroundHeight = 145;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
         this.titleX = (this.backgroundWidth - MinecraftClient.getInstance().textRenderer.getWidth(title)) / 2;
