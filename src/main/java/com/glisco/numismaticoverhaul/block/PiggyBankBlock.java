@@ -73,7 +73,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     ).reduce(VoxelShapes::union).get();
 
     public PiggyBankBlock() {
-        super(FabricBlockSettings.copyOf(Blocks.TERRACOTTA));
+        super(FabricBlockSettings.of(Material.STONE, MapColor.PINK).strength(1.25F, 4.2F));
     }
 
     @Override
