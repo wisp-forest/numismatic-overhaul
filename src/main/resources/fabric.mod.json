@@ -33,7 +33,7 @@
     "minecraft": ">=1.19",
     "cardinal-components-base": "*",
     "cardinal-components-entity": "*",
-    "owo": ">=0.7.3"
+    "owo": ">=0.9.2"
   },
   "custom": {
     "cardinal-components": [
