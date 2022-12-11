@@ -20,6 +20,7 @@ import net.minecraft.screen.slot.Slot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ShopScreenHandler extends ScreenHandler {
 
@@ -59,17 +60,37 @@ public class ShopScreenHandler extends ScreenHandler {
         //Trade Buffer Slot
         this.bufferInventory.addListener(this::onBufferChanged);
         this.addSlot(new AutoHidingSlot(bufferInventory, 0, 186, 14, 0, true) {
+
             @Override
-            public boolean canInsert(ItemStack stack) {
-                ItemStack shadow = stack.copy();
-                this.setStack(shadow);
-                return false;
+            public ItemStack takeStack(int amount) {
+                this.setStack(ItemStack.EMPTY);
+                return ItemStack.EMPTY;
             }
 
             @Override
-            public boolean canTakeItems(PlayerEntity playerEntity) {
+            public Optional<ItemStack> tryTakeStackRange(int min, int max, PlayerEntity player) {
                 this.setStack(ItemStack.EMPTY);
-                return false;
+                return Optional.empty();
+            }
+
+            @Override
+            public ItemStack takeStackRange(int min, int max, PlayerEntity player) {
+                this.setStack(ItemStack.EMPTY);
+                return ItemStack.EMPTY;
+            }
+
+            @Override
+            public ItemStack insertStack(ItemStack stack) {
+                this.setStack(stack.copy());
+                return stack;
+            }
+
+            @Override
+            public ItemStack insertStack(ItemStack stack, int count) {
+                var copy = stack.copy();
+                copy.setCount(count);
+                this.setStack(copy);
+                return stack;
             }
         });
     }
