@@ -59,7 +59,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         leftColumn.child(makeTabButton(Items.CHEST, false, button -> selectTab(0)));
         leftColumn.child(makeTabButton(Items.EMERALD, true, button -> this.selectTab(1)));
 
-        rootComponent.childById(ButtonWidget.class, "extract-button").onPress(button -> this.handler.extractCurrency());
+        rootComponent.childById(ButtonComponent.class, "extract-button").onPress(button -> this.handler.extractCurrency());
 
         rootComponent.childById(FlowLayout.class, "transfer-button").mouseDown().subscribe((x, y, button) -> {
             if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) return false;
@@ -183,7 +183,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
 
             var component = this.model.expandTemplate(FlowLayout.class, "trade-button", Map.of("price", String.valueOf(offer.getPrice())));
             component.childById(ItemComponent.class, "item-display").stack(offer.getSellStack());
-            component.childById(ButtonWidget.class, "trade-button").onPress(button -> {
+            component.childById(ButtonComponent.class, "trade-button").onPress(button -> {
                 this.handler.loadOffer(offerIndex);
                 this.priceDisplay.accept(String.valueOf(offer.getPrice()));
             });
@@ -198,10 +198,10 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         background.child(0, this.model.expandTemplate(TextureComponent.class, "background-texture", Map.of("texture", newTexture.toString())));
     }
 
-    private FlowLayout makeTabButton(Item icon, boolean active, ButtonWidget.PressAction onPress) {
+    private FlowLayout makeTabButton(Item icon, boolean active, Consumer<ButtonComponent> onPress) {
         var buttonContainer = this.model.expandTemplate(FlowLayout.class, "tab-button", Map.of("icon-item", Registry.ITEM.getId(icon).toString()));
 
-        final var button = buttonContainer.childById(ButtonWidget.class, "tab-button");
+        final var button = buttonContainer.childById(ButtonComponent.class, "tab-button");
         this.tabButtons.add(button);
 
         button.active = active;
