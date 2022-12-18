@@ -6,6 +6,7 @@ import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationContext
 import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.glisco.numismaticoverhaul.villagers.json.adapters.*;
 import com.google.gson.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
@@ -13,7 +14,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +75,7 @@ public class VillagerTradesHandler {
             if (professionId.getPath().equals("wandering_trader")) {
                 deserializeTrades(jsonRoot, NumismaticVillagerTradesRegistry::registerWanderingTraderTrade);
             } else {
-                VillagerProfession profession = Registry.VILLAGER_PROFESSION.getOrEmpty(professionId).orElseThrow(() -> new DeserializationException("Invalid profession"));
+                VillagerProfession profession = Registries.VILLAGER_PROFESSION.getOrEmpty(professionId).orElseThrow(() -> new DeserializationException("Invalid profession"));
                 deserializeTrades(jsonRoot, (integer, factory) -> NumismaticVillagerTradesRegistry.registerVillagerTrade(profession, integer, factory));
             }
         } catch (DeserializationException e) {

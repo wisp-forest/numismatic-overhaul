@@ -12,13 +12,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.map.MapIcon;
 import net.minecraft.item.map.MapState;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.world.gen.structure.StructureKeys;
@@ -61,7 +61,7 @@ public class SellMapAdapter extends TradeJsonAdapter {
         public TradeOffer create(Entity entity, Random random) {
             if (!(entity.world instanceof ServerWorld serverWorld)) return null;
 
-            final var registry = serverWorld.getRegistryManager().get(Registry.STRUCTURE_KEY);
+            final var registry = serverWorld.getRegistryManager().get(RegistryKeys.STRUCTURE);
             final var feature = RegistryAccess.getEntry(registry, this.structureId);
 
             if (feature == null || feature.getKey().isEmpty()) {

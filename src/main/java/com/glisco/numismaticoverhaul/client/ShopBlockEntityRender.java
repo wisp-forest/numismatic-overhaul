@@ -11,7 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntity> {
 
@@ -37,7 +37,7 @@ public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntit
         float scale = isBlockItem ? 0.95f : 0.85f;
         matrices.scale(scale, scale, scale);
 
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((float) (System.currentTimeMillis() / 20d % 360d)));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) (System.currentTimeMillis() / 20d % 360d)));
 
         client.getItemRenderer().renderItem(toRender, ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 

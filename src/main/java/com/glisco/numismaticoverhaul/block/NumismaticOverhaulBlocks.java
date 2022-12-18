@@ -2,7 +2,9 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
+import io.wispforest.owo.itemgroup.OwoItemSettings;
 import io.wispforest.owo.registration.reflect.AutoRegistryContainer;
+import io.wispforest.owo.registration.reflect.BlockEntityRegistryContainer;
 import io.wispforest.owo.registration.reflect.BlockRegistryContainer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -19,7 +21,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,14 +37,14 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
     @Override
     public BlockItem createBlockItem(Block block, String identifier) {
         if (block == INEXHAUSTIBLE_SHOP) {
-            return new BlockItem(block, new Item.Settings().group(NumismaticOverhaul.NUMISMATIC_GROUP).rarity(Rarity.EPIC)) {
+            return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP).rarity(Rarity.EPIC)) {
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
                     tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip").formatted(Formatting.GRAY));
                 }
             };
         } else if (block == PIGGY_BANK) {
-            return new BlockItem(block, new FabricItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP).equipmentSlot(stack -> EquipmentSlot.HEAD)) {
+            return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP).equipmentSlot(stack -> EquipmentSlot.HEAD)) {
                 @Override
                 public Optional<TooltipData> getTooltipData(ItemStack stack) {
                     if (stack.hasNbt() && stack.getNbt().contains("BlockEntityTag")) {
@@ -58,26 +60,15 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
             };
         }
 
-        return new BlockItem(block, new Item.Settings().group(NumismaticOverhaul.NUMISMATIC_GROUP));
+        return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP));
     }
 
-    public static final class Entities implements AutoRegistryContainer<BlockEntityType<?>> {
+    public static final class Entities implements BlockEntityRegistryContainer {
 
         public static final BlockEntityType<ShopBlockEntity> SHOP =
                 FabricBlockEntityTypeBuilder.create(ShopBlockEntity::new, NumismaticOverhaulBlocks.SHOP, NumismaticOverhaulBlocks.INEXHAUSTIBLE_SHOP).build();
 
         public static final BlockEntityType<PiggyBankBlockEntity> PIGGY_BANK =
                 FabricBlockEntityTypeBuilder.create(PiggyBankBlockEntity::new, NumismaticOverhaulBlocks.PIGGY_BANK).build();
-
-        @Override
-        public Registry<BlockEntityType<?>> getRegistry() {
-            return Registry.BLOCK_ENTITY_TYPE;
-        }
-
-        @Override
-        public Class<BlockEntityType<?>> getTargetFieldType() {
-            //noinspection unchecked
-            return (Class<BlockEntityType<?>>) (Object) BlockEntityType.class;
-        }
     }
 }

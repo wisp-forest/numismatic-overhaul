@@ -33,7 +33,7 @@ public class PiggyBankScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack quickMove(PlayerEntity player, int index) {
         return ScreenUtils.handleSlotTransfer(this, index, 3);
     }
 

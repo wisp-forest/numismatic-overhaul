@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +56,7 @@ public class SellPotionContainerItemAdapter extends TradeJsonAdapter {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            List<Potion> list = Registry.POTION.stream().filter((potion) -> !potion.getEffects().isEmpty() && BrewingRecipeRegistry.isBrewable(potion)).toList();
+            List<Potion> list = Registries.POTION.stream().filter((potion) -> !potion.getEffects().isEmpty() && BrewingRecipeRegistry.isBrewable(potion)).toList();
 
             Potion potion = list.get(random.nextInt(list.size()));
             ItemStack itemStack2 = PotionUtil.setPotion(containerItem.copy(), potion);

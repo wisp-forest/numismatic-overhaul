@@ -36,7 +36,6 @@ public class AlwaysOnTopTexturedButtonWidget extends TexturedButtonWidget {
 
         RenderSystem.disableDepthTest();
 
-        drawTexture(matrices, this.x, this.y, this.u, i, this.width, this.height);
-        if (this.isHovered()) this.renderTooltip(matrices, mouseX, mouseY);
+        drawTexture(matrices, this.getX(), this.getY(), this.u, i, this.width, this.height);
     }
 }

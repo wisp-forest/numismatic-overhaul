@@ -9,12 +9,13 @@ import com.google.gson.JsonObject;
 import io.wispforest.owo.ops.TextOps;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +55,7 @@ public class SellTagAdapter extends TradeJsonAdapter {
         }
 
         public TradeOffer create(Entity entity, Random random) {
-            final var entries = Registry.ITEM.getEntryList(TagKey.of(Registry.ITEM_KEY, sellTag))
+            final var entries = Registries.ITEM.getEntryList(TagKey.of(RegistryKeys.ITEM, sellTag))
                     .orElse(null);
 
             if (entries == null) {

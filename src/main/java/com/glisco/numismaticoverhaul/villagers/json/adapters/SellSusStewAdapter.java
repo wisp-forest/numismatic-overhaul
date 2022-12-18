@@ -9,10 +9,11 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SuspiciousStewItem;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +30,7 @@ public class SellSusStewAdapter extends TradeJsonAdapter {
         final int duration = JsonHelper.getInt(json, "duration", 100);
 
         final var effectId = new Identifier(JsonHelper.getString(json, "effect_id"));
-        final var effect = Registry.STATUS_EFFECT.getOrEmpty(effectId)
+        final var effect = Registries.STATUS_EFFECT.getOrEmpty(effectId)
                 .orElseThrow(() -> new DeserializationException("Unknown status effect '" + effectId + "'"));
 
         return new Factory(effect, price, duration, villager_experience, price_multiplier, max_uses);

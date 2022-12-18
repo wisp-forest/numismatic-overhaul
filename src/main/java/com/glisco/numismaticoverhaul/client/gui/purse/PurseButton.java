@@ -6,6 +6,7 @@ import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,17 +28,21 @@ public class PurseButton extends TexturedButtonWidget {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (MinecraftClient.getInstance().player.isSpectator()) return false;
-        return super.mouseClicked(mouseX, mouseY, button);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
+        if (this.hovered) {
+            CurrencyTooltipRenderer.renderTooltip(
+                    currencyStorage.getValue(),
+                    matrices, parent,
+                    TOOLTIP_TITLE,
+                    this.getX() + 14, this.getY() + 5
+            );
+        }
     }
 
     @Override
-    public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY) {
-        CurrencyTooltipRenderer.renderTooltip(
-                currencyStorage.getValue(),
-                matrices, parent,
-                TOOLTIP_TITLE,
-                x + 14, y + 5);
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (MinecraftClient.getInstance().player.isSpectator()) return false;
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 }

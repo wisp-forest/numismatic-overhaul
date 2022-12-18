@@ -30,7 +30,7 @@
   "depends": {
     "fabricloader": ">=0.10.8",
     "fabric": "*",
-    "minecraft": ">=1.19",
+    "minecraft": ">=1.19.3",
     "cardinal-components-base": "*",
     "cardinal-components-entity": "*",
     "owo": ">=0.9.2"

@@ -22,9 +22,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -199,7 +200,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
     }
 
     private FlowLayout makeTabButton(Item icon, boolean active, Consumer<ButtonComponent> onPress) {
-        var buttonContainer = this.model.expandTemplate(FlowLayout.class, "tab-button", Map.of("icon-item", Registry.ITEM.getId(icon).toString()));
+        var buttonContainer = this.model.expandTemplate(FlowLayout.class, "tab-button", Map.of("icon-item", Registries.ITEM.getId(icon).toString()));
 
         final var button = buttonContainer.childById(ButtonComponent.class, "tab-button");
         this.tabButtons.add(button);

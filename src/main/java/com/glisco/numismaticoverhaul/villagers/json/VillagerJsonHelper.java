@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class VillagerJsonHelper {
 
@@ -89,7 +89,7 @@ public class VillagerJsonHelper {
     }
 
     public static Item getItemFromID(String id) {
-        return Registry.ITEM.getOrEmpty(Identifier.tryParse(id)).orElseThrow(() -> new DeserializationException("Invalid item: \"" + id + "\""));
+        return Registries.ITEM.getOrEmpty(Identifier.tryParse(id)).orElseThrow(() -> new DeserializationException("Invalid item: \"" + id + "\""));
     }
 
     public static <T> T deepCopy(T object, Class<T> type) {

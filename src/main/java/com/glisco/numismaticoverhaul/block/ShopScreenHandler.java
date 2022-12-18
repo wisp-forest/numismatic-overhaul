@@ -168,7 +168,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());
     }
 
