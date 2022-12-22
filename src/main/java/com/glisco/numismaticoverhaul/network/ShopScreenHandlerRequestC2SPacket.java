@@ -21,11 +21,12 @@ public record ShopScreenHandlerRequestC2SPacket(Action action, long value) {
             case DELETE_OFFER -> shopHandler.deleteOffer();
             case EXTRACT_CURRENCY -> shopHandler.extractCurrency();
             case TOGGLE_TRANSFER -> shopHandler.toggleTransfer();
+            case CLICK_BUFFER -> shopHandler.handleBufferClick();
         }
     }
 
     public enum Action {
-        CREATE_OFFER, DELETE_OFFER, LOAD_OFFER, EXTRACT_CURRENCY, TOGGLE_TRANSFER
+        CREATE_OFFER, DELETE_OFFER, LOAD_OFFER, EXTRACT_CURRENCY, TOGGLE_TRANSFER, CLICK_BUFFER
     }
 
 }

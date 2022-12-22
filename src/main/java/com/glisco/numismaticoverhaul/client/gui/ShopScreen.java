@@ -15,9 +15,14 @@ import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.ScrollContainer;
 import io.wispforest.owo.ui.core.Component;
+import io.wispforest.owo.ui.parsing.UIParsing;
 import io.wispforest.owo.ui.util.UISounds;
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,12 +30,12 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenHandler> {
@@ -69,6 +74,14 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             UISounds.playInteractionSound();
             return true;
         });
+    }
+
+    @Override
+    protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int button) {
+        var buffer = this.component(ItemComponent.class, "trade-buffer");
+        if (buffer != null && buffer.isInBoundingBox(mouseX, mouseY)) return false;
+
+        return super.isClickOutsideBounds(mouseX, mouseY, left, top, button);
     }
 
     public void update(UpdateShopScreenS2CPacket data) {
@@ -127,6 +140,13 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             var submitButton = editWidget.childById(ButtonComponent.class, "submit-button");
             var deleteButton = editWidget.childById(ButtonComponent.class, "delete-button");
 
+            var tradeBuffer = editWidget.childById(ItemComponent.class, "trade-buffer");
+            tradeBuffer.showOverlay(true);
+            tradeBuffer.mouseDown().subscribe((mouseX, mouseY, button) -> {
+                this.handler.handleBufferClick();
+                return true;
+            });
+
             var priceField = editWidget.childById(TextFieldWidget.class, "price-field");
             priceField.setMaxLength(7);
             priceField.setTextPredicate(s -> s.matches("\\d*"));
@@ -145,13 +165,31 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             this.priceDisplay = priceField::setText;
             this.afterDataUpdate = () -> {
                 var priceText = priceField.getText();
-                boolean hasOffer = this.hasOfferFor(this.handler.getBufferStack());
+                var bufferStack = this.handler.getBufferStack();
+                boolean hasOffer = this.hasOfferFor(bufferStack);
 
                 submitButton.active = !priceText.isBlank()
                         && Integer.parseInt(priceText) > 0
-                        && !this.handler.getBufferStack().isEmpty()
+                        && !bufferStack.isEmpty()
                         && (this.offers.size() < 24 || hasOffer);
                 deleteButton.active = hasOffer;
+
+                tradeBuffer.stack(bufferStack);
+                if (!bufferStack.isEmpty()) {
+                    var tooltip = new ArrayList<TooltipComponent>();
+                    bufferStack.getTooltip(this.client.player, this.client.options.advancedItemTooltips ? TooltipContext.ADVANCED : TooltipContext.BASIC)
+                            .stream()
+                            .map(Text::asOrderedText)
+                            .map(TooltipComponent::of)
+                            .forEach(tooltip::add);
+                    bufferStack.getTooltipData().ifPresent(data -> {
+                        var fabricComponent = TooltipComponentCallback.EVENT.invoker().getComponent(data);
+                        tooltip.add(1, Objects.requireNonNullElseGet(fabricComponent, () -> TooltipComponent.of(data)));
+                    });
+                    tradeBuffer.tooltip(tooltip);
+                } else {
+                    tradeBuffer.tooltip((List<TooltipComponent>) null);
+                }
             };
 
             this.component(FlowLayout.class, "right-column").child(0, editWidget);
@@ -217,5 +255,23 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
 
     public int tab() {
         return this.tab;
+    }
+
+    public static class FakeSlotComponent extends ItemComponent {
+
+        protected FakeSlotComponent(ItemStack stack) {
+            super(stack);
+        }
+
+        @Override
+        public boolean shouldDrawTooltip(double mouseX, double mouseY) {
+            //noinspection DataFlowIssue
+            var screenHandler = MinecraftClient.getInstance().player.currentScreenHandler;
+            return (screenHandler == null || screenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
+        }
+    }
+
+    static {
+        UIParsing.registerFactory("numismatic.fake-slot", element -> new FakeSlotComponent(ItemStack.EMPTY));
     }
 }

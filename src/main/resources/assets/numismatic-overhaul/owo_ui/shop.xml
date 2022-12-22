@@ -204,6 +204,11 @@
                 <children>
                     <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" region-width="98" region-height="54" u="15" v="169"/>
 
+                    <numismatic.fake-slot id="trade-buffer">
+                        <show-overlay>true</show-overlay>
+                        <positioning type="absolute">8,15</positioning>
+                    </numismatic.fake-slot>
+
                     <button id="submit-button">
                         <renderer>
                             <texture texture="numismatic-overhaul:textures/gui/shop_gui.png" u="15" v="223" texture-width="256" texture-height="256"/>
