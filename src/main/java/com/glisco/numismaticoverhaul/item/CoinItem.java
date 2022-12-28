@@ -47,8 +47,8 @@ public class CoinItem extends Item implements CurrencyItem {
         if (!slot.canInsert(stack)) return false;
 
         slot.setStack(stack);
-
         cursorStackReference.set(ItemStack.EMPTY);
+
         return true;
     }
 

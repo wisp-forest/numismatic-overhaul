@@ -111,8 +111,10 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
             for (int i = 0; i < clickedValues.length; i++) clickedValues[i] += otherValues[i];
 
-            slot.setStack(MoneyBagItem.createCombined(clickedValues));
+            final var stack = MoneyBagItem.createCombined(clickedValues);
+            if (!slot.canInsert(stack)) return false;
 
+            slot.setStack(stack);
             cursorStackReference.set(ItemStack.EMPTY);
         }
 
