@@ -98,7 +98,7 @@ public class CurrencyHelper {
     }
 
     public static long[] getFromNbt(NbtCompound nbt, String key) {
-        if (nbt.contains(key, NbtElement.LONG_ARRAY_TYPE)) return nbt.getLongArray(key);
+        if (nbt.contains(key, NbtElement.LONG_ARRAY_TYPE)) return nbt.getLongArray(key).clone();
         if (!nbt.contains(key, NbtElement.INT_ARRAY_TYPE)) return new long[0];
 
         var intArray = nbt.getIntArray(key);
