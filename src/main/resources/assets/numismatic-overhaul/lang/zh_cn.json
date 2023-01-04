@@ -1,0 +1,61 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "铜币",
+  "item.numismatic-overhaul.silver_coin": "银币",
+  "item.numismatic-overhaul.gold_coin": "金币",
+  "item.numismatic-overhaul.money_bag": "钱袋",
+  "block.numismatic-overhaul.shop": "商店",
+  "block.numismatic-overhaul.inexhaustible_shop": "用之不竭的商店",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "仅仅只是个创意——永不缺货",
+  "block.numismatic-overhaul.piggy_bank": "储钱罐",
+  "gui.numismatic-overhaul.shop.price": "价格",
+  "gui.numismatic-overhaul.shop.inventory_title": "商店库存",
+  "gui.numismatic-overhaul.shop.merchant_title": "商店",
+  "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
+    "漏斗",
+    {
+      "text": " 可以 ",
+      "color": "#28FFBF"
+    },
+    "将物品放进该商店"
+  ],
+  "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
+    "漏斗",
+    {
+      "text": " 不可以 ",
+      "color": "#EB1D36"
+    },
+    "将物品放进该商店"
+  ],
+  "gui.numismatic-overhaul.purse_title": "钱袋",
+  "numismatic-overhaul.empty": "空的",
+  "filled_map.end_city": "终级探索者地图",
+  "currency.numismatic-overhaul.bronze": "铜",
+  "currency.numismatic-overhaul.silver": "银",
+  "currency.numismatic-overhaul.gold": "金",
+
+  "itemGroup.numismatic-overhaul.main": "钱币革新",
+  "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
+  "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",
+  "itemGroup.numismatic-overhaul.main.button.github": "GitHub",
+  "itemGroup.numismatic-overhaul.main.button.discord": "Discord",
+
+  "text.config.numismatic-overhaul.title": "钱币革新配置",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "启用村民交易",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "启用对MCA的兼容",
+  "text.config.numismatic-overhaul.option.pursePositionX": "钱袋的X轴坐标",
+  "text.config.numismatic-overhaul.option.pursePositionY": "钱袋的Y轴坐标",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "在战利品箱中生成货币",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "战利品的生成",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "在沙漠神庙生成的战利品最低为",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "在沙漠神庙生成的战利品最大为",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "在地牢生成的战利品最低为",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "在地牢生成的战利品最大为",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "在“结构”生成的战利品最低为",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "在“结构”生成的战利品最大为",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "在要塞图书馆生成的战利品最低为",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "在要塞图书馆生成的战利品最大为",
+
+  "gamerule.moneyDropPercentage": "死亡时掉落货币的百分比",
+  "gamerule.moneyDropPercentage.description": "在指令被关闭时，可以控制玩家死亡时掉落货币的百分比"
+}
