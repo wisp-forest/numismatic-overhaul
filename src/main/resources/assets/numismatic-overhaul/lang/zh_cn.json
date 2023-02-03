@@ -1,0 +1,35 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "铜币",
+  "item.numismatic-overhaul.silver_coin": "银币",
+  "item.numismatic-overhaul.gold_coin": "金币",
+  "item.numismatic-overhaul.money_bag": "钱袋",
+  "block.numismatic-overhaul.shop": "商店",
+  "block.numismatic-overhaul.inexhaustible_shop": "无尽商店",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "仅限创造模式 - 取之不尽的商店",
+  "block.numismatic-overhaul.piggy_bank": "猪猪存钱罐",
+  "gui.numismatic-overhaul.shop.price": "价格",
+  "gui.numismatic-overhaul.shop.inventory_title": "商店库存",
+  "gui.numismatic-overhaul.shop.merchant_title": "商店",
+  "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
+    "漏斗",
+    {
+      "text": "可以",
+      "color": "#28FFBF"
+    },
+    "向\n商店输送物品"
+  ],
+  "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
+    "漏斗",
+    {
+      "text": "不能",
+      "color": "#EB1D36"
+    },
+    "向\n商店输送物品"
+  ],
+  "gui.numismatic-overhaul.purse_title": "钱包",
+  "numismatic-overhaul.empty": "空",
+  "filled_map.end_city": "末地探险家地图",
+  "currency.numismatic-overhaul.bronze": "铜币",
+  "currency.numismatic-overhaul.silver": "银币",
+  "currency.numismatic-overhaul.gold": "金币",
+}
