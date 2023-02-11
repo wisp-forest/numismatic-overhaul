@@ -52,8 +52,11 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     //Incredibly beautiful lambda mixin
     @Inject(method = "method_19891", at = @At("TAIL"))
     private void updateWidgetPosition(ButtonWidget button, CallbackInfo ci) {
-        this.numismatic$button.setPos(this.x + 158, this.y + 6);
-        this.numismatic$purse = new PurseWidget(this.x + 129, this.y + 20, client, ModComponents.CURRENCY.get(client.player));
+        int purseX = NumismaticOverhaul.CONFIG.pursePositionX();
+        int purseY = NumismaticOverhaul.CONFIG.pursePositionY();
+
+        this.numismatic$purse = new PurseWidget(this.x + purseX, this.y + purseY, client, ModComponents.CURRENCY.get(client.player));
+        this.numismatic$button.setPos(this.x + purseX + 29, this.y + purseY - 14);
     }
 
     @Inject(method = "render", at = @At("TAIL"))
