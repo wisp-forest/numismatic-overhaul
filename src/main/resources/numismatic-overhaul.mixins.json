@@ -7,7 +7,6 @@
   "mixins": [
     "BundleItemMixin",
     "LivingEntityMixin",
-    "MCAVillageMixin",
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
     "ServerWorldMixin",

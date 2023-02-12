@@ -13,7 +13,8 @@ repositories {
     maven   { url = "https://ladysnake.jfrog.io/artifactory/mods" }
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
-    maven   { url = "https://storage.googleapis.com/devan-maven/" }
+    //maven   { url = "https://storage.googleapis.com/devan-maven/" } // stacc-maven
+    maven   { url = "https://api.modrinth.com/maven/" }
 
     mavenLocal()
 }
@@ -38,7 +39,7 @@ dependencies {
 //    modLocalRuntime "com.ptsmods:devlogin:1.2.1"
 
     // Stacc
-    modLocalRuntime include("net.devtech:Stacc:${project.stacc_version}")
+    modLocalRuntime include("maven.modrinth:stacc-api:${project.stacc_version}")
 
     // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
