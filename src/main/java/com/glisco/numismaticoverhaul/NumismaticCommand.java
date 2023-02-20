@@ -81,7 +81,7 @@ public class NumismaticCommand {
             final long balance = ModComponents.CURRENCY.get(player).getValue();
             totalBalance += balance;
 
-            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ":",
+            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ":" + balance,
                     Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
         }
 

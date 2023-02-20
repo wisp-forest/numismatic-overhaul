@@ -22,7 +22,7 @@ public class VillagerTradesResourceListener extends JsonDataLoader implements Id
 
     public VillagerTradesResourceListener() {
         //Fortnite
-        super(new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create(), "villager_trades");
+        super(new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create(), "villager_trades");
     }
 
     @Override
