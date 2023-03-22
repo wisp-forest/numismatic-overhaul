@@ -35,9 +35,6 @@ dependencies {
     modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     modLocalRuntime "dev.architectury:architectury-fabric:6.2.43"
 
-    // DevLogin
-//    modLocalRuntime "com.ptsmods:devlogin:1.2.1"
-
     // Stacc
     modLocalRuntime include("maven.modrinth:stacc-api:${project.stacc_version}")
 
