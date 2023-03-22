@@ -56,6 +56,12 @@
   "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "Stronghold Library Minimum Loot",
   "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "Stronghold Library Maximum Loot",
 
+  "text.config.numismatic-overhaul.option.moneyMessageLocation": "Money Message Location",
+  "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "Decides where the money notification appears (requires rejoining world to apply)",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "Actionbar",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "Chat",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "Disabled",
+
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }

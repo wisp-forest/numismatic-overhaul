@@ -1,14 +1,21 @@
 package com.glisco.numismaticoverhaul.currency;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.NumismaticOverhaulConfigModel;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import io.wispforest.owo.config.ConfigSynchronizer;
+import io.wispforest.owo.config.Option;
+import io.wispforest.owo.ops.TextOps;
+import io.wispforest.owo.ui.core.Color;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.MutableText;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +62,12 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
     }
 
     /**
-     * Modifies this component, displays a message in the action bar
+     * Modifies this component, displays a message with the change
      *
      * @param value The value to modify by
      */
     public void modify(long value) {
+        // This code can be triggered on both Client and Server, for example via Money Bags
         setValue(this.value + value);
 
         long tempValue = value < 0 ? -value : value;
@@ -67,16 +75,45 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         List<ItemStack> transactionStacks = CurrencyConverter.getAsItemStackList(tempValue);
         if (transactionStacks.isEmpty()) return;
 
-        MutableText message = value < 0 ? Text.literal("§c- ") : Text.literal("§a+ ");
+
+        // Only do text handling on the server, this is to prevent duplicate text if the config is set to display in chat
+        if (provider.world.isClient()) return;
+
+        // Always try to respect the clients option on where they want the message
+        NumismaticOverhaulConfigModel.MoneyMessageLocation moneyMessageLocation;
+
+        moneyMessageLocation = (NumismaticOverhaulConfigModel.MoneyMessageLocation) ConfigSynchronizer.getClientOptions(
+                (ServerPlayerEntity) provider,
+                NumismaticOverhaul.CONFIG.name()).get(new Option.Key("moneyMessageLocation"));
+
+        if (moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.DISABLED) return;
+
+        // Text handling examples:
+        // Actionbar = "+ [12 Silver, 4 Bronze]"
+        // Chat = "numismatic > + [12 Silver, 4 Bronze]"
+        var message = moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.CHAT
+                ?
+                TextOps.withColor("numismatic §> ", Currency.GOLD.getNameColor(), Color.ofFormatting(Formatting.GRAY).argb())
+                :
+                Text.empty();
+
+        message.append(value < 0 ? Text.literal("§c- ") : Text.literal("§a+ "));
         message.append(Text.literal("§7["));
         for (ItemStack stack : transactionStacks) {
             message.append(Text.literal("§b" + stack.getCount() + " "));
-            message.append(Text.translatable("currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase()));
-            if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) message.append(Text.literal(", "));
+            message.append(TextOps.translateWithColor(
+                    "currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase(),
+                    ((CoinItem) stack.getItem()).currency.getNameColor()
+            ));
+
+            if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) {
+                message.append(Text.literal(", "));
+            }
         }
         message.append(Text.literal("§7]"));
 
-        provider.sendMessage(message, true);
+        provider.sendMessage(message, moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.ACTIONBAR);
+
     }
 
     /**

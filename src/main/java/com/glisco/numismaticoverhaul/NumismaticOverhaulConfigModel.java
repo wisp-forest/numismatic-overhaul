@@ -1,10 +1,8 @@
 package com.glisco.numismaticoverhaul;
 
 import blue.endless.jankson.Comment;
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
-import io.wispforest.owo.config.annotation.Nest;
-import io.wispforest.owo.config.annotation.RestartRequired;
+import io.wispforest.owo.config.Option;
+import io.wispforest.owo.config.annotation.*;
 
 @SuppressWarnings("unused")
 @Modmenu(modId = "numismatic-overhaul")
@@ -25,10 +23,15 @@ public class NumismaticOverhaulConfigModel {
     @Comment("Where the purse in your inventory should be placed on the Y axis")
     public int pursePositionY = 20;
 
-    @Nest
-    public LootOptions_ lootOptions = new LootOptions_();
+    @Comment("Where the notification for adding/removing money from the purse should be (Requires rejoining to apply)")
+    @Sync(Option.SyncMode.INFORM_SERVER)
+    public MoneyMessageLocation moneyMessageLocation = MoneyMessageLocation.ACTIONBAR;
 
-    public static class LootOptions_ {
+    @Nest
+    public LootOptions lootOptions = new LootOptions();
+
+
+    public static class LootOptions {
         @Comment("Affects money gained from Dungeon and Mineshaft chests")
         public int desertMinLoot = 300;
         @Comment("Affects money gained from Dungeon and Mineshaft chests")
@@ -44,5 +47,11 @@ public class NumismaticOverhaulConfigModel {
 
         public int strongholdLibraryMinLoot = 2000;
         public int strongholdLibraryMaxLoot = 6000;
+    }
+
+    public enum MoneyMessageLocation {
+        ACTIONBAR,
+        CHAT,
+        DISABLED
     }
 }
