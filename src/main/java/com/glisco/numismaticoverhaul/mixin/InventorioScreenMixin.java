@@ -56,7 +56,7 @@ public abstract class InventorioScreenMixin extends AbstractInventoryScreen<Scre
     private void updateWidgetPosition(RecipeBookWidget recipeBook, int width, int parentWidth, CallbackInfoReturnable<Integer> ci) {
         final int x = ci.getReturnValueI();
         purse = new PurseWidget(x + 134, y + 20, MinecraftClient.getInstance(), ModComponents.CURRENCY.get(MinecraftClient.getInstance().player));
-        button.setPos(x + 163, y + 6);
+        button.setPosition(x + 163, y + 6);
     }
 
     @Inject(method = "method_25394", at = @At("TAIL"), remap = false)

@@ -99,12 +99,22 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
         return mouseX >= x && mouseX <= x + 37 && mouseY >= y && mouseY <= y + 57 && active;
     }
 
+    @Override
+    public void setFocused(boolean focused) {
+        
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
+    }
+
     public void toggleActive() {
         active = !active;
     }
 
     /**
-     * Modifies a value by either 1 or 10 depending on whether or not SHIFT is held
+     * Modifies a value by either 1 or 10 depending on whether SHIFT is held
      * <br>
      * Shortcut for {@link PurseWidget#modifyInBounds(MutableInt, int, boolean, Currency)}
      */

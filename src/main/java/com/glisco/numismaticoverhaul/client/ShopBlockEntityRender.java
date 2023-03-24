@@ -7,7 +7,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -23,13 +23,14 @@ public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntit
     public void render(ShopBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
         var client = MinecraftClient.getInstance();
+        var world = entity.getWorld();
 
-        if (entity.getOffers().isEmpty()) return;
+        if (entity.getOffers().isEmpty() || world == null) return;
 
         ItemStack toRender = entity.getItemToRender();
         boolean isBlockItem = toRender.getItem() instanceof BlockItem;
 
-        int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
+        int lightAbove = WorldRenderer.getLightmapCoordinates(world, entity.getPos().up());
 
         matrices.push();
         matrices.translate(0.5, isBlockItem ? 0.85 : 0.95, 0.5);
@@ -39,7 +40,7 @@ public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntit
 
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) (System.currentTimeMillis() / 20d % 360d)));
 
-        client.getItemRenderer().renderItem(toRender, ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+        client.getItemRenderer().renderItem(toRender, ModelTransformationMode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, world, 0);
 
         matrices.pop();
 

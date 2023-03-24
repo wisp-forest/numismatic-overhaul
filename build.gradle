@@ -16,6 +16,10 @@ repositories {
     //maven   { url = "https://storage.googleapis.com/devan-maven/" } // stacc-maven
     maven   { url = "https://api.modrinth.com/maven/" }
 
+    flatDir {
+        dir('libs')
+    }
+
     mavenLocal()
 }
 
@@ -33,10 +37,10 @@ dependencies {
     // REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
     modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modLocalRuntime "dev.architectury:architectury-fabric:6.2.43"
+    modLocalRuntime "dev.architectury:architectury-fabric:8.1.73"
 
     // Stacc
-    modLocalRuntime include("maven.modrinth:stacc-api:${project.stacc_version}")
+    modLocalRuntime include("net.devtech:stacc:${project.stacc_version}")
 
     // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"

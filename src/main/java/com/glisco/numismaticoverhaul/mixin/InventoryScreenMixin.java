@@ -56,7 +56,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         int purseY = NumismaticOverhaul.CONFIG.pursePositionY();
 
         this.numismatic$purse = new PurseWidget(this.x + purseX, this.y + purseY, client, ModComponents.CURRENCY.get(client.player));
-        this.numismatic$button.setPos(this.x + purseX + 29, this.y + purseY - 14);
+        this.numismatic$button.setPosition(this.x + purseX + 29, this.y + purseY - 14);
     }
 
     @Inject(method = "render", at = @At("TAIL"))

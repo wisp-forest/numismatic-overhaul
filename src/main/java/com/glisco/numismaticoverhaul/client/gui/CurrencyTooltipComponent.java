@@ -57,23 +57,23 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     @Override
     public void drawText(TextRenderer textRenderer, int x, int y, Matrix4f matrix4f, VertexConsumerProvider.Immediate immediate) {
         for (int i = 0; i < text.size(); i++) {
-            textRenderer.draw(text.get(i), x, y + i * 10, -1, true, matrix4f, immediate, false, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+            textRenderer.draw(text.get(i), x, y + i * 10, -1, true, matrix4f, immediate, TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
         }
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer) {
         List<ItemStack> originalCoins = data.original()[0] != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(data.value());
 
         RenderSystem.setShaderTexture(0, new Identifier("textures/gui/container/villager2.png"));
         for (int i = 0; i < originalCoins.size(); i++) {
-            DrawableHelper.drawTexture(matrices, x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, z, 0, 176, 9, 2, 512, 256);
-            itemRenderer.renderGuiItemIcon(ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
+            DrawableHelper.drawTexture(matrices, x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, 0, 176, 9, 2, 512, 256);
+            itemRenderer.renderGuiItemIcon(matrices, ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
         }
 
         for (int i = 0; i < coins.size(); i++) {
-            itemRenderer.renderGuiItemIcon(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
+            itemRenderer.renderGuiItemIcon(matrices, ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
         }
     }
 

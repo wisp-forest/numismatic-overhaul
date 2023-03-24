@@ -22,20 +22,24 @@ public class CurrencyTooltipRenderer {
 
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(value);
 
-        MinecraftClient.getInstance().getItemRenderer().zOffset = 700.0f;
+        // Push the item stack renderers forward, so they do not get obscured by the tooltip background
+        matrices.translate(0, 0, 500);
 
         for (int i = 0; i < coins.size(); i++) {
-            renderStack(matrices, coins.get(i), tooltip, i, x, y, screen.getZOffset() + 1000);
+            renderStack(matrices, coins.get(i), tooltip, i, x, y);
         }
+
+        matrices.translate(0, 0, -500);
 
         if (tooltip.size() == 1) {
             tooltip.add(Text.translatable("numismatic-overhaul.empty").formatted(Formatting.GRAY));
         }
 
+
         screen.renderTooltip(matrices, tooltip, x, y - 15);
     }
 
-    private static void renderStack(MatrixStack matrices, ItemStack stack, List<Text> tooltip, int index, int x, int y, int z) {
+    private static void renderStack(MatrixStack matrices, ItemStack stack, List<Text> tooltip, int index, int x, int y) {
         tooltip.add(createPlaceholder(String.valueOf(stack.getCount())));
 
         ItemStack toRender = stack.copy();
@@ -44,7 +48,7 @@ public class CurrencyTooltipRenderer {
         int localX = x + 8;
         int localY = y - (2 - index) * 10;
 
-        MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(toRender, localX, localY);
+        MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(matrices, toRender, localX, localY);
     }
 
     private static Text createPlaceholder(String text) {
