@@ -13,12 +13,7 @@ repositories {
     maven   { url = "https://ladysnake.jfrog.io/artifactory/mods" }
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
-    //maven   { url = "https://storage.googleapis.com/devan-maven/" } // stacc-maven
     maven   { url = "https://api.modrinth.com/maven/" }
-
-    flatDir {
-        dir('libs')
-    }
 
     mavenLocal()
 }
@@ -40,7 +35,8 @@ dependencies {
     modLocalRuntime "dev.architectury:architectury-fabric:8.1.73"
 
     // Stacc
-    modLocalRuntime include("net.devtech:stacc:${project.stacc_version}")
+    //modLocalRuntime include("maven.modrinth:stacc-api:${project.stacc_version}")
+    modLocalRuntime include("net.devtech:Stacc:1.5.2+pre.1")
 
     // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
