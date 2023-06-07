@@ -61,7 +61,7 @@ public class SellTagAdapter extends TradeJsonAdapter {
             if (entries == null) {
                 NumismaticOverhaul.LOGGER.warn("Could not generate trade for tag '" + sellTag + "', as it does not exist");
 
-                final var player = entity.world.getClosestPlayer(entity, 15);
+                final var player = entity.getWorld().getClosestPlayer(entity, 15);
                 if (player != null) {
                     player.sendMessage(TextOps.withColor("numismatic §> there has been a problem generating trades, check the log for details",
                             Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);

@@ -59,7 +59,7 @@ public class SellMapAdapter extends TradeJsonAdapter {
 
         @Nullable
         public TradeOffer create(Entity entity, Random random) {
-            if (!(entity.world instanceof ServerWorld serverWorld)) return null;
+            if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return null;
 
             final var registry = serverWorld.getRegistryManager().get(RegistryKeys.STRUCTURE);
             final var feature = RegistryAccess.getEntry(registry, this.structureId);

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
@@ -73,7 +74,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     ).reduce(VoxelShapes::union).get();
 
     public PiggyBankBlock() {
-        super(FabricBlockSettings.of(Material.STONE, MapColor.PINK).strength(1.25F, 4.2F));
+        super(FabricBlockSettings.create().strength(1.25F, 4.2F));
     }
 
     @Override
@@ -141,9 +142,9 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     }
 
     @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-        if (builder.getNullable(LootContextParameters.BLOCK_ENTITY) instanceof PiggyBankBlockEntity piggyBank) {
-            var tool = builder.getNullable(LootContextParameters.TOOL);
+    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
+        if (builder.getOptional(LootContextParameters.BLOCK_ENTITY) instanceof PiggyBankBlockEntity piggyBank) {
+            var tool = builder.getOptional(LootContextParameters.TOOL);
             if (tool != null && tool.hasCustomName() && Objects.equals(tool.getName().getString(), "Hammer")) {
 
                 WorldOps.playSound(piggyBank.getWorld(), piggyBank.getPos(), NumismaticOverhaul.PIGGY_BANK_BREAK, SoundCategory.BLOCKS);
@@ -153,7 +154,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
                 piggyBank.inventory().stream().filter(stack -> !stack.isEmpty()).forEach(drops::add);
                 return drops;
             } else {
-                builder.putDrop(new Identifier("contents"), (context, consumer) -> {
+                builder.addDynamicDrop(new Identifier("contents"), (consumer) -> {
                     piggyBank.inventory().forEach(consumer);
                 });
             }

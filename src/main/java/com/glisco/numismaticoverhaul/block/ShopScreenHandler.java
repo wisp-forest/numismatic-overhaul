@@ -43,7 +43,7 @@ public class ShopScreenHandler extends ScreenHandler {
         this.shopInventory = shopInventory;
         this.owner = playerInventory.player;
 
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             this.shop = (ShopBlockEntity) shopInventory;
             this.offers = shop.getOffers();
         } else {
@@ -59,7 +59,7 @@ public class ShopScreenHandler extends ScreenHandler {
 
         this.tradeEditBuffer = this.createProperty(ItemStack.class, ItemStack.EMPTY);
         this.tradeEditBuffer.observe(stack -> {
-            if (this.owner.world.isClient && MinecraftClient.getInstance().currentScreen instanceof ShopScreen screen) {
+            if (this.owner.getWorld().isClient && MinecraftClient.getInstance().currentScreen instanceof ShopScreen screen) {
                 screen.afterDataUpdate();
             }
         });
@@ -74,7 +74,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void loadOffer(long index) {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             if (index > this.offers.size() - 1) {
                 NumismaticOverhaul.LOGGER.error("Player {} attempted to load invalid trade at index {}", owner.getName(), index);
                 return;
@@ -87,7 +87,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void createOffer(long price) {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             final var stack = this.tradeEditBuffer.get();
             if (stack.isEmpty()) return;
 
@@ -99,7 +99,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void extractCurrency() {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             ModComponents.CURRENCY.get(owner).modify(shop.getStoredCurrency());
             this.shop.setStoredCurrency(0);
             this.updateClient();
@@ -109,7 +109,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void deleteOffer() {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             this.shop.deleteOffer(this.tradeEditBuffer.get());
             this.updateClient();
         } else {
@@ -118,7 +118,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void toggleTransfer() {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             this.shop.toggleTransfer();
             this.updateClient();
         } else {
@@ -127,7 +127,7 @@ public class ShopScreenHandler extends ScreenHandler {
     }
 
     public void handleBufferClick() {
-        if (!this.owner.world.isClient) {
+        if (!this.owner.getWorld().isClient) {
             this.tradeEditBuffer.set(this.getCursorStack().copy());
         } else {
             NumismaticOverhaul.CHANNEL.clientHandle().send(new ShopScreenHandlerRequestC2SPacket(ShopScreenHandlerRequestC2SPacket.Action.CLICK_BUFFER));

@@ -5,10 +5,9 @@ import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipRenderer;
 import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -28,12 +27,12 @@ public class PurseButton extends TexturedButtonWidget {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         if (this.hovered) {
             CurrencyTooltipRenderer.renderTooltip(
                     currencyStorage.getValue(),
-                    matrices, parent,
+                    context,
                     TOOLTIP_TITLE,
                     this.getX() + 14, this.getY() + 5
             );

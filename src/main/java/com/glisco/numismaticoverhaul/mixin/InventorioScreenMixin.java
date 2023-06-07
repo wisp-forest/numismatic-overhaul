@@ -6,6 +6,7 @@ import com.glisco.numismaticoverhaul.client.gui.purse.PurseButton;
 import com.glisco.numismaticoverhaul.client.gui.purse.PurseWidget;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
@@ -60,8 +61,8 @@ public abstract class InventorioScreenMixin extends AbstractInventoryScreen<Scre
     }
 
     @Inject(method = "method_25394", at = @At("TAIL"), remap = false)
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        purse.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        purse.render(context, mouseX, mouseY, delta);
     }
 
     @Inject(method = "method_25402", at = @At("HEAD"), cancellable = true, remap = false)
@@ -70,8 +71,8 @@ public abstract class InventorioScreenMixin extends AbstractInventoryScreen<Scre
     }
 
     @Override
-    protected void drawMouseoverTooltip(MatrixStack matrices, int x, int y) {
+    protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
         if (purse.isMouseOver(x, y)) return;
-        super.drawMouseoverTooltip(matrices, x, y);
+        super.drawMouseoverTooltip(context, x, y);
     }
 }

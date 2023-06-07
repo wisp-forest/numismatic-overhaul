@@ -40,7 +40,7 @@ public class ShopBlock extends BlockWithEntity {
     private final boolean inexhaustible;
 
     public ShopBlock(boolean inexhaustible) {
-        super(FabricBlockSettings.of(Material.STONE).nonOpaque().hardness(5.0f));
+        super(FabricBlockSettings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
     }
 

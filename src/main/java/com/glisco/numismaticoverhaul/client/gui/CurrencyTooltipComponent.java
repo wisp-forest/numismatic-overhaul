@@ -2,15 +2,12 @@ package com.glisco.numismaticoverhaul.client.gui;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.wispforest.owo.ops.ItemOps;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -62,18 +59,17 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
         List<ItemStack> originalCoins = data.original()[0] != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(data.value());
 
-        RenderSystem.setShaderTexture(0, new Identifier("textures/gui/container/villager2.png"));
         for (int i = 0; i < originalCoins.size(); i++) {
-            DrawableHelper.drawTexture(matrices, x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, 0, 176, 9, 2, 512, 256);
-            itemRenderer.renderGuiItemIcon(matrices, ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
+            context.drawTexture(new Identifier("textures/gui/container/villager2.png"), x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, 0, 176, 9, 2, 512, 256);
+            context.drawItemWithoutEntity(ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
         }
 
         for (int i = 0; i < coins.size(); i++) {
-            itemRenderer.renderGuiItemIcon(matrices, ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
+            context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
         }
     }
 

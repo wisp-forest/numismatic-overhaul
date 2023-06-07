@@ -249,10 +249,6 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         return buttonContainer;
     }
 
-    private <C extends Component> C component(Class<C> componentClass, String id) {
-        return this.uiAdapter.rootComponent.childById(componentClass, id);
-    }
-
     public int tab() {
         return this.tab;
     }

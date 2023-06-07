@@ -56,7 +56,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         this.value = value;
 
         //Update Client
-        if (!provider.world.isClient) {
+        if (!provider.getWorld().isClient) {
             ModComponents.CURRENCY.sync(this.provider);
         }
     }
@@ -77,14 +77,14 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
 
 
         // Only do text handling on the server, this is to prevent duplicate text if the config is set to display in chat
-        if (provider.world.isClient()) return;
+        if (provider.getWorld().isClient()) return;
 
         // Always try to respect the clients option on where they want the message
         NumismaticOverhaulConfigModel.MoneyMessageLocation moneyMessageLocation;
 
         moneyMessageLocation = (NumismaticOverhaulConfigModel.MoneyMessageLocation) ConfigSynchronizer.getClientOptions(
                 (ServerPlayerEntity) provider,
-                NumismaticOverhaul.CONFIG.name()).get(new Option.Key("moneyMessageLocation"));
+                NumismaticOverhaul.CONFIG).get(NumismaticOverhaul.CONFIG.keys.moneyMessageLocation);
 
         if (moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.DISABLED) return;
 

@@ -8,6 +8,7 @@ import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
@@ -32,8 +33,8 @@ public class PiggyBankScreen extends BaseUIModelHandledScreen<FlowLayout, PiggyB
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
         this.bronzeHint.sizing(this.handler.getSlot(0).hasStack() ? Sizing.fixed(0) : Sizing.fixed(16));
         this.silverHint.sizing(this.handler.getSlot(1).hasStack() ? Sizing.fixed(0) : Sizing.fixed(16));

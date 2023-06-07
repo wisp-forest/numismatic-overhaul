@@ -53,7 +53,8 @@ public class NumismaticCommand {
             serverWorth += OfflineDataLookup.get(offlineId).getCompound("cardinal_components").getCompound("numismatic-overhaul:currency").getLong("Value");
         }
 
-        context.getSource().sendFeedback(TextOps.withColor("numismatic §> server net worth: " + serverWorth,
+        long finalServerWorth = serverWorth;
+        context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> server net worth: " + finalServerWorth,
                 Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
 
         return (int) serverWorth;
@@ -66,7 +67,7 @@ public class NumismaticCommand {
         for (var player : players) {
             //noinspection deprecation
             ModComponents.CURRENCY.get(player).setValue(value);
-            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + value,
+            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + value,
                     Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
         }
 
@@ -81,7 +82,7 @@ public class NumismaticCommand {
             final long balance = ModComponents.CURRENCY.get(player).getValue();
             totalBalance += balance;
 
-            context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ":" + balance,
+            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ": " + balance,
                     Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
         }
 
@@ -101,7 +102,7 @@ public class NumismaticCommand {
                 currencyComponent.silentModify(amount * multiplier);
                 lastValue = currencyComponent.getValue();
 
-                context.getSource().sendFeedback(TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + currencyComponent.getValue(),
+                context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + currencyComponent.getValue(),
                         Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
             }
 

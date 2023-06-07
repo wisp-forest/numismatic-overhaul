@@ -17,7 +17,7 @@ public class ServerPlayerEntityMixin {
     public void onServerDeath(CallbackInfo ci) {
         var player = (PlayerEntity) (Object) this;
 
-        final var world = player.world;
+        final var world = player.getWorld();
         if (world.isClient) return;
 
         final var component = ModComponents.CURRENCY.get(player);

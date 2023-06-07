@@ -8,14 +8,13 @@ import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -23,7 +22,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurseWidget extends DrawableHelper implements Drawable, Element, Selectable {
+public class PurseWidget implements Drawable, Element, Selectable {
 
     public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/purse_widget.png");
     private final MinecraftClient client;
@@ -65,21 +64,20 @@ public class PurseWidget extends DrawableHelper implements Drawable, Element, Se
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         if (!active) return;
 
         //Draw over items in the crafting interface
         RenderSystem.disableDepthTest();
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        drawTexture(matrices, x, y, 0, 0, 37, 60);
+        context.drawTexture(TEXTURE, x, y, 0, 0, 37, 60);
 
         for (ButtonWidget button : buttons) {
-            button.render(matrices, mouseX, mouseY, delta);
+            button.render(context, mouseX, mouseY, delta);
         }
 
-        client.textRenderer.draw(matrices, Text.literal("" + goldAmount), x + 5, y + 12, 16777215);
-        client.textRenderer.draw(matrices, Text.literal("" + silverAmount), x + 5, y + 24, 16777215);
-        client.textRenderer.draw(matrices, Text.literal("" + bronzeAmount), x + 5, y + 36, 16777215);
+        context.drawText(client.textRenderer, Text.literal(String.valueOf(goldAmount)), x + 5, y + 12, 16777215, false);
+        context.drawText(client.textRenderer, Text.literal(String.valueOf(silverAmount)), x + 5, y + 24, 16777215, false);
+        context.drawText(client.textRenderer, Text.literal(String.valueOf(bronzeAmount)), x + 5, y + 36, 16777215, false);
     }
 
     @Override
