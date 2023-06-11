@@ -18,10 +18,10 @@ public class NumismaticOverhaulConfigModel {
     public boolean generateCurrencyInChests = true;
 
     @Comment("Where the purse in your inventory should be placed on the X axis")
-    public int pursePositionX = 129;
+    public int pursePositionX = 27;
 
     @Comment("Where the purse in your inventory should be placed on the Y axis")
-    public int pursePositionY = 20;
+    public int pursePositionY = -28;
 
     @Comment("Where the notification for adding/removing money from the purse should be (Requires rejoining to apply)")
     @Sync(Option.SyncMode.INFORM_SERVER)

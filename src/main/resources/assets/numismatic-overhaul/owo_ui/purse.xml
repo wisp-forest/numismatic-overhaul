@@ -1,0 +1,109 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <templates>
+
+        <!-- always-visible purse button -->
+        <template name="button">
+            <button>
+                <sizing>
+                    <horizontal method="fixed">11</horizontal>
+                    <vertical method="fixed">13</vertical>
+                </sizing>
+
+                <renderer>
+                    <texture texture="numismatic-overhaul:textures/gui/purse_widget.png" u="62" v="0"
+                             texture-width="128" texture-height="64"/>
+                </renderer>
+            </button>
+        </template>
+
+        <!-- user-controlled popup -->
+        <template name="popup">
+            <stack-layout>
+                <children>
+                    <texture texture="numismatic-overhaul:textures/gui/purse_widget.png"
+                             region-width="37" region-height="59" texture-width="128" texture-height="64" />
+
+                    <!-- count labels -->
+                    <flow-layout direction="vertical">
+                        <children>
+                            <label id="gold-count">
+                                <text>0</text>
+                            </label>
+                            <label id="silver-count">
+                                <text>0</text>
+                            </label>
+                            <label id="bronze-count">
+                                <text>0</text>
+                            </label>
+                        </children>
+
+                        <gap>3</gap>
+                        <positioning type="absolute">5,12</positioning>
+                    </flow-layout>
+
+                    <!-- adjustment buttons -->
+                    <flow-layout direction="vertical">
+                        <children>
+                            <template name="adjust-button">
+                                <id>gold-increment</id>
+                                <u>37</u>
+                            </template>
+                            <template name="adjust-button">
+                                <id>gold-decrement</id>
+                                <u>46</u>
+                            </template>
+
+                            <template name="adjust-button">
+                                <id>silver-increment</id>
+                                <u>37</u>
+                            </template>
+                            <template name="adjust-button">
+                                <id>silver-decrement</id>
+                                <u>46</u>
+                            </template>
+
+                            <template name="adjust-button">
+                                <id>bronze-increment</id>
+                                <u>37</u>
+                            </template>
+                            <template name="adjust-button">
+                                <id>bronze-decrement</id>
+                                <u>46</u>
+                            </template>
+                        </children>
+
+                        <gap>1</gap>
+                        <positioning type="absolute">18,10</positioning>
+                    </flow-layout>
+
+                    <button id="extract-button">
+                        <sizing>
+                            <horizontal method="fixed">24</horizontal>
+                            <vertical method="fixed">8</vertical>
+                        </sizing>
+
+                        <positioning type="absolute">3,46</positioning>
+
+                        <renderer>
+                            <texture texture="numismatic-overhaul:textures/gui/purse_widget.png" u="37" v="0" texture-width="128" texture-height="64"/>
+                        </renderer>
+                    </button>
+                </children>
+            </stack-layout>
+        </template>
+
+        <template name="adjust-button">
+            <button id="{{id}}">
+                <sizing>
+                    <horizontal method="fixed">9</horizontal>
+                    <vertical method="fixed">5</vertical>
+                </sizing>
+
+                <renderer>
+                    <texture texture="numismatic-overhaul:textures/gui/purse_widget.png" u="{{u}}" v="24" texture-width="128" texture-height="64"/>
+                </renderer>
+            </button>
+        </template>
+    </templates>
+</owo-ui>

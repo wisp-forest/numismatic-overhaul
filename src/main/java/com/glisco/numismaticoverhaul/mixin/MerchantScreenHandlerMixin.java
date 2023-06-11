@@ -74,9 +74,9 @@ public class MerchantScreenHandlerMixin {
         if (neededCurrency > playerBalance.getValue()) return;
 
         if (neededCurrency <= 0) {
-            CurrencyHelper.deduceFromInventory(player, requiredCurrency);
+            CurrencyHelper.deductFromInventory(player, requiredCurrency);
         } else {
-            CurrencyHelper.deduceFromInventory(player, availableCurrencyInPlayerInventory);
+            CurrencyHelper.deductFromInventory(player, availableCurrencyInPlayerInventory);
             playerBalance.pushTransaction(-neededCurrency);
         }
 

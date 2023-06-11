@@ -53,7 +53,7 @@ public class CurrencyHelper {
         }
     }
 
-    public static boolean deduceFromInventory(PlayerEntity player, long value) {
+    public static boolean deductFromInventory(PlayerEntity player, long value) {
         long presentInInventory = getMoneyInInventory(player, false);
         if (presentInInventory < value) return false;
 

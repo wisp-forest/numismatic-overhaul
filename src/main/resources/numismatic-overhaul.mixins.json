@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "BundleItemMixin",
+    "LayerInstanceAccessor",
     "LivingEntityMixin",
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
@@ -16,8 +17,6 @@
     "VillagerEntityMixin"
   ],
   "client": [
-    "InventorioScreenMixin",
-    "InventoryScreenMixin",
     "MerchantScreenMixin"
   ],
   "injectors": {
