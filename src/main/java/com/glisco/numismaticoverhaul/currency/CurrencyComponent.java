@@ -84,7 +84,8 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
 
         moneyMessageLocation = (NumismaticOverhaulConfigModel.MoneyMessageLocation) ConfigSynchronizer.getClientOptions(
                 (ServerPlayerEntity) provider,
-                NumismaticOverhaul.CONFIG).get(NumismaticOverhaul.CONFIG.keys.moneyMessageLocation);
+                NumismaticOverhaul.CONFIG
+        ).get(NumismaticOverhaul.CONFIG.keys.moneyMessageLocation);
 
         if (moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.DISABLED) return;
 

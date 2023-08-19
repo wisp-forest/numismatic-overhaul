@@ -23,7 +23,7 @@ public class NumismaticOverhaulConfigModel {
     @Comment("Where the purse in your inventory should be placed on the Y axis")
     public int pursePositionY = -28;
 
-    @Comment("Where the notification for adding/removing money from the purse should be (Requires rejoining to apply)")
+    @Comment("Where the notification for adding/removing money from the purse should be (requires rejoining to apply)")
     @Sync(Option.SyncMode.INFORM_SERVER)
     public MoneyMessageLocation moneyMessageLocation = MoneyMessageLocation.ACTIONBAR;
 
@@ -32,9 +32,9 @@ public class NumismaticOverhaulConfigModel {
 
 
     public static class LootOptions {
-        @Comment("Affects money gained from Dungeon and Mineshaft chests")
+        @Comment("Affects money gained from Desert Temple chests")
         public int desertMinLoot = 300;
-        @Comment("Affects money gained from Dungeon and Mineshaft chests")
+        @Comment("Affects money gained from Desert Temple chests")
         public int desertMaxLoot = 1200;
         @Comment("Affects money gained from Dungeon and Mineshaft chests")
         public int dungeonMinLoot = 500;
