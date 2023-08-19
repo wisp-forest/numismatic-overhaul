@@ -93,6 +93,10 @@ public class ShopBlock extends BlockWithEntity {
             return;
         }
 
+        if (itemStack.hasCustomName() && world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
+            shop.setCustomName(itemStack.getName());
+        }
+
         ((ShopBlockEntity) world.getBlockEntity(pos)).setOwner(placer.getUuid());
     }
 

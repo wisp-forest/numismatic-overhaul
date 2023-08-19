@@ -6,7 +6,7 @@ import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-public class ShopBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
+public class ShopBlockEntity extends LockableContainerBlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
 
     private static final int[] SLOTS = IntStream.range(0, 27).toArray();
     private static final int[] NO_SLOTS = new int[0];
@@ -79,7 +79,7 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
     }
 
     @Override
-    public Text getDisplayName() {
+    protected Text getContainerName() {
         return Text.translatable("gui.numismatic-overhaul.shop.inventory_title");
     }
 
@@ -184,10 +184,9 @@ public class ShopBlockEntity extends BlockEntity implements ImplementedInventory
         return offers.get(tradeIndex).getSellStack();
     }
 
-    @Nullable
     @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new ShopScreenHandler(syncId, inv, this);
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        return new ShopScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
