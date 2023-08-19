@@ -69,8 +69,13 @@ public class SellMapAdapter extends TradeJsonAdapter {
                 return null;
             }
 
-            final var result = serverWorld.getChunkManager().getChunkGenerator().locateStructure(serverWorld, RegistryEntryList.of(feature),
-                    entity.getBlockPos(), 1500, true);
+            final var result = serverWorld.getChunkManager().getChunkGenerator().locateStructure(
+                    serverWorld,
+                    RegistryEntryList.of(feature),
+                    entity.getBlockPos(),
+                    1500,
+                    true
+            );
 
             if (result == null) return null;
             final var blockPos = result.getFirst();

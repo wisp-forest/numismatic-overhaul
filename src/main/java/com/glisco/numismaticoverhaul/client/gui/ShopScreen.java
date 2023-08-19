@@ -51,8 +51,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
     private int tab = 0;
 
     public ShopScreen(ShopScreenHandler handler, PlayerInventory inventory, Text title) {
-//        super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.file("../src/main/resources/assets/numismatic-overhaul/owo_ui/shop.xml"));
-        super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.asset(NumismaticOverhaul.id("shop")));
+        super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("shop"));
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
     }
