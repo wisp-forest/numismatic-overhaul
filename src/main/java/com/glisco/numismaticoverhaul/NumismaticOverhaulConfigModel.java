@@ -23,6 +23,12 @@ public class NumismaticOverhaulConfigModel {
     @Comment("Where the purse in your inventory should be placed on the Y axis")
     public int pursePositionY = -28;
 
+    @Comment("Where the purse in your inventory should be placed on the X axis")
+    public int pursePositionCreativeX = 38;
+
+    @Comment("Where the purse in your inventory should be placed on the Y axis")
+    public int pursePositionCreativeY = 4;
+
     @Comment("Where the notification for adding/removing money from the purse should be (requires rejoining to apply)")
     @Sync(Option.SyncMode.INFORM_SERVER)
     public MoneyMessageLocation moneyMessageLocation = MoneyMessageLocation.ACTIONBAR;

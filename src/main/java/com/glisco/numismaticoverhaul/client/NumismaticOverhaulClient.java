@@ -67,8 +67,8 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
                     ((LayerInstanceAccessor) instance).numismatic$getLayoutUpdaters().add(() -> {
                         if (instance.screen.isInventoryTabSelected()) {
                             component.positioning(Positioning.absolute(
-                                    ((HandledScreenAccessor) instance.screen).owo$getRootX() + xOffset + 11,
-                                    ((HandledScreenAccessor) instance.screen).owo$getRootY() + yOffset + 33
+                                    ((HandledScreenAccessor) instance.screen).owo$getRootX() + NumismaticOverhaul.CONFIG.pursePositionCreativeX(),
+                                    ((HandledScreenAccessor) instance.screen).owo$getRootY() + NumismaticOverhaul.CONFIG.pursePositionCreativeY()
                             ));
                         } else {
                             component.positioning(Positioning.absolute(-50, -50));

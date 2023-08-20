@@ -44,6 +44,8 @@
   "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
   "text.config.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
   "text.config.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
+  "text.config.numismatic-overhaul.option.pursePositionCreativeX": "Creative Purse X Coordinate",
+  "text.config.numismatic-overhaul.option.pursePositionCreativeY": "Creative Purse Y Coordinate",
   "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
 
   "text.config.numismatic-overhaul.category.lootOptions": "Loot Generation",
