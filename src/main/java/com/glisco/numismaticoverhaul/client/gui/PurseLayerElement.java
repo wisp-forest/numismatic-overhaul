@@ -89,7 +89,10 @@ public class PurseLayerElement<S extends Screen> implements Consumer<Layer<S, St
         this.alignmentFunction.align(instance, button, x, y);
 
         button.onPress(buttonComponent -> {
-            if (popup.hasParent()) {
+            if (Screen.hasShiftDown()) {
+                NumismaticOverhaul.CHANNEL.clientHandle().send(RequestPurseActionC2SPacket.storeAll());
+            }
+            else if (popup.hasParent()) {
                 popup.remove();
             } else {
                 instance.adapter.rootComponent.child(popup);
