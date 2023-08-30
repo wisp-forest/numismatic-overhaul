@@ -32,4 +32,36 @@
   "currency.numismatic-overhaul.bronze": "铜币",
   "currency.numismatic-overhaul.silver": "银币",
   "currency.numismatic-overhaul.gold": "金币",
+
+  "itemGroup.numismatic-overhaul.main": "钱币革新",
+  "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
+  "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",
+  "itemGroup.numismatic-overhaul.main.button.github": "GitHub",
+  "itemGroup.numismatic-overhaul.main.button.discord": "Discord",
+
+  "text.config.numismatic-overhaul.title": "钱币革新配置",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "启用村民交易",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "启用MCA兼容",
+  "text.config.numismatic-overhaul.option.pursePositionX": "钱包X坐标",
+  "text.config.numismatic-overhaul.option.pursePositionY": "钱包Y坐标",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "在战利品箱中生成货币",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "战利品生成",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "沙漠神庙最少战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "沙漠神庙最多战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "地牢最少战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "地牢最多战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "结构最少战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "结构最多战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "要塞图书馆最少战利品",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "要塞图书馆最多战利品",
+
+  "text.config.numismatic-overhaul.option.moneyMessageLocation": "货币通知位置",
+  "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "决定货币通知出现的位置（需要重新加入世界才能应用）",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "动作栏",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "聊天栏",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "禁用",
+
+  "gamerule.moneyDropPercentage": "货币掉落比例",
+  "gamerule.moneyDropPercentage.description": "当keepInventory为false的情况下，控制玩家死亡时会掉落多少货币"
 }
