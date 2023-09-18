@@ -11,20 +11,20 @@
   "gui.numismatic-overhaul.shop.inventory_title": "Інвентар крамниці",
   "gui.numismatic-overhaul.shop.merchant_title": "Крамниця",
   "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
-    "Hoppers",
+    "Лійки",
     {
-      "text": " can ",
+      "text": " можуть ",
       "color": "#28FFBF"
     },
-    "вставте \nпредметів у цю крамницю"
+    "додавати \nпредмети в цю крамницю"
   ],
   "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
-    "Hoppers",
+    "Лійки",
     {
-      "text": " cannot ",
+      "text": " не можуть ",
       "color": "#EB1D36"
     },
-    "вставте \nпредметів у цю крамницю"
+    "додавати \nпредмети в цю крамницю"
   ],
   "gui.numismatic-overhaul.purse_title": "Гаманець",
   "numismatic-overhaul.empty": "Порожньо",
