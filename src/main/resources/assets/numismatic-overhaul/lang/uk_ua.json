@@ -60,7 +60,7 @@
 
   "text.config.numismatic-overhaul.option.moneyMessageLocation": "Розташування повідомлення про кошти",
   "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "Визначає де з'являється сповіщення про кошти (потребує перезапуск світу, щоб прийняти)",
-  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "Панель дій",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "Інвентар",
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "Чат",
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "Вимкнено",
 
