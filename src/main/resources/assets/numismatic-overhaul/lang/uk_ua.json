@@ -1,0 +1,69 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "Бронзова монета",
+  "item.numismatic-overhaul.silver_coin": "Срібна монета",
+  "item.numismatic-overhaul.gold_coin": "Золота монета",
+  "item.numismatic-overhaul.money_bag": "Мішок із грішми",
+  "block.numismatic-overhaul.shop": "Крамниця",
+  "block.numismatic-overhaul.inexhaustible_shop": "Невичерпна крамниця",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "Лише в творчості — ніколи не вичерпуються запаси",
+  "block.numismatic-overhaul.piggy_bank": "Свинка-скарбничка",
+  "gui.numismatic-overhaul.shop.price": "Ціна",
+  "gui.numismatic-overhaul.shop.inventory_title": "Інвентар крамниці",
+  "gui.numismatic-overhaul.shop.merchant_title": "Крамниця",
+  "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
+    "Hoppers",
+    {
+      "text": " can ",
+      "color": "#28FFBF"
+    },
+    "вставте \nпредметів у цю крамницю"
+  ],
+  "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
+    "Hoppers",
+    {
+      "text": " cannot ",
+      "color": "#EB1D36"
+    },
+    "вставте \nпредметів у цю крамницю"
+  ],
+  "gui.numismatic-overhaul.purse_title": "Гаманець",
+  "numismatic-overhaul.empty": "Порожньо",
+  "filled_map.end_city": "Мапа дослідника Енду",
+  "currency.numismatic-overhaul.bronze": "Бронза",
+  "currency.numismatic-overhaul.silver": "Срібло",
+  "currency.numismatic-overhaul.gold": "Золото",
+
+  "itemGroup.numismatic-overhaul.main": "Numismatic Overhaul",
+  "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
+  "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",
+  "itemGroup.numismatic-overhaul.main.button.github": "GitHub",
+  "itemGroup.numismatic-overhaul.main.button.discord": "Discord",
+
+  "text.config.numismatic-overhaul.title": "Конфігурація Numismatic Overhaul",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "Увімкнути торгівлю селян",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Увімнути сумісність MCA",
+  "text.config.numismatic-overhaul.option.pursePositionX": "Координата X гаманця",
+  "text.config.numismatic-overhaul.option.pursePositionY": "Координата Y гаманця",
+  "text.config.numismatic-overhaul.option.pursePositionCreativeX": "Координата X гаманця творчості",
+  "text.config.numismatic-overhaul.option.pursePositionCreativeY": "Координата Y гаманця творчості",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Генерувати валюту в скринях здобичі",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "Генерація здобичі",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "Мінімальна здобич пустельного храму",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "Максимальна здобич пустельного храму",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "Мінімальна здобич підземелля",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "Максимальна здобич підземелля",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "Мінімальна здобич споруди",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "Максимальна здобич споруди",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "Мінімальна здобич бібліотеки цитаделі",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "Максимальна здобич бібліотеки цитаделі",
+
+  "text.config.numismatic-overhaul.option.moneyMessageLocation": "Розташування повідомлення про кошти",
+  "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "Визначає де з'являється сповіщення про кошти (потребує перезапуск світу, щоб прийняти)",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "Панель дій",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "Чат",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "Вимкнено",
+
+  "gamerule.moneyDropPercentage": "Відсоток падіння грошей",
+  "gamerule.moneyDropPercentage.description": "Контролює як багато падає коштів гравця після смерті, якщо зберігання інвентарю вимкнено"
+}
