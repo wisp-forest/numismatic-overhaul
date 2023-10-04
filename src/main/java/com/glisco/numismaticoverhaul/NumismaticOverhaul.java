@@ -69,7 +69,7 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final ScreenHandlerType<PiggyBankScreenHandler> PIGGY_BANK_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PiggyBankScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
 
     public static final SoundEvent PIGGY_BANK_BREAK = SoundEvent.of(id("piggy_bank_break"));
-    public static final LootPoolEntryType MONEY_BAG_ENTRY = new LootPoolEntryType(new MoneyBagLootEntry.Serializer());
+    public static final LootPoolEntryType MONEY_BAG_ENTRY = new LootPoolEntryType(MoneyBagLootEntry.CODEC);
 
     public static final TagKey<EntityType<?>> THE_BOURGEOISIE = TagKey.of(RegistryKeys.ENTITY_TYPE, id("the_bourgeoisie"));
     public static final TagKey<Block> VERY_HEAVY_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("very_heavy_blocks"));

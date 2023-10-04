@@ -109,7 +109,7 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         }
 
         @Override
-        protected void drawChildren(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta, List<Component> children) {
+        protected void drawChildren(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta, List<? extends Component> children) {
             context.getMatrices().push();
             context.getMatrices().translate(0, 0, 300);
             super.drawChildren(context, mouseX, mouseY, partialTicks, delta, children);

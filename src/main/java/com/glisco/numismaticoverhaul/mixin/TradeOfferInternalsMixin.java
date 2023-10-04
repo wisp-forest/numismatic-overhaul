@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.villagers.data.NumismaticVillagerTradesRegistry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.impl.object.builder.TradeOfferInternals;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
@@ -21,9 +22,9 @@ public class TradeOfferInternalsMixin {
      * @author glisco
      */
     @Overwrite(remap = false)
-    public static synchronized void registerVillagerOffers(VillagerProfession profession, int level, Consumer<List<TradeOffers.Factory>> factory) {
+    public static synchronized void registerVillagerOffers(VillagerProfession profession, int level, TradeOfferHelper.VillagerOffersAdder factory) {
         final var factories = new ArrayList<TradeOffers.Factory>();
-        factory.accept(factories);
+        factory.onRegister(factories, false);
 
         NumismaticVillagerTradesRegistry.registerFabricVillagerTrades(profession, level, factories);
     }

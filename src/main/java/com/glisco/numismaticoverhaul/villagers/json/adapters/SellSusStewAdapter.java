@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.villagers.exceptions.DeserializationException;
 import com.glisco.numismaticoverhaul.villagers.json.TradeJsonAdapter;
 import com.google.gson.JsonObject;
+import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,8 @@ import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 
 public class SellSusStewAdapter extends TradeJsonAdapter {
@@ -57,7 +60,7 @@ public class SellSusStewAdapter extends TradeJsonAdapter {
         @Override
         public TradeOffer create(Entity entity, Random random) {
             ItemStack susStew = new ItemStack(Items.SUSPICIOUS_STEW, 1);
-            SuspiciousStewItem.addEffectToStew(susStew, this.effect, this.duration);
+            SuspiciousStewItem.addEffectsToStew(susStew, List.of(new SuspiciousStewIngredient.StewEffect(this.effect, this.duration)));
 
             return new TradeOffer(CurrencyHelper.getClosest(price), susStew, this.maxUses, this.experience, this.multiplier);
         }

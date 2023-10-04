@@ -63,14 +63,18 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         List<ItemStack> originalCoins = data.original()[0] != -1 ? CurrencyConverter.getAsItemStackList(data.original()) : new ArrayList<>();
         List<ItemStack> coins = CurrencyConverter.getAsItemStackList(data.value());
 
+        context.push().translate(0, 0, 50);
+
         for (int i = 0; i < originalCoins.size(); i++) {
-            context.drawTexture(new Identifier("textures/gui/container/villager2.png"), x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, 0, 176, 9, 2, 512, 256);
+            context.drawGuiTexture(new Identifier("container/villager/discount_strikethrough"), x + (originalCoins.get(i).getCount() > 9 ? 14 : 11), y + 3, 9, 2);
             context.drawItemWithoutEntity(ItemOps.singleCopy(originalCoins.get(i)), x - 4, y - 5 + i * 10);
         }
 
         for (int i = 0; i < coins.size(); i++) {
             context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
         }
+
+        context.pop();
     }
 
     private static Text createPlaceholder(int count) {

@@ -29,7 +29,7 @@ public class NumismaticVillagerTradesRegistry {
         getOrDefaultAndAdd(REMAPPED_FABRIC_WANDERING_TRADER_TRADES, level, new ArrayList<>()).addAll(factories.stream().map(RemappingTradeWrapper::wrap).toList());
     }
 
-    // -- NO datapack trades - this registry is cleared on reload--
+    // -- NO datapack trades - this registry is cleared on reload --
 
     public static void registerVillagerTrade(VillagerProfession profession, int level, TradeOffers.Factory trade) {
         getVillagerTradeList(TRADES_REGISTRY, profession, level).add(trade);
@@ -55,7 +55,7 @@ public class NumismaticVillagerTradesRegistry {
     }
 
     private static List<TradeOffers.Factory> getVillagerTradeList(HashMap<VillagerProfession, Int2ObjectOpenHashMap<List<TradeOffers.Factory>>> registry, VillagerProfession profession, int level) {
-        Int2ObjectOpenHashMap<List<TradeOffers.Factory>> villagerMap = getOrDefaultAndAdd(registry, profession, new Int2ObjectOpenHashMap<>());
+        var villagerMap = getOrDefaultAndAdd(registry, profession, new Int2ObjectOpenHashMap<>());
         return getOrDefaultAndAdd(villagerMap, level, new ArrayList<>());
     }
 
