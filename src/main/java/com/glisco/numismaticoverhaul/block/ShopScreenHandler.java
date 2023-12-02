@@ -31,7 +31,6 @@ public class ShopScreenHandler extends ScreenHandler {
 
     private final List<ShopOffer> offers;
 
-    @Environment(EnvType.SERVER)
     private ShopBlockEntity shop = null;
 
     public ShopScreenHandler(int syncId, PlayerInventory playerInventory) {
