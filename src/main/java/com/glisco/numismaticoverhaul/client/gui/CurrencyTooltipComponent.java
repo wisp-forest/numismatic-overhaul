@@ -30,11 +30,11 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         this.text = new ArrayList<>();
 
         if (data.original()[0] != -1) {
-            CurrencyConverter.getAsItemStackList(data.original()).forEach(stack -> text.add(createPlaceholder(stack.getCount())));
+            CurrencyConverter.getAsItemStackList(data.original()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));
             text.add(Text.of(" "));
         }
 
-        CurrencyConverter.getAsItemStackList(data.value()).forEach(stack -> text.add(createPlaceholder(stack.getCount())));
+        CurrencyConverter.getAsItemStackList(data.value()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     public int getWidth(TextRenderer textRenderer) {
         if (widthCache == -1) {
             widthCache = textRenderer.getWidth(text.stream()
-                    .max(Comparator.comparingInt(textRenderer::getWidth)).orElse(Text.of("")));
+                    .max(Comparator.comparingInt(textRenderer::getWidth)).orElse(Text.of(""))) + 10;
         }
         return widthCache;
     }
@@ -54,7 +54,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     @Override
     public void drawText(TextRenderer textRenderer, int x, int y, Matrix4f matrix4f, VertexConsumerProvider.Immediate immediate) {
         for (int i = 0; i < text.size(); i++) {
-            textRenderer.draw(text.get(i), x, y + i * 10, -1, true, matrix4f, immediate, TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+            textRenderer.draw(text.get(i), x + 10, y + i * 10, -1, true, matrix4f, immediate, TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
         }
     }
 
@@ -75,11 +75,6 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         }
 
         context.pop();
-    }
-
-    private static Text createPlaceholder(int count) {
-        String placeholder = "§7   " + count + " ";
-        return Text.literal(placeholder).formatted(Formatting.GRAY);
     }
 
 }
