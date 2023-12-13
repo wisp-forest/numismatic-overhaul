@@ -57,29 +57,22 @@ public class ShopBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-
             ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
+            if (shop.busy) return ActionResult.SUCCESS;
 
-            if (shop.getOwner().equals(player.getUuid())) {
-                if (player.isSneaking()) {
-                    return openShopMerchant(player, shop);
-                } else {
-                    player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                    NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
-                }
+            if (shop.getOwner().equals(player.getUuid()) && !player.isSneaking()) {
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+                NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
+
+                shop.busy = true;
             } else {
-                return openShopMerchant(player, shop);
+                ((ShopMerchant) shop.getMerchant()).updateTrades();
+                shop.getMerchant().setCustomer(player);
+                shop.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.shop.merchant_title"), 0);
+
+                return ActionResult.SUCCESS;
             }
         }
-        return ActionResult.SUCCESS;
-    }
-
-    private ActionResult openShopMerchant(PlayerEntity player, ShopBlockEntity shop) {
-        if (shop.getMerchant().getCustomer() != null) return ActionResult.SUCCESS;
-
-        ((ShopMerchant) shop.getMerchant()).updateTrades();
-        shop.getMerchant().setCustomer(player);
-        shop.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.shop.merchant_title"), 0);
 
         return ActionResult.SUCCESS;
     }

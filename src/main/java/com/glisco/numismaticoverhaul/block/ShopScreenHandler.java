@@ -62,9 +62,6 @@ public class ShopScreenHandler extends ScreenHandler {
                 screen.afterDataUpdate();
             }
         });
-//
-//        Trade Buffer Slot
-//        this.bufferInventory.addListener(this::onBufferChanged);
     }
 
     @Override
@@ -144,6 +141,12 @@ public class ShopScreenHandler extends ScreenHandler {
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());
+    }
+
+    @Override
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        this.shop.busy = false;
     }
 
     private static class AutoHidingSlot extends Slot {
