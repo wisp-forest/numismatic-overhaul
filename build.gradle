@@ -13,9 +13,6 @@ repositories {
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
     maven   { url = "https://api.modrinth.com/maven/" }
-    flatDir {
-        dir('libs')
-    }
 }
 
 dependencies {

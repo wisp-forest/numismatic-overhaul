@@ -1,5 +1,5 @@
 <owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20.3/owo-ui.xsd">
     <templates>
 
         <!-- always-visible purse button -->
@@ -90,6 +90,11 @@
                         </renderer>
                     </button>
                 </children>
+
+                <margins>
+                    <left>-30</left>
+                    <top>15</top>
+                </margins>
             </stack-layout>
         </template>
 
