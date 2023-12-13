@@ -146,7 +146,7 @@ public class ShopScreenHandler extends ScreenHandler {
     @Override
     public void onClosed(PlayerEntity player) {
         super.onClosed(player);
-        this.shop.busy = false;
+        if (this.shop != null) this.shop.busy = false;
     }
 
     private static class AutoHidingSlot extends Slot {
