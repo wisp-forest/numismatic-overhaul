@@ -39,11 +39,8 @@ public class PurseLayerElement<S extends Screen> implements Consumer<Layer<S, St
     @Override
     @SuppressWarnings("DataFlowIssue")
     public void accept(Layer<S, StackLayout>.Instance instance) {
-        int x = NumismaticOverhaul.CONFIG.pursePositionX();
-        int y = NumismaticOverhaul.CONFIG.pursePositionY();
-
         var popup = UIModelLoader.get(NumismaticOverhaul.id("purse")).expandTemplate(StackLayout.class, "popup", Map.of());
-        this.alignmentFunction.align(instance, popup, x - 30, y + 15);
+        this.alignmentFunction.align(instance, popup);
 
         var total = new MutableObject<LongSupplier>();
         var goldCount = configureSelector(
@@ -86,7 +83,7 @@ public class PurseLayerElement<S extends Screen> implements Consumer<Layer<S, St
 
         var button = UIModelLoader.get(NumismaticOverhaul.id("purse")).expandTemplate(ButtonComponent.class, "button", Map.of());
         instance.adapter.rootComponent.child(button);
-        this.alignmentFunction.align(instance, button, x, y);
+        this.alignmentFunction.align(instance, button);
 
         button.onPress(buttonComponent -> {
             if (Screen.hasShiftDown()) {
@@ -128,6 +125,6 @@ public class PurseLayerElement<S extends Screen> implements Consumer<Layer<S, St
 
     @FunctionalInterface
     public interface AlignmentFunction<S extends Screen> {
-        void align(Layer<S, StackLayout>.Instance instance, Component component, int xOffset, int yOffset);
+        void align(Layer<S, StackLayout>.Instance instance, Component component);
     }
 }
