@@ -17,25 +17,26 @@ public class NumismaticOverhaulConfigModel {
     @Comment("Whether Numismatic currency should be injected into the loot tables of loot chests")
     public boolean generateCurrencyInChests = true;
 
-    @Comment("Where the purse in your inventory should be placed on the X axis")
-    public int pursePositionX = 27;
-
-    @Comment("Where the purse in your inventory should be placed on the Y axis")
-    public int pursePositionY = -28;
-
-    @Comment("Where the purse in your inventory should be placed on the X axis")
-    public int pursePositionCreativeX = 38;
-
-    @Comment("Where the purse in your inventory should be placed on the Y axis")
-    public int pursePositionCreativeY = 4;
-
     @Comment("Where the notification for adding/removing money from the purse should be (requires rejoining to apply)")
     @Sync(Option.SyncMode.INFORM_SERVER)
     public MoneyMessageLocation moneyMessageLocation = MoneyMessageLocation.ACTIONBAR;
 
     @Nest
-    public LootOptions lootOptions = new LootOptions();
+    public PurseOffsets purseOffsets = new PurseOffsets();
 
+    public static class PurseOffsets {
+        public int survivalX = 0;
+        public int survivalY = 0;
+
+        public int creativeX = 0;
+        public int creativeY = 0;
+
+        public int merchantX = 0;
+        public int merchantY = 0;
+    }
+
+    @Nest
+    public LootOptions lootOptions = new LootOptions();
 
     public static class LootOptions {
         @Comment("Affects money gained from Desert Temple chests")

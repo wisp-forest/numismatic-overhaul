@@ -42,11 +42,14 @@
   "text.config.numismatic-overhaul.title": "Numismatic Overhaul Configuration",
   "text.config.numismatic-overhaul.option.enableVillagerTrading": "Enable Villager Trading",
   "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Enable MCA Compatibility",
-  "text.config.numismatic-overhaul.option.pursePositionX": "Purse X Coordinate",
-  "text.config.numismatic-overhaul.option.pursePositionY": "Purse Y Coordinate",
-  "text.config.numismatic-overhaul.option.pursePositionCreativeX": "Creative Purse X Coordinate",
-  "text.config.numismatic-overhaul.option.pursePositionCreativeY": "Creative Purse Y Coordinate",
-  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
+
+  "text.config.numismatic-overhaul.category.purseOffsets": "Purse offsets",
+  "text.config.numismatic-overhaul.option.purseOffsets.survivalX": "Survival - X",
+  "text.config.numismatic-overhaul.option.purseOffsets.survivalY": "Survival - Y",
+  "text.config.numismatic-overhaul.option.purseOffsets.creativeX": "Creative - X",
+  "text.config.numismatic-overhaul.option.purseOffsets.creativeY": "Creative - Y",
+  "text.config.numismatic-overhaul.option.purseOffsets.merchantX": "Merchants - X",
+  "text.config.numismatic-overhaul.option.purseOffsets.merchantY": "Merchants - Y",
 
   "text.config.numismatic-overhaul.category.lootOptions": "Loot Generation",
   "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "Desert Temple Minimum Loot",
@@ -58,6 +61,7 @@
   "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "Stronghold Library Minimum Loot",
   "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "Stronghold Library Maximum Loot",
 
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Generate currency in loot chests",
   "text.config.numismatic-overhaul.option.moneyMessageLocation": "Money Message Location",
   "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "Decides where the money notification appears (requires rejoining world to apply)",
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "Actionbar",

@@ -39,6 +39,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
 
+    public boolean busy = false;
     private final Merchant merchant;
     private final List<ShopOffer> offers;
 
