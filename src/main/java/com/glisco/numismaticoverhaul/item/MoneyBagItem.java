@@ -18,7 +18,7 @@ import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-
+import java.util.List;
 import java.util.Optional;
 
 public class MoneyBagItem extends Item implements CurrencyItem {

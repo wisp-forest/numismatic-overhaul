@@ -28,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;

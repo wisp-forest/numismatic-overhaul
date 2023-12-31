@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul.network;
 
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import io.wispforest.owo.network.ServerAccess;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public record ShopScreenHandlerRequestC2SPacket(Action action, long value) {
 

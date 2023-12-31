@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul;
 
 import com.glisco.numismaticoverhaul.currency.Currency;
+import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -10,11 +11,16 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.wispforest.owo.offline.OfflineDataLookup;
 import io.wispforest.owo.ops.TextOps;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Formatting;
 
 import static net.minecraft.server.command.CommandManager.argument;

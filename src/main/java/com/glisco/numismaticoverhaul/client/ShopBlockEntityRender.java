@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.world.World;
 
 public class ShopBlockEntityRender implements BlockEntityRenderer<ShopBlockEntity> {
 

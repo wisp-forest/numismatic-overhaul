@@ -4,6 +4,7 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import io.wispforest.owo.network.ServerAccess;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public record RequestPurseActionC2SPacket(Action action, long value) {
 

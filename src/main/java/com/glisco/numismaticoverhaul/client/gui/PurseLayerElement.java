@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.client.gui;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.Currency;
+import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;

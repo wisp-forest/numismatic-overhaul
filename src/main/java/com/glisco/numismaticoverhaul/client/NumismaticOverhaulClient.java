@@ -24,6 +24,7 @@ import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.ingame.MerchantScreen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;

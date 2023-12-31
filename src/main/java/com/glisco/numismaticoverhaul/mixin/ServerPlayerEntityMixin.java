@@ -2,9 +2,13 @@ package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import io.wispforest.owo.ops.ItemOps;
+import java.util.List;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
