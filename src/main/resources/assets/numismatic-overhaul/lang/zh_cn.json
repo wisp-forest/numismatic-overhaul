@@ -29,7 +29,27 @@
   "gui.numismatic-overhaul.purse_title": "钱包",
   "numismatic-overhaul.empty": "空",
   "filled_map.end_city": "末地探险家地图",
-  "currency.numismatic-overhaul.bronze": "铜币",
-  "currency.numismatic-overhaul.silver": "银币",
-  "currency.numismatic-overhaul.gold": "金币",
+  "currency.numismatic-overhaul.bronze": "铜",
+  "currency.numismatic-overhaul.silver": "银",
+  "currency.numismatic-overhaul.gold": "金",
+  
+  "text.config.numismatic-overhaul.title": "钱币革新设置",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "启用村民交易",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "启用MCA兼容",
+  "text.config.numismatic-overhaul.option.pursePositionX": "钱包X方位",
+  "text.config.numismatic-overhaul.option.pursePositionY": "钱包Y方位",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "在战利品宝箱中生成钱袋",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "战利品生成",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "沙漠神殿战利品最小值",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "沙漠神殿战利品最大值",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "地牢战利品最小值",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "地牢战利品最大值",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "特殊结构战利品最小值",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "特殊结构战利品最大值",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "要塞图书馆战利品最少值",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "要塞图书馆战利品最大值",
+
+  "gamerule.moneyDropPercentage": "死亡掉落钱币百分比",
+  "gamerule.moneyDropPercentage.description": "如果没有开启死亡不掉落游戏规则，会有多少钱在死亡时掉落"
 }
