@@ -1,0 +1,55 @@
+{
+  "item.numismatic-overhaul.bronze_coin": "Бронзова монета",
+  "item.numismatic-overhaul.silver_coin": "Срібна монета",
+  "item.numismatic-overhaul.gold_coin": "Золота монета",
+  "item.numismatic-overhaul.money_bag": "Мішечок з грошима",
+  "block.numismatic-overhaul.shop": "Магазин",
+  "block.numismatic-overhaul.inexhaustible_shop": "Невичерпна магазин",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "Тільки творчість - ніколи не закінчуються запаси",
+  "block.numismatic-overhaul.piggy_bank": "Свиня-копілка",
+  "gui.numismatic-overhaul.shop.price": "Ціна",
+  "gui.numismatic-overhaul.shop.inventory_title": "Інвентар крамниці",
+  "gui.numismatic-overhaul.shop.merchant_title": "магазин",
+  "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
+    "Лійки",
+    {
+      "text": " можуть ",
+      "color": "#28FFBF"
+    },
+    "вставляти \nпредмети в цей магазин"
+  ],
+  "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
+    "Лійки",
+    {
+      "text": " не можуть ",
+      "color": "#EB1D36"
+    },
+    "ставляти \nпредмети в цей магазин"
+  ],
+  "gui.numismatic-overhaul.purse_title": "Гаманець",
+  "numismatic-overhaul.empty": "Пусто",
+  "filled_map.end_city": "End Explorer Map",
+  "currency.numismatic-overhaul.bronze": "Бронза",
+  "currency.numismatic-overhaul.silver": "Срібло",
+  "currency.numismatic-overhaul.gold": "Золото",
+
+  "text.config.numismatic-overhaul.title": "Numismatic Overhaul Налаштування",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "Увімкнути торгівлю селян",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "Увімкніть сумісність з MCA",
+  "text.config.numismatic-overhaul.option.pursePositionX": "Розташування гаманця по осі X",
+  "text.config.numismatic-overhaul.option.pursePositionY": "Розташування гаманця по осі Y",
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "Генерувати валюту в скринях зі здобиччю",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "генерація здобичі",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "Мінімум здобичі в пустельному храмі",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "Максимум здобичі в пустельному храмі",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "Мінімум здобичі в підземеллях",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "Максимум здобичі в підземеллях",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "Мінімум здобичі в структурах",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "Маусимум здобичі в структурах",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "Мінімум здобичі в бібліотеці фортеці",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "Максимум здобичі в бібліотеці фортеці",
+
+  "gamerule.moneyDropPercentage": "Money drop percentage",
+  "gamerule.moneyDropPercentage.description": "Контролює, скільки грошей гравець втрачає, коли помирає, якщо keepInventory дорівнює false"
+}
