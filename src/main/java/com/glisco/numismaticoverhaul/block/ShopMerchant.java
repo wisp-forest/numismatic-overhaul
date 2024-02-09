@@ -100,4 +100,8 @@ public class ShopMerchant implements Merchant {
     public boolean isClient() {
         return false;
     }
+
+    public ShopBlockEntity shop() {
+        return this.shop;
+    }
 }
