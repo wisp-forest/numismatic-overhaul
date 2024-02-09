@@ -90,6 +90,11 @@
                         </renderer>
                     </button>
                 </children>
+
+                <margins>
+                    <left>-30</left>
+                    <top>15</top>
+                </margins>
             </stack-layout>
         </template>
 

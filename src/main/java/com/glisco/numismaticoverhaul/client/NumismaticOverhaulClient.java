@@ -24,7 +24,6 @@ import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.ingame.MerchantScreen;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.util.Identifier;
@@ -62,13 +61,13 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
 
         Layers.add(
                 PurseLayerContainer::new,
-                new PurseLayerElement<>((instance, component, xOffset, yOffset) -> {
+                new PurseLayerElement<>((instance, component) -> {
                     instance.aggressivePositioning = true;
                     ((LayerInstanceAccessor) instance).numismatic$getLayoutUpdaters().add(() -> {
                         if (instance.screen.isInventoryTabSelected()) {
                             component.positioning(Positioning.absolute(
-                                    ((HandledScreenAccessor) instance.screen).owo$getRootX() + NumismaticOverhaul.CONFIG.pursePositionCreativeX(),
-                                    ((HandledScreenAccessor) instance.screen).owo$getRootY() + NumismaticOverhaul.CONFIG.pursePositionCreativeY()
+                                    ((HandledScreenAccessor) instance.screen).owo$getRootX() + 38 + NumismaticOverhaul.CONFIG.purseOffsets.creativeX() ,
+                                    ((HandledScreenAccessor) instance.screen).owo$getRootY() + 4 + NumismaticOverhaul.CONFIG.purseOffsets.creativeY()
                             ));
                         } else {
                             component.positioning(Positioning.absolute(-50, -50));
@@ -80,24 +79,24 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
 
         Layers.add(
                 PurseLayerContainer::new,
-                new PurseLayerElement<>((instance, component, xOffset, yOffset) -> {
+                new PurseLayerElement<>((instance, component) -> {
                     instance.aggressivePositioning = true;
-                    ((LayerInstanceAccessor) instance).numismatic$getLayoutUpdaters().add(() -> {
-                        var recipeBookButton = instance.queryWidget($ -> $ instanceof TexturedButtonWidget);
-                        if (recipeBookButton == null) return;
-
-                        component.positioning(
-                                Positioning.absolute(recipeBookButton.getX() + xOffset + NumismaticOverhaul.CONFIG.pursePositionX(),
-                                        recipeBookButton.getY() + yOffset + NumismaticOverhaul.CONFIG.pursePositionY())
-                        );
-                    });
+                    instance.alignComponentToHandledScreenCoordinates(
+                            component,
+                            160 + NumismaticOverhaul.CONFIG.purseOffsets.survivalX(),
+                            5 + NumismaticOverhaul.CONFIG.purseOffsets.survivalY()
+                    );
                 }),
                 InventoryScreen.class
         );
 
         Layers.add(
                 PurseLayerContainer::new,
-                new PurseLayerElement<>((instance, component, xOffset, yOffset) -> instance.alignComponentToHandledScreenCoordinates(component, 232 + xOffset, 33 + yOffset)),
+                new PurseLayerElement<>((instance, component) -> instance.alignComponentToHandledScreenCoordinates(
+                        component,
+                        260 + NumismaticOverhaul.CONFIG.purseOffsets.merchantX(),
+                        5 + NumismaticOverhaul.CONFIG.purseOffsets.merchantY()
+                )),
                 MerchantScreen.class
         );
     }

@@ -31,7 +31,6 @@ public class ShopScreenHandler extends ScreenHandler {
 
     private final List<ShopOffer> offers;
 
-    @Environment(EnvType.SERVER)
     private ShopBlockEntity shop = null;
 
     public ShopScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -63,9 +62,6 @@ public class ShopScreenHandler extends ScreenHandler {
                 screen.afterDataUpdate();
             }
         });
-//
-//        Trade Buffer Slot
-//        this.bufferInventory.addListener(this::onBufferChanged);
     }
 
     @Override
@@ -145,6 +141,12 @@ public class ShopScreenHandler extends ScreenHandler {
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());
+    }
+
+    @Override
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        if (this.shop != null) this.shop.busy = false;
     }
 
     private static class AutoHidingSlot extends Slot {
