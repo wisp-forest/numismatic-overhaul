@@ -33,7 +33,7 @@ dependencies {
     modLocalRuntime "dev.architectury:architectury-fabric:8.1.73"
 
     // Stacc
-    modLocalRuntime include("net.devtech:stacc:${project.stacc_version}")
+    modLocalRuntime include("maven.modrinth:stacc-api:${project.stacc_version}")
 
     // ModMenu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
