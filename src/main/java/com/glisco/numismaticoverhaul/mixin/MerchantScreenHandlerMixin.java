@@ -94,7 +94,8 @@ public class MerchantScreenHandlerMixin {
     public void thwartTaxEvasion(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         if (!(this.merchant instanceof ShopMerchant shopMerchant)) return;
 
-        if (shopMerchant.shop().getPos().getSquaredDistance(player.getX(), player.getY(), player.getZ()) > 100) {
+        var shop = shopMerchant.shop();
+        if (shop.getWorld().getBlockEntity(shop.getPos()) != shop || shop.getPos().getSquaredDistance(player.getX(), player.getY(), player.getZ()) > 100) {
             cir.setReturnValue(false);
         }
     }

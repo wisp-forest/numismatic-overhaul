@@ -192,7 +192,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return player.getUuid().equals(this.owner) && this.pos.getSquaredDistance(player.getX(), player.getY(), player.getZ()) <= 100;
+        return player.getUuid().equals(this.owner) && this.world.getBlockEntity(this.pos) == this && this.pos.getSquaredDistance(player.getX(), player.getY(), player.getZ()) <= 100;
     }
 
     @Override
