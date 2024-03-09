@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import io.wispforest.owo.ops.WorldOps;
+import io.wispforest.owo.serialization.endec.KeyedEndec;
 import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -36,12 +37,13 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     private static final int[] SLOTS = IntStream.range(0, 27).toArray();
     private static final int[] NO_SLOTS = new int[0];
+    public static KeyedEndec<List<ShopOffer>> OFFERS_LIST = ShopOffer.ENDEC.listOf().keyed("offers", ArrayList::new);
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
 
     public boolean busy = false;
     private final Merchant merchant;
-    private final List<ShopOffer> offers;
+    private List<ShopOffer> offers;
 
     private long storedCurrency;
     private UUID owner;
@@ -119,7 +121,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
-        ShopOffer.writeAll(tag, offers);
+        tag.put(OFFERS_LIST, offers);
         tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
@@ -131,7 +133,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         Inventories.readNbt(tag, INVENTORY);
-        ShopOffer.readAll(tag, offers);
+        this.offers = tag.get(OFFERS_LIST);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }
@@ -171,11 +173,11 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
         this.markDirty();
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, ShopBlockEntity blockEntity) {
-        blockEntity.tick();
+    public static void tick(World world, BlockPos ignoredPos, BlockState ignoredState, ShopBlockEntity blockEntity) {
+        blockEntity.tick(world);
     }
 
-    public void tick() {
+    public void tick(World world) {
         if (world.getTime() % 60 == 0) tradeIndex++;
     }
 

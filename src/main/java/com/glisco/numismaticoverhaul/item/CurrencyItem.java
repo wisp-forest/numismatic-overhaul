@@ -1,11 +1,12 @@
 package com.glisco.numismaticoverhaul.item;
 
-import io.wispforest.owo.nbt.NbtKey;
+import io.wispforest.owo.serialization.Endec;
+import io.wispforest.owo.serialization.endec.KeyedEndec;
 import net.minecraft.item.ItemStack;
 
 public interface CurrencyItem {
 
-    NbtKey<Long> ORIGINAL_VALUE = new NbtKey<>("OriginalValue", NbtKey.Type.LONG);
+    KeyedEndec<Long> ORIGINAL_VALUE = new KeyedEndec<>("OriginalValue", Endec.LONG, 0L);
 
     static void setOriginalValue(ItemStack stack, long value) {
         stack.put(ORIGINAL_VALUE, value);

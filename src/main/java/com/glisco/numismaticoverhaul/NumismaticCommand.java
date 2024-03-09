@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul;
 
-import com.glisco.numismaticoverhaul.currency.Currency;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.currency.*;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
@@ -50,7 +49,7 @@ public class NumismaticCommand {
         }
 
         for (var offlineId : offlineUUIDs) {
-            serverWorth += OfflineDataLookup.get(offlineId).getCompound("cardinal_components").getCompound("numismatic-overhaul:currency").getLong("Value");
+            serverWorth += OfflineDataLookup.get(offlineId).getCompound("cardinal_components").getCompound("numismatic-overhaul:currency").get(CurrencyHelper.VALUE);
         }
 
         long finalServerWorth = serverWorth;
@@ -67,7 +66,7 @@ public class NumismaticCommand {
         for (var player : players) {
             //noinspection deprecation
             ModComponents.CURRENCY.get(player).setValue(value);
-            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + value,
+            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getName().getString() + " set to: " + value,
                     Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
         }
 
@@ -82,7 +81,7 @@ public class NumismaticCommand {
             final long balance = ModComponents.CURRENCY.get(player).getValue();
             totalBalance += balance;
 
-            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ": " + balance,
+            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getName().getString() + ": " + balance,
                     Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
         }
 
@@ -102,7 +101,7 @@ public class NumismaticCommand {
                 currencyComponent.silentModify(amount * multiplier);
                 lastValue = currencyComponent.getValue();
 
-                context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + " set to: " + currencyComponent.getValue(),
+                context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getName().getString() + " set to: " + currencyComponent.getValue(),
                         Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
             }
 

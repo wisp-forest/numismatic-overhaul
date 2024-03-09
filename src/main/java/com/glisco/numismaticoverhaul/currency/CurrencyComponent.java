@@ -29,17 +29,17 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
 
     public CurrencyComponent(PlayerEntity provider) {
         this.provider = provider;
-        this.transactions = new ArrayList<Long>();
+        this.transactions = new ArrayList<>();
     }
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        value = tag.getLong("Value");
+        value = tag.get(CurrencyHelper.VALUE);
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putLong("Value", value);
+        tag.put(CurrencyHelper.VALUE, value);
     }
 
     public long getValue() {

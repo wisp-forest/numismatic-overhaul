@@ -1,10 +1,9 @@
 package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
-import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
-import io.wispforest.owo.nbt.NbtKey;
+import com.glisco.numismaticoverhaul.currency.*;
+import io.wispforest.owo.serialization.Endec;
+import io.wispforest.owo.serialization.endec.KeyedEndec;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,18 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.TradeOutputSlot;
 import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-
 import java.util.Optional;
 
 public class MoneyBagItem extends Item implements CurrencyItem {
 
-    private static final NbtKey<Long> VALUE = new NbtKey<>("Value", NbtKey.Type.LONG);
-    private static final NbtKey<long[]> VALUES = new NbtKey<>("Values", NbtKey.Type.LONG_ARRAY);
-    private static final NbtKey<Boolean> COMBINED = new NbtKey<>("Combined", NbtKey.Type.BOOLEAN);
+    public static final KeyedEndec<Boolean> COMBINED = new KeyedEndec<>("Combined", Endec.BOOLEAN, false);
 
     public MoneyBagItem() {
         super(new Settings().maxCount(1));
@@ -34,19 +28,19 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     @Override
     public ItemStack getDefaultStack() {
         var defaultStack = super.getDefaultStack();
-        defaultStack.put(VALUE, 0L);
+        defaultStack.put(CurrencyHelper.VALUE, 0L);
         return defaultStack;
     }
 
     public static ItemStack create(long value) {
         var stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.put(VALUE, value);
+        stack.put(CurrencyHelper.VALUE, value);
         return stack;
     }
 
     public static ItemStack createCombined(long[] values) {
         var stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.put(VALUES, values);
+        stack.put(CurrencyHelper.VALUES, values);
         stack.put(COMBINED, true);
         return stack;
     }
@@ -55,27 +49,19 @@ public class MoneyBagItem extends Item implements CurrencyItem {
         if (stack.getItem() != NumismaticOverhaulItems.MONEY_BAG) return 0;
 
         if (!stack.has(COMBINED)) {
-            return stack.get(VALUE);
+            return stack.get(CurrencyHelper.VALUE);
         } else {
-            return CurrencyResolver.combineValues(CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values"));
+            return CurrencyResolver.combineValues(CurrencyHelper.getValues(stack));
         }
     }
 
     @Override
     public long[] getCombinedValue(ItemStack stack) {
         if (!stack.has(COMBINED)) {
-            return CurrencyResolver.splitValues(stack.get(VALUE));
+            return CurrencyResolver.splitValues(stack.get(CurrencyHelper.VALUE));
         } else {
-            return CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values");
+            return CurrencyHelper.getValues(stack);
         }
-    }
-
-    public void setValue(ItemStack stack, long value) {
-        stack.getOrCreateNbt().putLong("Value", value);
-    }
-
-    public void setCombinedValue(ItemStack stack, long[] values) {
-        stack.getOrCreateNbt().putLongArray("Values", values);
     }
 
     @Override
@@ -100,7 +86,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
             } else if (canBeCompacted && CurrencyConverter.getAsValidStacks(newValue).size() == 1) {
                 slot.setStack(CurrencyConverter.getAsValidStacks(newValue).get(0));
             } else {
-                setCombinedValue(clickedStack, values);
+                clickedStack.put(CurrencyHelper.VALUES, values);
             }
 
         } else if (clickType == ClickType.LEFT) {

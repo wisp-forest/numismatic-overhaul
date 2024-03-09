@@ -3,15 +3,19 @@ package com.glisco.numismaticoverhaul.currency;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import io.wispforest.owo.serialization.Endec;
+import io.wispforest.owo.serialization.endec.BuiltInEndecs;
+import io.wispforest.owo.serialization.endec.KeyedEndec;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyHelper {
+
+    public static final KeyedEndec<Long> VALUE = new KeyedEndec<>("Value", Endec.LONG, 0L);
+    public static final KeyedEndec<long[]> VALUES = new KeyedEndec<>("Values", BuiltInEndecs.LONG_ARRAY, new long[]{});
 
     /**
      * Checks how much money a player has as coin items in their inventory
@@ -97,21 +101,11 @@ public class CurrencyHelper {
         return CurrencyConverter.getAsItemStackList(CurrencyResolver.combineValues(values)).get(0);
     }
 
-    public static long[] getFromNbt(NbtCompound nbt, String key) {
-        if (nbt.contains(key, NbtElement.LONG_ARRAY_TYPE)) return nbt.getLongArray(key).clone();
-        if (!nbt.contains(key, NbtElement.INT_ARRAY_TYPE)) return new long[0];
-
-        var intArray = nbt.getIntArray(key);
-        var longArray = new long[intArray.length];
-        for (int i = 0; i < intArray.length; i++) {
-            longArray[i] = intArray[i];
-        }
-
-        return longArray;
-    }
-
     private static boolean isCombined(ItemStack stack) {
-        return stack.hasNbt() && stack.getNbt().contains("Combined", NbtElement.BYTE_TYPE);
+        return stack.get(MoneyBagItem.COMBINED);
     }
 
+    public static long[] getValues(ItemStack stack) {
+        return stack.get(VALUES);
+    }
 }

@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.mojang.serialization.MapCodec;
 import io.wispforest.owo.ops.WorldOps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -11,7 +12,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -36,6 +36,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntityProvider {
+    public static final MapCodec<PiggyBankBlock> CODEC = createCodec(ignored -> new PiggyBankBlock());
 
     private static final VoxelShape NORTH_SHAPE = Stream.of(
             Block.createCuboidShape(7, 2, 4, 9, 4, 5),
@@ -127,7 +128,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank && player.isCreative() && !world.isClient && !piggyBank.inventory().stream().allMatch(ItemStack::isEmpty)) {
 
             var stack = new ItemStack(NumismaticOverhaulBlocks.PIGGY_BANK);
@@ -138,7 +139,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
             world.spawnEntity(var);
         }
 
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
@@ -167,5 +168,10 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PiggyBankBlockEntity(pos, state);
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalFacingBlock> getCodec() {
+        return CODEC;
     }
 }

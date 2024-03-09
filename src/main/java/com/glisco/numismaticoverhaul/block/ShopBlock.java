@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.block;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -25,7 +26,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class ShopBlock extends BlockWithEntity {
-
     private static final VoxelShape MAIN_PILLAR = Block.createCuboidShape(1, 0, 1, 14, 8, 14);
 
     private static final VoxelShape PLATE = Block.createCuboidShape(0, 8, 0, 16, 12, 16);
@@ -42,6 +42,11 @@ public class ShopBlock extends BlockWithEntity {
     public ShopBlock(boolean inexhaustible) {
         super(FabricBlockSettings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null; // TODO
     }
 
     @Override
