@@ -14,6 +14,8 @@ repositories {
     maven   { url = "https://maven.shedaniel.me/" }
     maven   { url = "https://maven.wispforest.io/" }
     maven   { url = "https://ueaj.dev/maven" }
+    maven   { url = "https://storage.googleapis.com/devan-maven/"}
+    maven   { url = "https://api.modrinth.com/maven/"}
 }
 
 dependencies {
