@@ -11,7 +11,7 @@
   "gui.numismatic-overhaul.shop.inventory_title": "商店物品栏",
   "gui.numismatic-overhaul.shop.merchant_title": "商店",
   "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
-    "漏洞",
+    "漏斗",
     {
       "text": "能",
       "color": "#28FFBF"
@@ -19,7 +19,7 @@
     "将\n物品装入商店"
   ],
   "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
-    "漏洞",
+    "漏斗",
     {
       "text": "不能",
       "color": "#EB1D36"
