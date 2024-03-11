@@ -4,32 +4,70 @@
   "item.numismatic-overhaul.gold_coin": "金币",
   "item.numismatic-overhaul.money_bag": "钱袋",
   "block.numismatic-overhaul.shop": "商店",
-  "block.numismatic-overhaul.inexhaustible_shop": "无尽商店",
-  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "仅限创造模式 - 取之不尽的商店",
+  "block.numismatic-overhaul.inexhaustible_shop": "无限商店",
+  "block.numismatic-overhaul.inexhaustible_shop.tooltip": "创造模式专属 - 从不会缺货",
   "block.numismatic-overhaul.piggy_bank": "猪猪存钱罐",
   "gui.numismatic-overhaul.shop.price": "价格",
-  "gui.numismatic-overhaul.shop.inventory_title": "商店库存",
+  "gui.numismatic-overhaul.shop.inventory_title": "商店物品栏",
   "gui.numismatic-overhaul.shop.merchant_title": "商店",
   "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
-    "漏斗",
+    "漏洞",
     {
-      "text": "可以",
+      "text": "能",
       "color": "#28FFBF"
     },
-    "向\n商店输送物品"
+    "将\n物品装入商店"
   ],
   "gui.numismatic-overhaul.shop.transfer_tooltip.disabled": [
-    "漏斗",
+    "漏洞",
     {
       "text": "不能",
       "color": "#EB1D36"
     },
-    "向\n商店输送物品"
+    "将\n物品装入商店"
   ],
   "gui.numismatic-overhaul.purse_title": "钱包",
-  "numismatic-overhaul.empty": "空",
-  "filled_map.end_city": "末地探险家地图",
-  "currency.numismatic-overhaul.bronze": "铜币",
-  "currency.numismatic-overhaul.silver": "银币",
-  "currency.numismatic-overhaul.gold": "金币",
+  "numismatic-overhaul.empty": "空空如也",
+  "filled_map.end_city": "末地探险地图",
+  "currency.numismatic-overhaul.bronze": "铜",
+  "currency.numismatic-overhaul.silver": "银",
+  "currency.numismatic-overhaul.gold": "金",
+
+  "itemGroup.numismatic-overhaul.main": "Numismatic Overhaul",
+  "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
+  "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",
+  "itemGroup.numismatic-overhaul.main.button.github": "GitHub",
+  "itemGroup.numismatic-overhaul.main.button.discord": "Discord",
+
+  "text.config.numismatic-overhaul.title": "Numismatic Overhaul配置",
+  "text.config.numismatic-overhaul.option.enableVillagerTrading": "启用村民交易",
+  "text.config.numismatic-overhaul.option.enableMcaCompatibility": "启用凡家物语（MCA）兼容",
+
+  "text.config.numismatic-overhaul.category.purseOffsets": "钱包位置",
+  "text.config.numismatic-overhaul.option.purseOffsets.survivalX": "生存模式 - 钱包X坐标",
+  "text.config.numismatic-overhaul.option.purseOffsets.survivalY": "生存模式 - 钱包Y坐标",
+  "text.config.numismatic-overhaul.option.purseOffsets.creativeX": "创造模式 - 钱包X坐标",
+  "text.config.numismatic-overhaul.option.purseOffsets.creativeY": "创造模式 - 钱包Y坐标",
+  "text.config.numismatic-overhaul.option.purseOffsets.merchantX": "商人 - 钱包X坐标",
+  "text.config.numismatic-overhaul.option.purseOffsets.merchantY": "商人 - 钱包Y坐标",
+
+  "text.config.numismatic-overhaul.category.lootOptions": "战利品生成"",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "沙漠神庙战利品最少生成",
+  "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "沙漠神庙战利品最多生成",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "地牢战利品最少生成",
+  "text.config.numismatic-overhaul.option.lootOptions.dungeonMaxLoot": "地牢战利品最多生成",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMinLoot": "结构战利品最少生成",
+  "text.config.numismatic-overhaul.option.lootOptions.structureMaxLoot": "结构战利品最多生成",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMinLoot": "要塞图书馆战利品最少生成",
+  "text.config.numismatic-overhaul.option.lootOptions.strongholdLibraryMaxLoot": "要塞图书馆战利品最多生成",
+
+  "text.config.numismatic-overhaul.option.generateCurrencyInChests": "战利品箱子中生成钱币",
+  "text.config.numismatic-overhaul.option.moneyMessageLocation": "货币通知位置",
+  "text.config.numismatic-overhaul.option.moneyMessageLocation.tooltip": "设置货币通知出现位置（重新加入世界后应用）",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.actionbar": "动作栏",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "聊天栏",
+  "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "聊天栏",
+
+  "gamerule.moneyDropPercentage": "货币掉落比例",
+  "gamerule.moneyDropPercentage.description": "在死亡不掉落关闭时，设置玩家每次死亡时会掉落多少货币"
 }
