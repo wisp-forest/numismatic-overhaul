@@ -51,7 +51,7 @@
   "text.config.numismatic-overhaul.option.purseOffsets.merchantX": "商人 - 钱包X坐标",
   "text.config.numismatic-overhaul.option.purseOffsets.merchantY": "商人 - 钱包Y坐标",
 
-  "text.config.numismatic-overhaul.category.lootOptions": "战利品生成"",
+  "text.config.numismatic-overhaul.category.lootOptions": "战利品生成",
   "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "沙漠神庙战利品最少生成",
   "text.config.numismatic-overhaul.option.lootOptions.desertMaxLoot": "沙漠神庙战利品最多生成",
   "text.config.numismatic-overhaul.option.lootOptions.dungeonMinLoot": "地牢战利品最少生成",
