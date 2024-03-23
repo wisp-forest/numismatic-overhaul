@@ -1,0 +1,10 @@
+{
+  "default": true,
+  "editable": "OPERATOR",
+  "ifModsLoaded": [
+    "numismatic-overhaul"
+  ],
+  "components": [
+    "numismatic-overhaul:currency"
+  ]
+}
