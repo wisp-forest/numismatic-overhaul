@@ -15,11 +15,12 @@ public record RequestPurseActionC2SPacket(Action action, long value) {
             case STORE_ALL ->
                     ModComponents.CURRENCY.get(player).modify(CurrencyHelper.getMoneyInInventory(player, true));
             case EXTRACT -> {
-                //Check if we can actually extract this much money to prevent cheeky packet forgery
-                if (ModComponents.CURRENCY.get(player).getValue() < value) return;
+                //Limit the amount of money we cam extract to prevent cheeky packet forgery
+                //It'd be a bit of a problem if a player somehow tried to extract -200 ;)
+                var extracting = Math.max(0, Math.min(value, ModComponents.CURRENCY.get(player).getValue()))
 
-                CurrencyConverter.getAsItemStackList(value).forEach(stack -> player.getInventory().offerOrDrop(stack));
-                ModComponents.CURRENCY.get(player).modify(-value);
+                CurrencyConverter.getAsItemStackList(extracting).forEach(stack -> player.getInventory().offerOrDrop(stack));
+                ModComponents.CURRENCY.get(player).modify(-extracting);
             }
             case EXTRACT_ALL -> {
                 CurrencyConverter.getAsValidStacks(ModComponents.CURRENCY.get(player).getValue())
