@@ -4,6 +4,8 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.NumismaticOverhaulConfigModel;
 import com.glisco.numismaticoverhaul.item.CoinItem;
+import net.minecraft.registry.RegistryWrapper;
+import org.jetbrains.annotations.NotNull;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import io.wispforest.owo.config.ConfigSynchronizer;
@@ -33,12 +35,12 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag) {
+    public void readFromNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup registryLookup) {
         value = tag.get(CurrencyHelper.VALUE);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag) {
+    public void writeToNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup registryLookup) {
         tag.put(CurrencyHelper.VALUE, value);
     }
 

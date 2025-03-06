@@ -71,7 +71,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         }
 
         for (int i = 0; i < coins.size(); i++) {
-            context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
+            context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.isEmpty() ? 0 : 10 + originalCoins.size() * 10));
         }
 
         context.pop();

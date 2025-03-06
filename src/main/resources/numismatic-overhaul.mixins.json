@@ -12,7 +12,6 @@
     "ServerPlayerEntityMixin",
     "ServerWorldMixin",
     "TradeOfferInternalsMixin",
-    "TradeOfferListMixin",
     "TradeOfferMixin",
     "VillagerEntityMixin"
   ],

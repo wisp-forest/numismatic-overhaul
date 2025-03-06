@@ -4,11 +4,11 @@ import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +40,7 @@ public class ShopBlock extends BlockWithEntity {
     private final boolean inexhaustible;
 
     public ShopBlock(boolean inexhaustible) {
-        super(FabricBlockSettings.create().nonOpaque().hardness(5.0f));
+        super(Settings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
     }
 
@@ -93,7 +92,7 @@ public class ShopBlock extends BlockWithEntity {
         }
 
         if (itemStack.contains(DataComponentTypes.CUSTOM_NAME) && world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
-            shop.setCustomName(itemStack.getName());
+            shop.setComponents(ComponentMap.builder().add(DataComponentTypes.CUSTOM_NAME, itemStack.getName()).build());
         }
 
         ((ShopBlockEntity) world.getBlockEntity(pos)).setOwner(placer.getUuid());

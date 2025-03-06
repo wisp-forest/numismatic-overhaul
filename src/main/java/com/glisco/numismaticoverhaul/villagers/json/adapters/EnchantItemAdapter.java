@@ -9,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -55,6 +56,7 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
             this.basePrice = basePrice;
         }
 
+        // TODO: Would need a rework of the json?
         public TradeOffer create(Entity entity, Random random) {
             ItemStack itemStack = toEnchant.copy();
             itemStack = EnchantmentHelper.enchant(random, itemStack, level, allowTreasure);

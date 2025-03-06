@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.currency;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.LootCondition;
@@ -10,15 +11,14 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.LeafEntry;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.loot.function.LootFunction;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.MathHelper;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class MoneyBagLootEntry extends LeafEntry {
 
-    public static final Codec<MoneyBagLootEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codecs.createStrictOptionalFieldCodec(Codec.INT, "min", 0).forGetter(o -> o.min),
+    public static final MapCodec<MoneyBagLootEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.INT.optionalFieldOf("min", 0).forGetter(o -> o.min),
             Codec.INT.fieldOf("max").forGetter(o -> o.max)
     ).and(LeafEntry.addLeafFields(instance)).apply(instance, MoneyBagLootEntry::new));
 

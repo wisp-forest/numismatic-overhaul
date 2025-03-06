@@ -35,7 +35,7 @@ public class ShopOffer {
     @SuppressWarnings("ConstantConditions")
     public TradeOffer toTradeOffer(ShopBlockEntity shop, boolean inexhaustible) {
         boolean isPocketChange = CurrencyConverter.getRequiredCurrencyTypes(price) == 1;
-        var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).getFirst() : MoneyBagItem.create(price);
+        var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
         int maxUses = inexhaustible ? Integer.MAX_VALUE : count(shop.getItems(), sell) / sell.getCount();
         var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), (int) price) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.EMPTY, buyStack);
 

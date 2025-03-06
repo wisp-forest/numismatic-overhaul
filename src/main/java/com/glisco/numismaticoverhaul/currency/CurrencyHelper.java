@@ -107,6 +107,8 @@ public class CurrencyHelper {
         return new TradedItem(closestPriceStack.getItem(), closestPriceStack.getCount());
     }
 
+    // TODO: Don't know how you want to handle NBT stuff going forward
+
     private static boolean isCombined(ItemStack stack) {
         return stack.get(MoneyBagItem.COMBINED);
     }

@@ -18,7 +18,6 @@ import net.minecraft.world.World;
 import java.util.Optional;
 
 public class MoneyBagItem extends Item implements CurrencyItem {
-
     public static final KeyedEndec<Boolean> COMBINED = new KeyedEndec<>("Combined", Endec.BOOLEAN, false);
 
     public MoneyBagItem() {

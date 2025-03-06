@@ -82,6 +82,7 @@ public class VillagerJsonHelper {
                 VillagerTradesHandler.addLoadingException(new DeserializationException("Tag parsing error: " + e.getMessage()));
             }
 
+            // TODO: NBT Rework
             if (stackTag != null) stack.setNbt(stackTag);
         }
 
