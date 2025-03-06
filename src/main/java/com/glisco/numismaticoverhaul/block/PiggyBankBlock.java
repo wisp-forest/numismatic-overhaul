@@ -155,7 +155,9 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
                 piggyBank.inventory().stream().filter(stack -> !stack.isEmpty()).forEach(drops::add);
                 return drops;
             } else {
-                builder.addDynamicDrop(Identifier.of("contents"), (consumer) -> piggyBank.inventory().forEach(consumer));
+                builder.addDynamicDrop(Identifier.of("contents"), (consumer) -> {
+                    piggyBank.inventory().forEach(consumer);
+                });
             }
         }
 
