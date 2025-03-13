@@ -62,7 +62,10 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
                 cost = 1;
                 itemStack = new ItemStack(Items.BOOK);
             }
-            return new TradeOffer(new TradedItem(CurrencyHelper.getClosest(cost).getItem(), cost), Optional.of(new TradedItem(Items.BOOK)), itemStack, maxUses, this.experience, multiplier);
+
+            ItemStack itemAndCost = CurrencyHelper.getClosest(cost);
+
+            return new TradeOffer(new TradedItem(itemAndCost.getItem(), itemAndCost.getCount()), Optional.of(new TradedItem(Items.BOOK)), itemStack, maxUses, this.experience, multiplier);
         }
     }
 }

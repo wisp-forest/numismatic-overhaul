@@ -39,6 +39,11 @@ public class ShopBlock extends BlockWithEntity {
 
     private final boolean inexhaustible;
 
+    public ShopBlock(Settings settings) {
+        super(Settings.create().nonOpaque().hardness(5.0f));
+        this.inexhaustible = false;
+    }
+
     public ShopBlock(boolean inexhaustible) {
         super(Settings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
@@ -46,7 +51,7 @@ public class ShopBlock extends BlockWithEntity {
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return null; // TODO
+        return createCodec(ShopBlock::new);
     }
 
     @Override

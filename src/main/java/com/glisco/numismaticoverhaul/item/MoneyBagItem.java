@@ -4,12 +4,15 @@ import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.*;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.KeyedEndec;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.TradeOutputSlot;
 import net.minecraft.text.Text;
@@ -27,28 +30,34 @@ public class MoneyBagItem extends Item implements CurrencyItem {
     @Override
     public ItemStack getDefaultStack() {
         var defaultStack = super.getDefaultStack();
-        defaultStack.put(CurrencyHelper.VALUE, 0L);
+        var nbt = new NbtCompound();
+        nbt.put(CurrencyHelper.VALUE, 0L);
+        defaultStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
         return defaultStack;
     }
 
     public static ItemStack create(long value) {
         var stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.put(CurrencyHelper.VALUE, value);
+        var nbt = new NbtCompound();
+        nbt.put(CurrencyHelper.VALUE, value);
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
         return stack;
     }
 
     public static ItemStack createCombined(long[] values) {
         var stack = new ItemStack(NumismaticOverhaulItems.MONEY_BAG);
-        stack.put(CurrencyHelper.VALUES, values);
-        stack.put(COMBINED, true);
+        var nbt = new NbtCompound();
+        nbt.put(CurrencyHelper.VALUES, values);
+        nbt.put(COMBINED, true);
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
         return stack;
     }
 
     public long getValue(ItemStack stack) {
         if (stack.getItem() != NumismaticOverhaulItems.MONEY_BAG) return 0;
-
-        if (!stack.has(COMBINED)) {
-            return stack.get(CurrencyHelper.VALUE);
+        var nbt = stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+        if (!nbt.has(COMBINED)) {
+            return nbt.get(CurrencyHelper.VALUE);
         } else {
             return CurrencyResolver.combineValues(CurrencyHelper.getValues(stack));
         }
@@ -56,8 +65,9 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public long[] getCombinedValue(ItemStack stack) {
-        if (!stack.has(COMBINED)) {
-            return CurrencyResolver.splitValues(stack.get(CurrencyHelper.VALUE));
+        var nbt = stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+        if (!nbt.has(COMBINED)) {
+            return CurrencyResolver.splitValues(nbt.get(CurrencyHelper.VALUE));
         } else {
             return CurrencyHelper.getValues(stack);
         }
@@ -85,7 +95,9 @@ public class MoneyBagItem extends Item implements CurrencyItem {
             } else if (canBeCompacted && CurrencyConverter.getAsValidStacks(newValue).size() == 1) {
                 slot.setStack(CurrencyConverter.getAsValidStacks(newValue).get(0));
             } else {
-                clickedStack.put(CurrencyHelper.VALUES, values);
+                var nbt = new NbtCompound();
+                nbt.put(CurrencyHelper.VALUES, values);
+                clickedStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
             }
 
         } else if (clickType == ClickType.LEFT) {
@@ -114,7 +126,8 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (stack.get(COMBINED)) return;
+        var nbt = stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+        if (nbt.get(COMBINED)) return;
         if (!(entity instanceof PlayerEntity player)) return;
 
         player.getInventory().removeOne(stack);
