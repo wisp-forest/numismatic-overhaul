@@ -74,6 +74,7 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
                 finalItemStack = new ItemStack(Items.ENCHANTED_BOOK);
             }
 
+            // TODO: review, if correct. Might require .getEntryList(EnchantmentTags.TRADEABLE) ?
             Registry<Enchantment> enchantmentRegistry = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT);
 
             List<Enchantment> possibleEnchantments = new ArrayList<>();

@@ -45,6 +45,7 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
             int cost;
             ItemStack itemStack;
 
+            // TODO: review, if correct
             Optional<RegistryEntry<Enchantment>> optionalEnchantment = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
             if (optionalEnchantment.isPresent()) {
                 RegistryEntry<Enchantment> enchantmentEntry = optionalEnchantment.get();
@@ -53,8 +54,7 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
                 int enchantmentLevel = MathHelper.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
                 itemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(enchantmentEntry, enchantmentLevel));
 
-                // TODO: Rarity/Weight no longer exists in Enchantment removed the extra math for now.
-                cost = 100 * ((random.nextInt(50) + enchantmentLevel) * enchantmentLevel * enchantmentLevel);
+                cost = 100 * (10 / enchantment.getWeight()) + (random.nextInt(50) + enchantmentLevel) * enchantmentLevel * enchantmentLevel * (10 / enchantment.getWeight());
                 if (enchantmentEntry.isIn(EnchantmentTags.DOUBLE_TRADE_PRICE)) {
                     cost *= 2;
                 }
