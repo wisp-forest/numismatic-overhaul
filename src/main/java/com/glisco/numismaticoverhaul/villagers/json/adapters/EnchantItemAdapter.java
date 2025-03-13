@@ -8,12 +8,15 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +68,7 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
         }
 
 
-        // TODO: Review, probably easier to copy usage in net.minecraft.village.TradeOffers.SellEnchantedToolFactory#create
+        // TODO: Review
         public TradeOffer create(Entity entity, Random random) {
             ItemStack itemStack = toEnchant.copy();
 
@@ -74,29 +77,39 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
                 finalItemStack = new ItemStack(Items.ENCHANTED_BOOK);
             }
 
-            // TODO: review, if correct. Might require .getEntryList(EnchantmentTags.TRADEABLE) ?
             Registry<Enchantment> enchantmentRegistry = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+            Optional<RegistryEntryList.Named<Enchantment>> tradeRegistry = enchantmentRegistry.getEntryList(EnchantmentTags.TRADEABLE);
+            Optional<RegistryEntryList.Named<Enchantment>> treasureRegistry = enchantmentRegistry.getEntryList(EnchantmentTags.TREASURE);
 
             List<Enchantment> possibleEnchantments = new ArrayList<>();
 
-            for (Enchantment enchantment : enchantmentRegistry) {
-                boolean isTreasure = enchantmentRegistry.getEntry(enchantment).isIn(EnchantmentTags.TREASURE);
+            if (tradeRegistry.isPresent()) {
+                for (RegistryEntry<Enchantment> enchantment : tradeRegistry.get()) {
+                    if (!enchantment.value().isAcceptableItem(finalItemStack)) continue;
 
-                if (!allowTreasure && isTreasure) continue;
-                if (!enchantment.isAcceptableItem(finalItemStack)) continue;
+                    possibleEnchantments.add(enchantment.value());
+                }
+            }
 
-                possibleEnchantments.add(enchantment);
+            if (allowTreasure && treasureRegistry.isPresent()) {
+                for (RegistryEntry<Enchantment> enchantment : treasureRegistry.get()) {
+                    if (!enchantment.value().isAcceptableItem(finalItemStack)) continue;
+
+                    possibleEnchantments.add(enchantment.value());
+                }
             }
 
             boolean hasEnchantment = false;
+            int enchantLevel = 1;
 
+            // Randomizer to apply from Enchant List
             for (Enchantment enchantment : possibleEnchantments) {
                 if (random.nextInt(5) <= level && (!hasEnchantment || random.nextBoolean())) {
-                    int enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
+                    enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
                     RegistryEntry<Enchantment> registeredEnchantment = enchantmentRegistry.getEntry(enchantment);
 
                     if (finalItemStack.isOf(Items.ENCHANTED_BOOK)) {
-                        EnchantmentHelper.apply(finalItemStack, builder -> builder.add(registeredEnchantment, enchantLevel));
+                        finalItemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(registeredEnchantment, enchantLevel));
                     } else {
                         finalItemStack.addEnchantment(registeredEnchantment, enchantLevel);
                     }
@@ -106,15 +119,17 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
             }
 
             // Random Fallback in case nothing was added
-            if (!hasEnchantment && !possibleEnchantments.isEmpty()) {
-                Enchantment enchantment = possibleEnchantments.get(random.nextInt(possibleEnchantments.size()));
-                int enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
-                RegistryEntry<Enchantment> registeredEnchantment = enchantmentRegistry.getEntry(enchantment);
-
-                if (finalItemStack.isOf(Items.ENCHANTED_BOOK)) {
-                    EnchantmentHelper.apply(finalItemStack, builder -> builder.add(registeredEnchantment, enchantLevel));
-                } else {
-                    finalItemStack.addEnchantment(registeredEnchantment, enchantLevel);
+            if (!hasEnchantment) {
+                Optional<RegistryEntry<Enchantment>> optional = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
+                if (optional.isPresent()) {
+                    RegistryEntry<Enchantment> registryEntry = optional.get();
+                    Enchantment enchantment = registryEntry.value();
+                    enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
+                    if (finalItemStack.isOf(Items.ENCHANTED_BOOK)) {
+                        finalItemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(registryEntry, enchantLevel));
+                    } else {
+                        finalItemStack.addEnchantment(registryEntry, enchantLevel);
+                    }
                 }
             }
 
@@ -125,15 +140,15 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
                 RegistryEntry<Enchantment> enchantment = entry.getKey();
                 boolean isTreasure = enchantment.isIn(EnchantmentTags.TREASURE);
 
-                // TODO: Review, not sure entry.GetIntValue is correct for level
+                // TODO: Review, not sure if math is correct
                 price += (int) (price * 0.10f + basePrice * (isTreasure ? 2f : 1f) *
-                        entry.getIntValue() * MathHelper.nextFloat(random, .8f, 1.2f)
+                        enchantLevel * MathHelper.nextFloat(random, .8f, 1.2f)
                         * (5f / (float) enchantment.value().getWeight()));
             }
 
             ItemStack itemAndCost = CurrencyHelper.getClosest(price);
 
-            return new TradeOffer(new TradedItem(itemAndCost.getItem(), itemAndCost.getCount()), Optional.of(new TradedItem(toEnchant.getItem())), itemStack, maxUses, this.experience, multiplier);
+            return new TradeOffer(new TradedItem(itemAndCost.getItem(), itemAndCost.getCount()), Optional.of(new TradedItem(toEnchant.getItem())), finalItemStack, maxUses, this.experience, multiplier);
         }
     }
 }
