@@ -140,6 +140,10 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
                 RegistryEntry<Enchantment> enchantment = entry.getKey();
                 boolean isTreasure = enchantment.isIn(EnchantmentTags.TREASURE);
 
+                if (enchantment.isIn(EnchantmentTags.DOUBLE_TRADE_PRICE)) {
+                    price *= 2;
+                }
+
                 // TODO: Review, not sure if math is correct
                 price += (int) (price * 0.10f + basePrice * (isTreasure ? 2f : 1f) *
                         enchantLevel * MathHelper.nextFloat(random, .8f, 1.2f)
