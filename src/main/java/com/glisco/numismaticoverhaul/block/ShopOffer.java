@@ -13,23 +13,17 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 
-public class ShopOffer {
+public record ShopOffer(ItemStack sell, long price) {
     public static final Endec<ShopOffer> ENDEC = StructEndecBuilder.of(
         MinecraftEndecs.ITEM_STACK.fieldOf("sell", ShopOffer::getSellStack),
         Endec.LONG.fieldOf("price", ShopOffer::getPrice),
         ShopOffer::new
     );
 
-    private final ItemStack sell;
-    private final long price;
 
-    public ShopOffer(ItemStack sell, long price) {
-
+    public ShopOffer {
         if (sell.isEmpty()) throw new IllegalArgumentException("Sell Stack must not be empty");
         if (price == 0) throw new IllegalArgumentException("Price must not be null");
-
-        this.sell = sell;
-        this.price = price;
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -6,6 +6,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 
 public interface CurrencyItem {
 
@@ -18,12 +19,16 @@ public interface CurrencyItem {
     }
 
     static long getOriginalValue(ItemStack stack) {
-        NbtCompound nbt = stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+        NbtCompound nbt = new NbtCompound();
+        nbt.put(ORIGINAL_VALUE, ORIGINAL_VALUE.defaultValue());
+        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         return nbt.get(ORIGINAL_VALUE);
     }
 
     static boolean hasOriginalValue(ItemStack stack) {
-        NbtCompound nbt = stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+        NbtCompound nbt = new NbtCompound();
+        nbt.put(ORIGINAL_VALUE, ORIGINAL_VALUE.defaultValue());
+        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         return nbt.has(ORIGINAL_VALUE);
     }
 
