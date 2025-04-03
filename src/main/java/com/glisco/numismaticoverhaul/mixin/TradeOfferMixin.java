@@ -21,7 +21,9 @@ import java.util.Collections;
 @Mixin(TradeOffer.class)
 public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
 
-    @Shadow @Final private TradedItem firstBuyItem;
+    @Shadow
+    @Final
+    private TradedItem firstBuyItem;
     private int numismatic$reputation = 0;
 
     @Override
@@ -40,8 +42,8 @@ public class TradeOfferMixin implements NumismaticTradeOfferExtensions {
 
         if (!(this.firstBuyItem.item() instanceof CurrencyItem currencyItem)) return;
 
-        long originalValue = currencyItem.getValue(this.firstBuyItem.itemStack());
-        long adjustedValue = numismatic$reputation < 0
+        var originalValue = currencyItem.getValue(this.firstBuyItem.itemStack());
+        var adjustedValue = numismatic$reputation < 0
                 ? (long) (originalValue + Math.abs(numismatic$reputation) * (Math.abs(originalValue) * .02))
                 : (long) Math.max(1, originalValue - Math.abs(originalValue) * (numismatic$reputation / (numismatic$reputation + 100f)));
 

@@ -55,7 +55,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     public long getValue(ItemStack stack) {
         if (stack.getItem() != NumismaticOverhaulItems.MONEY_BAG) return 0;
-        NbtCompound nbt = new NbtCompound();
+        var nbt = new NbtCompound();
         nbt.put(COMBINED, COMBINED.defaultValue());
         nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         if (!nbt.has(COMBINED)) {
@@ -67,7 +67,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public long[] getCombinedValue(ItemStack stack) {
-        NbtCompound nbt = new NbtCompound();
+        var nbt = new NbtCompound();
         nbt.put(COMBINED, COMBINED.defaultValue());
         nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         if (!nbt.has(COMBINED)) {
@@ -130,7 +130,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        NbtCompound nbt = new NbtCompound();
+        var nbt = new NbtCompound();
         nbt.put(COMBINED, COMBINED.defaultValue());
         nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         if (nbt.get(COMBINED)) return;

@@ -3,14 +3,12 @@ package com.glisco.numismaticoverhaul.villagers.json.adapters;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.villagers.json.TradeJsonAdapter;
 import com.google.gson.JsonObject;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -46,12 +44,12 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
             ItemStack itemStack;
 
             // TODO: review, if correct
-            Optional<RegistryEntry<Enchantment>> optionalEnchantment = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
+            var optionalEnchantment = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
             if (optionalEnchantment.isPresent()) {
-                RegistryEntry<Enchantment> enchantmentEntry = optionalEnchantment.get();
-                Enchantment enchantment = enchantmentEntry.value();
+                var enchantmentEntry = optionalEnchantment.get();
+                var enchantment = enchantmentEntry.value();
 
-                int enchantmentLevel = MathHelper.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
+                var enchantmentLevel = MathHelper.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
                 itemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(enchantmentEntry, enchantmentLevel));
 
                 cost = 100 * (10 / enchantment.getWeight()) + (random.nextInt(50) + enchantmentLevel) * enchantmentLevel * enchantmentLevel * (10 / enchantment.getWeight());
@@ -63,7 +61,7 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
                 itemStack = new ItemStack(Items.BOOK);
             }
 
-            ItemStack itemAndCost = CurrencyHelper.getClosest(cost);
+            var itemAndCost = CurrencyHelper.getClosest(cost);
 
             return new TradeOffer(new TradedItem(itemAndCost.getItem(), itemAndCost.getCount()), Optional.of(new TradedItem(Items.BOOK)), itemStack, maxUses, this.experience, multiplier);
         }

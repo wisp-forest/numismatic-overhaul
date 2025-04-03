@@ -111,14 +111,14 @@ public class CurrencyHelper {
     }
 
     private static boolean isCombined(ItemStack stack) {
-        NbtCompound nbt = new NbtCompound();
+        var nbt = new NbtCompound();
         nbt.put(MoneyBagItem.COMBINED, MoneyBagItem.COMBINED.defaultValue());
         nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         return nbt.get(MoneyBagItem.COMBINED);
     }
 
     public static long[] getValues(ItemStack stack) {
-        NbtCompound nbt = new NbtCompound();
+        var nbt = new NbtCompound();
         nbt.put(VALUES, VALUES.defaultValue());
         nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
         return nbt.get(VALUES);
