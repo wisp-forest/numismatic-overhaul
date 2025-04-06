@@ -5,6 +5,7 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.packet.s2c.play.SetTradeOffersS2CPacket;
 import net.minecraft.village.TradeOfferList;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -13,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 // TODO: Review, not sure if this is correct. Seems to work?
 @Mixin(SetTradeOffersS2CPacket.class)
 public class SetTradeOffersS2CPacketMixin implements NumismaticTradeOfferExtensions {
+    @Unique
     private int numismatic$reputation = 0;
 
     @Override
