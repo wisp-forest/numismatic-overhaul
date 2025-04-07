@@ -34,6 +34,7 @@ public class ShopMerchant implements Merchant {
     @Override
     public void setCustomer(@Nullable PlayerEntity customer) {
         this.customer = customer;
+        this.shop.busy = customer != null;
     }
 
     @Nullable

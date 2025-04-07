@@ -146,6 +146,12 @@ public class ShopScreenHandler extends ScreenHandler {
         return ScreenUtils.handleSlotTransfer(this, invSlot, this.shopInventory.size());
     }
 
+    @Override
+    public void close(PlayerEntity player) {
+        super.close(player);
+        if (this.shop != null) this.shop.busy = false;
+    }
+
     private static class AutoHidingSlot extends Slot {
 
         private final int targetTab;

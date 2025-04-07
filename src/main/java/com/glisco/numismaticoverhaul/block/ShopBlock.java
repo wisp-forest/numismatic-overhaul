@@ -60,6 +60,8 @@ public class ShopBlock extends BlockWithEntity {
 
             ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
 
+            if (shop.busy) { return ActionResult.SUCCESS; };
+
             if (shop.getOwner().equals(player.getUuid())) {
                 if (player.isSneaking()) {
                     return openShopMerchant(player, shop);
@@ -67,6 +69,7 @@ public class ShopBlock extends BlockWithEntity {
                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
                     NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
                 }
+                shop.busy = true;
             } else {
                 return openShopMerchant(player, shop);
             }
