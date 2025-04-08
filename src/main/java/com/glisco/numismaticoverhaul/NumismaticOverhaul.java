@@ -2,6 +2,7 @@ package com.glisco.numismaticoverhaul;
 
 import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
+import com.glisco.numismaticoverhaul.block.ShopBlockEntity;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
@@ -20,12 +21,14 @@ import io.wispforest.owo.registration.reflect.FieldRegistrationHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
@@ -36,6 +39,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.tag.TagKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -123,6 +127,14 @@ public class NumismaticOverhaul implements ModInitializer {
                 }
             });
         }
+
+        PlayerBlockBreakEvents.BEFORE.register(new Identifier(MOD_ID, "check"), ((world, player, pos, state, blockEntity) -> {
+            if (blockEntity instanceof ShopBlockEntity shopBlockEntity && shopBlockEntity.busy) {
+                player.sendMessage(Text.translatable("notify.numismatic-overhaul.shop_in_use_break") ,true);
+                return false;
+            }
+            return true;
+        }));
     }
 
     private static boolean anyMatch(Identifier target, Identifier... comparisons) {
