@@ -1,4 +1,6 @@
 {
+  "notify.numismatic-overhaul.shop_in_use": "Cannot access the shop, someone is using it",
+  "notify.numismatic-overhaul.shop_in_use_break": "Cannot destroy the shop, someone is using it",
   "item.numismatic-overhaul.bronze_coin": "Bronze Coin",
   "item.numismatic-overhaul.silver_coin": "Silver Coin",
   "item.numismatic-overhaul.gold_coin": "Gold Coin",
