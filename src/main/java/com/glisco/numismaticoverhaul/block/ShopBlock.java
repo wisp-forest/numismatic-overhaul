@@ -60,7 +60,10 @@ public class ShopBlock extends BlockWithEntity {
 
             ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
 
-            if (shop.busy) { return ActionResult.SUCCESS; };
+            if (shop.busy) {
+                player.sendMessage(Text.translatable("notify.numismatic-overhaul.shop_in_use") ,true);
+                return ActionResult.SUCCESS;
+            }
 
             if (shop.getOwner().equals(player.getUuid())) {
                 if (player.isSneaking()) {
