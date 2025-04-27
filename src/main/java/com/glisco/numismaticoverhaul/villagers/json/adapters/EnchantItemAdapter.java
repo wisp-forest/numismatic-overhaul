@@ -5,25 +5,17 @@ import com.glisco.numismaticoverhaul.villagers.json.TradeJsonAdapter;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerJsonHelper;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOffers;
-import net.minecraft.village.TradedItem;
+import net.minecraft.village.*;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,71 +56,27 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
             this.basePrice = basePrice;
         }
 
-
-        // TODO: Review
         public TradeOffer create(Entity entity, Random random) {
             var itemStack = toEnchant.copy();
+
+            var enchantmentRegistry = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+            var nonTreasureEnchants = enchantmentRegistry.getEntryList(EnchantmentTags.NON_TREASURE);
+            var treasureRegistry = enchantmentRegistry.getEntryList(EnchantmentTags.TRADEABLE);
+            var enchants = List.<EnchantmentLevelEntry>of();
+            if (allowTreasure && treasureRegistry.isPresent()) {
+                enchants = EnchantmentHelper.generateEnchantments(random, itemStack, level, treasureRegistry.get().stream());
+            }
+            else if (nonTreasureEnchants.isPresent()) {
+                enchants = EnchantmentHelper.generateEnchantments(random, itemStack, level, nonTreasureEnchants.get().stream());
+            }
 
             var finalItemStack = itemStack.copy();
             if (finalItemStack.isOf(Items.BOOK)) {
                 finalItemStack = new ItemStack(Items.ENCHANTED_BOOK);
             }
 
-            var enchantmentRegistry = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT);
-            var tradeRegistry = enchantmentRegistry.getEntryList(EnchantmentTags.TRADEABLE);
-            var treasureRegistry = enchantmentRegistry.getEntryList(EnchantmentTags.TREASURE);
-
-            // Can't be var
-            List<Enchantment> possibleEnchantments = new ArrayList<>();
-
-            if (tradeRegistry.isPresent()) {
-                for (RegistryEntry<Enchantment> enchantment : tradeRegistry.get()) {
-                    if (!enchantment.value().isAcceptableItem(finalItemStack)) continue;
-
-                    possibleEnchantments.add(enchantment.value());
-                }
-            }
-
-            if (allowTreasure && treasureRegistry.isPresent()) {
-                for (RegistryEntry<Enchantment> enchantment : treasureRegistry.get()) {
-                    if (!enchantment.value().isAcceptableItem(finalItemStack)) continue;
-
-                    possibleEnchantments.add(enchantment.value());
-                }
-            }
-
-            var hasEnchantment = false;
-            var enchantLevel = 1;
-
-            // Randomizer to apply from Enchant List
-            for (Enchantment enchantment : possibleEnchantments) {
-                if (random.nextInt(5) <= level && (!hasEnchantment || random.nextBoolean())) {
-                    enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
-                    var registeredEnchantment = enchantmentRegistry.getEntry(enchantment);
-
-                    if (finalItemStack.isOf(Items.ENCHANTED_BOOK)) {
-                        finalItemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(registeredEnchantment, enchantLevel));
-                    } else {
-                        finalItemStack.addEnchantment(registeredEnchantment, enchantLevel);
-                    }
-
-                    hasEnchantment = true;
-                }
-            }
-
-            // Random Fallback in case nothing was added
-            if (!hasEnchantment) {
-                var optional = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
-                if (optional.isPresent()) {
-                    var registryEntry = optional.get();
-                    var enchantment = registryEntry.value();
-                    enchantLevel = MathHelper.nextInt(random, Math.max(1, enchantment.getMinLevel()), Math.min(enchantment.getMaxLevel(), level));
-                    if (finalItemStack.isOf(Items.ENCHANTED_BOOK)) {
-                        finalItemStack = EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(registryEntry, enchantLevel));
-                    } else {
-                        finalItemStack.addEnchantment(registryEntry, enchantLevel);
-                    }
-                }
+            for (EnchantmentLevelEntry enchant : enchants) {
+                finalItemStack.addEnchantment(enchant.enchantment, enchant.level);
             }
 
             int price = basePrice;
@@ -144,7 +92,7 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
 
                 // TODO: Review, not sure if math is correct
                 price += (int) (price * 0.10f + basePrice * (isTreasure ? 2f : 1f) *
-                        enchantLevel * MathHelper.nextFloat(random, .8f, 1.2f)
+                        entry.getIntValue() * MathHelper.nextFloat(random, .8f, 1.2f)
                         * (5f / (float) enchantment.value().getWeight()));
             }
 
