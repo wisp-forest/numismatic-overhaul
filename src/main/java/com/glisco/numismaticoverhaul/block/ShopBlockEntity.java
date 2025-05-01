@@ -99,8 +99,8 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     }
 
     @NotNull
-    public Merchant getMerchant() {
-        return merchant;
+    public ShopMerchant getMerchant() {
+        return (ShopMerchant) merchant;
     }
 
     public List<ShopOffer> getOffers() {

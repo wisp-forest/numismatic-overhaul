@@ -5,9 +5,7 @@ import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.*;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
@@ -66,23 +64,25 @@ public class ShopBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient) {
-            ShopBlockEntity shop = (ShopBlockEntity) world.getBlockEntity(pos);
-            if (shop.busy) return ActionResult.SUCCESS;
+        if (world.isClient()) return ActionResult.SUCCESS;
+        if (!(world.getBlockEntity(pos) instanceof ShopBlockEntity shop)) return ActionResult.FAIL;
 
-            if (shop.getOwner().equals(player.getUuid()) && !player.isSneaking()) {
-                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
-
-                shop.busy = true;
-            } else {
-                ((ShopMerchant) shop.getMerchant()).updateTrades();
-                shop.getMerchant().setCustomer(player);
-                shop.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.shop.merchant_title"), 0);
-
-                return ActionResult.SUCCESS;
-            }
+        if (shop.busy) {
+            return ActionResult.SUCCESS;
         }
+
+        if (shop.getOwner().equals(player.getUuid()) && !player.isSneaking()) {
+            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+            NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
+
+            shop.busy = true;
+            return ActionResult.SUCCESS;
+        }
+
+        var merchant = shop.getMerchant();
+        merchant.updateTrades();
+        merchant.setCustomer(player);
+        merchant.sendOffers(player, Text.translatable("gui.numismatic-overhaul.shop.merchant_title"), 0);
 
         return ActionResult.SUCCESS;
     }
@@ -110,7 +110,7 @@ public class ShopBlock extends BlockWithEntity {
                 shop.getMerchant().setCustomer(null);
 
                 CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
-                        .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+                    .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
 
                 ItemScatterer.spawn(world, pos, shop);
             }
