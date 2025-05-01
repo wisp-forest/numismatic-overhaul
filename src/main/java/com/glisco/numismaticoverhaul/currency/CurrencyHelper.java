@@ -6,8 +6,11 @@ import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.BuiltInEndecs;
 import io.wispforest.endec.impl.KeyedEndec;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.village.TradedItem;
 
 import java.util.ArrayList;
@@ -108,10 +111,16 @@ public class CurrencyHelper {
     }
 
     private static boolean isCombined(ItemStack stack) {
-        return stack.get(MoneyBagItem.COMBINED);
+        var nbt = new NbtCompound();
+        nbt.put(MoneyBagItem.COMBINED, MoneyBagItem.COMBINED.defaultValue());
+        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
+        return nbt.get(MoneyBagItem.COMBINED);
     }
 
     public static long[] getValues(ItemStack stack) {
-        return stack.get(VALUES);
+        var nbt = new NbtCompound();
+        nbt.put(VALUES, VALUES.defaultValue());
+        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
+        return nbt.get(VALUES);
     }
 }

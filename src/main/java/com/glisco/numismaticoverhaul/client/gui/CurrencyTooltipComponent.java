@@ -31,7 +31,8 @@ public class CurrencyTooltipComponent implements TooltipComponent {
 
         if (data.original()[0] != -1) {
             CurrencyConverter.getAsItemStackList(data.original()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));
-            text.add(Text.of(" "));
+            // TODO - Investigate. Why did this exist? It just breaks coin tooltips
+            //text.add(Text.of(" "));
         }
 
         CurrencyConverter.getAsItemStackList(data.value()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));
@@ -54,7 +55,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
     @Override
     public void drawText(TextRenderer textRenderer, int x, int y, Matrix4f matrix4f, VertexConsumerProvider.Immediate immediate) {
         for (int i = 0; i < text.size(); i++) {
-            textRenderer.draw(text.get(i), x + 10, y + i * 10, -1, true, matrix4f, immediate, TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+            textRenderer.draw(text.get(i), x + 12, y + i * 10, -1, true, matrix4f, immediate, TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
         }
     }
 
@@ -71,7 +72,7 @@ public class CurrencyTooltipComponent implements TooltipComponent {
         }
 
         for (int i = 0; i < coins.size(); i++) {
-            context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.size() == 0 ? 0 : 10 + originalCoins.size() * 10));
+            context.drawItemWithoutEntity(ItemOps.singleCopy(coins.get(i)), x - 4, y - 5 + i * 10 + (originalCoins.isEmpty() ? 0 : 10 + originalCoins.size() * 10));
         }
 
         context.pop();

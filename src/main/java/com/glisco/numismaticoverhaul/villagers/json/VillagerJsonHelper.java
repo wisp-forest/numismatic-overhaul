@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -82,7 +84,7 @@ public class VillagerJsonHelper {
                 VillagerTradesHandler.addLoadingException(new DeserializationException("Tag parsing error: " + e.getMessage()));
             }
 
-            if (stackTag != null) stack.setNbt(stackTag);
+            if (stackTag != null) stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(stackTag));
         }
 
         return stack;

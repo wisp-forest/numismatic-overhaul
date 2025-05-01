@@ -40,7 +40,8 @@ public class MerchantScreenHandlerMixin {
             autofillWithMoneyBag(slot, stack, handler, playerBalance);
         }
 
-        if (slot == 1) playerBalance.commitTransactions();
+        // TODO: Review: Removed if (slot == 1) check as it was causing coins to not actually be removed the purse when trading
+        playerBalance.commitTransactions();
     }
 
     private static void numismatic$autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {

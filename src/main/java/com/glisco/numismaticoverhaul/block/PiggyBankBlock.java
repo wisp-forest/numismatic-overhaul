@@ -3,7 +3,6 @@ package com.glisco.numismaticoverhaul.block;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.mojang.serialization.MapCodec;
 import io.wispforest.owo.ops.WorldOps;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
@@ -14,15 +13,12 @@ import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -79,7 +75,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     ).reduce(VoxelShapes::union).get();
 
     public PiggyBankBlock() {
-        super(FabricBlockSettings.create().strength(1.25F, 4.2F));
+        super(Settings.create().strength(1.25F, 4.2F));
     }
 
     @Override
@@ -150,7 +146,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
         if (builder.getOptional(LootContextParameters.BLOCK_ENTITY) instanceof PiggyBankBlockEntity piggyBank) {
             var tool = builder.getOptional(LootContextParameters.TOOL);
-            if (tool != null && tool.hasCustomName() && Objects.equals(tool.getName().getString(), "Hammer")) {
+            if (tool != null && tool.get(DataComponentTypes.CUSTOM_NAME) != null && Objects.equals(tool.getName().getString(), "Hammer")) {
 
                 WorldOps.playSound(piggyBank.getWorld(), piggyBank.getPos(), NumismaticOverhaul.PIGGY_BANK_BREAK, SoundCategory.BLOCKS);
                 NumismaticOverhaul.PIGGY_BANK_BROKEN.spawn(piggyBank.getWorld(), Vec3d.of(piggyBank.getPos()), 5);

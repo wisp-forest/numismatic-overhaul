@@ -7,7 +7,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.village.*;
 import org.jetbrains.annotations.Nullable;
-import java.util.Optional;
 
 public class RemappingTradeWrapper implements TradeOffers.Factory {
 
@@ -29,10 +28,10 @@ public class RemappingTradeWrapper implements TradeOffers.Factory {
         if (tempOffer == null) return null;
 
         final var firstBuyRemapped = remap(tempOffer.getOriginalFirstBuyItem());
-        final var secondBuyRemapped = remap(tempOffer.getSecondBuyItem().orElseThrow());
+        final var secondBuyRemapped = tempOffer.getSecondBuyItem().map(RemappingTradeWrapper::remap);
         final var sellRemapped = remap(tempOffer.getSellItem());
 
-        return new TradeOffer(firstBuyRemapped, Optional.of(secondBuyRemapped), sellRemapped.itemStack(), tempOffer.getUses(), tempOffer.getMaxUses(), tempOffer.getMerchantExperience(), tempOffer.getPriceMultiplier(), tempOffer.getDemandBonus());
+        return new TradeOffer(firstBuyRemapped, secondBuyRemapped, sellRemapped.itemStack(), tempOffer.getUses(), tempOffer.getMaxUses(), tempOffer.getMerchantExperience(), tempOffer.getPriceMultiplier(), tempOffer.getDemandBonus());
     }
 
     private static TradedItem remap(TradedItem tradedItem) {

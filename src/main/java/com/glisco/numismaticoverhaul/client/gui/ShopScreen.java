@@ -165,7 +165,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                 tradeBuffer.stack(bufferStack);
                 if (!bufferStack.isEmpty()) {
                     var tooltip = new ArrayList<TooltipComponent>();
-                    bufferStack.getTooltip(this.client.player, this.client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC)
+                    bufferStack.getTooltip(Item.TooltipContext.create(this.client.world), this.client.player, this.client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC)
                             .stream()
                             .map(Text::asOrderedText)
                             .map(TooltipComponent::of)

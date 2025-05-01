@@ -72,7 +72,7 @@
         "type": "numismatic-overhaul:sell_stack",
         "price": 300,
         "sell": {
-          "item": "scute",
+          "item": "turtle_scute",
           "count": 1
         }
       },
