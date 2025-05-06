@@ -13,7 +13,7 @@ public enum Currency implements ItemConvertible {
 
         @Override
         public long getRawValue(long amount) {
-            return amount;
+            return amount * BRONZE_VALUE;
         }
 
         @Override
@@ -28,7 +28,7 @@ public enum Currency implements ItemConvertible {
 
         @Override
         public long getRawValue(long amount) {
-            return amount * 100;
+            return amount * SILVER_VALUE;
         }
 
         @Override
@@ -43,7 +43,7 @@ public enum Currency implements ItemConvertible {
 
         @Override
         public long getRawValue(long amount) {
-            return amount * 10000;
+            return amount * GOLD_VALUE;
         }
 
         @Override
@@ -55,4 +55,8 @@ public enum Currency implements ItemConvertible {
     public abstract int getNameColor();
 
     public abstract long getRawValue(long amount);
+
+    public static final int GOLD_VALUE = 10000;
+    public static final int SILVER_VALUE = 100;
+    public static final int BRONZE_VALUE = 1;
 }

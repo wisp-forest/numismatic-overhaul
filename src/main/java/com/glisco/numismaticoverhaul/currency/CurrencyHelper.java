@@ -1,25 +1,17 @@
 package com.glisco.numismaticoverhaul.currency;
 
-import com.glisco.numismaticoverhaul.item.CoinItem;
-import com.glisco.numismaticoverhaul.item.CurrencyItem;
-import com.glisco.numismaticoverhaul.item.MoneyBagItem;
+import com.glisco.numismaticoverhaul.item.*;
 import io.wispforest.endec.Endec;
-import io.wispforest.endec.impl.BuiltInEndecs;
 import io.wispforest.endec.impl.KeyedEndec;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.village.TradedItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyHelper {
 
     public static final KeyedEndec<Long> VALUE = new KeyedEndec<>("Value", Endec.LONG, 0L);
-    public static final KeyedEndec<long[]> VALUES = new KeyedEndec<>("Values", BuiltInEndecs.LONG_ARRAY, new long[]{});
 
     /**
      * Checks how much money a player has as coin items in their inventory
@@ -34,7 +26,6 @@ public class CurrencyHelper {
 
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
-            if (isCombined(stack)) continue;
             if (!(stack.getItem() instanceof CurrencyItem currencyItem)) continue;
 
             value += currencyItem.getValue(stack);
@@ -49,7 +40,6 @@ public class CurrencyHelper {
         return stacks.stream().mapToInt(stack -> {
             if (stack == null) return 0;
 
-            if (isCombined(stack)) return 0;
             if (!(stack.getItem() instanceof CurrencyItem currencyItem)) return 0;
             return (int) currencyItem.getValue(stack);
         }).sum();
@@ -87,7 +77,7 @@ public class CurrencyHelper {
         if (rawStacks.size() <= maxStacks) {
             stacks.addAll(rawStacks);
         } else {
-            stacks.add(MoneyBagItem.create(value));
+            stacks.add(MoneyBagItem.fromRawValue(value));
         }
 
         return stacks;
@@ -110,17 +100,4 @@ public class CurrencyHelper {
         return new TradedItem(closestPriceStack.getItem(), closestPriceStack.getCount());
     }
 
-    private static boolean isCombined(ItemStack stack) {
-        var nbt = new NbtCompound();
-        nbt.put(MoneyBagItem.COMBINED, MoneyBagItem.COMBINED.defaultValue());
-        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
-        return nbt.get(MoneyBagItem.COMBINED);
-    }
-
-    public static long[] getValues(ItemStack stack) {
-        var nbt = new NbtCompound();
-        nbt.put(VALUES, VALUES.defaultValue());
-        nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt)).copyNbt();
-        return nbt.get(VALUES);
-    }
 }

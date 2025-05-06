@@ -31,8 +31,6 @@ public class CurrencyTooltipComponent implements TooltipComponent {
 
         if (data.original()[0] != -1) {
             CurrencyConverter.getAsItemStackList(data.original()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));
-            // TODO - Investigate. Why did this exist? It just breaks coin tooltips
-            //text.add(Text.of(" "));
         }
 
         CurrencyConverter.getAsItemStackList(data.value()).forEach(stack -> text.add(Text.literal(String.valueOf(stack.getCount())).formatted(Formatting.GRAY)));

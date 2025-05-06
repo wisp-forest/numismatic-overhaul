@@ -6,6 +6,7 @@ import com.glisco.numismaticoverhaul.client.gui.CurrencyTooltipComponent;
 import com.glisco.numismaticoverhaul.client.gui.PiggyBankScreen;
 import com.glisco.numismaticoverhaul.client.gui.PurseLayerElement;
 import com.glisco.numismaticoverhaul.client.gui.ShopScreen;
+import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.mixin.LayerInstanceAccessor;
@@ -43,13 +44,11 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(NumismaticOverhaulItems.GOLD_COIN, Identifier.of("coins"), (stack, world, entity, seed) -> stack.getCount() / 100.0f);
 
         ModelPredicateProviderRegistry.register(NumismaticOverhaulItems.MONEY_BAG, Identifier.of("size"), (stack, world, entity, seed) -> {
-            long[] values = NumismaticOverhaulItems.MONEY_BAG.getCombinedValue(stack);
-            if (values.length < 3) return 0;
+            long value = NumismaticOverhaulItems.MONEY_BAG.getValue(stack);
 
-            if (values[2] > 0) return 1;
-            if (values[1] > 0) return .5f;
-
-            return 0;
+            if (value >= Currency.GOLD_VALUE) return 1;
+            else if (value >= Currency.SILVER_VALUE) return .5f;
+            else return 0;
         });
 
         TooltipComponentCallback.EVENT.register(data -> {

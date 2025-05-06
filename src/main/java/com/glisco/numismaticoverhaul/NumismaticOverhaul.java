@@ -4,8 +4,7 @@ import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
-import com.glisco.numismaticoverhaul.item.MoneyBagItem;
-import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
+import com.glisco.numismaticoverhaul.item.*;
 import com.glisco.numismaticoverhaul.network.RequestPurseActionC2SPacket;
 import com.glisco.numismaticoverhaul.network.ShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
@@ -28,6 +27,7 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.*;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
@@ -76,9 +76,11 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
             = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(10, 0, 100));
 
+    public static final ComponentType<MoneyBagComponent> MONEY_BAG_COMPONENT = MoneyBagComponent.register();
+
     public static final OwoItemGroup NUMISMATIC_GROUP = OwoItemGroup.builder(
                     NumismaticOverhaul.id("main"),
-                    () -> Icon.of(MoneyBagItem.createCombined(new long[]{0, 1, 0})))
+                    () -> Icon.of(MoneyBagItem.fromRawValue(100)))
             .initializer(group -> {
                 group.addButton(ItemGroupButton.modrinth(group, "https://modrinth.com/mod/numismatic-overhaul"));
                 group.addButton(ItemGroupButton.curseforge(group, "https://www.curseforge.com/minecraft/mc-mods/numismatic-overhaul"));

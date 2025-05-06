@@ -2,7 +2,6 @@ package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
-import com.glisco.numismaticoverhaul.villagers.data.NumismaticTradeOfferExtensions;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
@@ -29,13 +28,11 @@ public record ShopOffer(ItemStack sell, long price) {
     @SuppressWarnings("ConstantConditions")
     public TradeOffer toTradeOffer(ShopBlockEntity shop, boolean inexhaustible) {
         boolean isPocketChange = CurrencyConverter.getRequiredCurrencyTypes(price) == 1;
-        var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
+        var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).getFirst() : MoneyBagItem.fromRawValue(price);
         int maxUses = inexhaustible ? Integer.MAX_VALUE : count(shop.getItems(), sell) / sell.getCount();
         var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), (int) price) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.EMPTY, buyStack);
 
-        final var tradeOffer = new TradeOffer(tradedItem, sell, maxUses, 0, 0);
-        ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(-69420);
-        return tradeOffer;
+        return new TradeOffer(tradedItem, sell, maxUses, 0, 0);
     }
 
     public long getPrice() {

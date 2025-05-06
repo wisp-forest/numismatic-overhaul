@@ -10,14 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.TradeOutputSlot;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.text.*;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-
 import java.util.Optional;
 
 public class CoinItem extends Item implements CurrencyItem {
@@ -32,22 +27,19 @@ public class CoinItem extends Item implements CurrencyItem {
     }
 
     @Override
-    public boolean onClicked(ItemStack clickedStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+    public boolean onClicked(ItemStack clickedStack, ItemStack cursorStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (slot instanceof TradeOutputSlot) return false;
         if (clickType != ClickType.LEFT) return false;
 
-        if ((otherStack.getItem() == this && otherStack.getCount() + clickedStack.getCount() <= otherStack.getMaxCount()) || !(otherStack.getItem() instanceof CurrencyItem currencyItem))
+        if ((cursorStack.getItem() == this && cursorStack.getCount() + clickedStack.getCount() <= cursorStack.getMaxCount()) || !(cursorStack.getItem() instanceof CurrencyItem currencyItem)) {
             return false;
+        }
 
-        long[] values = currencyItem.getCombinedValue(otherStack);
-        values[this.currency.ordinal()] += clickedStack.getCount();
-
-        final var stack = MoneyBagItem.createCombined(values);
+        final var stack = MoneyBagItem.create(clickedStack, cursorStack);
         if (!slot.canInsert(stack)) return false;
 
         slot.setStack(stack);
         cursorStackReference.set(ItemStack.EMPTY);
-
         return true;
     }
 
@@ -66,8 +58,7 @@ public class CoinItem extends Item implements CurrencyItem {
 
     @Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
-        return Optional.of(new CurrencyTooltipData(this.currency.getRawValue(stack.getCount()),
-                CurrencyItem.hasOriginalValue(stack) ? CurrencyItem.getOriginalValue(stack) : -1));
+        return Optional.of(new CurrencyTooltipData(this.currency.getRawValue(stack.getCount()), -1));
     }
 
     @Override

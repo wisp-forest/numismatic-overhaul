@@ -37,13 +37,14 @@ public class MerchantScreenHandlerMixin {
         if (stack.getItem() instanceof CoinItem) {
             numismatic$autofillWithCoins(slot, stack, handler, playerBalance);
         } else if (stack.getItem() == NumismaticOverhaulItems.MONEY_BAG) {
-            autofillWithMoneyBag(slot, stack, handler, playerBalance);
+            numismatic$autofillWithMoneyBag(slot, stack, handler, playerBalance);
         }
 
         // TODO: Review: Removed if (slot == 1) check as it was causing coins to not actually be removed the purse when trading
         playerBalance.commitTransactions();
     }
 
+    @Unique
     private static void numismatic$autofillWithCoins(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
         //See how much is required and how much was already autofilled
         long requiredCurrency = ((CoinItem) stack.getItem()).currency.getRawValue(stack.getCount());
@@ -62,7 +63,8 @@ public class MerchantScreenHandlerMixin {
         handler.slots.get(slot).setStack(stack.copy());
     }
 
-    private static void autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
+    @Unique
+    private static void numismatic$autofillWithMoneyBag(int slot, ItemStack stack, MerchantScreenHandler handler, CurrencyComponent playerBalance) {
         if (ItemStack.areEqual(stack, handler.getSlot(slot).getStack())) return;
         PlayerEntity player = ((PlayerInventory) handler.getSlot(3).inventory).player;
 

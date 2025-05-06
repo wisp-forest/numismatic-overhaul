@@ -11,9 +11,7 @@
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
     "ServerWorldMixin",
-    "TradeOfferInternalsMixin",
-    "TradeOfferMixin",
-    "VillagerEntityMixin"
+    "TradeOfferInternalsMixin"
   ],
   "client": [
     "MerchantScreenMixin"

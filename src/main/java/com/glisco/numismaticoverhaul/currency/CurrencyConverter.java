@@ -33,7 +33,7 @@ public class CurrencyConverter {
         List<ItemStack> list = new ArrayList<>();
 
         Arrays.stream(getAsItemStackArray(value)).forEach(itemStack -> {
-            if (itemStack.getCount() != 0) list.add(0, itemStack);
+            if (itemStack.getCount() != 0) list.addFirst(itemStack);
         });
 
         return list;
