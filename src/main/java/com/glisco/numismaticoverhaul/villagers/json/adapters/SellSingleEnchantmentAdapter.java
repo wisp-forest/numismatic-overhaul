@@ -43,7 +43,6 @@ public class SellSingleEnchantmentAdapter extends TradeJsonAdapter {
             int cost;
             ItemStack itemStack;
 
-            // TODO: review, if correct
             var optionalEnchantment = entity.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getRandomEntry(EnchantmentTags.TRADEABLE, random);
             if (optionalEnchantment.isPresent()) {
                 var enchantmentEntry = optionalEnchantment.get();

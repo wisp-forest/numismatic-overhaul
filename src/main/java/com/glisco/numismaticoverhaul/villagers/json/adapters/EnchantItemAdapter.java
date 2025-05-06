@@ -90,7 +90,6 @@ public class EnchantItemAdapter extends TradeJsonAdapter {
                     price *= 2;
                 }
 
-                // TODO: Review, not sure if math is correct
                 price += (int) (price * 0.10f + basePrice * (isTreasure ? 2f : 1f) *
                         entry.getIntValue() * MathHelper.nextFloat(random, .8f, 1.2f)
                         * (5f / (float) enchantment.value().getWeight()));

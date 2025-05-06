@@ -18,8 +18,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -40,8 +39,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     private static final int[] NO_SLOTS = new int[0];
     public static KeyedEndec<List<ShopOffer>> OFFERS_LIST = ShopOffer.ENDEC.listOf().keyed("offers", ArrayList::new);
 
-    // TODO - Review, no longer final
-    private DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(27, ItemStack.EMPTY);
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
 
     public boolean busy = false;
     private final Merchant merchant;
@@ -65,7 +63,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     @Override
     public DefaultedList<ItemStack> getItems() {
-        return INVENTORY;
+        return this.inventory;
     }
 
     @Override
@@ -90,12 +88,12 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     @Override
     protected DefaultedList<ItemStack> getHeldStacks() {
-        return this.INVENTORY;
+        return this.inventory;
     }
 
     @Override
     protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
-        this.INVENTORY = inventory;
+        this.inventory = inventory;
     }
 
     @NotNull
@@ -132,7 +130,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     @Override
     public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(tag, registryLookup);
-        Inventories.writeNbt(tag, INVENTORY, registryLookup);
+        Inventories.writeNbt(tag, this.inventory, registryLookup);
         tag.put(OFFERS_LIST, offers);
         tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
@@ -144,7 +142,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     @Override
     public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(tag, registryLookup);
-        Inventories.readNbt(tag, INVENTORY, registryLookup);
+        Inventories.readNbt(tag, this.inventory, registryLookup);
         this.offers = tag.get(OFFERS_LIST);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
@@ -201,7 +199,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new ShopScreenHandler(syncId, playerInventory, this);
+        return new ShopScreenHandler(syncId, playerInventory, this, ScreenHandlerContext.create(world, pos));
     }
 
     @Override

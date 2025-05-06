@@ -59,7 +59,7 @@
                                 <flow-layout direction="vertical">
                                     <children>
                                         <item>
-                                            <stack>hopper</stack> <!--TODO: Verify -->
+                                            <stack>hopper</stack>
                                             <margins>
                                                 <all>6</all>
                                             </margins>

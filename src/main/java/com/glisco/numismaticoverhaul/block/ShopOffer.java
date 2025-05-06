@@ -1,10 +1,15 @@
 package com.glisco.numismaticoverhaul.block;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.item.MoneyBagComponent;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
+import io.wispforest.owo.serialization.CodecUtils;
 import io.wispforest.owo.serialization.endec.MinecraftEndecs;
+import net.minecraft.component.ComponentMap;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.ComponentPredicate;
 import net.minecraft.registry.Registries;
@@ -14,7 +19,7 @@ import net.minecraft.village.TradedItem;
 
 public record ShopOffer(ItemStack sell, long price) {
     public static final Endec<ShopOffer> ENDEC = StructEndecBuilder.of(
-        MinecraftEndecs.ITEM_STACK.fieldOf("sell", ShopOffer::getSellStack),
+        CodecUtils.toEndec(ItemStack.VALIDATED_CODEC).fieldOf("sell", ShopOffer::getSellStack),
         Endec.LONG.fieldOf("price", ShopOffer::getPrice),
         ShopOffer::new
     );
@@ -30,7 +35,7 @@ public record ShopOffer(ItemStack sell, long price) {
         boolean isPocketChange = CurrencyConverter.getRequiredCurrencyTypes(price) == 1;
         var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).getFirst() : MoneyBagItem.fromRawValue(price);
         int maxUses = inexhaustible ? Integer.MAX_VALUE : count(shop.getItems(), sell) / sell.getCount();
-        var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), (int) price) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.EMPTY, buyStack);
+        var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), (int) price) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.of(ComponentMap.of(ComponentMap.EMPTY, ComponentMap.builder().add(NumismaticOverhaul.MONEY_BAG_COMPONENT, MoneyBagComponent.of(price)).build())), buyStack);
 
         return new TradeOffer(tradedItem, sell, maxUses, 0, 0);
     }
@@ -46,7 +51,7 @@ public record ShopOffer(ItemStack sell, long price) {
     public static int count(DefaultedList<ItemStack> stacks, ItemStack testStack) {
         int count = 0;
         for (var stack : stacks) {
-            if (!ItemStack.areEqual(stack, testStack)) continue;
+            if (!ItemStack.areItemsEqual(stack, testStack)) continue;
             count += stack.getCount();
         }
         return count;
@@ -55,7 +60,7 @@ public record ShopOffer(ItemStack sell, long price) {
     public static int remove(DefaultedList<ItemStack> stacks, ItemStack removeStack) {
         int toRemove = removeStack.getCount();
         for (var stack : stacks) {
-            if (!ItemStack.areEqual(stack, removeStack)) continue;
+            if (!ItemStack.areItemsEqual(stack, removeStack)) continue;
 
             int removed = stack.getCount();
             stack.decrement(toRemove);

@@ -89,7 +89,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             var offersScroll = this.component(ScrollContainer.class, "offer-container");
             var leftColumn = offersScroll.childById(FlowLayout.class, "first-trades-column");
 
-            offersScroll.scrollTo(leftColumn.children().get(leftColumn.children().size() - 1));
+            offersScroll.scrollTo(leftColumn.children().getLast());
         }
 
         this.component(FlowLayout.class, "transfer-button").tooltip(
@@ -165,7 +165,8 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                 tradeBuffer.stack(bufferStack);
                 if (!bufferStack.isEmpty()) {
                     var tooltip = new ArrayList<TooltipComponent>();
-                    bufferStack.getTooltip(Item.TooltipContext.create(this.client.world), this.client.player, this.client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC)
+                    var client = MinecraftClient.getInstance();
+                    bufferStack.getTooltip(Item.TooltipContext.create(client.world), client.player, client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC)
                             .stream()
                             .map(Text::asOrderedText)
                             .map(TooltipComponent::of)
@@ -192,7 +193,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
     }
 
     private boolean hasOfferFor(ItemStack stack) {
-        return this.offers.stream().anyMatch(offer -> ItemStack.areEqual(stack, offer.getSellStack()));
+        return this.offers.stream().anyMatch(offer -> ItemStack.areItemsEqual(stack, offer.getSellStack()));
     }
 
     private void populateTrades(int tab) {
@@ -249,9 +250,9 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
 
         @Override
         public boolean shouldDrawTooltip(double mouseX, double mouseY) {
-            //noinspection DataFlowIssue
-            var screenHandler = MinecraftClient.getInstance().player.currentScreenHandler;
-            return (screenHandler == null || screenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
+            var player = MinecraftClient.getInstance().player;
+            if (player == null) return false;
+            return (player.currentScreenHandler == null || player.currentScreenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
         }
     }
 
