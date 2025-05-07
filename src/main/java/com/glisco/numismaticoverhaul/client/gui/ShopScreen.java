@@ -50,7 +50,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         this.tabButtons.clear();
 
         var leftColumn = rootComponent.childById(FlowLayout.class, "left-column");
-        leftColumn.child(makeTabButton(Items.CHEST, false, button -> selectTab(0)));
+        leftColumn.child(makeTabButton(Items.CHEST, false, button -> this.selectTab(0)));
         leftColumn.child(makeTabButton(Items.EMERALD, true, button -> this.selectTab(1)));
 
         rootComponent.childById(ButtonComponent.class, "extract-button").onPress(button -> this.handler.extractCurrency());
@@ -93,14 +93,14 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         }
 
         this.component(FlowLayout.class, "transfer-button").tooltip(
-                data.transferEnabled()
-                        ? Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.enabled")
-                        : Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.disabled")
+            data.transferEnabled()
+                ? Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.enabled")
+                : Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.disabled")
         );
         this.component(LabelComponent.class, "transfer-label").text(
-                data.transferEnabled()
-                        ? TextOps.withColor("✔", 0x28FFBF)
-                        : TextOps.withColor("✘", 0xEB1D36)
+            data.transferEnabled()
+                ? TextOps.withColor("✔", 0x28FFBF)
+                : TextOps.withColor("✘", 0xEB1D36)
         );
 
         this.afterDataUpdate();
@@ -157,9 +157,9 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                 boolean hasOffer = this.hasOfferFor(bufferStack);
 
                 submitButton.active = !priceText.isBlank()
-                        && Integer.parseInt(priceText) > 0
-                        && !bufferStack.isEmpty()
-                        && (this.offers.size() < 24 || hasOffer);
+                    && Integer.parseInt(priceText) > 0
+                    && !bufferStack.isEmpty()
+                    && (this.offers.size() < 24 || hasOffer);
                 deleteButton.active = hasOffer;
 
                 tradeBuffer.stack(bufferStack);
@@ -167,10 +167,10 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
                     var tooltip = new ArrayList<TooltipComponent>();
                     var client = MinecraftClient.getInstance();
                     bufferStack.getTooltip(Item.TooltipContext.create(client.world), client.player, client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC)
-                            .stream()
-                            .map(Text::asOrderedText)
-                            .map(TooltipComponent::of)
-                            .forEach(tooltip::add);
+                        .stream()
+                        .map(Text::asOrderedText)
+                        .map(TooltipComponent::of)
+                        .forEach(tooltip::add);
                     bufferStack.getTooltipData().ifPresent(data -> {
                         var fabricComponent = TooltipComponentCallback.EVENT.invoker().getComponent(data);
                         tooltip.add(1, Objects.requireNonNullElseGet(fabricComponent, () -> TooltipComponent.of(data)));
