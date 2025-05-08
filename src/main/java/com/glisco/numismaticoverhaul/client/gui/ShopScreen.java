@@ -1,15 +1,14 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.ShopOffer;
 import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.ops.TextOps;
-import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
+import io.wispforest.owo.ui.base.BaseOwoHandledScreen;
 import io.wispforest.owo.ui.component.*;
-import io.wispforest.owo.ui.container.FlowLayout;
-import io.wispforest.owo.ui.container.ScrollContainer;
+import io.wispforest.owo.ui.container.*;
+import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.parsing.UIParsing;
 import io.wispforest.owo.ui.util.UISounds;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
@@ -20,44 +19,107 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenHandler> {
+import static com.glisco.numismaticoverhaul.NumismaticOverhaul.id;
+import static io.wispforest.owo.ui.container.Containers.horizontalFlow;
+import static io.wispforest.owo.ui.container.Containers.verticalFlow;
 
-    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui.png");
-    public static final Identifier TRADES_TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui_trades.png");
+public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandler> {
+
+    public static final Identifier TEXTURE_PNG = id("textures/gui/shop_gui.png");
+    public static final Identifier TRADES_TEXTURE = id("textures/gui/shop_gui_trades.png");
 
     private final List<ButtonWidget> tabButtons = new ArrayList<>();
+    //private final ShopWidget shopWidget = new ShopWidget();
     private final List<ShopOffer> offers = new ArrayList<>();
 
-    private Runnable afterDataUpdate = () -> {};
-    private Consumer<String> priceDisplay = s -> {};
+    private Runnable afterDataUpdate = () -> {
+    };
+    private Consumer<String> priceDisplay = s -> {
+    };
     private int tab = 0;
 
     public ShopScreen(ShopScreenHandler handler, PlayerInventory inventory, Text title) {
-        super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("shop"));
+        super(handler, inventory, title);
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
     }
 
     @Override
+    protected @NotNull OwoUIAdapter<FlowLayout> createAdapter() {
+        return OwoUIAdapter.create(this, (sizing, sizing2) -> {
+            var root = verticalFlow(sizing, sizing2);
+            root.alignment(HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
+            root.surface(Surface.VANILLA_TRANSLUCENT);
+            return root;
+        });
+    }
+
+    @Override
     protected void build(FlowLayout rootComponent) {
         this.tabButtons.clear();
+        // Main shop screen
+        rootComponent
+            .child(
+                horizontalFlow(Sizing.content(), Sizing.content())
+                    .children(List.of(
+                            verticalFlow(Sizing.fixed(120), Sizing.content())
+                                .children(List.of(
+                                    makeTabButton(Items.CHEST, false, button -> this.selectTab(0)),
+                                    makeTabButton(Items.EMERALD, true, button -> this.selectTab(1))
+                                ))
+                                .horizontalAlignment(HorizontalAlignment.LEFT)
+                                .padding(Insets.top(5))
+                                .allowOverflow(true)
+                                .id("left-column"),
+                            horizontalFlow(Sizing.content(), Sizing.content())
+                                .child(createBackgroundTexture(TEXTURE_PNG)
+                                    .id("background-texture"))
+                                .child(Containers.verticalScroll(Sizing.fixed(160), Sizing.fixed(60),
+                                    Containers.horizontalFlow(Sizing.content(), Sizing.content())
+                                        .child(Containers.verticalFlow(Sizing.content(), Sizing.content()).id("first-trades-column"))
+                                        .child(Containers.verticalFlow(Sizing.content(), Sizing.content()).id("second-trades-column")
+                                            .margins(Insets.left(4)))
+                                        .positioning(Positioning.absolute(8, 10))
+                                        .id("offer-container"))
+                                )
+                                .id("background"),
+                            verticalFlow(Sizing.fixed(120), Sizing.content())
+                                .child(makeCurrencyWidget(button -> this.handler.extractCurrency()))
+                                .child(verticalFlow(Sizing.content(), Sizing.content())
+                                    .child(Components.item(Items.HOPPER.getDefaultStack())
+                                        .margins(Insets.of(6))
+                                    )
+                                    .child(Components.label(Text.empty())
+                                        .shadow(true)
+                                        .positioning(Positioning.absolute(15, 15))
+                                        .zIndex(150)
+                                        .id("transfer-label")
+                                    )
+                                    .child(verticalFlow(Sizing.fixed(28), Sizing.fixed(28))
+                                        .cursorStyle(CursorStyle.HAND)
+                                        .positioning(Positioning.absolute(0, 0))
+                                        .id("transfer-button")
+                                    )
+                                    .margins(Insets.top(3))
+                                    .surface(Surface.PANEL)
+                                )
+                                .horizontalAlignment(HorizontalAlignment.RIGHT)
+                                .padding(Insets.left(2))
+                                .id("right-column")
+                        )
+                    )
+            );
 
-        var leftColumn = rootComponent.childById(FlowLayout.class, "left-column");
-        leftColumn.child(makeTabButton(Items.CHEST, false, button -> this.selectTab(0)));
-        leftColumn.child(makeTabButton(Items.EMERALD, true, button -> this.selectTab(1)));
-
-        rootComponent.childById(ButtonComponent.class, "extract-button").onPress(button -> this.handler.extractCurrency());
-
+        // Utility
         rootComponent.childById(FlowLayout.class, "transfer-button").mouseDown().subscribe((x, y, button) -> {
             if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) return false;
-
             this.handler.toggleTransfer();
             UISounds.playInteractionSound();
             return true;
@@ -114,7 +176,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         if (this.tab == index) return;
 
         if (index == 0) {
-            this.swapBackgroundTexture(TEXTURE);
+            this.swapBackgroundTexture(TEXTURE_PNG);
             this.titleY = 5;
 
             this.component(FlowLayout.class, "right-column").removeChild(this.component(FlowLayout.class, "trade-edit-widget"));
@@ -124,7 +186,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             this.swapBackgroundTexture(TRADES_TEXTURE);
             this.titleY = 69420;
 
-            final var editWidget = this.model.expandTemplate(FlowLayout.class, "trade-edit-widget", Map.of());
+            final var editWidget = makeTradeEditWidget(this.handler.getBufferStack());
             var submitButton = editWidget.childById(ButtonComponent.class, "submit-button");
             var deleteButton = editWidget.childById(ButtonComponent.class, "delete-button");
 
@@ -206,36 +268,124 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         if (tab == 0) return;
 
         for (int i = 0; i < this.offers.size(); i++) {
-            final int offerIndex = i;
-            var offer = this.offers.get(offerIndex);
+            var offer = this.offers.get(i);
 
-            var component = this.model.expandTemplate(FlowLayout.class, "trade-button", Map.of("price", String.valueOf(offer.getPrice())));
-            component.childById(ItemComponent.class, "item-display").stack(offer.getSellStack());
-            component.childById(ButtonComponent.class, "trade-button").onPress(button -> {
-                this.handler.loadOffer(offerIndex);
-                this.priceDisplay.accept(String.valueOf(offer.getPrice()));
-            });
-
-            (i % 2 == 0 ? firstColumn : secondColumn).child(component);
+            var tradeComponent = makeTradeButton(offer.getSellStack(), offer.getPrice(), i);
+            (i % 2 == 0 ? firstColumn : secondColumn).child(tradeComponent);
         }
     }
 
     private void swapBackgroundTexture(Identifier newTexture) {
-        final var background = this.component(FlowLayout.class, "background");
-        background.removeChild(background.children().get(0));
-        background.child(0, this.model.expandTemplate(TextureComponent.class, "background-texture", Map.of("texture", newTexture.toString())));
+        this.uiAdapter.rootComponent.childById(TextureComponent.class, "background-texture").remove();
+        this.uiAdapter.rootComponent.childById(FlowLayout.class, "background").child(createBackgroundTexture(newTexture));
+    }
+
+    private TextureComponent createBackgroundTexture(Identifier id) {
+        return Components.texture(id, 0, 0, 176, 168);
     }
 
     private FlowLayout makeTabButton(Item icon, boolean active, Consumer<ButtonComponent> onPress) {
-        var buttonContainer = this.model.expandTemplate(FlowLayout.class, "tab-button", Map.of("icon-item", Registries.ITEM.getId(icon).toString()));
-
-        final var button = buttonContainer.childById(ButtonComponent.class, "tab-button");
-        this.tabButtons.add(button);
-
-        button.active = active;
-        button.onPress(onPress);
+        var buttonContainer = Containers.verticalFlow(Sizing.content(), Sizing.content());
+        buttonContainer.child(
+                Components.item(icon.getDefaultStack()))
+            .child(Components.button(Text.empty(), onPress)
+                .active(active)
+                .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 113, 168, 256, 256))
+                .sizing(Sizing.fixed(32), Sizing.fixed(28))
+                .zIndex(1)
+                .margins(Insets.right(-3))
+                .id("tab-button")
+            )
+            .margins(Insets.bottom(4))
+            .allowOverflow(true);
 
         return buttonContainer;
+    }
+
+    private FlowLayout makeCurrencyWidget(Consumer<ButtonComponent> onPress) {
+        var currencyComponent = Containers.verticalFlow(Sizing.content(), Sizing.content());
+        currencyComponent
+            .child(Components.texture(TEXTURE_PNG, 146, 169, 34, 54))
+            .child(Components.label(Text.literal("0")).id("gold-count"))
+            .child(Components.label(Text.literal("0")).id("silver-count"))
+            .child(Components.label(Text.literal("0")).id("bronze-count"))
+            .child(Components.button(Text.empty(), onPress)
+                .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 146, 224, 256, 256))
+                .sizing(Sizing.fixed(26), Sizing.fixed(8))
+                .positioning(Positioning.absolute(4, 41))
+            );
+        return currencyComponent;
+    }
+
+    private FlowLayout makeTradeButton(ItemStack tradeItem, long price, int offerIndex) {
+        var tradeButton = Containers.horizontalFlow(Sizing.content(), Sizing.content());
+        tradeButton
+            .child(Components.button(Text.empty(), button -> {
+                this.handler.loadOffer(offerIndex);
+                this.priceDisplay.accept(String.valueOf(price));
+            }))
+            .child(horizontalFlow(Sizing.content(), Sizing.fixed(20))
+                .children(List.of(
+                    Components.item(tradeItem)
+                        .showOverlay(true)
+                        .cursorStyle(CursorStyle.HAND),
+                    Components.texture(TEXTURE_PNG, 1, 172, 5, 7),
+                    Components.label(Text.literal(String.valueOf(price)))
+                ))
+                .padding(Insets.left(4))
+                .positioning(Positioning.absolute(0, 0))
+            );
+        return tradeButton;
+    }
+
+    private FlowLayout makeTradeEditWidget(ItemStack tradeStack) {
+        var editorWidget = horizontalFlow(Sizing.content(), Sizing.content());
+        var priceFieldComponent = Components.textBox(Sizing.fixed(47));
+        priceFieldComponent
+            .verticalSizing(Sizing.fixed(11))
+            .positioning(Positioning.absolute(35, 18))
+            .id("price-field");
+        priceFieldComponent.setDrawsBackground(false);
+        editorWidget.children(List.of(
+            Components.texture(TEXTURE_PNG, 15, 169, 98, 54),
+            new FakeSlotComponent(tradeStack)
+                .showOverlay(true)
+                .positioning(Positioning.absolute(8, 15))
+                .id("trade-buffer"),
+            Components.button(Text.empty(), buttonComponent -> {
+                })
+                .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 15, 223, 256, 256))
+                .sizing(Sizing.fixed(41), Sizing.fixed(11))
+                .positioning(Positioning.absolute(7, 36))
+                .id("submit-button"),
+            Components.button(Text.empty(), buttonComponent -> {
+                })
+                .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 56, 223, 256, 256))
+                .active(false)
+                .sizing(Sizing.fixed(41), Sizing.fixed(11))
+                .positioning(Positioning.absolute(50, 36))
+                .id("delete-button"),
+            priceFieldComponent,
+            horizontalFlow(Sizing.content(), Sizing.content())
+                .children(List.of(
+                    Components.label(Text.literal("0"))
+                        .color(Color.ofRgb(0x898989))
+                        .horizontalSizing(Sizing.fixed(12))
+                        .id("offer-bronze-count"),
+                    Components.label(Text.literal("0"))
+                        .color(Color.ofRgb(0x898989))
+                        .horizontalSizing(Sizing.fixed(12))
+                        .id("offer-silver-count"),
+                    Components.label(Text.literal("0"))
+                        .color(Color.ofRgb(0x898989))
+                        .horizontalSizing(Sizing.fixed(18))
+                        .id("offer-gold-count")
+                ))
+                .positioning(Positioning.absolute(36, 5))
+        ));
+        editorWidget.margins(Insets.bottom(3));
+        editorWidget.id("trade-edit-widget");
+        return editorWidget;
     }
 
     public int tab() {
@@ -257,6 +407,6 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
     }
 
     static {
-        UIParsing.registerFactory(NumismaticOverhaul.id("fake-slot"), element -> new FakeSlotComponent(ItemStack.EMPTY));
+        UIParsing.registerFactory(id("fake-slot"), element -> new FakeSlotComponent(ItemStack.EMPTY));
     }
 }
