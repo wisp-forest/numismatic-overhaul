@@ -27,8 +27,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 import static com.glisco.numismaticoverhaul.NumismaticOverhaul.id;
-import static io.wispforest.owo.ui.container.Containers.horizontalFlow;
-import static io.wispforest.owo.ui.container.Containers.verticalFlow;
+import static io.wispforest.owo.ui.container.Containers.*;
 
 public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandler> {
 
@@ -36,7 +35,6 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
     public static final Identifier TRADES_TEXTURE = id("textures/gui/shop_gui_trades.png");
 
     private final List<ButtonWidget> tabButtons = new ArrayList<>();
-    //private final ShopWidget shopWidget = new ShopWidget();
     private final List<ShopOffer> offers = new ArrayList<>();
 
     private Runnable afterDataUpdate = () -> {
@@ -71,28 +69,20 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
                     .children(List.of(
                             verticalFlow(Sizing.fixed(120), Sizing.content())
                                 .children(List.of(
-                                    makeTabButton(Items.CHEST, false, button -> this.selectTab(0)),
-                                    makeTabButton(Items.EMERALD, true, button -> this.selectTab(1))
+                                    makeTabButton(Items.CHEST, false, b -> this.selectTab(0)),
+                                    makeTabButton(Items.EMERALD, true, b -> this.selectTab(1))
                                 ))
-                                .horizontalAlignment(HorizontalAlignment.LEFT)
+                                .horizontalAlignment(HorizontalAlignment.RIGHT)
                                 .padding(Insets.top(5))
                                 .allowOverflow(true)
                                 .id("left-column"),
-                            horizontalFlow(Sizing.content(), Sizing.content())
+                            stack(Sizing.content(), Sizing.content())
                                 .child(createBackgroundTexture(TEXTURE_PNG)
                                     .id("background-texture"))
-                                .child(Containers.verticalScroll(Sizing.fixed(160), Sizing.fixed(60),
-                                    Containers.horizontalFlow(Sizing.content(), Sizing.content())
-                                        .child(Containers.verticalFlow(Sizing.content(), Sizing.content()).id("first-trades-column"))
-                                        .child(Containers.verticalFlow(Sizing.content(), Sizing.content()).id("second-trades-column")
-                                            .margins(Insets.left(4)))
-                                        .positioning(Positioning.absolute(8, 10))
-                                        .id("offer-container"))
-                                )
                                 .id("background"),
                             verticalFlow(Sizing.fixed(120), Sizing.content())
                                 .child(makeCurrencyWidget(button -> this.handler.extractCurrency()))
-                                .child(verticalFlow(Sizing.content(), Sizing.content())
+                                .child(stack(Sizing.content(), Sizing.content())
                                     .child(Components.item(Items.HOPPER.getDefaultStack())
                                         .margins(Insets.of(6))
                                     )
@@ -110,7 +100,7 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
                                     .margins(Insets.top(3))
                                     .surface(Surface.PANEL)
                                 )
-                                .horizontalAlignment(HorizontalAlignment.RIGHT)
+                                .horizontalAlignment(HorizontalAlignment.LEFT)
                                 .padding(Insets.left(2))
                                 .id("right-column")
                         )
@@ -145,7 +135,8 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
         int prevOffers = this.offers.size();
         this.offers.clear();
         this.offers.addAll(data.offers());
-        this.populateTrades(this.tab);
+
+        if (this.tab == 1) this.populateTrades(this.tab);
 
         if (this.tab == 1 && this.offers.size() > prevOffers) {
             var offersScroll = this.component(ScrollContainer.class, "offer-container");
@@ -168,6 +159,10 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
         this.afterDataUpdate();
     }
 
+    private Text computeTransferTooltip(boolean isTransferEnabled) {
+        return isTransferEnabled ? Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.enabled") : Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.disabled");
+    }
+
     public void afterDataUpdate() {
         this.afterDataUpdate.run();
     }
@@ -180,11 +175,30 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
             this.titleY = 5;
 
             this.component(FlowLayout.class, "right-column").removeChild(this.component(FlowLayout.class, "trade-edit-widget"));
-            this.afterDataUpdate = () -> {};
-            this.priceDisplay = s -> {};
+            this.afterDataUpdate = () -> {
+            };
+            this.priceDisplay = s -> {
+            };
         } else {
             this.swapBackgroundTexture(TRADES_TEXTURE);
             this.titleY = 69420;
+
+            this.uiAdapter.rootComponent.childById(StackLayout.class, "background")
+                .child(
+                    verticalScroll(Sizing.fixed(160), Sizing.fixed(60),
+                        horizontalFlow(Sizing.content(), Sizing.content())
+                            .child(verticalFlow(Sizing.content(), Sizing.content())
+                                .children(List.of())
+                                .id("first-trades-column"))
+                            .child(verticalFlow(Sizing.content(), Sizing.content())
+                                .children(List.of())
+                                .id("second-trades-column")
+                                .margins(Insets.left(4))
+                            )
+                    )
+                        .positioning(Positioning.absolute(8, 10))
+                        .id("offer-container")
+                );
 
             final var editWidget = makeTradeEditWidget(this.handler.getBufferStack());
             var submitButton = editWidget.childById(ButtonComponent.class, "submit-button");
@@ -277,38 +291,43 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
 
     private void swapBackgroundTexture(Identifier newTexture) {
         this.uiAdapter.rootComponent.childById(TextureComponent.class, "background-texture").remove();
-        this.uiAdapter.rootComponent.childById(FlowLayout.class, "background").child(createBackgroundTexture(newTexture));
+        this.uiAdapter.rootComponent.childById(StackLayout.class, "background").child(createBackgroundTexture(newTexture));
     }
 
     private TextureComponent createBackgroundTexture(Identifier id) {
-        return Components.texture(id, 0, 0, 176, 168);
+        var bg = Components.texture(id, 0, 0, 176, 168);
+        bg.id("background-texture");
+        return bg;
     }
 
-    private FlowLayout makeTabButton(Item icon, boolean active, Consumer<ButtonComponent> onPress) {
-        var buttonContainer = Containers.verticalFlow(Sizing.content(), Sizing.content());
-        buttonContainer.child(
-                Components.item(icon.getDefaultStack()))
+    private StackLayout makeTabButton(Item icon, boolean active, Consumer<ButtonComponent> onPress) {
+        var buttonLayout = stack(Sizing.content(), Sizing.content());
+        buttonLayout
+            .child(
+                Components.item(icon.getDefaultStack()).positioning(Positioning.absolute(9, 6)))
             .child(Components.button(Text.empty(), onPress)
                 .active(active)
                 .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 113, 168, 256, 256))
                 .sizing(Sizing.fixed(32), Sizing.fixed(28))
-                .zIndex(1)
                 .margins(Insets.right(-3))
                 .id("tab-button")
             )
             .margins(Insets.bottom(4))
             .allowOverflow(true);
 
-        return buttonContainer;
+        var button = buttonLayout.childById(ButtonComponent.class, "tab-button");
+        this.tabButtons.add(button);
+
+        return buttonLayout;
     }
 
-    private FlowLayout makeCurrencyWidget(Consumer<ButtonComponent> onPress) {
-        var currencyComponent = Containers.verticalFlow(Sizing.content(), Sizing.content());
+    private StackLayout makeCurrencyWidget(Consumer<ButtonComponent> onPress) {
+        var currencyComponent = stack(Sizing.content(), Sizing.content());
         currencyComponent
             .child(Components.texture(TEXTURE_PNG, 146, 169, 34, 54))
-            .child(Components.label(Text.literal("0")).id("gold-count"))
-            .child(Components.label(Text.literal("0")).id("silver-count"))
-            .child(Components.label(Text.literal("0")).id("bronze-count"))
+            .child(Components.label(Text.literal("0")).positioning(Positioning.absolute(5, 7)).id("gold-count"))
+            .child(Components.label(Text.literal("0")).positioning(Positioning.absolute(5, 19)).id("silver-count"))
+            .child(Components.label(Text.literal("0")).positioning(Positioning.absolute(5, 31)).id("bronze-count"))
             .child(Components.button(Text.empty(), onPress)
                 .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 146, 224, 256, 256))
                 .sizing(Sizing.fixed(26), Sizing.fixed(8))
@@ -318,20 +337,30 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
     }
 
     private FlowLayout makeTradeButton(ItemStack tradeItem, long price, int offerIndex) {
-        var tradeButton = Containers.horizontalFlow(Sizing.content(), Sizing.content());
+        var tradeButton = horizontalFlow(Sizing.content(), Sizing.content());
         tradeButton
             .child(Components.button(Text.empty(), button -> {
-                this.handler.loadOffer(offerIndex);
-                this.priceDisplay.accept(String.valueOf(price));
-            }))
+                        this.handler.loadOffer(offerIndex);
+                        this.priceDisplay.accept(String.valueOf(price));
+                    })
+                    .sizing(Sizing.fixed(78), Sizing.content())
+                    .id("trade-button")
+            )
             .child(horizontalFlow(Sizing.content(), Sizing.fixed(20))
                 .children(List.of(
                     Components.item(tradeItem)
                         .showOverlay(true)
-                        .cursorStyle(CursorStyle.HAND),
-                    Components.texture(TEXTURE_PNG, 1, 172, 5, 7),
+                        .cursorStyle(CursorStyle.HAND)
+                        .id("item-display")
+                    ,
+                    Components.texture(TEXTURE_PNG, 1, 172, 5, 7).margins(Insets.left(3)),
                     Components.label(Text.literal(String.valueOf(price)))
+                        .shadow(true)
+                        .cursorStyle(CursorStyle.HAND)
+                        .margins(Insets.left(2))
+                        .id("price-label")
                 ))
+                .verticalAlignment(VerticalAlignment.CENTER)
                 .padding(Insets.left(4))
                 .positioning(Positioning.absolute(0, 0))
             );
@@ -354,6 +383,7 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
                 .id("trade-buffer"),
             Components.button(Text.empty(), buttonComponent -> {
                 })
+                .active(false)
                 .renderer(ButtonComponent.Renderer.texture(TEXTURE_PNG, 15, 223, 256, 256))
                 .sizing(Sizing.fixed(41), Sizing.fixed(11))
                 .positioning(Positioning.absolute(7, 36))
@@ -374,10 +404,12 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
                         .id("offer-bronze-count"),
                     Components.label(Text.literal("0"))
                         .color(Color.ofRgb(0x898989))
+                        .margins(Insets.left(8))
                         .horizontalSizing(Sizing.fixed(12))
                         .id("offer-silver-count"),
                     Components.label(Text.literal("0"))
                         .color(Color.ofRgb(0x898989))
+                        .margins(Insets.left(8))
                         .horizontalSizing(Sizing.fixed(18))
                         .id("offer-gold-count")
                 ))

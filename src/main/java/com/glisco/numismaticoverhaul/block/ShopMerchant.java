@@ -7,12 +7,10 @@ import net.minecraft.network.packet.s2c.play.SetTradeOffersS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.village.Merchant;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOfferList;
+import net.minecraft.village.*;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class ShopMerchant implements Merchant {
 
@@ -69,7 +67,12 @@ public class ShopMerchant implements Merchant {
             }
         }
 
-        shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem().get().itemStack())));
+        var items = new ArrayList<ItemStack>();
+        items.add(offer.getOriginalFirstBuyItem());
+        if (offer.getSecondBuyItem().isPresent()) {
+            items.add(offer.getSecondBuyItem().get().itemStack());
+        }
+        shop.addCurrency(CurrencyHelper.getValue(items));
     }
 
     @Override
