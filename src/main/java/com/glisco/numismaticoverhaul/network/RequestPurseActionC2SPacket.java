@@ -17,7 +17,7 @@ public record RequestPurseActionC2SPacket(Action action, long value) {
             case EXTRACT -> {
                 //Limit the amount of money we cam extract to prevent cheeky packet forgery
                 //It'd be a bit of a problem if a player somehow tried to extract -200 ;)
-                var extracting = Math.max(0, Math.min(value, ModComponents.CURRENCY.get(player).getValue()))
+                var extracting = Math.max(0, Math.min(value, ModComponents.CURRENCY.get(player).getValue()));
 
                 CurrencyConverter.getAsItemStackList(extracting).forEach(stack -> player.getInventory().offerOrDrop(stack));
                 ModComponents.CURRENCY.get(player).modify(-extracting);
