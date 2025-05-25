@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "BundleItemMixin",
+    "ItemStackComponentizationFixin",
     "LayerInstanceAccessor",
     "LivingEntityMixin",
     "MerchantScreenHandlerMixin",

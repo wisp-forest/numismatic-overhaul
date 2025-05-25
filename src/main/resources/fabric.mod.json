@@ -27,6 +27,7 @@
   "mixins": [
     "numismatic-overhaul.mixins.json"
   ],
+  "accessWidener": "numismatic-overhaul.accesswidener",
   "depends": {
     "fabricloader": ">=0.16.5",
     "fabric": "*",

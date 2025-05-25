@@ -54,6 +54,11 @@ processResources {
     }
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/numismatic-overhaul.accesswidener")
+}
+
+
 tasks.withType(JavaCompile).configureEach {
     // Minecraft 1.21 upwards uses Java 21.
     it.options.release = 21
