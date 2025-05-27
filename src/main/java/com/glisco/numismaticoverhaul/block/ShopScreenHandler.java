@@ -17,7 +17,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 
 import java.util.ArrayList;
@@ -29,21 +28,19 @@ public class ShopScreenHandler extends ScreenHandler {
 
     private final Inventory shopInventory;
     private final SyncedProperty<ItemStack> tradeEditBuffer;
-    private final ScreenHandlerContext context;
 
     private final List<ShopOffer> offers;
 
     private ShopBlockEntity shop = null;
 
     public ShopScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(27), ScreenHandlerContext.EMPTY);
+        this(syncId, playerInventory, new SimpleInventory(27));
     }
 
-    public ShopScreenHandler(int syncId, PlayerInventory playerInventory, Inventory shopInventory, ScreenHandlerContext context) {
+    public ShopScreenHandler(int syncId, PlayerInventory playerInventory, Inventory shopInventory) {
         super(NumismaticOverhaul.SHOP_SCREEN_HANDLER_TYPE, syncId);
         this.shopInventory = shopInventory;
         this.owner = playerInventory.player;
-        this.context = context;
 
         if (!this.owner.getWorld().isClient()) {
             this.shop = (ShopBlockEntity) shopInventory;
@@ -69,7 +66,7 @@ public class ShopScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return canUse(context, player, NumismaticOverhaulBlocks.SHOP) && this.shopInventory.canPlayerUse(player);
+        return this.shopInventory.canPlayerUse(player);
     }
 
     public void loadOffer(long index) {

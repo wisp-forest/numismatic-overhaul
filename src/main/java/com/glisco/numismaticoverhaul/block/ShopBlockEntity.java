@@ -27,10 +27,7 @@ import net.minecraft.village.Merchant;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class ShopBlockEntity extends LockableContainerBlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
@@ -199,12 +196,13 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new ShopScreenHandler(syncId, playerInventory, this, ScreenHandlerContext.create(world, pos));
+        return new ShopScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return player.getUuid().equals(this.owner) && this.world.getBlockEntity(this.pos) == this && this.pos.getSquaredDistance(player.getX(), player.getY(), player.getZ()) <= 100;
+        if (this.world == null) return false;
+        return player.getUuid().equals(this.owner) && this.world.getBlockEntity(this.pos) == this && player.canInteractWithBlockAt(this.pos, 10);
     }
 
     @Override
