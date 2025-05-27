@@ -35,7 +35,7 @@ public record ShopOffer(ItemStack sell, long price) {
         boolean isPocketChange = CurrencyConverter.getRequiredCurrencyTypes(price) == 1;
         var buyStack = isPocketChange ? CurrencyConverter.getAsItemStackList(price).getFirst() : MoneyBagItem.fromRawValue(price);
         int maxUses = inexhaustible ? Integer.MAX_VALUE : count(shop.getItems(), sell) / sell.getCount();
-        var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), (int) price) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.of(ComponentMap.of(ComponentMap.EMPTY, ComponentMap.builder().add(NumismaticOverhaul.MONEY_BAG_COMPONENT, MoneyBagComponent.of(price)).build())), buyStack);
+        var tradedItem = isPocketChange ? new TradedItem(buyStack.getItem(), buyStack.getCount()) : new TradedItem(Registries.ITEM.getEntry(buyStack.getItem()), 1, ComponentPredicate.of(ComponentMap.of(ComponentMap.EMPTY, ComponentMap.builder().add(NumismaticOverhaul.MONEY_BAG_COMPONENT, MoneyBagComponent.of(price)).build())), buyStack);
 
         return new TradeOffer(tradedItem, sell, maxUses, 0, 0);
     }
