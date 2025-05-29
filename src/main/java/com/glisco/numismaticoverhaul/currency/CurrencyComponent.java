@@ -1,29 +1,30 @@
 package com.glisco.numismaticoverhaul.currency;
 
-import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.NumismaticOverhaulConfigModel;
+import com.glisco.numismaticoverhaul.*;
 import com.glisco.numismaticoverhaul.item.CoinItem;
-import net.minecraft.registry.RegistryWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.ladysnake.cca.api.v3.component.Component;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import io.wispforest.owo.config.ConfigSynchronizer;
-import io.wispforest.owo.config.Option;
 import io.wispforest.owo.ops.TextOps;
 import io.wispforest.owo.ui.core.Color;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-
+import org.jetbrains.annotations.NotNull;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.glisco.numismaticoverhaul.NumismaticOverhaul.LOGGER;
+
 public class CurrencyComponent implements Component, AutoSyncedComponent {
 
+    private static final Logger log = LoggerFactory.getLogger(CurrencyComponent.class);
     private long value;
     private final PlayerEntity provider;
 
@@ -82,31 +83,35 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
         if (provider.getWorld().isClient()) return;
 
         // Always try to respect the clients option on where they want the message
-        NumismaticOverhaulConfigModel.MoneyMessageLocation moneyMessageLocation;
+        var config = ConfigSynchronizer.getClientOptions(
+            (ServerPlayerEntity) provider,
+            NumismaticOverhaul.CONFIG
+        );
 
-        moneyMessageLocation = (NumismaticOverhaulConfigModel.MoneyMessageLocation) ConfigSynchronizer.getClientOptions(
-                (ServerPlayerEntity) provider,
-                NumismaticOverhaul.CONFIG
-        ).get(NumismaticOverhaul.CONFIG.keys.moneyMessageLocation);
+        if (config == null) {
+            LOGGER.warn("Unable to fetch synced config option from the client");
+            return;
+        }
 
+        var moneyMessageLocation = config.get(NumismaticOverhaul.CONFIG.keys.moneyMessageLocation);
         if (moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.DISABLED) return;
 
         // Text handling examples:
         // Actionbar = "+ [12 Silver, 4 Bronze]"
         // Chat = "numismatic > + [12 Silver, 4 Bronze]"
         var message = moneyMessageLocation == NumismaticOverhaulConfigModel.MoneyMessageLocation.CHAT
-                ?
-                TextOps.withColor("numismatic §> ", Currency.GOLD.getNameColor(), Color.ofFormatting(Formatting.GRAY).argb())
-                :
-                Text.empty();
+            ?
+            TextOps.withColor("numismatic §> ", Currency.GOLD.getNameColor(), Color.ofFormatting(Formatting.GRAY).argb())
+            :
+            Text.empty();
 
         message.append(value < 0 ? Text.literal("§c- ") : Text.literal("§a+ "));
         message.append(Text.literal("§7["));
         for (ItemStack stack : transactionStacks) {
             message.append(Text.literal("§b" + stack.getCount() + " "));
             message.append(TextOps.translateWithColor(
-                    "currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase(),
-                    ((CoinItem) stack.getItem()).currency.getNameColor()
+                "currency.numismatic-overhaul." + ((CoinItem) stack.getItem()).currency.name().toLowerCase(),
+                ((CoinItem) stack.getItem()).currency.getNameColor()
             ));
 
             if (transactionStacks.indexOf(stack) != transactionStacks.size() - 1) {
@@ -143,7 +148,7 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      * @return The transaction that was popped
      */
     public Long popTransaction() {
-        return this.transactions.remove(this.transactions.size() - 1);
+        return this.transactions.removeLast();
     }
 
     /**
