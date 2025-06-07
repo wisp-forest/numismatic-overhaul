@@ -76,6 +76,9 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final GameRules.Key<GameRules.IntRule> MONEY_DROP_PERCENTAGE
             = GameRuleRegistry.register("moneyDropPercentage", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(10, 0, 100));
 
+    public static final GameRules.Key<GameRules.IntRule> MONEY_MOB_DROP_VARIANCE
+        = GameRuleRegistry.register("moneyMobDropVariancePercentage", GameRules.Category.MOBS, GameRuleFactory.createIntRule(50, 0, 100));
+
     public static final ComponentType<MoneyBagComponent> MONEY_BAG_COMPONENT = MoneyBagComponent.register();
 
     public static final OwoItemGroup NUMISMATIC_GROUP = OwoItemGroup.builder(

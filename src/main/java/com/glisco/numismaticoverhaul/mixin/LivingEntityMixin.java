@@ -1,20 +1,32 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.glisco.numismaticoverhaul.NumismaticOverhaul.CONFIG;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+
+    @Shadow @Nullable protected PlayerEntity attackingPlayer;
+
+    @Shadow public abstract float getMaxHealth();
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -22,6 +34,25 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "dropLoot", at = @At("TAIL"))
     public void injectCoins(DamageSource source, boolean causedByPlayer, CallbackInfo ci) {
+        if (this.attackingPlayer == null) return;
+        // Handle config dependent coin drops
+        var entityId = Registries.ENTITY_TYPE.getId(this.getType());
+        if (CONFIG.mobsToBaseValues().containsKey(entityId)) {
+            long baseValue = CONFIG.mobsToBaseValues().get(entityId);
+            float variance = this.getWorld().getGameRules().get(NumismaticOverhaul.MONEY_MOB_DROP_VARIANCE).get() * .01f;
+            if (variance >= 0.1f) {
+                variance = MathHelper.nextBetween(random, variance, 1.0f + variance);
+            } else {
+                variance = 1.0f;
+            }
+            if (CONFIG.scaleOnHealth()) {
+                variance *= (this.getMaxHealth() / 20);
+            }
+            long finalValue = MathHelper.clamp(((long) (baseValue * variance)), 0, Long.MAX_VALUE);
+            var moneyStacks = CurrencyHelper.getAsStacks(finalValue, 4);
+            moneyStacks.forEach(this::dropStack);
+        }
+        // Handle mod integration via tag
         if (!this.getType().isIn(NumismaticOverhaul.THE_BOURGEOISIE)) return;
         if (random.nextFloat() > .5f)
             dropStack(new ItemStack(NumismaticOverhaulItems.BRONZE_COIN, random.nextBetween(9, 35)));
