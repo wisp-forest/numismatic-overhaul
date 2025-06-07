@@ -3,6 +3,8 @@ package com.glisco.numismaticoverhaul;
 import blue.endless.jankson.Comment;
 import io.wispforest.owo.config.Option;
 import io.wispforest.owo.config.annotation.*;
+import net.minecraft.util.Identifier;
+import java.util.Map;
 
 @SuppressWarnings("unused")
 @Modmenu(modId = "numismatic-overhaul")
@@ -61,4 +63,19 @@ public class NumismaticOverhaulConfigModel {
         CHAT,
         DISABLED
     }
+
+    @Comment("""
+        Sets the base value of money dropped for an entity. This value is multiplied by the moneyMobDropVariancePercentage gamerule.
+        Example of having pillagers drop around 80 Bronze Coins:
+        "mobsToBaseValues": {
+            "minecraft:pillager": 80,
+        }
+        Requires a restart to reload correctly!
+        """)
+    @RestartRequired
+    public Map<Identifier, Integer> mobsToBaseValues = Map.of();
+
+    @RestartRequired
+    @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / 20'")
+    public boolean scaleOnHealth = false;
 }

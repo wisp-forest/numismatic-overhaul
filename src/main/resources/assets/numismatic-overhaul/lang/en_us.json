@@ -68,6 +68,10 @@
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.chat": "Chat",
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "Disabled",
 
+  "text.config.numismatic-overhaul.option.scaleOnHealth": "Scales the money dropped based on the mobs max health. Money dropped this way is multiplied by '(mob max health) / 20'",
+
+  "gamerule.moneyMobDropVariancePercentage": "Mob money drop variance percentage",
+  "gamerule.moneyMobDropVariancePercentage.description": "Controls the variance of money dropped by mobs. By default a value of 50 means that the base value will be multiplied by 50%-150% randomly.",
   "gamerule.moneyDropPercentage": "Money drop percentage",
   "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
 }
