@@ -40,8 +40,8 @@ public abstract class LivingEntityMixin extends Entity {
         if (CONFIG.mobsToBaseValues().containsKey(entityId)) {
             long baseValue = CONFIG.mobsToBaseValues().get(entityId);
             float variance = this.getWorld().getGameRules().get(NumismaticOverhaul.MONEY_MOB_DROP_VARIANCE).get() * .01f;
-            if (variance >= 0.1f) {
-                variance = MathHelper.nextBetween(random, variance, 1.0f + variance);
+            if (variance > 0.02f) {
+                variance = MathHelper.nextBetween(random, 1.0f - variance, 1.0f + variance);
             } else {
                 variance = 1.0f;
             }
