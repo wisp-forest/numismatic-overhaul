@@ -69,7 +69,9 @@
   "text.config.numismatic-overhaul.enum.moneyMessageLocation.disabled": "Disabled",
 
   "text.config.numismatic-overhaul.option.scaleOnHealth": "Scale mob money drops on health",
-  "text.config.numismatic-overhaul.option.scaleOnHealth.tooltip": "Scales the money dropped based on the mobs max health. Money dropped this way is multiplied by '(mob max health) / 20'",
+  "text.config.numismatic-overhaul.option.scaleOnHealth.tooltip": "Scales the money dropped based on the mobs max health. Money dropped this way is multiplied by '(mob max health) / (20)'",
+  "text.config.numismatic-overhaul.option.healthScaleReduction": "Mob Health Scale Factor",
+  "text.config.numismatic-overhaul.option.healthScaleReduction.tooltip": "Reduces the scaling of money drops on health by this factor. Practically divides the value by this factor.",
 
   "gamerule.moneyMobDropVariancePercentage": "Mob money drop variance percentage",
   "gamerule.moneyMobDropVariancePercentage.description": "Controls the variance of money dropped by mobs. By default a value of 50 means that the base value will be multiplied by 50%-150% randomly.",
