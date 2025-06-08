@@ -54,12 +54,12 @@ public class SellPotionContainerItemAdapter extends TradeJsonAdapter {
 
         public TradeOffer create(Entity entity, Random random) {
             List<Potion> list = Registries.POTION.stream().filter((potion) -> {
-                return !potion.getEffects().isEmpty() && entity.getWorld().getBrewingRecipeRegistry().isBrewable(Registries.POTION.createEntry(potion));
+                return !potion.getEffects().isEmpty() && entity.getWorld().getBrewingRecipeRegistry().isBrewable(Registries.POTION.getEntry(potion));
             }).toList();
 
             Potion potion = list.get(random.nextInt(list.size()));
 
-            ItemStack itemStack2 = PotionContentsComponent.createStack(containerItem.getItem(), Registries.POTION.createEntry(potion));
+            ItemStack itemStack2 = PotionContentsComponent.createStack(containerItem.getItem(), Registries.POTION.getEntry(potion));
             return new TradeOffer(CurrencyHelper.getClosestTradeItem(price), Optional.of(new TradedItem(buyItem.getItem(), buyItem.getCount())), itemStack2, this.maxUses, this.experience, this.priceMultiplier);
         }
     }
