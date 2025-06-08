@@ -76,6 +76,13 @@ public class NumismaticOverhaulConfigModel {
     public Map<Identifier, Integer> mobsToBaseValues = Map.of();
 
     @RestartRequired
-    @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / 20'")
+    @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / (20 * healthScaleReduction)'")
     public boolean scaleOnHealth = false;
+
+    @Comment("""
+        Reduces the impact that health scaling has on money dropped from mobs.
+        Requires a restart to reload correctly!
+        """)
+    @RestartRequired
+    public float healthScaleReduction = 1.0f;
 }

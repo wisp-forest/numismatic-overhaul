@@ -46,7 +46,7 @@ public abstract class LivingEntityMixin extends Entity {
                 variance = 1.0f;
             }
             if (CONFIG.scaleOnHealth()) {
-                variance *= (this.getMaxHealth() / 20);
+                variance *= (this.getMaxHealth() / (20 * CONFIG.healthScaleReduction()));
             }
             long finalValue = MathHelper.clamp(((long) (baseValue * variance)), 0, Long.MAX_VALUE);
             var moneyStacks = CurrencyHelper.getAsStacks(finalValue, 4);
