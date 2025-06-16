@@ -3,7 +3,6 @@ package com.glisco.numismaticoverhaul;
 import blue.endless.jankson.Comment;
 import io.wispforest.owo.config.Option;
 import io.wispforest.owo.config.annotation.*;
-import net.minecraft.util.Identifier;
 import java.util.Map;
 
 @SuppressWarnings("unused")
@@ -70,12 +69,16 @@ public class NumismaticOverhaulConfigModel {
         "mobsToBaseValues": {
             "minecraft:pillager": 80,
         }
-        Requires a restart to reload correctly!
+        
+        Another example which uses tags:
+        "mobsToBaseValues": {
+        "#numismatic-overhaul:the_bourgeoisie": 75
+        }
+        Run /reload when you are finished to reapply the config.
         """)
-    @RestartRequired
-    public Map<Identifier, Integer> mobsToBaseValues = Map.of();
+    @Hook
+    public Map<String, Integer> mobsToBaseValues = Map.of("#" + NumismaticOverhaul.THE_BOURGEOISIE.id().toString(), 75);
 
-    @RestartRequired
     @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / (20 * healthScaleReduction)'")
     public boolean scaleOnHealth = false;
 
@@ -83,6 +86,5 @@ public class NumismaticOverhaulConfigModel {
         Reduces the impact that health scaling has on money dropped from mobs.
         Requires a restart to reload correctly!
         """)
-    @RestartRequired
     public float healthScaleReduction = 1.0f;
 }
