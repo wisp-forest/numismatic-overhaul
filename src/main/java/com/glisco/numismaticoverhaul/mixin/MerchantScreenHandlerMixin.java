@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.block.ShopMerchant;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MerchantScreenHandler.class)
 public class MerchantScreenHandlerMixin {
@@ -88,4 +90,13 @@ public class MerchantScreenHandlerMixin {
         if (!(merchant instanceof Entity)) ci.cancel();
     }
 
+    @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
+    public void thwartTaxEvasion(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+        if (!(this.merchant instanceof ShopMerchant shopMerchant)) return;
+
+        var shop = shopMerchant.shop;
+        if (shop.getWorld() == null || shop.getWorld().getBlockEntity(shop.getPos()) != shop || shop.getPos().getSquaredDistance(player.getX(), player.getY(), player.getZ()) > 100) {
+            cir.setReturnValue(false);
+        }
+    }
 }

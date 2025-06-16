@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class ShopMerchant implements Merchant {
 
-    private final ShopBlockEntity shop;
+    public final ShopBlockEntity shop;
     private final boolean inexhaustible;
     private TradeOfferList recipeList = new TradeOfferList();
     private PlayerEntity customer;
