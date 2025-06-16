@@ -1,8 +1,10 @@
 package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import io.wispforest.endec.SerializationContext;
 import io.wispforest.endec.impl.KeyedEndec;
 import io.wispforest.owo.ops.WorldOps;
+import io.wispforest.owo.serialization.RegistriesAttribute;
 import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,6 +20,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.SerializableRegistries;
 import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
@@ -128,7 +131,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(tag, registryLookup);
         Inventories.writeNbt(tag, this.inventory, registryLookup);
-        tag.put(OFFERS_LIST, offers);
+        tag.put(SerializationContext.attributes(RegistriesAttribute.of(this.getWorld().getRegistryManager())), OFFERS_LIST, offers);
         tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
