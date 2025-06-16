@@ -7,9 +7,7 @@ import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.serialization.CodecUtils;
-import io.wispforest.owo.serialization.endec.MinecraftEndecs;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.ComponentPredicate;
 import net.minecraft.registry.Registries;
@@ -51,7 +49,7 @@ public record ShopOffer(ItemStack sell, long price) {
     public static int count(DefaultedList<ItemStack> stacks, ItemStack testStack) {
         int count = 0;
         for (var stack : stacks) {
-            if (!ItemStack.areItemsEqual(stack, testStack)) continue;
+            if (!ItemStack.areItemsAndComponentsEqual(stack, testStack)) continue;
             count += stack.getCount();
         }
         return count;
@@ -60,7 +58,7 @@ public record ShopOffer(ItemStack sell, long price) {
     public static int remove(DefaultedList<ItemStack> stacks, ItemStack removeStack) {
         int toRemove = removeStack.getCount();
         for (var stack : stacks) {
-            if (!ItemStack.areItemsEqual(stack, removeStack)) continue;
+            if (!ItemStack.areItemsAndComponentsEqual(stack, removeStack)) continue;
 
             int removed = stack.getCount();
             stack.decrement(toRemove);
