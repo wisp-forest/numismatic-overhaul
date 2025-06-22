@@ -8,6 +8,7 @@ public final class CurrencyTooltipData implements TooltipData {
     private final long[] value;
     private final long[] original;
 
+    // TODO - Working with raw long arrays sucks. Migrate this to use CurrencyComponent or similar
     public CurrencyTooltipData(long[] value, long[] original) {
         this.value = value;
         this.original = original;
