@@ -1,6 +1,8 @@
 package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
+import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import io.wispforest.owo.registration.reflect.BlockEntityRegistryContainer;
 import io.wispforest.owo.registration.reflect.BlockRegistryContainer;
@@ -39,11 +41,7 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
                 public Optional<TooltipData> getTooltipData(ItemStack stack) {
                     var containerComponent = stack.getComponents().getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
 
-                    List<Long> valueList = new ArrayList<>();
-                    containerComponent.iterateNonEmpty().forEach(itemStack -> valueList.add(((long) itemStack.getCount())));
-
-                    if (valueList.isEmpty()) return Optional.empty();
-
+                    var valueList = CurrencyHelper.getFromContainer(containerComponent);
                     long[] values = new long[valueList.size()];
                     for (int i = 0; i < valueList.size(); i++) {
                         values[i] = valueList.get(i);

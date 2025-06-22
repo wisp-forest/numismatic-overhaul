@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.client.gui;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
+import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Sizing;
@@ -24,6 +25,7 @@ public class PiggyBankScreen extends BaseUIModelHandledScreen<FlowLayout, PiggyB
 
     @Override
     protected void build(FlowLayout rootComponent) {
+        this.uiAdapter.rootComponent.childById(LabelComponent.class, "piggy-title").text(title);
         this.bronzeHint = this.uiAdapter.rootComponent.childById(TextureComponent.class, "bronze-hint");
         this.silverHint = this.uiAdapter.rootComponent.childById(TextureComponent.class, "silver-hint");
         this.goldHint = this.uiAdapter.rootComponent.childById(TextureComponent.class, "gold-hint");

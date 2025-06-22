@@ -2,14 +2,13 @@ package com.glisco.numismaticoverhaul.block;
 
 import io.wispforest.owo.util.ImplementedInventory;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.Text;
@@ -17,9 +16,9 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
+public class PiggyBankBlockEntity extends LootableContainerBlockEntity {
 
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 
     public PiggyBankBlockEntity(BlockPos pos, BlockState state) {
         super(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, pos, state);
@@ -40,8 +39,18 @@ public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHand
     }
 
     @Override
-    public Text getDisplayName() {
-        return this.getCachedState().getBlock().getName();
+    protected Text getContainerName() {
+        return Text.translatable("container.numismatic-overhaul.piggy_bank");
+    }
+
+    @Override
+    protected DefaultedList<ItemStack> getHeldStacks() {
+        return inventory;
+    }
+
+    @Override
+    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+        this.inventory = inventory;
     }
 
     public DefaultedList<ItemStack> inventory() {
@@ -57,5 +66,15 @@ public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHand
                 ScreenHandlerContext.create(this.world, this.pos),
                 (ImplementedInventory) () -> PiggyBankBlockEntity.this.inventory
         );
+    }
+
+    @Override
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        return new PiggyBankScreenHandler(syncId, playerInventory);
+    }
+
+    @Override
+    public int size() {
+        return 0;
     }
 }

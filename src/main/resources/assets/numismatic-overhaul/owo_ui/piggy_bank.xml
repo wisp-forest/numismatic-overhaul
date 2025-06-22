@@ -6,7 +6,9 @@
                 <flow-layout direction="vertical">
                     <children>
                         <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-width="176" region-height="145"/>
-
+                        <label id="piggy-title">
+                            <positioning type="absolute">5,5</positioning>
+                        </label>
                         <texture texture="numismatic-overhaul:textures/gui/piggy_bank.png" region-height="16" region-width="16" u="0" v="145" id="bronze-hint">
                             <positioning type="absolute">62,26</positioning>
                         </texture>

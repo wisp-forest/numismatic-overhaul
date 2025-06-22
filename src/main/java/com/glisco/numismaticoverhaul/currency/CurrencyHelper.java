@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.currency;
 import com.glisco.numismaticoverhaul.item.*;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.KeyedEndec;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.TradedItem;
@@ -34,6 +35,13 @@ public class CurrencyHelper {
         }
 
         return value;
+    }
+
+    public static List<Long> getFromContainer(ContainerComponent component) {
+        var items = component.stream().toList();
+        int value = getValue(items);
+        var moneyBagComponent = MoneyBagComponent.of(value);
+        return List.of(moneyBagComponent.bronze(), moneyBagComponent.silver(), moneyBagComponent.gold());
     }
 
     public static int getValue(List<ItemStack> stacks) {

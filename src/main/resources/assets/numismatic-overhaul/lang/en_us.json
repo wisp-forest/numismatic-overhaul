@@ -76,5 +76,6 @@
   "gamerule.moneyMobDropVariancePercentage": "Mob money drop variance percentage",
   "gamerule.moneyMobDropVariancePercentage.description": "Controls the variance of money dropped by mobs. By default a value of 50 means that the base value will be multiplied by 50%-150% randomly.",
   "gamerule.moneyDropPercentage": "Money drop percentage",
-  "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false"
+  "gamerule.moneyDropPercentage.description": "Controls how much of their money a player drops when they die, given that keepInventory is false",
+  "container.numismatic-overhaul.piggy_bank": "Piggy Bank"
 }

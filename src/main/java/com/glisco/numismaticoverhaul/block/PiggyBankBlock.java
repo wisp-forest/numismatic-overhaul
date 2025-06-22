@@ -153,6 +153,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
 
                 var drops = new ArrayList<>(super.getDroppedStacks(state, builder));
                 piggyBank.inventory().stream().filter(stack -> !stack.isEmpty()).forEach(drops::add);
+                drops.removeIf(itemStack -> itemStack.getItem().equals(NumismaticOverhaulBlocks.PIGGY_BANK.asItem()));
                 return drops;
             } else {
                 builder.addDynamicDrop(Identifier.of("contents"), (consumer) -> {
