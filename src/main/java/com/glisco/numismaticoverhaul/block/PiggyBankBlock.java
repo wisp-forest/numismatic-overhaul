@@ -129,10 +129,10 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
 
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank && player.isCreative() && !world.isClient && !piggyBank.inventory().stream().allMatch(ItemStack::isEmpty)) {
+        if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank && player.isCreative() && !world.isClient && !piggyBank.inventory().isEmpty()) {
 
             var stack = new ItemStack(NumismaticOverhaulBlocks.PIGGY_BANK);
-            piggyBank.setComponents(ComponentMap.builder().add(DataComponentTypes.CONTAINER, ContainerComponent.fromStacks(List.of(stack))).build());
+            stack.applyComponentsFrom(piggyBank.createComponentMap());
 
             ItemEntity var = new ItemEntity(world, pos.getX() + .5d, pos.getY() + .5d, pos.getZ() + .5d, stack);
             var.setToDefaultPickupDelay();
