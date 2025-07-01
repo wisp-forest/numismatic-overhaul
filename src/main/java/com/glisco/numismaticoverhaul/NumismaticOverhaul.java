@@ -160,13 +160,15 @@ public class NumismaticOverhaul implements ModInitializer {
     private static void loadMobDropConfig(MinecraftServer ignored) {
         CONFIG.mobsToBaseValues().forEach((s, baseValue) -> {
             if (s.startsWith("#")) {
-                Registries.ENTITY_TYPE.getEntryList(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(s.split("#")[1]))).ifPresent(registryEntries -> {
+                Registries.ENTITY_TYPE.getEntryList(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(s.split("#")[1]))).ifPresentOrElse(registryEntries -> {
                     registryEntries.forEach(entityTypeRegistryEntry -> MOBS_IN_BOURGEOISIE.put(entityTypeRegistryEntry.value(), baseValue));
+                }, () -> {
+                    LOGGER.error("[Numismatic Overhaul] Could not find entity type for tag '{}' when applying mob drops", s);
                 });
             } else {
                 var entityOpt = Registries.ENTITY_TYPE.getOrEmpty(Identifier.of(s));
                 entityOpt.ifPresentOrElse(entityType -> MOBS_IN_BOURGEOISIE.put(entityType, baseValue), () -> {
-                    LOGGER.error("[Numismatic Overhaul] Could not find entity type or entity type tag '{}' for mob drops", s);
+                    LOGGER.error("[Numismatic Overhaul] Could not find entity type '{}' when applying mob drops", s);
                 });
             }
         });
