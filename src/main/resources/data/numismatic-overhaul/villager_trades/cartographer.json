@@ -33,9 +33,9 @@
         "max_uses": 16
       },
       {
-        "type": "numismatic-overhaul:sell_map",
+        "type": "numismatic-overhaul:sell_map_tag",
         "price": 3000,
-        "structure": "monument",
+        "tag": "minecraft:on_ocean_explorer_maps",
         "max_uses": 2,
         "villager_experience": 15
       }
@@ -50,16 +50,16 @@
         }
       },
       {
-        "type": "numismatic-overhaul:sell_map",
+        "type": "numismatic-overhaul:sell_map_tag",
         "price": 10000,
-        "structure": "mansion",
+        "tag": "c:on_woodland_explorer_maps",
         "max_uses": 2,
         "villager_experience": 15
       },
       {
-        "type": "numismatic-overhaul:sell_map",
+        "type": "numismatic-overhaul:sell_map_tag",
         "price": 20000,
-        "structure": "end_city",
+        "tag": "c:end_cities",
         "max_uses": 2,
         "villager_experience": 20
       }
