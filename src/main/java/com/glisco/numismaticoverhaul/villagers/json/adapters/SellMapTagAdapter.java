@@ -78,9 +78,9 @@ public class SellMapTagAdapter extends TradeJsonAdapter {
             final var blockPos = result.getFirst();
             final var feature = result.getSecond();
 
-            var iconType = MapIcon.Type.TARGET_POINT;
+            var iconType = MapIcon.Type.TARGET_X;
             if (feature.isIn(StructureTags.ON_TREASURE_MAPS))
-                iconType = MapIcon.Type.TARGET_X;
+                iconType = MapIcon.Type.RED_X;
             if (feature.isIn(StructureTags.ON_OCEAN_EXPLORER_MAPS))
                 iconType = MapIcon.Type.MONUMENT;
             if (feature.isIn(StructureTags.ON_WOODLAND_EXPLORER_MAPS))
