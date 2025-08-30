@@ -32,8 +32,8 @@
     "fabricloader": ">=0.16.5",
     "fabric": "*",
     "minecraft": ">=1.21",
-    "cardinal-components-base": "6.1.0",
-    "cardinal-components-entity": "6.1.0",
+    "cardinal-components-base": ">=6.1.0",
+    "cardinal-components-entity": ">=6.1.0",
     "owo": ">=0.12.15"
   },
   "custom": {
