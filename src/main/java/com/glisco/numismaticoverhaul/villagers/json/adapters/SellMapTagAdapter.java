@@ -5,9 +5,10 @@ import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.villagers.json.TradeJsonAdapter;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerJsonHelper;
 import com.google.gson.JsonObject;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
-import net.minecraft.item.map.MapIcon;
+import net.minecraft.item.map.MapDecorationTypes;
 import net.minecraft.item.map.MapState;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
@@ -18,11 +19,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.village.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
+import java.util.Optional;
 
 public class SellMapTagAdapter extends TradeJsonAdapter {
 
@@ -35,7 +36,7 @@ public class SellMapTagAdapter extends TradeJsonAdapter {
         VillagerJsonHelper.assertString(json, "tag");
         int price = json.get("price").getAsInt();
 
-        final var structure = new Identifier(JsonHelper.getString(json, "tag"));
+        final var structure = Identifier.of(JsonHelper.getString(json, "tag"));
         return new Factory(price, structure, max_uses, villager_experience, price_multiplier);
     }
 
@@ -78,19 +79,47 @@ public class SellMapTagAdapter extends TradeJsonAdapter {
             final var blockPos = result.getFirst();
             final var feature = result.getSecond();
 
-            var iconType = MapIcon.Type.TARGET_POINT;
-            if (feature.isIn(StructureTags.ON_TREASURE_MAPS))
-                iconType = MapIcon.Type.TARGET_X;
-            if (feature.isIn(StructureTags.ON_OCEAN_EXPLORER_MAPS))
-                iconType = MapIcon.Type.MONUMENT;
-            if (feature.isIn(StructureTags.ON_WOODLAND_EXPLORER_MAPS))
-                iconType = MapIcon.Type.MANSION;
+            // I "love" hardcoding these kinds of things
+            var iconType = MapDecorationTypes.TARGET_X;
+            if (feature.isIn(StructureTags.ON_TREASURE_MAPS)) {
+                iconType = MapDecorationTypes.RED_X;
+            }
+            if (feature.isIn(StructureTags.ON_OCEAN_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.MONUMENT;
+            }
+            if (feature.isIn(StructureTags.ON_WOODLAND_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.MANSION;
+            }
+            if (feature.isIn(StructureTags.ON_DESERT_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_DESERT;
+            }
+            if (feature.isIn(StructureTags.ON_SAVANNA_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_SAVANNA;
+            }
+            if (feature.isIn(StructureTags.ON_PLAINS_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_PLAINS;
+            }
+            if (feature.isIn(StructureTags.ON_TAIGA_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_TAIGA;
+            }
+            if (feature.isIn(StructureTags.ON_SNOWY_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_SNOWY;
+            }
+            if (feature.isIn(StructureTags.ON_JUNGLE_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.JUNGLE_TEMPLE;
+            }
+            if (feature.isIn(StructureTags.ON_SWAMP_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.SWAMP_HUT;
+            }
+            if (feature.isIn(StructureTags.ON_TRIAL_CHAMBERS_MAPS)) {
+                iconType = MapDecorationTypes.TRIAL_CHAMBERS;
+            }
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
             MapState.addDecorationsNbt(itemStack, blockPos, "+", iconType);
-            itemStack.setCustomName(Text.translatable("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
-            return new TradeOffer(CurrencyHelper.getClosest(price), new ItemStack(Items.MAP), itemStack, this.maxUses, this.experience, multiplier);
+            itemStack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
+            return new TradeOffer(CurrencyHelper.getClosestTradeItem(price), Optional.of(new TradedItem(Items.MAP)), itemStack, this.maxUses, this.experience, multiplier);
         }
     }
 }

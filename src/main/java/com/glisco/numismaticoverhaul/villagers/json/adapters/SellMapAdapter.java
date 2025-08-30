@@ -79,19 +79,46 @@ public class SellMapAdapter extends TradeJsonAdapter {
             if (result == null) return null;
             final var blockPos = result.getFirst();
 
-            var iconType = MapDecorationTypes.TARGET_POINT;
-            if (feature.isIn(StructureTags.ON_TREASURE_MAPS))
-                iconType = MapDecorationTypes.TARGET_X;
-            if (feature.isIn(StructureTags.ON_OCEAN_EXPLORER_MAPS))
+            // I "love" hardcoding these kinds of things
+            var iconType = MapDecorationTypes.TARGET_X;
+            if (feature.isIn(StructureTags.ON_TREASURE_MAPS)) {
+                iconType = MapDecorationTypes.RED_X;
+            }
+            if (feature.isIn(StructureTags.ON_OCEAN_EXPLORER_MAPS)) {
                 iconType = MapDecorationTypes.MONUMENT;
-            if (feature.isIn(StructureTags.ON_WOODLAND_EXPLORER_MAPS))
+            }
+            if (feature.isIn(StructureTags.ON_WOODLAND_EXPLORER_MAPS)) {
                 iconType = MapDecorationTypes.MANSION;
+            }
+            if (feature.isIn(StructureTags.ON_DESERT_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_DESERT;
+            }
+            if (feature.isIn(StructureTags.ON_SAVANNA_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_SAVANNA;
+            }
+            if (feature.isIn(StructureTags.ON_PLAINS_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_PLAINS;
+            }
+            if (feature.isIn(StructureTags.ON_TAIGA_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_TAIGA;
+            }
+            if (feature.isIn(StructureTags.ON_SNOWY_VILLAGE_MAPS)) {
+                iconType = MapDecorationTypes.VILLAGE_SNOWY;
+            }
+            if (feature.isIn(StructureTags.ON_JUNGLE_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.JUNGLE_TEMPLE;
+            }
+            if (feature.isIn(StructureTags.ON_SWAMP_EXPLORER_MAPS)) {
+                iconType = MapDecorationTypes.SWAMP_HUT;
+            }
+            if (feature.isIn(StructureTags.ON_TRIAL_CHAMBERS_MAPS)) {
+                iconType = MapDecorationTypes.TRIAL_CHAMBERS;
+            }
 
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
             MapState.addDecorationsNbt(itemStack, blockPos, "+", iconType);
             itemStack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("filled_map." + feature.getKey().get().getValue().getPath().toLowerCase(Locale.ROOT)));
-
 
             return new TradeOffer(CurrencyHelper.getClosestTradeItem(price), Optional.of(new TradedItem(Items.MAP)), itemStack, this.maxUses, this.experience, multiplier);
         }
