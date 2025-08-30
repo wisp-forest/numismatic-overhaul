@@ -47,6 +47,7 @@ public class VillagerTradesHandler {
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_tag"), new SellTagAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("dimension_sell_stack"), new DimensionAwareSellStackAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_map"), new SellMapAdapter());
+        tradeTypesRegistry.put(NumismaticOverhaul.id("sell_map_tag"), new SellMapTagAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("sell_single_enchantment"), new SellSingleEnchantmentAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("enchant_item"), new EnchantItemAdapter());
         tradeTypesRegistry.put(NumismaticOverhaul.id("process_item"), new ProcessItemAdapter());
