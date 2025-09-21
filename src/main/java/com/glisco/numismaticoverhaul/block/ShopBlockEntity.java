@@ -19,8 +19,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.SerializableRegistries;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
@@ -131,7 +130,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(tag, registryLookup);
         Inventories.writeNbt(tag, this.inventory, registryLookup);
-        tag.put(SerializationContext.attributes(RegistriesAttribute.of(this.getWorld().getRegistryManager())), OFFERS_LIST, offers);
+        tag.put(SerializationContext.attributes(RegistriesAttribute.of((DynamicRegistryManager) registryLookup)), OFFERS_LIST, offers);
         tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
@@ -143,7 +142,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(tag, registryLookup);
         Inventories.readNbt(tag, this.inventory, registryLookup);
-        this.offers = tag.get(OFFERS_LIST);
+        this.offers = tag.get(SerializationContext.attributes(RegistriesAttribute.of((DynamicRegistryManager) registryLookup)), OFFERS_LIST);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }
