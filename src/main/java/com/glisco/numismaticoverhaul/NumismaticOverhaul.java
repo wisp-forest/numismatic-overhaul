@@ -25,6 +25,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
@@ -44,6 +45,7 @@ import net.minecraft.world.GameRules;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class NumismaticOverhaul implements ModInitializer {
@@ -159,7 +161,29 @@ public class NumismaticOverhaul implements ModInitializer {
 
     private static void loadMobDropConfig(MinecraftServer ignored) {
         CONFIG.mobsToBaseValues().forEach((s, baseValue) -> {
-            if (s.startsWith("#")) {
+            if (s.startsWith("€")) {
+                var potentialGroup = s.split("€")[1];
+                try {
+                    var group = SpawnGroup.valueOf(potentialGroup.toUpperCase(Locale.ROOT));
+                    Registries.ENTITY_TYPE.forEach(entityType -> {
+                        if (entityType.getSpawnGroup() == group) {
+                            MOBS_IN_BOURGEOISIE.put(entityType, baseValue);
+                        }
+                    });
+                } catch (IllegalArgumentException e) {
+                    LOGGER.error("[Numismatic Overhaul] Could not find spawn group '{}' for mob drops", s);
+                }
+            }
+            else if (s.startsWith("@")) {
+                var namespace = s.split("@")[1];
+                Registries.ENTITY_TYPE.getEntrySet().forEach(entry -> {
+                    var entityNamespace = entry.getKey().getValue().getNamespace();
+                    if (entityNamespace.equals(namespace)) {
+                        MOBS_IN_BOURGEOISIE.put(entry.getValue(), baseValue);
+                    }
+                });
+            }
+            else if (s.startsWith("#")) {
                 Registries.ENTITY_TYPE.getEntryList(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(s.split("#")[1]))).ifPresentOrElse(registryEntries -> {
                     registryEntries.forEach(entityTypeRegistryEntry -> MOBS_IN_BOURGEOISIE.put(entityTypeRegistryEntry.value(), baseValue));
                 }, () -> {

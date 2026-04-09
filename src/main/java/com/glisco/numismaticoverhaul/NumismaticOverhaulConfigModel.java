@@ -65,13 +65,19 @@ public class NumismaticOverhaulConfigModel {
 
     @Comment("""
         Sets the base value of money dropped for an entity. This value is multiplied by the moneyMobDropVariancePercentage gamerule.
-        Syntax supports entity types (same ids you would find when running the "/summon" command),
-        and tags (groups of entities, check the Minecraft Wiki for examples)
+        Values are written as a key:value, where the key is the mob/entity, and the value is the amount of coins it drops.
+        See the Numismatic Overhaul Wiki for more details on the syntax. Examples:
+        string = Entity Type (id, same as '/summon')
+        # = tag (E.G. "#minecraft:skeletons", or "#numismatic-overhaul:the_bourgeoisie")
+        @ = mod namespace (E.G. @minecraft or @minecells)
+        € = spawn group (E.G. MONSTER for mobs, CREATURE for animals)
+        Run /reload when you are finished to reapply the config.
         "mobsToBaseValues": {
             "minecraft:pillager": 80,
-            "#numismatic-overhaul:the_bourgeoisie": 75
+            "#numismatic-overhaul:the_bourgeoisie": 75,
+            "@minecells": 200,
+            "€MONSTER": 50
         }
-        Run /reload when you are finished to reapply the config.
         """)
     public Map<String, Integer> mobsToBaseValues = Map.of("#" + NumismaticOverhaul.THE_BOURGEOISIE.id().toString(), 75);
 
