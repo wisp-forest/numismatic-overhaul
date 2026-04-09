@@ -1,9 +1,12 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopOffer;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopScreenHandler;
 import com.glisco.numismaticoverhaul.block.shop.ShopOffer;
 import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
+import com.glisco.numismaticoverhaul.network.UpdatePawnShopScreenS2CPacket;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.ops.TextOps;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
@@ -35,20 +38,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
-
-public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenHandler> {
+public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnShopScreenHandler> {
 
     public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui.png");
     public static final Identifier TRADES_TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui_trades.png");
 
     private final List<ButtonWidget> tabButtons = new ArrayList<>();
-    private final List<ShopOffer> offers = new ArrayList<>();
+    private final List<PawnShopOffer> offers = new ArrayList<>();
 
     private Runnable afterDataUpdate = () -> {};
     private Consumer<String> priceDisplay = s -> {};
     private int tab = 0;
 
-    public ShopScreen(ShopScreenHandler handler, PlayerInventory inventory, Text title) {
+    public PawnShopScreen(PawnShopScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("shop"));
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
@@ -81,7 +83,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
         return super.isClickOutsideBounds(mouseX, mouseY, left, top, button);
     }
 
-    public void update(UpdateShopScreenS2CPacket data) {
+    public void update(UpdatePawnShopScreenS2CPacket data) {
         if (this.uiAdapter == null) return;
 
         long[] storedCurrency = CurrencyResolver.splitValues(data.storedCurrency());
@@ -201,7 +203,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
     }
 
     private boolean hasOfferFor(ItemStack stack) {
-        return this.offers.stream().anyMatch(offer -> ItemStack.areEqual(stack, offer.getSellStack()));
+        return this.offers.stream().anyMatch(offer -> ItemStack.areEqual(stack, offer.getBuyStack()));
     }
 
     private void populateTrades(int tab) {
@@ -218,7 +220,7 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
             var offer = this.offers.get(offerIndex);
 
             var component = this.model.expandTemplate(FlowLayout.class, "trade-button", Map.of("price", String.valueOf(offer.getPrice())));
-            component.childById(ItemComponent.class, "item-display").stack(offer.getSellStack());
+            component.childById(ItemComponent.class, "item-display").stack(offer.getBuyStack());
             component.childById(ButtonComponent.class, "trade-button").onPress(button -> {
                 this.handler.loadOffer(offerIndex);
                 this.priceDisplay.accept(String.valueOf(offer.getPrice()));

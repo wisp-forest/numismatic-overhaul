@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.block;
+package com.glisco.numismaticoverhaul.block.shop;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;

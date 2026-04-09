@@ -1,6 +1,7 @@
-package com.glisco.numismaticoverhaul.block;
+package com.glisco.numismaticoverhaul.block.pawn;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import io.wispforest.owo.ops.WorldOps;
 import io.wispforest.owo.util.ImplementedInventory;
 import net.fabricmc.api.EnvType;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-public class ShopBlockEntity extends LockableContainerBlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
+public class PawnShopBlockEntity extends LockableContainerBlockEntity implements ImplementedInventory, SidedInventory, NamedScreenHandlerFactory {
 
     private static final int[] SLOTS = IntStream.range(0, 27).toArray();
     private static final int[] NO_SLOTS = new int[0];
@@ -41,7 +42,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     public boolean busy = false;
     private final Merchant merchant;
-    private final List<ShopOffer> offers;
+    private final List<PawnShopOffer> offers;
 
     private long storedCurrency;
     private UUID owner;
@@ -49,11 +50,11 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     private int tradeIndex;
 
-    public ShopBlockEntity(BlockPos pos, BlockState state) {
-        super(NumismaticOverhaulBlocks.Entities.SHOP, pos, state);
+    public PawnShopBlockEntity(BlockPos pos, BlockState state) {
+        super(NumismaticOverhaulBlocks.Entities.PAWN_SHOP, pos, state);
 
-        boolean inexhaustible = (state.getBlock() instanceof ShopBlock shop) && shop.inexhaustible();
-        this.merchant = new ShopMerchant(this, inexhaustible);
+        boolean inexhaustible = (state.getBlock() instanceof PawnShopBlock shop) && shop.inexhaustible();
+        this.merchant = new PawnShopMerchant(this, inexhaustible);
 
         this.offers = new ArrayList<>();
         this.storedCurrency = 0;
@@ -89,7 +90,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
         return merchant;
     }
 
-    public List<ShopOffer> getOffers() {
+    public List<PawnShopOffer> getOffers() {
         return offers;
     }
 
@@ -115,11 +116,16 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
         markDirty();
     }
 
+    public void removeCurrency(int value) {
+        this.storedCurrency -= value;
+        markDirty();
+    }
+
     @Override
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         Inventories.writeNbt(tag, INVENTORY);
-        ShopOffer.writeAll(tag, offers);
+        PawnShopOffer.writeAll(tag, offers);
         tag.putBoolean("AllowsTransfer", this.allowsTransfer);
         tag.putLong("StoredCurrency", storedCurrency);
         if (owner != null) {
@@ -131,7 +137,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         Inventories.readNbt(tag, INVENTORY);
-        ShopOffer.readAll(tag, offers);
+        PawnShopOffer.readAll(tag, offers);
         if (tag.contains("Owner")) {
             owner = tag.getUuid("Owner");
         }
@@ -139,12 +145,11 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
         this.storedCurrency = tag.getLong("StoredCurrency");
     }
 
-    public void addOrReplaceOffer(ShopOffer offer) {
-
+    public void addOrReplaceOffer(PawnShopOffer offer) {
         int indexToReplace = -1;
 
         for (int i = 0; i < offers.size(); i++) {
-            if (!ItemStack.areEqual(offer.getSellStack(), offers.get(i).getSellStack())) continue;
+            if (!ItemStack.areEqual(offer.getBuyStack(), offers.get(i).getBuyStack())) continue;
             indexToReplace = i;
             break;
         }
@@ -163,7 +168,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     }
 
     public void deleteOffer(ItemStack stack) {
-        if (!offers.removeIf(offer -> ItemStack.areEqual(stack, offer.getSellStack()))) {
+        if (!offers.removeIf(offer -> ItemStack.areEqual(stack, offer.getBuyStack()))) {
             NumismaticOverhaul.LOGGER.error("Tried to delete invalid trade for {} from shop at {}", stack, this.pos);
             return;
         }
@@ -171,7 +176,7 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
         this.markDirty();
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, ShopBlockEntity blockEntity) {
+    public static void tick(World world, BlockPos pos, BlockState state, PawnShopBlockEntity blockEntity) {
         blockEntity.tick();
     }
 
@@ -182,12 +187,12 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
     @Environment(EnvType.CLIENT)
     public ItemStack getItemToRender() {
         if (tradeIndex > offers.size() - 1) tradeIndex = 0;
-        return offers.get(tradeIndex).getSellStack();
+        return offers.get(tradeIndex).getBuyStack();
     }
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new ShopScreenHandler(syncId, playerInventory, this);
+        return new PawnShopScreenHandler(syncId, playerInventory, this);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.glisco.numismaticoverhaul.block;
+package com.glisco.numismaticoverhaul.block.pawn;
 
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -7,21 +7,22 @@ import net.minecraft.network.packet.s2c.play.SetTradeOffersS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
+import java.util.List;
 
-public class ShopMerchant implements Merchant {
+public class PawnShopMerchant implements Merchant {
 
-    private final ShopBlockEntity shop;
+    private final PawnShopBlockEntity shop;
     private final boolean inexhaustible;
     private TradeOfferList recipeList = new TradeOfferList();
     private PlayerEntity customer;
 
-    public ShopMerchant(ShopBlockEntity blockEntity, boolean inexhaustible) {
+    public PawnShopMerchant(PawnShopBlockEntity blockEntity, boolean inexhaustible) {
         this.shop = blockEntity;
         this.inexhaustible = inexhaustible;
     }
@@ -57,7 +58,7 @@ public class ShopMerchant implements Merchant {
     public void trade(TradeOffer offer) {
         offer.use();
         if (!this.inexhaustible) {
-            ShopOffer.remove(shop.getItems(), offer.getSellItem());
+            PawnShopOffer.add(shop, offer.getOriginalFirstBuyItem());
 
             this.updateTrades();
             if (this.getCustomer() instanceof ServerPlayerEntity serverPlayer) {
@@ -67,9 +68,8 @@ public class ShopMerchant implements Merchant {
                         0, 0, false, false
                 ));
             }
+            shop.removeCurrency(CurrencyHelper.getValue(List.of(offer.getSellItem())));
         }
-
-        shop.addCurrency(CurrencyHelper.getValue(Arrays.asList(offer.getOriginalFirstBuyItem(), offer.getSecondBuyItem())));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ShopMerchant implements Merchant {
         return false;
     }
 
-    public ShopBlockEntity shop() {
+    public PawnShopBlockEntity shop() {
         return this.shop;
     }
 }

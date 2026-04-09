@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
-import com.glisco.numismaticoverhaul.block.ShopMerchant;
+import com.glisco.numismaticoverhaul.block.shop.ShopMerchant;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;

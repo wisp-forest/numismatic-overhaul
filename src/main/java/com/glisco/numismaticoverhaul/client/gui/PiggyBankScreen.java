@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
+import com.glisco.numismaticoverhaul.block.piggy.PiggyBankScreenHandler;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
