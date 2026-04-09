@@ -121,7 +121,7 @@ public class NumismaticOverhaul implements ModInitializer {
 
         ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, serverResourceManager, success) -> {
             VillagerTradesHandler.broadcastErrors(server);
-            CONFIG.subscribeToMobsToBaseValues(NumismaticOverhaul::reloadMobDropConfig);
+            reloadMobDropConfig();
         });
 
         NUMISMATIC_GROUP.initialize();
@@ -198,7 +198,7 @@ public class NumismaticOverhaul implements ModInitializer {
         });
     }
 
-    private static void reloadMobDropConfig(Map<String, Integer> ignored) {
+    private static void reloadMobDropConfig() {
         MOBS_IN_BOURGEOISIE.clear();
         CONFIG.load();
         loadMobDropConfig(null);
