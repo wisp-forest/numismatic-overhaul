@@ -65,18 +65,14 @@ public class NumismaticOverhaulConfigModel {
 
     @Comment("""
         Sets the base value of money dropped for an entity. This value is multiplied by the moneyMobDropVariancePercentage gamerule.
-        Example of having pillagers drop around 80 Bronze Coins:
+        Syntax supports entity types (same ids you would find when running the "/summon" command),
+        and tags (groups of entities, check the Minecraft Wiki for examples)
         "mobsToBaseValues": {
             "minecraft:pillager": 80,
-        }
-        
-        Another example which uses tags:
-        "mobsToBaseValues": {
-        "#numismatic-overhaul:the_bourgeoisie": 75
+            "#numismatic-overhaul:the_bourgeoisie": 75
         }
         Run /reload when you are finished to reapply the config.
         """)
-    @Hook
     public Map<String, Integer> mobsToBaseValues = Map.of("#" + NumismaticOverhaul.THE_BOURGEOISIE.id().toString(), 75);
 
     @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / (20 * healthScaleReduction)'")
