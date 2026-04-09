@@ -1,6 +1,6 @@
 package com.glisco.numismaticoverhaul.client;
 
-import com.glisco.numismaticoverhaul.block.ShopBlockEntity;
+import com.glisco.numismaticoverhaul.block.shop.ShopBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;

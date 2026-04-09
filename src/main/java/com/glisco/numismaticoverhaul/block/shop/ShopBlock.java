@@ -1,6 +1,7 @@
-package com.glisco.numismaticoverhaul.block;
+package com.glisco.numismaticoverhaul.block.shop;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import com.mojang.serialization.MapCodec;

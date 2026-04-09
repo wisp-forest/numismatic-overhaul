@@ -1,6 +1,9 @@
 package com.glisco.numismaticoverhaul;
 
 import com.glisco.numismaticoverhaul.block.*;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopScreenHandler;
+import com.glisco.numismaticoverhaul.block.piggy.PiggyBankScreenHandler;
+import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
 import com.glisco.numismaticoverhaul.item.*;
 import com.glisco.numismaticoverhaul.network.*;
@@ -65,6 +68,7 @@ public class NumismaticOverhaul implements ModInitializer {
     });
 
     public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(ShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
+    public static final ScreenHandlerType<PawnShopScreenHandler> PAWN_SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PawnShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
     public static final ScreenHandlerType<PiggyBankScreenHandler> PIGGY_BANK_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PiggyBankScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
 
     public static final SoundEvent PIGGY_BANK_BREAK = SoundEvent.of(id("piggy_bank_break"));
@@ -112,7 +116,9 @@ public class NumismaticOverhaul implements ModInitializer {
 
         CHANNEL.registerServerbound(RequestPurseActionC2SPacket.class, RequestPurseActionC2SPacket::handle);
         CHANNEL.registerServerbound(ShopScreenHandlerRequestC2SPacket.class, ShopScreenHandlerRequestC2SPacket::handle);
+        CHANNEL.registerServerbound(PawnShopScreenHandlerRequestC2SPacket.class, PawnShopScreenHandlerRequestC2SPacket::handle);
         UpdateShopScreenS2CPacket.initialize();
+        UpdatePawnShopScreenS2CPacket.initialize();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new VillagerTradesResourceListener());
         VillagerTradesHandler.registerDefaultAdapters();

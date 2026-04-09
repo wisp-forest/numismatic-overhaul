@@ -1,11 +1,17 @@
 package com.glisco.numismaticoverhaul.block;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopBlock;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopBlockEntity;
+import com.glisco.numismaticoverhaul.block.piggy.PiggyBankBlock;
+import com.glisco.numismaticoverhaul.block.piggy.PiggyBankBlockEntity;
+import com.glisco.numismaticoverhaul.block.shop.ShopBlock;
+import com.glisco.numismaticoverhaul.block.shop.ShopBlockEntity;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
-import com.glisco.numismaticoverhaul.item.CurrencyItem;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import io.wispforest.owo.registration.reflect.BlockEntityRegistryContainer;
 import io.wispforest.owo.registration.reflect.BlockRegistryContainer;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.DataComponentTypes;
@@ -17,12 +23,15 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
     public static final Block SHOP = new ShopBlock(false);
+    public static final Block PAWN_SHOP = new PawnShopBlock(false);
     public static final Block INEXHAUSTIBLE_SHOP = new ShopBlock(true);
+    public static final Block INEXHAUSTIBLE_PAWN_SHOP = new PawnShopBlock(true);
     public static final Block PIGGY_BANK = new PiggyBankBlock();
 
     @Override
@@ -58,6 +67,9 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
         public static final BlockEntityType<ShopBlockEntity> SHOP =
             BlockEntityType.Builder.create(ShopBlockEntity::new, NumismaticOverhaulBlocks.SHOP, NumismaticOverhaulBlocks.INEXHAUSTIBLE_SHOP).build();
+
+        public static final BlockEntityType<PawnShopBlockEntity> PAWN_SHOP =
+            FabricBlockEntityTypeBuilder.create(PawnShopBlockEntity::new, NumismaticOverhaulBlocks.PAWN_SHOP, NumismaticOverhaulBlocks.INEXHAUSTIBLE_PAWN_SHOP).build();
 
         public static final BlockEntityType<PiggyBankBlockEntity> PIGGY_BANK =
             BlockEntityType.Builder.create(PiggyBankBlockEntity::new, NumismaticOverhaulBlocks.PIGGY_BANK).build();

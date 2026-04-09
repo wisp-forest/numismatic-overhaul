@@ -1,7 +1,7 @@
 package com.glisco.numismaticoverhaul.client.gui;
 
-import com.glisco.numismaticoverhaul.block.ShopOffer;
-import com.glisco.numismaticoverhaul.block.ShopScreenHandler;
+import com.glisco.numismaticoverhaul.block.shop.ShopOffer;
+import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.ops.TextOps;

@@ -1,19 +1,20 @@
 package com.glisco.numismaticoverhaul.network;
 
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopScreenHandler;
 import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import io.wispforest.owo.network.ServerAccess;
 
-public record ShopScreenHandlerRequestC2SPacket(Action action, long value) {
+public record PawnShopScreenHandlerRequestC2SPacket(Action action, long value) {
 
-    public ShopScreenHandlerRequestC2SPacket(Action action) {
+    public PawnShopScreenHandlerRequestC2SPacket(Action action) {
         this(action, 0);
     }
 
-    public static void handle(ShopScreenHandlerRequestC2SPacket message, ServerAccess access) {
+    public static void handle(PawnShopScreenHandlerRequestC2SPacket message, ServerAccess access) {
         final var player = access.player();
         final long value = message.value();
 
-        if (!(player.currentScreenHandler instanceof ShopScreenHandler shopHandler)) return;
+        if (!(player.currentScreenHandler instanceof PawnShopScreenHandler shopHandler)) return;
 
         switch (message.action()) {
             case LOAD_OFFER -> shopHandler.loadOffer(value);

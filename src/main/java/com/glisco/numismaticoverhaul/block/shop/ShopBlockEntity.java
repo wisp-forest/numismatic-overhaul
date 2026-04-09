@@ -1,6 +1,7 @@
-package com.glisco.numismaticoverhaul.block;
+package com.glisco.numismaticoverhaul.block.shop;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import io.wispforest.endec.SerializationContext;
 import io.wispforest.endec.impl.KeyedEndec;
 import io.wispforest.owo.ops.WorldOps;
@@ -19,8 +20,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.*;
-import net.minecraft.screen.*;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -123,6 +126,11 @@ public class ShopBlockEntity extends LockableContainerBlockEntity implements Imp
 
     public void addCurrency(long value) {
         this.storedCurrency += value;
+        markDirty();
+    }
+
+    public void removeCurrency(int value) {
+        this.storedCurrency -= value;
         markDirty();
     }
 

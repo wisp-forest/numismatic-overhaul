@@ -1,8 +1,8 @@
 package com.glisco.numismaticoverhaul.network;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.block.ShopBlockEntity;
-import com.glisco.numismaticoverhaul.block.ShopOffer;
+import com.glisco.numismaticoverhaul.block.shop.ShopBlockEntity;
+import com.glisco.numismaticoverhaul.block.shop.ShopOffer;
 import com.glisco.numismaticoverhaul.client.gui.ShopScreen;
 import io.wispforest.endec.impl.ReflectiveEndecBuilder;
 import io.wispforest.owo.network.ClientAccess;
