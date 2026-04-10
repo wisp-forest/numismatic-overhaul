@@ -40,7 +40,7 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
     @Override
     public BlockItem createBlockItem(Block block, String identifier) {
-        if (block == INEXHAUSTIBLE_SHOP) {
+        if (block == INEXHAUSTIBLE_SHOP || block == INEXHAUSTIBLE_PAWN_SHOP) {
             return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP).rarity(Rarity.EPIC)) {
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
@@ -63,8 +63,12 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
                 }
             };
         }
-
-        return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP));
+        return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP)) {
+            @Override
+            public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+                tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip").formatted(Formatting.GRAY));
+            }
+        };
     }
 
     public static final class Entities implements BlockEntityRegistryContainer {

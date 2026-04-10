@@ -3,12 +3,11 @@ package com.glisco.numismaticoverhaul.block.pawn;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.villagers.data.NumismaticTradeOfferExtensions;
+import io.wispforest.owo.ops.ItemOps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.TradeOffer;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class PawnShopOffer {
         var shopItems = pawnShop.getItems();
         // loop once to merge existing stacks together
         for (ItemStack stack : shopItems) {
-            if (stack.getItem() == boughtStack.getItem() && ItemStack.canCombine(stack, boughtStack)) {
+            if (ItemOps.canStack(stack, boughtStack)) {
                 stack.increment(boughtStack.getCount());
                 return;
             }
@@ -47,14 +46,13 @@ public class PawnShopOffer {
 
     @SuppressWarnings("ConstantConditions")
     public TradeOffer toTradeOffer(PawnShopBlockEntity shop, boolean inexhaustible) {
-        // TODO - max uses must be calculated both from available space in the shop block, as well as stored currency in the shop
         int maxUses = inexhaustible ? Integer.MAX_VALUE : (int) (shop.getStoredCurrency() / price);
         if (!shop.getItems().contains(ItemStack.EMPTY)) {
             maxUses = 0;
         }
         var money = CurrencyConverter.getRequiredCurrencyTypes(price) == 1 ? CurrencyConverter.getAsItemStackList(price).get(0) : MoneyBagItem.create(price);
 
-        final var tradeOffer = new TradeOffer(buy, money, maxUses, 0, 0);
+        final var tradeOffer = new TradeOffer(getBuyStack(), money, maxUses, 0, 0);
         ((NumismaticTradeOfferExtensions) tradeOffer).numismatic$setReputation(-69420);
         return tradeOffer;
     }
@@ -104,15 +102,6 @@ public class PawnShopOffer {
     public static PawnShopOffer fromNbt(NbtCompound nbt) {
         var item = ItemStack.fromNbt(nbt.getCompound("Item"));
         return new PawnShopOffer(item, nbt.getLong("Price"));
-    }
-
-    public static int count(DefaultedList<ItemStack> stacks, ItemStack testStack) {
-        int count = 0;
-        for (var stack : stacks) {
-            if (!ItemStack.canCombine(stack, testStack)) continue;
-            count += stack.getCount();
-        }
-        return count;
     }
 
     @Override

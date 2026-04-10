@@ -13,10 +13,8 @@ import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.ScrollContainer;
-import io.wispforest.owo.ui.parsing.UIParsing;
 import io.wispforest.owo.ui.util.UISounds;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -248,23 +246,5 @@ public class ShopScreen extends BaseUIModelHandledScreen<FlowLayout, ShopScreenH
 
     public int tab() {
         return this.tab;
-    }
-
-    public static class FakeSlotComponent extends ItemComponent {
-
-        protected FakeSlotComponent(ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public boolean shouldDrawTooltip(double mouseX, double mouseY) {
-            //noinspection DataFlowIssue
-            var screenHandler = MinecraftClient.getInstance().player.currentScreenHandler;
-            return (screenHandler == null || screenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
-        }
-    }
-
-    static {
-        UIParsing.registerFactory("numismatic.fake-slot", element -> new FakeSlotComponent(ItemStack.EMPTY));
     }
 }

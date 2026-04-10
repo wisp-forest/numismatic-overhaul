@@ -72,17 +72,17 @@ public class PawnShopBlockEntity extends LockableContainerBlockEntity implements
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return allowsTransfer;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
         return false;
     }
 
     @Override
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+        return allowsTransfer;
+    }
+
+    @Override
     protected Text getContainerName() {
-        return Text.translatable("gui.numismatic-overhaul.shop.inventory_title");
+        return Text.translatable("gui.numismatic-overhaul.pawn_shop.inventory_title");
     }
 
     @NotNull

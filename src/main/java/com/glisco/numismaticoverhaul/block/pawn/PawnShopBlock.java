@@ -70,7 +70,7 @@ public class PawnShopBlock extends BlockWithEntity {
             } else {
                 ((PawnShopMerchant) blockEntity.getMerchant()).updateTrades();
                 blockEntity.getMerchant().setCustomer(player);
-                blockEntity.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.pawn.merchant_title"), 0);
+                blockEntity.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.pawn_shop.merchant_title"), 0);
 
                 return ActionResult.SUCCESS;
             }
