@@ -60,6 +60,7 @@ public class PawnShopMerchant implements Merchant {
         if (!this.inexhaustible) {
             PawnShopOffer.add(shop, offer.getOriginalFirstBuyItem());
 
+            shop.removeCurrency(CurrencyHelper.getValue(List.of(offer.getSellItem())));
             this.updateTrades();
             if (this.getCustomer() instanceof ServerPlayerEntity serverPlayer) {
                 serverPlayer.networkHandler.sendPacket(new SetTradeOffersS2CPacket(
@@ -68,7 +69,6 @@ public class PawnShopMerchant implements Merchant {
                         0, 0, false, false
                 ));
             }
-            shop.removeCurrency(CurrencyHelper.getValue(List.of(offer.getSellItem())));
         }
     }
 

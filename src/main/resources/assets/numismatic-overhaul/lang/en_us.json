@@ -3,11 +3,15 @@
   "item.numismatic-overhaul.silver_coin": "Silver Coin",
   "item.numismatic-overhaul.gold_coin": "Gold Coin",
   "item.numismatic-overhaul.money_bag": "Money Bag",
+  "block.numismatic-overhaul.pawn_shop": "Pawn Shop",
+  "block.numismatic-overhaul.pawn_shop.tooltip": "Buy items from other players",
   "block.numismatic-overhaul.shop": "Shop",
+  "block.numismatic-overhaul.shop.tooltip": "Sell items to other players",
+  "block.numismatic-overhaul.inexhaustible_pawn_shop": "Inexhaustible Pawn Shop",
+  "block.numismatic-overhaul.inexhaustible_pawn_shop.tooltip": "Creative only - never runs out of items",
   "block.numismatic-overhaul.inexhaustible_shop": "Inexhaustible Shop",
   "block.numismatic-overhaul.inexhaustible_shop.tooltip": "Creative only - never runs out of stock",
   "block.numismatic-overhaul.piggy_bank": "Piggy Bank",
-  "gui.numismatic-overhaul.shop.price": "Price",
   "gui.numismatic-overhaul.shop.inventory_title": "Shop Inventory",
   "gui.numismatic-overhaul.shop.merchant_title": "Shop",
   "gui.numismatic-overhaul.shop.transfer_tooltip.enabled": [
@@ -25,6 +29,24 @@
       "color": "#EB1D36"
     },
     "insert \nitems into this shop"
+  ],
+  "gui.numismatic-overhaul.pawn_shop.inventory_title": "Shop Inventory",
+  "gui.numismatic-overhaul.pawn_shop.merchant_title": "Pawn Shop",
+  "gui.numismatic-overhaul.pawn_shop.transfer_tooltip.enabled": [
+    "Hoppers",
+    {
+      "text": " can ",
+      "color": "#28FFBF"
+    },
+    "extract \nitems from this shop"
+  ],
+  "gui.numismatic-overhaul.pawn_shop.transfer_tooltip.disabled": [
+    "Hoppers",
+    {
+      "text": " cannot ",
+      "color": "#EB1D36"
+    },
+    "extract \nitems from this shop"
   ],
   "gui.numismatic-overhaul.purse_title": "Purse",
   "numismatic-overhaul.empty": "Empty",

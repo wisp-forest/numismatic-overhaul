@@ -10,7 +10,6 @@ import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.component.*;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.ScrollContainer;
-import io.wispforest.owo.ui.parsing.UIParsing;
 import io.wispforest.owo.ui.util.UISounds;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.MinecraftClient;
@@ -29,7 +28,7 @@ import java.util.function.Consumer;
 
 public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnShopScreenHandler> {
 
-    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui.png");
+    public static final Identifier TEXTURE = NumismaticOverhaul.id("textures/gui/pawn_shop_gui.png");
     public static final Identifier TRADES_TEXTURE = NumismaticOverhaul.id("textures/gui/shop_gui_trades.png");
 
     private final List<ButtonWidget> tabButtons = new ArrayList<>();
@@ -40,7 +39,7 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
     private int tab = 0;
 
     public PawnShopScreen(PawnShopScreenHandler handler, PlayerInventory inventory, Text title) {
-        super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("shop"));
+        super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("pawn_shop"));
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
     }
@@ -53,6 +52,7 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
         leftColumn.child(makeTabButton(Items.CHEST, false, button -> selectTab(0)));
         leftColumn.child(makeTabButton(Items.EMERALD, true, button -> this.selectTab(1)));
 
+        rootComponent.childById(ButtonComponent.class, "insert-button").onPress(button -> this.handler.insertCurrency());
         rootComponent.childById(ButtonComponent.class, "extract-button").onPress(button -> this.handler.extractCurrency());
 
         rootComponent.childById(FlowLayout.class, "transfer-button").mouseDown().subscribe((x, y, button) -> {
@@ -94,8 +94,8 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
 
         this.component(FlowLayout.class, "transfer-button").tooltip(
                 data.transferEnabled()
-                        ? Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.enabled")
-                        : Text.translatable("gui.numismatic-overhaul.shop.transfer_tooltip.disabled")
+                        ? Text.translatable("gui.numismatic-overhaul.pawn_shop.transfer_tooltip.enabled")
+                        : Text.translatable("gui.numismatic-overhaul.pawn_shop.transfer_tooltip.disabled")
         );
         this.component(LabelComponent.class, "transfer-label").text(
                 data.transferEnabled()
@@ -240,23 +240,5 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
 
     public int tab() {
         return this.tab;
-    }
-
-    public static class FakeSlotComponent extends ItemComponent {
-
-        protected FakeSlotComponent(ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public boolean shouldDrawTooltip(double mouseX, double mouseY) {
-            //noinspection DataFlowIssue
-            var screenHandler = MinecraftClient.getInstance().player.currentScreenHandler;
-            return (screenHandler == null || screenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
-        }
-    }
-
-    static {
-        UIParsing.registerFactory("numismatic.fake-slot", element -> new FakeSlotComponent(ItemStack.EMPTY));
     }
 }

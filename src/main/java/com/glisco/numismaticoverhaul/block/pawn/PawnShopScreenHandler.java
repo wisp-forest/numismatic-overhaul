@@ -3,6 +3,7 @@ package com.glisco.numismaticoverhaul.block.pawn;
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.client.gui.PawnShopScreen;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.network.PawnShopScreenHandlerRequestC2SPacket;
 import com.glisco.numismaticoverhaul.network.UpdatePawnShopScreenS2CPacket;
 import io.wispforest.owo.client.screens.ScreenUtils;
@@ -91,6 +92,16 @@ public class PawnShopScreenHandler extends ScreenHandler {
             this.updateClient();
         } else {
             NumismaticOverhaul.CHANNEL.clientHandle().send(new PawnShopScreenHandlerRequestC2SPacket(PawnShopScreenHandlerRequestC2SPacket.Action.CREATE_OFFER, price));
+        }
+    }
+
+    public void insertCurrency() {
+        if (!this.owner.getWorld().isClient) {
+            var money = CurrencyHelper.getMoneyInInventory(this.owner, true);
+            this.shop.addCurrency(money);
+            this.updateClient();
+        } else {
+            NumismaticOverhaul.CHANNEL.clientHandle().send(new PawnShopScreenHandlerRequestC2SPacket(PawnShopScreenHandlerRequestC2SPacket.Action.INSERT_CURRENCY));
         }
     }
 

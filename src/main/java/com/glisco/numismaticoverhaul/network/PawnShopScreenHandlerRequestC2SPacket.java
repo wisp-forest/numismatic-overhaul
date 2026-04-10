@@ -20,6 +20,7 @@ public record PawnShopScreenHandlerRequestC2SPacket(Action action, long value) {
             case LOAD_OFFER -> shopHandler.loadOffer(value);
             case CREATE_OFFER -> shopHandler.createOffer(value);
             case DELETE_OFFER -> shopHandler.deleteOffer();
+            case INSERT_CURRENCY -> shopHandler.insertCurrency();
             case EXTRACT_CURRENCY -> shopHandler.extractCurrency();
             case TOGGLE_TRANSFER -> shopHandler.toggleTransfer();
             case CLICK_BUFFER -> shopHandler.handleBufferClick();
@@ -27,7 +28,7 @@ public record PawnShopScreenHandlerRequestC2SPacket(Action action, long value) {
     }
 
     public enum Action {
-        CREATE_OFFER, DELETE_OFFER, LOAD_OFFER, EXTRACT_CURRENCY, TOGGLE_TRANSFER, CLICK_BUFFER
+        CREATE_OFFER, DELETE_OFFER, LOAD_OFFER, INSERT_CURRENCY, EXTRACT_CURRENCY, TOGGLE_TRANSFER, CLICK_BUFFER
     }
 
 }

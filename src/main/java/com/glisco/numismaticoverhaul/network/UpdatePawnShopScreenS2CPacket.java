@@ -6,7 +6,6 @@ import com.glisco.numismaticoverhaul.block.pawn.PawnShopOffer;
 import com.glisco.numismaticoverhaul.client.gui.PawnShopScreen;
 import io.wispforest.endec.impl.ReflectiveEndecBuilder;
 import io.wispforest.owo.network.ClientAccess;
-import io.wispforest.owo.network.serialization.PacketBufSerializer;
 
 import java.util.List;
 

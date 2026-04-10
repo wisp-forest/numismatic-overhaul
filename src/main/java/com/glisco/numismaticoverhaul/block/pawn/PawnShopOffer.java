@@ -5,6 +5,7 @@ import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.serialization.CodecUtils;
+import io.wispforest.owo.ops.ItemOps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.village.TradeOffer;
@@ -29,7 +30,7 @@ public record PawnShopOffer(ItemStack buy, long price) {
         var shopItems = pawnShop.getItems();
         // loop once to merge existing stacks together
         for (ItemStack stack : shopItems) {
-            if (stack.getItem() == boughtStack.getItem() && ItemStack.areItemsAndComponentsEqual(stack, boughtStack)) {
+            if (ItemOps.canStack(stack, boughtStack)) {
                 stack.increment(boughtStack.getCount());
                 return;
             }
@@ -45,7 +46,6 @@ public record PawnShopOffer(ItemStack buy, long price) {
 
     @SuppressWarnings("ConstantConditions")
     public TradeOffer toTradeOffer(PawnShopBlockEntity shop, boolean inexhaustible) {
-        // TODO - max uses must be calculated both from available space in the shop block, as well as stored currency in the shop
         int maxUses = inexhaustible ? Integer.MAX_VALUE : (int) (shop.getStoredCurrency() / price);
         if (!shop.getItems().contains(ItemStack.EMPTY)) {
             maxUses = 0;

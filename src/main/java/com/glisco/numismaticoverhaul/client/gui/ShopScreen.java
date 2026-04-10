@@ -9,7 +9,6 @@ import io.wispforest.owo.ui.base.BaseOwoHandledScreen;
 import io.wispforest.owo.ui.component.*;
 import io.wispforest.owo.ui.container.*;
 import io.wispforest.owo.ui.core.*;
-import io.wispforest.owo.ui.parsing.UIParsing;
 import io.wispforest.owo.ui.util.UISounds;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.MinecraftClient;
@@ -422,23 +421,5 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
 
     public int tab() {
         return this.tab;
-    }
-
-    public static class FakeSlotComponent extends ItemComponent {
-
-        protected FakeSlotComponent(ItemStack stack) {
-            super(stack);
-        }
-
-        @Override
-        public boolean shouldDrawTooltip(double mouseX, double mouseY) {
-            var player = MinecraftClient.getInstance().player;
-            if (player == null) return false;
-            return (player.currentScreenHandler == null || player.currentScreenHandler.getCursorStack().isEmpty()) && super.shouldDrawTooltip(mouseX, mouseY);
-        }
-    }
-
-    static {
-        UIParsing.registerFactory(id("fake-slot"), element -> new FakeSlotComponent(ItemStack.EMPTY));
     }
 }
