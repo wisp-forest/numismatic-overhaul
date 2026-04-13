@@ -64,6 +64,18 @@
     {"index": 0, "color": "#ae5b3c"},
     {"text": " Bronze", "color": "#ae5b3c"}
   ],
+  "chat.numismatic-overhaul.balance.player": [
+    {"text": "numismatic ", "color": "#bd9838"},
+    {"text": "> balance of ", "color": "gray"},
+    {"index": 0, "color": "gray"},
+    {"text": ": ", "color": "gray"},
+    {"index": 3, "color": "#bd9838"},
+    {"text": " Gold "},
+    {"index": 2, "color": "#617174"},
+    {"text": " Silver ", "color": "#617174"},
+    {"index": 1, "color": "#ae5b3c"},
+    {"text": " Bronze", "color": "#ae5b3c"}
+  ],
   "itemGroup.numismatic-overhaul.main": "Numismatic Overhaul",
   "itemGroup.numismatic-overhaul.main.button.modrinth": "Modrinth",
   "itemGroup.numismatic-overhaul.main.button.curseforge": "CurseForge",

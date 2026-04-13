@@ -62,6 +62,11 @@ public class NumismaticCommand {
         src.sendFeedback(() -> Text.translatable("chat.numismatic-overhaul.balance", values[0], values[1], values[2]), false);
     }
 
+    private static void printBalancePlayer(ServerCommandSource src, long balance, String playerName) {
+        var values = CurrencyResolver.splitValues(balance);
+        src.sendFeedback(() -> Text.translatable("chat.numismatic-overhaul.balance.player", playerName, values[0], values[1], values[2]), false);
+    }
+
     @SuppressWarnings("ConstantConditions")
     private static int serverWorth(CommandContext<ServerCommandSource> context) {
         final var playerManager = context.getSource().getServer().getPlayerManager();
@@ -107,8 +112,7 @@ public class NumismaticCommand {
             final long balance = ModComponents.CURRENCY.get(player).getValue();
             totalBalance += balance;
 
-            context.getSource().sendFeedback(() -> TextOps.withColor("numismatic §> balance of " + player.getEntityName() + ": " + balance,
-                    Currency.GOLD.getNameColor(), TextOps.color(Formatting.GRAY)), false);
+            printBalancePlayer(context.getSource(), balance, player.getEntityName());
         }
 
         return CurrencyConverter.asInt(totalBalance);
