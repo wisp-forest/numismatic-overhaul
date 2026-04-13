@@ -1,7 +1,6 @@
 package com.glisco.numismaticoverhaul;
 
-import com.glisco.numismaticoverhaul.currency.Currency;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.currency.*;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
@@ -15,6 +14,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import static net.minecraft.server.command.CommandManager.argument;
@@ -23,18 +23,43 @@ import static net.minecraft.server.command.CommandManager.literal;
 public class NumismaticCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(literal("numismatic")
-                .then(literal("balance").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
-                        .then(argument("player", EntityArgumentType.players())
-                                .then(literal("get").executes(NumismaticCommand::get))
-                                .then(longSubcommand("set", "value", NumismaticCommand::set))
-                                .then(longSubcommand("add", "amount", NumismaticCommand.modify(1)))
-                                .then(longSubcommand("subtract", "amount", NumismaticCommand.modify(-1)))))
-                .then(literal("serverworth").executes(NumismaticCommand::serverWorth)));
+        var root = literal("numismatic").build();
+
+        var balance = literal("balance").executes(NumismaticCommand::getSelf).build();
+        var detailedBalance = argument("player", EntityArgumentType.players())
+            .requires(src -> src.hasPermissionLevel(2))
+            .then(literal("get").executes(NumismaticCommand::get))
+            .then(longSubcommand("set", "value", NumismaticCommand::set))
+            .then(longSubcommand("add", "amount", NumismaticCommand.modify(1)))
+            .then(longSubcommand("subtract", "amount", NumismaticCommand.modify(-1)))
+            .build();
+        var serverWorth = literal("serverworth").executes(NumismaticCommand::serverWorth).build();
+        balance.addChild(detailedBalance);
+
+        root.addChild(balance);
+        root.addChild(serverWorth);
+
+        dispatcher.getRoot().addChild(root);
+    }
+
+    private static int getSelf(CommandContext<ServerCommandSource> src) {
+        var player = src.getSource().getPlayer();
+        if (player == null) return 0;
+
+        var coins = ModComponents.CURRENCY.get(player).getValue();
+
+        printBalance(src.getSource(), coins);
+
+        return (int) coins;
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> longSubcommand(String name, String argName, Command<ServerCommandSource> command) {
         return literal(name).then(argument(argName, LongArgumentType.longArg(0)).executes(command));
+    }
+
+    private static void printBalance(ServerCommandSource src, long balance) {
+        var values = CurrencyResolver.splitValues(balance);
+        src.sendFeedback(() -> Text.translatable("chat.numismatic-overhaul.balance", values[0], values[1], values[2]), false);
     }
 
     @SuppressWarnings("ConstantConditions")
