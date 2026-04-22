@@ -107,9 +107,8 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         Layers.add(
             PurseLayerContainer::new,
             new PurseLayerElement<>((instance, component) -> instance.alignComponentToHandledScreenCoordinates(
-                component,
-                220,
-                50
+                component, NumismaticOverhaul.CONFIG.purseOffsets.pawnShopX(),
+                70 + NumismaticOverhaul.CONFIG.purseOffsets.pawnShopY()
             )),
             PawnShopScreen.class
         );
