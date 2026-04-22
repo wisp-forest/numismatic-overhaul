@@ -3,6 +3,8 @@ package com.glisco.numismaticoverhaul.currency;
 import static com.glisco.numismaticoverhaul.currency.Currency.*;
 import static com.glisco.numismaticoverhaul.currency.Currency.GOLD;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+
 public class CurrencyResolver {
 
     /**
@@ -38,7 +40,13 @@ public class CurrencyResolver {
      * @return The raw value, with respect to each value's worth
      */
     public static long combineValues(long[] values) {
-        if (values.length != 3) throw new IllegalArgumentException("Input array has to have 3 elements");
+        if (values.length != 3) {
+            NumismaticOverhaul.LOGGER.error(
+                "Invalid money bag!",
+                new IllegalArgumentException("Input array has to have 3 elements")
+            );
+            return 0L;
+        }
 
         return BRONZE.getRawValue(values[0]) + SILVER.getRawValue(values[1]) + GOLD.getRawValue(values[2]);
     }
