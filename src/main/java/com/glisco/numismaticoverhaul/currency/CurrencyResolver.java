@@ -1,5 +1,7 @@
 package com.glisco.numismaticoverhaul.currency;
 
+import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+
 public class CurrencyResolver {
 
     /**
@@ -35,7 +37,13 @@ public class CurrencyResolver {
      * @return The raw value, with respect to each value's worth
      */
     public static long combineValues(long[] values) {
-        if (values.length != 3) throw new IllegalArgumentException("Input array has to have 3 elements");
+        if (values.length != 3) {
+            NumismaticOverhaul.LOGGER.error(
+                "Invalid money bag!",
+                new IllegalArgumentException("Input array has to have 3 elements")
+            );
+            return 0L;
+        }
 
         return values[0] + values[1] * 100 + values[2] * 10000;
     }
