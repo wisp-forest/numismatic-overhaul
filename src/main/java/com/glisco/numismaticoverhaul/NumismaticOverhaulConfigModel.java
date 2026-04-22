@@ -34,6 +34,9 @@ public class NumismaticOverhaulConfigModel {
 
         public int merchantX = 0;
         public int merchantY = 0;
+
+        public int pawnShopX = 0;
+        public int pawnShopY = 0;
     }
 
     @Nest
@@ -81,7 +84,10 @@ public class NumismaticOverhaulConfigModel {
         """)
     public Map<String, Integer> mobsToBaseValues = Map.of("#" + NumismaticOverhaul.THE_BOURGEOISIE.id().toString(), 75);
 
-    @Comment("Scales the money dropped based on the mobs max health. Money dropped is multiplied by '(mob max health) / (20 * healthScaleReduction)'")
+    @Comment("""
+        Scales the money dropped based on the mobs max health.
+        Money dropped is multiplied by '(mob max health) / (20 * healthScaleReduction)'
+        """)
     public boolean scaleOnHealth = false;
 
     @Comment("""
