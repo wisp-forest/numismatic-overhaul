@@ -111,7 +111,6 @@ public class CurrencyHelper {
     }
 
     private static boolean isCombined(ItemStack stack) {
-        return stack.hasNbt() && stack.getNbt().contains("Combined", NbtElement.BYTE_TYPE);
+        return stack.hasNbt() && stack.getNbt().has(MoneyBagItem.COMBINED);
     }
-
 }

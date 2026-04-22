@@ -2,7 +2,6 @@ package com.glisco.numismaticoverhaul.item;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
-import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.currency.CurrencyResolver;
 import io.wispforest.owo.nbt.NbtKey;
 import net.minecraft.client.item.TooltipData;
@@ -25,7 +24,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
 
     private static final NbtKey<Long> VALUE = new NbtKey<>("Value", NbtKey.Type.LONG);
     private static final NbtKey<long[]> VALUES = new NbtKey<>("Values", NbtKey.Type.LONG_ARRAY);
-    private static final NbtKey<Boolean> COMBINED = new NbtKey<>("Combined", NbtKey.Type.BOOLEAN);
+    public static final NbtKey<Boolean> COMBINED = new NbtKey<>("Combined", NbtKey.Type.BOOLEAN);
 
     public MoneyBagItem() {
         super(new Settings().maxCount(1));
@@ -57,7 +56,7 @@ public class MoneyBagItem extends Item implements CurrencyItem {
         if (!stack.has(COMBINED)) {
             return stack.get(VALUE);
         } else {
-            return CurrencyResolver.combineValues(CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values"));
+            return CurrencyResolver.combineValues(stack.get(VALUES));
         }
     }
 
@@ -66,16 +65,16 @@ public class MoneyBagItem extends Item implements CurrencyItem {
         if (!stack.has(COMBINED)) {
             return CurrencyResolver.splitValues(stack.get(VALUE));
         } else {
-            return CurrencyHelper.getFromNbt(stack.getOrCreateNbt(), "Values");
+            return stack.get(VALUES);
         }
     }
 
     public void setValue(ItemStack stack, long value) {
-        stack.getOrCreateNbt().putLong("Value", value);
+        stack.getOrCreateNbt().put(VALUE, value);
     }
 
     public void setCombinedValue(ItemStack stack, long[] values) {
-        stack.getOrCreateNbt().putLongArray("Values", values);
+        stack.getOrCreateNbt().put(VALUES, values);
     }
 
     @Override
