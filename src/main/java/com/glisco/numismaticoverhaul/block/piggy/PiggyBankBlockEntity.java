@@ -13,6 +13,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
@@ -20,9 +21,16 @@ import org.jetbrains.annotations.Nullable;
 public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    private final DyeColor color;
 
     public PiggyBankBlockEntity(BlockPos pos, BlockState state) {
         super(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, pos, state);
+        this.color = null;
+    }
+
+    public PiggyBankBlockEntity(@Nullable DyeColor color, BlockPos pos, BlockState state) {
+        super(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, pos, state);
+        this.color = color;
     }
 
     @Override
@@ -46,6 +54,10 @@ public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHand
 
     public DefaultedList<ItemStack> inventory() {
         return this.inventory;
+    }
+
+    public DyeColor getColor() {
+        return color;
     }
 
     @Nullable

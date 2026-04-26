@@ -17,10 +17,7 @@ import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -36,6 +33,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntityProvider {
+
+    @Nullable
+    private final DyeColor color;
 
     private static final VoxelShape NORTH_SHAPE = Stream.of(
             Block.createCuboidShape(7, 2, 4, 9, 4, 5),
@@ -75,6 +75,12 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
 
     public PiggyBankBlock() {
         super(FabricBlockSettings.create().strength(1.25F, 4.2F));
+        color = null;
+    }
+
+    public PiggyBankBlock(DyeColor color) {
+        super(FabricBlockSettings.create().strength(1.25F, 4.2F));
+        this.color = color;
     }
 
     @Override
@@ -166,6 +172,6 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new PiggyBankBlockEntity(pos, state);
+        return new PiggyBankBlockEntity(this.color, pos, state);
     }
 }

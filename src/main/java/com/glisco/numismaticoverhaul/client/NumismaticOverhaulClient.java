@@ -7,35 +7,32 @@ import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.mixin.LayerInstanceAccessor;
 import io.wispforest.owo.mixin.ui.layers.HandledScreenAccessor;
-import io.wispforest.owo.ui.component.ItemComponent;
 import io.wispforest.owo.ui.container.StackLayout;
-import io.wispforest.owo.ui.core.Component;
-import io.wispforest.owo.ui.core.OwoUIDrawContext;
-import io.wispforest.owo.ui.core.Positioning;
-import io.wispforest.owo.ui.core.Sizing;
+import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.layers.Layers;
-import io.wispforest.owo.ui.parsing.UIParsing;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.screen.ingame.MerchantScreen;
+import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-
-import java.util.List;
+import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class NumismaticOverhaulClient implements ClientModInitializer {
 
+    public static final EntityModelLayer PIGGY_BANK = new EntityModelLayer(NumismaticOverhaul.id("piggy_bank"), "main");
+    public static final SpriteIdentifier PIGGY_BANK_TEXTURE_ID = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, NumismaticOverhaul.id("block/piggy_bank/base"));
+    public static final Map<DyeColor, SpriteIdentifier> COLORED_PIGGY_BANKS = new HashMap<>();
+
     @Override
     public void onInitializeClient() {
+        generateColoredPiggies();
         HandledScreens.register(NumismaticOverhaul.SHOP_SCREEN_HANDLER_TYPE, ShopScreen::new);
         HandledScreens.register(NumismaticOverhaul.PAWN_SHOP_SCREEN_HANDLER_TYPE, PawnShopScreen::new);
         HandledScreens.register(NumismaticOverhaul.PIGGY_BANK_SCREEN_HANDLER_TYPE, PiggyBankScreen::new);
@@ -63,6 +60,9 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
 
         BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.SHOP, ShopBlockEntityRender::new);
         BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.PAWN_SHOP, PawnShopBlockEntityRender::new);
+
+        EntityModelLayerRegistry.registerModelLayer(PIGGY_BANK, PiggyBankBlockEntityRenderer::createModelData);
+        BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, PiggyBankBlockEntityRenderer::new);
 
         Layers.add(
                 PurseLayerContainer::new,
@@ -112,6 +112,13 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
             )),
             PawnShopScreen.class
         );
+    }
+
+    private void generateColoredPiggies() {
+        Arrays.stream(DyeColor.values()).forEach(dyeColor -> {
+            var color = dyeColor.asString().toLowerCase(Locale.ROOT);
+            COLORED_PIGGY_BANKS.put(dyeColor, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, NumismaticOverhaul.id("block/piggy_bank/" + color)));
+        });
     }
 
     private static class PurseLayerContainer extends StackLayout {

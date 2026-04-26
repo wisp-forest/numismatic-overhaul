@@ -21,8 +21,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Rarity;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -47,8 +46,11 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
                     tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip").formatted(Formatting.GRAY));
                 }
             };
-        } else if (block == PIGGY_BANK) {
-            return new BlockItem(block, new OwoItemSettings().group(NumismaticOverhaul.NUMISMATIC_GROUP).equipmentSlot(stack -> EquipmentSlot.HEAD)) {
+        } else if (block instanceof PiggyBankBlock piggy) {
+            return new BlockItem(block, new OwoItemSettings()
+                .group(NumismaticOverhaul.NUMISMATIC_GROUP)
+                .equipmentSlot(stack -> EquipmentSlot.HEAD)
+            ) {
                 @Override
                 public Optional<TooltipData> getTooltipData(ItemStack stack) {
                     if (stack.hasNbt() && stack.getNbt().contains("BlockEntityTag")) {
@@ -80,6 +82,8 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
             FabricBlockEntityTypeBuilder.create(PawnShopBlockEntity::new, NumismaticOverhaulBlocks.PAWN_SHOP, NumismaticOverhaulBlocks.INEXHAUSTIBLE_PAWN_SHOP).build();
 
         public static final BlockEntityType<PiggyBankBlockEntity> PIGGY_BANK =
-                FabricBlockEntityTypeBuilder.create(PiggyBankBlockEntity::new, NumismaticOverhaulBlocks.PIGGY_BANK).build();
+                FabricBlockEntityTypeBuilder.create(PiggyBankBlockEntity::new,
+                    NumismaticOverhaulBlocks.PIGGY_BANK
+                ).build();
     }
 }
