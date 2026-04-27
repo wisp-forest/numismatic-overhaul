@@ -1,0 +1,22 @@
+{
+  "replace": "false",
+  "values": [
+    "numismatic-overhaul:piggy_bank",
+    "numismatic-overhaul:white_piggy_bank",
+    "numismatic-overhaul:orange_piggy_bank",
+    "numismatic-overhaul:magenta_piggy_bank",
+    "numismatic-overhaul:light_blue_piggy_bank",
+    "numismatic-overhaul:yellow_piggy_bank",
+    "numismatic-overhaul:lime_piggy_bank",
+    "numismatic-overhaul:pink_piggy_bank",
+    "numismatic-overhaul:gray_piggy_bank",
+    "numismatic-overhaul:light_gray_piggy_bank",
+    "numismatic-overhaul:cyan_piggy_bank",
+    "numismatic-overhaul:purple_piggy_bank",
+    "numismatic-overhaul:blue_piggy_bank",
+    "numismatic-overhaul:brown_piggy_bank",
+    "numismatic-overhaul:green_piggy_bank",
+    "numismatic-overhaul:red_piggy_bank",
+    "numismatic-overhaul:black_piggy_bank"
+  ]
+}

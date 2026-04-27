@@ -1,14 +1,11 @@
 package com.glisco.numismaticoverhaul.block.piggy;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import io.wispforest.owo.ops.WorldOps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -26,11 +23,10 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
+
+import static com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks.*;
 
 public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntityProvider {
 
@@ -38,47 +34,42 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     private final DyeColor color;
 
     private static final VoxelShape NORTH_SHAPE = Stream.of(
-            Block.createCuboidShape(7, 2, 4, 9, 4, 5),
-            Block.createCuboidShape(5, 1, 5, 11, 6, 11),
-            Block.createCuboidShape(5, 0, 5, 6, 1, 7),
-            Block.createCuboidShape(5, 0, 9, 6, 1, 11),
-            Block.createCuboidShape(10, 0, 9, 11, 1, 11),
-            Block.createCuboidShape(10, 0, 5, 11, 1, 7)
+        Block.createCuboidShape(7, 2, 4, 9, 4, 5),
+        Block.createCuboidShape(5, 1, 5, 11, 6, 11),
+        Block.createCuboidShape(5, 0, 5, 6, 1, 7),
+        Block.createCuboidShape(5, 0, 9, 6, 1, 11),
+        Block.createCuboidShape(10, 0, 9, 11, 1, 11),
+        Block.createCuboidShape(10, 0, 5, 11, 1, 7)
     ).reduce(VoxelShapes::union).get();
 
     private static final VoxelShape SOUTH_SHAPE = Stream.of(
-            Block.createCuboidShape(7, 2, 11, 9, 4, 12),
-            Block.createCuboidShape(5, 1, 5, 11, 6, 11),
-            Block.createCuboidShape(10, 0, 9, 11, 1, 11),
-            Block.createCuboidShape(10, 0, 5, 11, 1, 7),
-            Block.createCuboidShape(5, 0, 5, 6, 1, 7),
-            Block.createCuboidShape(5, 0, 9, 6, 1, 11)
+        Block.createCuboidShape(7, 2, 11, 9, 4, 12),
+        Block.createCuboidShape(5, 1, 5, 11, 6, 11),
+        Block.createCuboidShape(10, 0, 9, 11, 1, 11),
+        Block.createCuboidShape(10, 0, 5, 11, 1, 7),
+        Block.createCuboidShape(5, 0, 5, 6, 1, 7),
+        Block.createCuboidShape(5, 0, 9, 6, 1, 11)
     ).reduce(VoxelShapes::union).get();
 
     private static final VoxelShape EAST_SHAPE = Stream.of(
-            Block.createCuboidShape(11, 2, 7, 12, 4, 9),
-            Block.createCuboidShape(5, 1, 5, 11, 6, 11),
-            Block.createCuboidShape(9, 0, 5, 11, 1, 6),
-            Block.createCuboidShape(5, 0, 5, 7, 1, 6),
-            Block.createCuboidShape(5, 0, 10, 7, 1, 11),
-            Block.createCuboidShape(9, 0, 10, 11, 1, 11)
+        Block.createCuboidShape(11, 2, 7, 12, 4, 9),
+        Block.createCuboidShape(5, 1, 5, 11, 6, 11),
+        Block.createCuboidShape(9, 0, 5, 11, 1, 6),
+        Block.createCuboidShape(5, 0, 5, 7, 1, 6),
+        Block.createCuboidShape(5, 0, 10, 7, 1, 11),
+        Block.createCuboidShape(9, 0, 10, 11, 1, 11)
     ).reduce(VoxelShapes::union).get();
 
     private static final VoxelShape WEST_SHAPE = Stream.of(
-            Block.createCuboidShape(4, 2, 7, 5, 4, 9),
-            Block.createCuboidShape(5, 1, 5, 11, 6, 11),
-            Block.createCuboidShape(5, 0, 10, 7, 1, 11),
-            Block.createCuboidShape(9, 0, 10, 11, 1, 11),
-            Block.createCuboidShape(9, 0, 5, 11, 1, 6),
-            Block.createCuboidShape(5, 0, 5, 7, 1, 6)
+        Block.createCuboidShape(4, 2, 7, 5, 4, 9),
+        Block.createCuboidShape(5, 1, 5, 11, 6, 11),
+        Block.createCuboidShape(5, 0, 10, 7, 1, 11),
+        Block.createCuboidShape(9, 0, 10, 11, 1, 11),
+        Block.createCuboidShape(9, 0, 5, 11, 1, 6),
+        Block.createCuboidShape(5, 0, 5, 7, 1, 6)
     ).reduce(VoxelShapes::union).get();
 
-    public PiggyBankBlock() {
-        super(FabricBlockSettings.create().strength(1.25F, 4.2F));
-        color = null;
-    }
-
-    public PiggyBankBlock(DyeColor color) {
+    public PiggyBankBlock(@Nullable DyeColor color) {
         super(FabricBlockSettings.create().strength(1.25F, 4.2F));
         this.color = color;
     }
@@ -136,7 +127,30 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank && player.isCreative() && !world.isClient && !piggyBank.inventory().stream().allMatch(ItemStack::isEmpty)) {
 
-            var stack = new ItemStack(NumismaticOverhaulBlocks.PIGGY_BANK);
+            ItemStack stack;
+            if (piggyBank.getColor() == null) {
+                stack = new ItemStack(PIGGY_BANK);
+            } else {
+                switch (piggyBank.getColor()) {
+                    case WHITE -> stack = new ItemStack(WHITE_PIGGY_BANK);
+                    case ORANGE -> stack = new ItemStack(ORANGE_PIGGY_BANK);
+                    case MAGENTA -> stack = new ItemStack(MAGENTA_PIGGY_BANK);
+                    case LIGHT_BLUE -> stack = new ItemStack(LIGHT_BLUE_PIGGY_BANK);
+                    case YELLOW -> stack = new ItemStack(YELLOW_PIGGY_BANK);
+                    case LIME -> stack = new ItemStack(LIME_PIGGY_BANK);
+                    case PINK -> stack = new ItemStack(PINK_PIGGY_BANK);
+                    case GRAY -> stack = new ItemStack(GRAY_PIGGY_BANK);
+                    case LIGHT_GRAY -> stack = new ItemStack(LIGHT_GRAY_PIGGY_BANK);
+                    case CYAN -> stack = new ItemStack(CYAN_PIGGY_BANK);
+                    case PURPLE -> stack = new ItemStack(PURPLE_PIGGY_BANK);
+                    case BLUE -> stack = new ItemStack(BLUE_PIGGY_BANK);
+                    case BROWN -> stack = new ItemStack(BROWN_PIGGY_BANK);
+                    case GREEN -> stack = new ItemStack(GREEN_PIGGY_BANK);
+                    case RED -> stack = new ItemStack(RED_PIGGY_BANK);
+                    case BLACK -> stack = new ItemStack(BLACK_PIGGY_BANK);
+                    default -> stack = new ItemStack(PIGGY_BANK);
+                }
+            }
             piggyBank.setStackNbt(stack);
 
             ItemEntity var = new ItemEntity(world, pos.getX() + .5d, pos.getY() + .5d, pos.getZ() + .5d, stack);

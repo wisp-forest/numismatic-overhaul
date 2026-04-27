@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public class PiggyBankBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    @Nullable
     private final DyeColor color;
 
     public PiggyBankBlockEntity(BlockPos pos, BlockState state) {

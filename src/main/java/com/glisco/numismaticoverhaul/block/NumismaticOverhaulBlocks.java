@@ -35,7 +35,23 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
     public static final Block PAWN_SHOP = new PawnShopBlock(false);
     public static final Block INEXHAUSTIBLE_SHOP = new ShopBlock(true);
     public static final Block INEXHAUSTIBLE_PAWN_SHOP = new PawnShopBlock(true);
-    public static final Block PIGGY_BANK = new PiggyBankBlock();
+    public static final Block PIGGY_BANK = new PiggyBankBlock(null);
+    public static final Block WHITE_PIGGY_BANK = new PiggyBankBlock(DyeColor.WHITE);
+    public static final Block ORANGE_PIGGY_BANK = new PiggyBankBlock(DyeColor.ORANGE);
+    public static final Block MAGENTA_PIGGY_BANK = new PiggyBankBlock(DyeColor.MAGENTA);
+    public static final Block LIGHT_BLUE_PIGGY_BANK = new PiggyBankBlock(DyeColor.LIGHT_BLUE);
+    public static final Block YELLOW_PIGGY_BANK = new PiggyBankBlock(DyeColor.YELLOW);
+    public static final Block LIME_PIGGY_BANK = new PiggyBankBlock(DyeColor.LIME);
+    public static final Block PINK_PIGGY_BANK = new PiggyBankBlock(DyeColor.PINK);
+    public static final Block GRAY_PIGGY_BANK = new PiggyBankBlock(DyeColor.GRAY);
+    public static final Block LIGHT_GRAY_PIGGY_BANK = new PiggyBankBlock(DyeColor.LIGHT_GRAY);
+    public static final Block CYAN_PIGGY_BANK = new PiggyBankBlock(DyeColor.CYAN);
+    public static final Block PURPLE_PIGGY_BANK = new PiggyBankBlock(DyeColor.PURPLE);
+    public static final Block BLUE_PIGGY_BANK = new PiggyBankBlock(DyeColor.BLUE);
+    public static final Block BROWN_PIGGY_BANK = new PiggyBankBlock(DyeColor.BROWN);
+    public static final Block GREEN_PIGGY_BANK = new PiggyBankBlock(DyeColor.GREEN);
+    public static final Block RED_PIGGY_BANK = new PiggyBankBlock(DyeColor.RED);
+    public static final Block BLACK_PIGGY_BANK = new PiggyBankBlock(DyeColor.BLACK);
 
     @Override
     public BlockItem createBlockItem(Block block, String identifier) {
@@ -46,7 +62,7 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
                     tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip").formatted(Formatting.GRAY));
                 }
             };
-        } else if (block instanceof PiggyBankBlock piggy) {
+        } else if (block instanceof PiggyBankBlock) {
             return new BlockItem(block, new OwoItemSettings()
                 .group(NumismaticOverhaul.NUMISMATIC_GROUP)
                 .equipmentSlot(stack -> EquipmentSlot.HEAD)
@@ -83,7 +99,23 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
 
         public static final BlockEntityType<PiggyBankBlockEntity> PIGGY_BANK =
                 FabricBlockEntityTypeBuilder.create(PiggyBankBlockEntity::new,
-                    NumismaticOverhaulBlocks.PIGGY_BANK
+                    NumismaticOverhaulBlocks.PIGGY_BANK,
+                    NumismaticOverhaulBlocks.WHITE_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.ORANGE_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.MAGENTA_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.LIGHT_BLUE_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.YELLOW_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.LIME_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.PINK_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.GRAY_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.LIGHT_GRAY_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.CYAN_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.PURPLE_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.BLUE_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.BROWN_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.GREEN_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.RED_PIGGY_BANK,
+                    NumismaticOverhaulBlocks.BLACK_PIGGY_BANK
                 ).build();
     }
 }

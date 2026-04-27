@@ -1,8 +1,8 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "numismatic-overhaul:block/piggy_bank",
-    "particle": "numismatic-overhaul:block/piggy_bank"
+    "0": "numismatic-overhaul:block/piggy_bank/base",
+    "particle": "numismatic-overhaul:block/piggy_bank/base"
   },
   "elements": [
     {

@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "numismatic-overhaul:block/piggy_bank",
+      "model": "numismatic-overhaul:block/piggy_bank_base",
       "y": 90
     },
     "facing=north": {
-      "model": "numismatic-overhaul:block/piggy_bank"
+      "model": "numismatic-overhaul:block/piggy_bank_base"
     },
     "facing=south": {
-      "model": "numismatic-overhaul:block/piggy_bank",
+      "model": "numismatic-overhaul:block/piggy_bank_base",
       "y": 180
     },
     "facing=west": {
-      "model": "numismatic-overhaul:block/piggy_bank",
+      "model": "numismatic-overhaul:block/piggy_bank_base",
       "y": 270
     }
   }

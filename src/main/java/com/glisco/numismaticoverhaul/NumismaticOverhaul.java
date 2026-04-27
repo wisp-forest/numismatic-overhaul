@@ -36,6 +36,7 @@ import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
@@ -57,6 +58,7 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final OwoNetChannel CHANNEL = OwoNetChannel.create(id("main"));
+    public static final TagKey<Block> PIGGY_BANKS = TagKey.of(RegistryKeys.BLOCK, id("piggy_banks"));
     private static final ParticleSystemController PARTICLE_SYSTEMS = new ParticleSystemController(id("particles"));
     public static final ParticleSystem<Integer> PIGGY_BANK_BROKEN = PARTICLE_SYSTEMS.register(Integer.class, (world, pos, data) -> {
         ClientParticles.setParticleCount(6 * data);

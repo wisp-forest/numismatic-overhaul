@@ -40,6 +40,11 @@ public class PiggyBankScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return canUse(context, player, NumismaticOverhaulBlocks.PIGGY_BANK);
+        return context.get(
+            (world, pos) -> !world.getBlockState(pos).isIn(NumismaticOverhaul.PIGGY_BANKS)
+                ? false
+                : player.squaredDistanceTo((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5) <= 64.0,
+            true
+        );
     }
 }
