@@ -1,6 +1,7 @@
 package com.glisco.numismaticoverhaul.block.piggy;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import io.wispforest.owo.ops.WorldOps;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -74,6 +75,29 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
         this.color = color;
     }
 
+    public static ItemStack getPiggy(@Nullable DyeColor color) {
+        if (color == null) return new ItemStack(PIGGY_BANK);
+
+        return switch (color) {
+            case WHITE -> new ItemStack(NumismaticOverhaulBlocks.WHITE_PIGGY_BANK);
+            case ORANGE -> new ItemStack(NumismaticOverhaulBlocks.ORANGE_PIGGY_BANK);
+            case MAGENTA -> new ItemStack(NumismaticOverhaulBlocks.MAGENTA_PIGGY_BANK);
+            case LIGHT_BLUE -> new ItemStack(NumismaticOverhaulBlocks.LIGHT_BLUE_PIGGY_BANK);
+            case YELLOW -> new ItemStack(NumismaticOverhaulBlocks.YELLOW_PIGGY_BANK);
+            case LIME -> new ItemStack(NumismaticOverhaulBlocks.LIME_PIGGY_BANK);
+            case PINK -> new ItemStack(NumismaticOverhaulBlocks.PINK_PIGGY_BANK);
+            case GRAY -> new ItemStack(NumismaticOverhaulBlocks.GRAY_PIGGY_BANK);
+            case LIGHT_GRAY -> new ItemStack(NumismaticOverhaulBlocks.LIGHT_GRAY_PIGGY_BANK);
+            case CYAN -> new ItemStack(NumismaticOverhaulBlocks.CYAN_PIGGY_BANK);
+            case PURPLE -> new ItemStack(NumismaticOverhaulBlocks.PURPLE_PIGGY_BANK);
+            case BLUE -> new ItemStack(NumismaticOverhaulBlocks.BLUE_PIGGY_BANK);
+            case BROWN -> new ItemStack(NumismaticOverhaulBlocks.BROWN_PIGGY_BANK);
+            case GREEN -> new ItemStack(NumismaticOverhaulBlocks.GREEN_PIGGY_BANK);
+            case RED -> new ItemStack(NumismaticOverhaulBlocks.RED_PIGGY_BANK);
+            case BLACK -> new ItemStack(NumismaticOverhaulBlocks.BLACK_PIGGY_BANK);
+        };
+    }
+
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
@@ -126,30 +150,11 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank && player.isCreative() && !world.isClient && !piggyBank.inventory().stream().allMatch(ItemStack::isEmpty)) {
-
             ItemStack stack;
             if (piggyBank.getColor() == null) {
                 stack = new ItemStack(PIGGY_BANK);
             } else {
-                switch (piggyBank.getColor()) {
-                    case WHITE -> stack = new ItemStack(WHITE_PIGGY_BANK);
-                    case ORANGE -> stack = new ItemStack(ORANGE_PIGGY_BANK);
-                    case MAGENTA -> stack = new ItemStack(MAGENTA_PIGGY_BANK);
-                    case LIGHT_BLUE -> stack = new ItemStack(LIGHT_BLUE_PIGGY_BANK);
-                    case YELLOW -> stack = new ItemStack(YELLOW_PIGGY_BANK);
-                    case LIME -> stack = new ItemStack(LIME_PIGGY_BANK);
-                    case PINK -> stack = new ItemStack(PINK_PIGGY_BANK);
-                    case GRAY -> stack = new ItemStack(GRAY_PIGGY_BANK);
-                    case LIGHT_GRAY -> stack = new ItemStack(LIGHT_GRAY_PIGGY_BANK);
-                    case CYAN -> stack = new ItemStack(CYAN_PIGGY_BANK);
-                    case PURPLE -> stack = new ItemStack(PURPLE_PIGGY_BANK);
-                    case BLUE -> stack = new ItemStack(BLUE_PIGGY_BANK);
-                    case BROWN -> stack = new ItemStack(BROWN_PIGGY_BANK);
-                    case GREEN -> stack = new ItemStack(GREEN_PIGGY_BANK);
-                    case RED -> stack = new ItemStack(RED_PIGGY_BANK);
-                    case BLACK -> stack = new ItemStack(BLACK_PIGGY_BANK);
-                    default -> stack = new ItemStack(PIGGY_BANK);
-                }
+                stack = getPiggy(color);
             }
             piggyBank.setStackNbt(stack);
 

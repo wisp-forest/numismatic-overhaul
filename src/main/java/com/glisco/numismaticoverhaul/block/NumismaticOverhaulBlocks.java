@@ -65,6 +65,7 @@ public class NumismaticOverhaulBlocks implements BlockRegistryContainer {
         } else if (block instanceof PiggyBankBlock) {
             return new BlockItem(block, new OwoItemSettings()
                 .group(NumismaticOverhaul.NUMISMATIC_GROUP)
+                .maxCount(1)
                 .equipmentSlot(stack -> EquipmentSlot.HEAD)
             ) {
                 @Override

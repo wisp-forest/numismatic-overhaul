@@ -8,6 +8,7 @@ import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
 import com.glisco.numismaticoverhaul.item.MoneyBagItem;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.network.*;
+import com.glisco.numismaticoverhaul.recipe.PiggyBankColoringRecipe;
 import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import io.wispforest.owo.itemgroup.Icon;
@@ -35,8 +36,9 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
@@ -69,6 +71,7 @@ public class NumismaticOverhaul implements ModInitializer {
         );
     });
 
+    public static final RecipeSerializer<PiggyBankColoringRecipe> PIGGY_BANK_COLORING_RECIPE = RecipeSerializer.register(MOD_ID + ":piggy_bank_coloring", new SpecialRecipeSerializer<>(PiggyBankColoringRecipe::new));
     public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(ShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
     public static final ScreenHandlerType<PawnShopScreenHandler> PAWN_SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PawnShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
     public static final ScreenHandlerType<PiggyBankScreenHandler> PIGGY_BANK_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PiggyBankScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
