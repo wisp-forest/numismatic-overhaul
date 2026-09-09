@@ -109,6 +109,8 @@
   "text.config.numismatic-overhaul.option.purseOffsets.creativeY": "Creative - Y",
   "text.config.numismatic-overhaul.option.purseOffsets.merchantX": "Merchants - X",
   "text.config.numismatic-overhaul.option.purseOffsets.merchantY": "Merchants - Y",
+  "text.config.numismatic-overhaul.option.purseOffsets.pawnShopX": "Pawn Shop - X",
+  "text.config.numismatic-overhaul.option.purseOffsets.pawnShopY": "Pawn Shop - Y",
 
   "text.config.numismatic-overhaul.category.lootOptions": "Loot Generation",
   "text.config.numismatic-overhaul.option.lootOptions.desertMinLoot": "Desert Temple Minimum Loot",
