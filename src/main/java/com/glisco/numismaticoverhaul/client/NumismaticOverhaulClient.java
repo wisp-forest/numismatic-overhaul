@@ -8,28 +8,15 @@ import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.mixin.LayerInstanceAccessor;
 import io.wispforest.owo.mixin.ui.layers.HandledScreenAccessor;
-import io.wispforest.owo.ui.component.ItemComponent;
 import io.wispforest.owo.ui.container.StackLayout;
-import io.wispforest.owo.ui.core.Component;
-import io.wispforest.owo.ui.core.OwoUIDrawContext;
-import io.wispforest.owo.ui.core.Positioning;
-import io.wispforest.owo.ui.core.Sizing;
+import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.layers.Layers;
-import io.wispforest.owo.ui.parsing.UIParsing;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.screen.ingame.MerchantScreen;
+import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
@@ -62,6 +49,7 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
 
         BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.SHOP, ShopBlockEntityRender::new);
         BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.PAWN_SHOP, PawnShopBlockEntityRender::new);
+        BlockEntityRendererFactories.register(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, PiggyBankBlockEntityRenderer::new);
 
         Layers.add(
                 PurseLayerContainer::new,

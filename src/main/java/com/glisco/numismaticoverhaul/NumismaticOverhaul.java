@@ -1,12 +1,13 @@
 package com.glisco.numismaticoverhaul;
 
-import com.glisco.numismaticoverhaul.block.*;
+import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.pawn.PawnShopScreenHandler;
 import com.glisco.numismaticoverhaul.block.piggy.PiggyBankScreenHandler;
 import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
 import com.glisco.numismaticoverhaul.item.*;
 import com.glisco.numismaticoverhaul.network.*;
+import com.glisco.numismaticoverhaul.recipe.PiggyBankColoringRecipe;
 import com.glisco.numismaticoverhaul.villagers.data.VillagerTradesResourceListener;
 import com.glisco.numismaticoverhaul.villagers.json.VillagerTradesHandler;
 import io.wispforest.owo.itemgroup.Icon;
@@ -35,6 +36,8 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceType;
@@ -47,9 +50,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class NumismaticOverhaul implements ModInitializer {
 
@@ -57,6 +58,7 @@ public class NumismaticOverhaul implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final OwoNetChannel CHANNEL = OwoNetChannel.create(id("main"));
+    public static final TagKey<Block> PIGGY_BANKS = TagKey.of(RegistryKeys.BLOCK, id("piggy_banks"));
     private static final ParticleSystemController PARTICLE_SYSTEMS = new ParticleSystemController(id("particles"));
     public static final ParticleSystem<Integer> PIGGY_BANK_BROKEN = PARTICLE_SYSTEMS.register(Integer.class, (world, pos, data) -> {
         ClientParticles.setParticleCount(6 * data);
@@ -67,6 +69,7 @@ public class NumismaticOverhaul implements ModInitializer {
         );
     });
 
+    public static final RecipeSerializer<PiggyBankColoringRecipe> PIGGY_BANK_COLORING_RECIPE = RecipeSerializer.register(MOD_ID + ":piggy_bank_coloring", new SpecialRecipeSerializer<>(PiggyBankColoringRecipe::new));
     public static final ScreenHandlerType<ShopScreenHandler> SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(ShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
     public static final ScreenHandlerType<PawnShopScreenHandler> PAWN_SHOP_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PawnShopScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
     public static final ScreenHandlerType<PiggyBankScreenHandler> PIGGY_BANK_SCREEN_HANDLER_TYPE = new ScreenHandlerType<>(PiggyBankScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);

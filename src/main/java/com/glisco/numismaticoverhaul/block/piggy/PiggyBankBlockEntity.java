@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
@@ -20,9 +21,17 @@ import org.jetbrains.annotations.Nullable;
 public class PiggyBankBlockEntity extends LootableContainerBlockEntity {
 
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    @Nullable
+    private final DyeColor color;
 
     public PiggyBankBlockEntity(BlockPos pos, BlockState state) {
         super(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, pos, state);
+        this.color = null;
+    }
+
+    public PiggyBankBlockEntity(@Nullable DyeColor color, BlockPos pos, BlockState state) {
+        super(NumismaticOverhaulBlocks.Entities.PIGGY_BANK, pos, state);
+        this.color = color;
     }
 
     @Override
@@ -56,6 +65,10 @@ public class PiggyBankBlockEntity extends LootableContainerBlockEntity {
 
     public DefaultedList<ItemStack> inventory() {
         return this.inventory;
+    }
+
+    public DyeColor getColor() {
+        return color;
     }
 
     @Nullable
