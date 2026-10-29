@@ -25,7 +25,9 @@ public record ShopOffer(ItemStack sell, long price) {
 
     public ShopOffer {
         if (sell.isEmpty()) throw new IllegalArgumentException("Sell Stack must not be empty");
-        if (price == 0) throw new IllegalArgumentException("Price must not be null");
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than zero");
+        }
     }
 
     public TradeOffer toTradeOffer(ShopBlockEntity shop, boolean inexhaustible) {
@@ -64,18 +66,27 @@ public record ShopOffer(ItemStack sell, long price) {
         return count;
     }
 
-    public static int remove(DefaultedList<ItemStack> stacks, ItemStack removeStack) {
-        int toRemove = removeStack.getCount();
-        for (var stack : stacks) {
+    public static boolean remove(DefaultedList<ItemStack> stacks, ItemStack removeStack) {
+        if (removeStack.isEmpty() || removeStack.getCount() <= 0) return false;
+        if (count(stacks, removeStack) < removeStack.getCount()) return false;
+
+        int needed = removeStack.getCount();
+        for (int i = 0; i < stacks.size(); i++) {
+            var stack = stacks.get(i);
             if (!ItemStack.areItemsAndComponentsEqual(stack, removeStack)) continue;
 
-            int removed = stack.getCount();
-            stack.decrement(toRemove);
+            int toTake = Math.min(needed, stack.getCount());
+            stack.decrement(toTake);
+            needed -= toTake;
 
-            toRemove -= removed;
-            if (toRemove < 1) break;
+            if (stack.isEmpty()) {
+                stacks.set(i, ItemStack.EMPTY);
+            }
+
+            if (needed <= 0) break;
         }
-        return removeStack.getCount() - toRemove;
+
+        return true;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 @Mixin(Layer.Instance.class)
 public interface LayerInstanceAccessor {
 
-    @Accessor("layoutUpdaters")
+    @Accessor(value = "layoutUpdaters", remap = false)
     List<Runnable> numismatic$getLayoutUpdaters();
 
 }

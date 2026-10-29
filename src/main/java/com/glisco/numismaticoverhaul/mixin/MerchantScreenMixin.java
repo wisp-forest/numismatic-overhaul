@@ -33,15 +33,22 @@ public abstract class MerchantScreenMixin extends Screen {
 
     @ModifyVariable(method = "renderFirstBuyItem", at = @At("HEAD"), argsOnly = true, ordinal = 1)
     private ItemStack dontShowBagDiscount(ItemStack original) {
-        var adjustedItem = numismatic$adjustedFirstBuyItem.getItem();
-
-        if (adjustedItem instanceof CurrencyItem adjustable && adjustable.wasAdjusted(numismatic$originalFirstBuyItem)) {
-            var copy = this.numismatic$adjustedFirstBuyItem;
-            this.numismatic$adjustedFirstBuyItem = null;
-            return copy;
-        } else {
-            this.numismatic$adjustedFirstBuyItem = null;
+        if (this.numismatic$adjustedFirstBuyItem == null) {
             return original;
+        }
+
+        try {
+            var adjustedItem = this.numismatic$adjustedFirstBuyItem.getItem();
+            if (adjustedItem instanceof CurrencyItem adjustable
+                    && this.numismatic$originalFirstBuyItem != null
+                    && adjustable.wasAdjusted(this.numismatic$originalFirstBuyItem)) {
+                return this.numismatic$adjustedFirstBuyItem;
+            } else {
+                return original;
+            }
+        } finally {
+            this.numismatic$adjustedFirstBuyItem = null;
+            this.numismatic$originalFirstBuyItem = null;
         }
     }
 }

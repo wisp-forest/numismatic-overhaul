@@ -71,7 +71,13 @@ public class CurrencyComponent implements Component, AutoSyncedComponent {
      */
     public void modify(long value) {
         // This code can be triggered on both Client and Server, for example via Money Bags
-        setValue(this.value + value);
+        long newValue;
+        if (value > 0) {
+            newValue = (Long.MAX_VALUE - this.value < value) ? Long.MAX_VALUE : this.value + value;
+        } else {
+            newValue = (this.value + value < 0) ? 0 : this.value + value;
+        }
+        setValue(newValue);
 
         long tempValue = value < 0 ? -value : value;
 

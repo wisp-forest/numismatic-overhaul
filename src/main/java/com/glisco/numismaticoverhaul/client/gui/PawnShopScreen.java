@@ -42,6 +42,7 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
         super(handler, inventory, title, FlowLayout.class, NumismaticOverhaul.id("pawn_shop"));
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
+        this.handler.tradeEditBuffer().observe(stack -> this.afterDataUpdate());
     }
 
     @Override
@@ -112,6 +113,7 @@ public class PawnShopScreen extends BaseUIModelHandledScreen<FlowLayout, PawnSho
 
     private void selectTab(int index) {
         if (this.tab == index) return;
+        this.handler.setCurrentTab(index);
 
         if (index == 0) {
             this.swapBackgroundTexture(TEXTURE);

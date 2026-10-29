@@ -7,15 +7,23 @@ import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import io.wispforest.owo.offline.OfflineDataLookup;
 import io.wispforest.owo.ops.TextOps;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.Entity;
+import net.minecraft.datafixer.DataFixTypes;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtSizeTracker;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.WorldSavePath;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.UUID;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -67,20 +75,53 @@ public class NumismaticCommand {
         src.sendFeedback(() -> Text.translatable("chat.numismatic-overhaul.balance.player", playerName, values[0], values[1], values[2]), false);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private static int serverWorth(CommandContext<ServerCommandSource> context) {
-        final var playerManager = context.getSource().getServer().getPlayerManager();
+        final var server = context.getSource().getServer();
+        final var playerManager = server.getPlayerManager();
 
-        var onlineUUIDs = playerManager.getPlayerList().stream().map(Entity::getUuid).toList();
-        var offlineUUIDs = OfflineDataLookup.savedPlayers().stream().filter(uuid -> !onlineUUIDs.contains(uuid)).toList();
-
+        var onlineUUIDs = new HashSet<UUID>();
         long serverWorth = 0;
-        for (var onlineId : onlineUUIDs) {
-            serverWorth += ModComponents.CURRENCY.get(playerManager.getPlayer(onlineId)).getValue();
+
+        for (var player : playerManager.getPlayerList()) {
+            onlineUUIDs.add(player.getUuid());
+            serverWorth += ModComponents.CURRENCY.get(player).getValue();
         }
 
-        for (var offlineId : offlineUUIDs) {
-            serverWorth += OfflineDataLookup.get(offlineId).getCompound("cardinal_components").getCompound("numismatic-overhaul:currency").get(CurrencyHelper.VALUE);
+        var playerDataDir = server.getSavePath(WorldSavePath.PLAYERDATA);
+        if (Files.isDirectory(playerDataDir)) {
+            try (var stream = Files.list(playerDataDir)) {
+                var iterator = stream.iterator();
+                while (iterator.hasNext()) {
+                    var path = iterator.next();
+                    if (Files.isDirectory(path)) continue;
+
+                    var filename = path.getFileName().toString();
+                    if (!filename.endsWith(".dat")) continue;
+
+                    var uuidStr = filename.substring(0, filename.length() - 4);
+                    UUID uuid;
+                    try {
+                        uuid = UUID.fromString(uuidStr);
+                    } catch (IllegalArgumentException e) {
+                        continue;
+                    }
+
+                    if (onlineUUIDs.contains(uuid)) continue;
+
+                    try {
+                        var rawNbt = NbtIo.readCompressed(path, NbtSizeTracker.ofUnlimitedBytes());
+                        if (rawNbt != null) {
+                            int dataVersion = rawNbt.contains("DataVersion", NbtElement.INT_TYPE) ? rawNbt.getInt("DataVersion") : -1;
+                            var nbt = DataFixTypes.PLAYER.update(server.getDataFixer(), rawNbt, dataVersion);
+                            serverWorth += nbt.getCompound("cardinal_components").getCompound("numismatic-overhaul:currency").get(CurrencyHelper.VALUE);
+                        }
+                    } catch (Exception e) {
+                        NumismaticOverhaul.LOGGER.error("Couldn't get player data for offline player {}", uuid, e);
+                    }
+                }
+            } catch (IOException e) {
+                NumismaticOverhaul.LOGGER.error("Couldn't list offline player UUIDs", e);
+            }
         }
 
         long finalServerWorth = serverWorth;

@@ -3,10 +3,9 @@ package com.glisco.numismaticoverhaul.block.pawn;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.shop.ShopBlock;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.network.UpdatePawnShopScreenS2CPacket;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -50,7 +49,9 @@ public class PawnShopBlock extends BlockWithEntity {
     }
 
     public PawnShopBlock(boolean inexhaustible) {
-        super(FabricBlockSettings.create().nonOpaque().hardness(5.0f));
+        super(inexhaustible
+                ? Settings.create().nonOpaque().strength(-1.0f, 3600000.0f)
+                : Settings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
     }
 
@@ -73,22 +74,26 @@ public class PawnShopBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
-            PawnShopBlockEntity blockEntity = (PawnShopBlockEntity) world.getBlockEntity(pos);
-            if (blockEntity == null) return ActionResult.FAIL;
+            if (!(world.getBlockEntity(pos) instanceof PawnShopBlockEntity blockEntity)) return ActionResult.FAIL;
             if (blockEntity.busy) return ActionResult.SUCCESS;
 
-            if (blockEntity.getOwner().equals(player.getUuid()) && !player.isSneaking()) {
-                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdatePawnShopScreenS2CPacket(blockEntity));
-
-                blockEntity.busy = true;
-            } else {
-                ((PawnShopMerchant) blockEntity.getMerchant()).updateTrades();
-                blockEntity.getMerchant().setCustomer(player);
-                blockEntity.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.pawn_shop.merchant_title"), 0);
-
+            boolean canManage = (blockEntity.getOwner() != null && player.getUuid().equals(blockEntity.getOwner())) || player.isCreative() || player.hasPermissionLevel(2);
+            if (canManage && !player.isSneaking()) {
+                if (blockEntity.getOwner() == null) {
+                    blockEntity.setOwner(player.getUuid());
+                }
+                if (player.openHandledScreen(state.createScreenHandlerFactory(world, pos)).isPresent()) {
+                    NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdatePawnShopScreenS2CPacket(blockEntity));
+                    blockEntity.busy = true;
+                }
                 return ActionResult.SUCCESS;
             }
+
+            ((PawnShopMerchant) blockEntity.getMerchant()).updateTrades();
+            blockEntity.getMerchant().setCustomer(player);
+            blockEntity.getMerchant().sendOffers(player, Text.translatable("gui.numismatic-overhaul.pawn_shop.merchant_title"), 0);
+
+            return ActionResult.SUCCESS;
         }
 
         return ActionResult.SUCCESS;
@@ -103,11 +108,12 @@ public class PawnShopBlock extends BlockWithEntity {
             return;
         }
 
-        if (itemStack.contains(DataComponentTypes.CUSTOM_NAME) && world.getBlockEntity(pos) instanceof PawnShopBlockEntity shop) {
-            shop.setComponents(ComponentMap.builder().add(DataComponentTypes.CUSTOM_NAME, itemStack.getName()).build());
+        if (world.getBlockEntity(pos) instanceof PawnShopBlockEntity shop) {
+            if (itemStack.contains(DataComponentTypes.CUSTOM_NAME)) {
+                shop.setComponents(ComponentMap.builder().add(DataComponentTypes.CUSTOM_NAME, itemStack.getName()).build());
+            }
+            shop.setOwner(placer.getUuid());
         }
-
-        ((PawnShopBlockEntity) world.getBlockEntity(pos)).setOwner(placer.getUuid());
     }
 
     @Override
@@ -116,10 +122,12 @@ public class PawnShopBlock extends BlockWithEntity {
             if (world.getBlockEntity(pos) instanceof PawnShopBlockEntity shop) {
                 shop.getMerchant().setCustomer(null);
 
-                CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
-                        .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+                var currencyStacks = CurrencyHelper.getAsStacks(shop.getStoredCurrency(), 5);
+                shop.setStoredCurrency(0);
+                currencyStacks.forEach(stack -> ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack));
 
                 ItemScatterer.spawn(world, pos, shop);
+                shop.clear();
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }

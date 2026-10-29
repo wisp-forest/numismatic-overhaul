@@ -53,19 +53,16 @@ public class ShopMerchant implements Merchant {
 
     @Override
     public void trade(TradeOffer offer) {
-        offer.use();
         if (!this.inexhaustible) {
-            ShopOffer.remove(shop.getItems(), offer.getSellItem());
-
-            this.updateTrades();
-            if (this.getCustomer() instanceof ServerPlayerEntity serverPlayer) {
-                serverPlayer.networkHandler.sendPacket(new SetTradeOffersS2CPacket(
-                        serverPlayer.currentScreenHandler.syncId,
-                        this.recipeList,
-                        0, 0, false, false
-                ));
+            if (!ShopOffer.remove(shop.getItems(), offer.getSellItem())) {
+                this.syncTrades();
+                return;
             }
+
+            this.syncTrades();
         }
+
+        offer.use();
 
         var items = new ArrayList<ItemStack>();
         items.add(offer.getOriginalFirstBuyItem());
@@ -73,6 +70,17 @@ public class ShopMerchant implements Merchant {
             items.add(offer.getSecondBuyItem().get().itemStack());
         }
         shop.addCurrency(CurrencyHelper.getValue(items));
+    }
+
+    private void syncTrades() {
+        this.updateTrades();
+        if (this.getCustomer() instanceof ServerPlayerEntity serverPlayer) {
+            serverPlayer.networkHandler.sendPacket(new SetTradeOffersS2CPacket(
+                    serverPlayer.currentScreenHandler.syncId,
+                    this.recipeList,
+                    0, 0, false, false
+            ));
+        }
     }
 
     @Override

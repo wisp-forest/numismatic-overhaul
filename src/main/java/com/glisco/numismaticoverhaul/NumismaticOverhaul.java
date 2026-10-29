@@ -2,9 +2,12 @@ package com.glisco.numismaticoverhaul;
 
 import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
 import com.glisco.numismaticoverhaul.block.pawn.PawnShopScreenHandler;
-import com.glisco.numismaticoverhaul.block.piggy.PiggyBankScreenHandler;
+import com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopOffer;
+import com.glisco.numismaticoverhaul.block.shop.ShopOffer;
 import com.glisco.numismaticoverhaul.block.shop.ShopScreenHandler;
 import com.glisco.numismaticoverhaul.currency.MoneyBagLootEntry;
+import io.wispforest.endec.impl.ReflectiveEndecBuilder;
 import com.glisco.numismaticoverhaul.item.*;
 import com.glisco.numismaticoverhaul.network.*;
 import com.glisco.numismaticoverhaul.recipe.PiggyBankColoringRecipe;
@@ -115,13 +118,16 @@ public class NumismaticOverhaul implements ModInitializer {
         Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, id("money_bag"), MONEY_BAG_ENTRY);
 
         Registry.register(Registries.SCREEN_HANDLER, id("shop"), SHOP_SCREEN_HANDLER_TYPE);
+        Registry.register(Registries.SCREEN_HANDLER, id("pawn_shop"), PAWN_SHOP_SCREEN_HANDLER_TYPE);
         Registry.register(Registries.SCREEN_HANDLER, id("piggy_bank"), PIGGY_BANK_SCREEN_HANDLER_TYPE);
 
         CHANNEL.registerServerbound(RequestPurseActionC2SPacket.class, RequestPurseActionC2SPacket::handle);
         CHANNEL.registerServerbound(ShopScreenHandlerRequestC2SPacket.class, ShopScreenHandlerRequestC2SPacket::handle);
         CHANNEL.registerServerbound(PawnShopScreenHandlerRequestC2SPacket.class, PawnShopScreenHandlerRequestC2SPacket::handle);
-        UpdateShopScreenS2CPacket.initialize();
-        UpdatePawnShopScreenS2CPacket.initialize();
+        ReflectiveEndecBuilder.SHARED_INSTANCE.register(ShopOffer.ENDEC, ShopOffer.class);
+        ReflectiveEndecBuilder.SHARED_INSTANCE.register(PawnShopOffer.ENDEC, PawnShopOffer.class);
+        CHANNEL.registerClientboundDeferred(UpdateShopScreenS2CPacket.class);
+        CHANNEL.registerClientboundDeferred(UpdatePawnShopScreenS2CPacket.class);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new VillagerTradesResourceListener());
         VillagerTradesHandler.registerDefaultAdapters();

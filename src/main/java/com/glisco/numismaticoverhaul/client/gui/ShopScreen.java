@@ -46,6 +46,7 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
         super(handler, inventory, title);
         this.playerInventoryTitleY += 1;
         this.titleY = 5;
+        this.handler.tradeEditBuffer().observe(stack -> this.afterDataUpdate());
     }
 
     @Override
@@ -168,6 +169,7 @@ public class ShopScreen extends BaseOwoHandledScreen<FlowLayout, ShopScreenHandl
 
     private void selectTab(int index) {
         if (this.tab == index) return;
+        this.handler.setCurrentTab(index);
 
         if (index == 0) {
             this.swapBackgroundTexture(TEXTURE_PNG);

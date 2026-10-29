@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.TradedItem;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CurrencyHelper {
@@ -31,7 +32,9 @@ public class CurrencyHelper {
 
             value += currencyItem.getValue(stack);
 
-            if (remove) player.getInventory().removeOne(stack);
+            if (remove) {
+                player.getInventory().setStack(i, ItemStack.EMPTY);
+            }
         }
 
         return value;
@@ -54,12 +57,15 @@ public class CurrencyHelper {
     }
 
     public static void offerAsCoins(PlayerEntity player, long value) {
-        for (ItemStack itemStack : CurrencyConverter.getAsValidStacks(value)) {
+        for (ItemStack itemStack : getAsStacks(value, 36)) {
             player.getInventory().offerOrDrop(itemStack);
         }
     }
 
     public static boolean deductFromInventory(PlayerEntity player, long value) {
+        if (value < 0) return false;
+        if (value == 0) return true;
+
         long presentInInventory = getMoneyInInventory(player, false);
         if (presentInInventory < value) return false;
 
@@ -78,8 +84,14 @@ public class CurrencyHelper {
      * @return The List of {@link ItemStack}
      */
     public static List<ItemStack> getAsStacks(long value, int maxStacks) {
+        if (value <= 0) return Collections.emptyList();
 
         List<ItemStack> stacks = new ArrayList<>();
+        if (maxStacks <= 0 || value > (long) maxStacks * 99L * Currency.GOLD_VALUE) {
+            stacks.add(MoneyBagItem.fromRawValue(value));
+            return stacks;
+        }
+
         List<ItemStack> rawStacks = CurrencyConverter.getAsValidStacks(value);
 
         if (rawStacks.size() <= maxStacks) {

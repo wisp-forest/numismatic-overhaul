@@ -2,7 +2,7 @@ package com.glisco.numismaticoverhaul.block.shop;
 
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
 import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -44,7 +44,9 @@ public class ShopBlock extends BlockWithEntity {
     }
 
     public ShopBlock(boolean inexhaustible) {
-        super(Settings.create().nonOpaque().hardness(5.0f));
+        super(inexhaustible
+            ? Settings.create().nonOpaque().strength(-1.0f, 3600000.0f)
+            : Settings.create().nonOpaque().hardness(5.0f));
         this.inexhaustible = inexhaustible;
     }
 
@@ -72,11 +74,15 @@ public class ShopBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
 
-        if (shop.getOwner().equals(player.getUuid()) && !player.isSneaking()) {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
-
-            shop.busy = true;
+        boolean canManage = (shop.getOwner() != null && player.getUuid().equals(shop.getOwner())) || player.isCreative() || player.hasPermissionLevel(2);
+        if (canManage && !player.isSneaking()) {
+            if (shop.getOwner() == null) {
+                shop.setOwner(player.getUuid());
+            }
+            if (player.openHandledScreen(state.createScreenHandlerFactory(world, pos)).isPresent()) {
+                NumismaticOverhaul.CHANNEL.serverHandle(player).send(new UpdateShopScreenS2CPacket(shop));
+                shop.busy = true;
+            }
             return ActionResult.SUCCESS;
         }
 
@@ -97,11 +103,12 @@ public class ShopBlock extends BlockWithEntity {
             return;
         }
 
-        if (itemStack.contains(DataComponentTypes.CUSTOM_NAME) && world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
-            shop.setComponents(ComponentMap.builder().add(DataComponentTypes.CUSTOM_NAME, itemStack.getName()).build());
+        if (world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
+            if (itemStack.contains(DataComponentTypes.CUSTOM_NAME)) {
+                shop.setComponents(ComponentMap.builder().add(DataComponentTypes.CUSTOM_NAME, itemStack.getName()).build());
+            }
+            shop.setOwner(placer.getUuid());
         }
-
-        ((ShopBlockEntity) world.getBlockEntity(pos)).setOwner(placer.getUuid());
     }
 
     @Override
@@ -110,10 +117,12 @@ public class ShopBlock extends BlockWithEntity {
             if (world.getBlockEntity(pos) instanceof ShopBlockEntity shop) {
                 shop.getMerchant().setCustomer(null);
 
-                CurrencyConverter.getAsValidStacks(shop.getStoredCurrency())
-                    .forEach(stack -> ItemScatterer.spawn(shop.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack));
+                var currencyStacks = CurrencyHelper.getAsStacks(shop.getStoredCurrency(), 5);
+                shop.setStoredCurrency(0);
+                currencyStacks.forEach(stack -> ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack));
 
                 ItemScatterer.spawn(world, pos, shop);
+                shop.clear();
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }

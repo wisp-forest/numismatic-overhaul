@@ -1,50 +1,17 @@
 package com.glisco.numismaticoverhaul.block.piggy;
 
-import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.block.NumismaticOverhaulBlocks;
-import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
-import io.wispforest.owo.client.screens.ScreenUtils;
-import io.wispforest.owo.client.screens.SlotGenerator;
-import io.wispforest.owo.client.screens.ValidatingSlot;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 
-public class PiggyBankScreenHandler extends ScreenHandler {
-
-    private final ScreenHandlerContext context;
+@Deprecated
+public class PiggyBankScreenHandler extends com.glisco.numismaticoverhaul.block.PiggyBankScreenHandler {
 
     public PiggyBankScreenHandler(int index, PlayerInventory playerInventory) {
-        this(index, playerInventory, ScreenHandlerContext.EMPTY, new SimpleInventory(3));
+        super(index, playerInventory);
     }
 
     public PiggyBankScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context, Inventory piggyBankInventory) {
-        super(NumismaticOverhaul.PIGGY_BANK_SCREEN_HANDLER_TYPE, syncId);
-        this.context = context;
-
-        this.addSlot(new ValidatingSlot(piggyBankInventory, 0, 62, 26, stack -> stack.isOf(NumismaticOverhaulItems.BRONZE_COIN)));
-        this.addSlot(new ValidatingSlot(piggyBankInventory, 1, 80, 26, stack -> stack.isOf(NumismaticOverhaulItems.SILVER_COIN)));
-        this.addSlot(new ValidatingSlot(piggyBankInventory, 2, 98, 26, stack -> stack.isOf(NumismaticOverhaulItems.GOLD_COIN)));
-
-        SlotGenerator.begin(this::addSlot, 8, 63).playerInventory(playerInventory);
-    }
-
-    @Override
-    public ItemStack quickMove(PlayerEntity player, int index) {
-        return ScreenUtils.handleSlotTransfer(this, index, 3);
-    }
-
-    @Override
-    public boolean canUse(PlayerEntity player) {
-        return context.get(
-            (world, pos) -> !world.getBlockState(pos).isIn(NumismaticOverhaul.PIGGY_BANKS)
-                ? false
-                : player.squaredDistanceTo((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5) <= 64.0,
-            true
-        );
+        super(syncId, playerInventory, context, piggyBankInventory);
     }
 }

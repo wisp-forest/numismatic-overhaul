@@ -2,8 +2,7 @@ package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
 import com.glisco.numismaticoverhaul.NumismaticOverhaul;
-import com.glisco.numismaticoverhaul.currency.CurrencyConverter;
-import io.wispforest.owo.ops.ItemOps;
+import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,15 +20,18 @@ public class ServerPlayerEntityMixin {
         if (world.isClient) return;
 
         final var component = ModComponents.CURRENCY.get(player);
+        long currentBalance = component.getValue();
+        if (currentBalance <= 0) return;
 
         var dropPercentage = world.getGameRules().get(NumismaticOverhaul.MONEY_DROP_PERCENTAGE).get() * .01f;
-        int dropped = (int) (component.getValue() * dropPercentage);
+        long dropped = Math.max(0L, (long) (currentBalance * dropPercentage));
+        dropped = Math.min(dropped, currentBalance);
 
-        var stacksDropped = CurrencyConverter.getAsValidStacks(dropped);
+        if (dropped <= 0) return;
+
+        var stacksDropped = CurrencyHelper.getAsStacks(dropped, 5);
         for (var drop : stacksDropped) {
-            for (int i = 0; i < drop.getCount(); i++) {
-                player.dropItem(ItemOps.singleCopy(drop), true, false);
-            }
+            player.dropItem(drop, true, false);
         }
 
         component.modify(-dropped);

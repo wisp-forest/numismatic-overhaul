@@ -20,10 +20,10 @@ public record PawnShopOffer(ItemStack buy, long price) {
     );
 
     public PawnShopOffer {
-
         if (buy.isEmpty()) throw new IllegalArgumentException("Buy Stack must not be empty");
-        if (price == 0) throw new IllegalArgumentException("Price must not be null");
-
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than zero");
+        }
     }
 
     public static void add(PawnShopBlockEntity pawnShop, ItemStack boughtStack) {

@@ -1,11 +1,13 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopMerchant;
 import com.glisco.numismaticoverhaul.block.shop.ShopMerchant;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -76,6 +78,7 @@ public class MerchantScreenHandlerMixin {
         long neededCurrency = requiredCurrency - availableCurrencyInPlayerInventory;
 
         //Is that even possible?
+
         if (neededCurrency > playerBalance.getValue()) return;
 
         if (neededCurrency <= 0) {
@@ -95,10 +98,18 @@ public class MerchantScreenHandlerMixin {
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     public void thwartTaxEvasion(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        if (!(this.merchant instanceof ShopMerchant shopMerchant)) return;
+        BlockEntity shop = null;
+        if (this.merchant instanceof ShopMerchant shopMerchant) {
+            shop = shopMerchant.shop();
+        } else if (this.merchant instanceof PawnShopMerchant pawnShopMerchant) {
+            shop = pawnShopMerchant.shop();
+        }
 
-        var shop = shopMerchant.shop();
-        if (shop.getWorld().getBlockEntity(shop.getPos()) != shop || shop.getPos().getSquaredDistance(player.getX(), player.getY(), player.getZ()) > 100) {
+        if (shop == null) return;
+
+        var pos = shop.getPos();
+        if (shop.isRemoved() || shop.getWorld() == null || shop.getWorld().getBlockEntity(pos) != shop
+                || player.squaredDistanceTo((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) > 64.0) {
             cir.setReturnValue(false);
         }
     }

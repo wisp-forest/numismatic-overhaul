@@ -7,7 +7,6 @@
   "mixins": [
     "BundleItemMixin",
     "ItemStackComponentizationFixin",
-    "LayerInstanceAccessor",
     "LivingEntityMixin",
     "MerchantScreenHandlerMixin",
     "ServerPlayerEntityMixin",
@@ -15,6 +14,7 @@
     "TradeOfferInternalsMixin"
   ],
   "client": [
+    "LayerInstanceAccessor",
     "MerchantScreenMixin"
   ],
   "injectors": {

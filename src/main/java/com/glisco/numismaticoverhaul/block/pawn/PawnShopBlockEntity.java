@@ -126,7 +126,12 @@ public class PawnShopBlockEntity extends LockableContainerBlockEntity implements
     }
 
     public void addCurrency(long value) {
-        this.storedCurrency += value;
+        if (value <= 0) return;
+        if (Long.MAX_VALUE - this.storedCurrency < value) {
+            this.storedCurrency = Long.MAX_VALUE;
+        } else {
+            this.storedCurrency += value;
+        }
         markDirty();
     }
 
@@ -152,8 +157,10 @@ public class PawnShopBlockEntity extends LockableContainerBlockEntity implements
         super.readNbt(tag, registryLookup);
         Inventories.readNbt(tag, inventory, registryLookup);
         this.offers = tag.get(SerializationContext.attributes(RegistriesAttribute.of((DynamicRegistryManager) registryLookup)), OFFERS_LIST);
-        if (tag.contains("Owner")) {
-            owner = tag.getUuid("Owner");
+        if (tag.containsUuid("Owner")) {
+            this.owner = tag.getUuid("Owner");
+        } else {
+            this.owner = null;
         }
         this.allowsTransfer = tag.getBoolean("AllowsTransfer");
         this.storedCurrency = tag.getLong("StoredCurrency");
@@ -211,14 +218,17 @@ public class PawnShopBlockEntity extends LockableContainerBlockEntity implements
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return player.getUuid().equals(this.owner) && this.world.getBlockEntity(this.pos) == this && this.pos.getSquaredDistance(player.getX(), player.getY(), player.getZ()) <= 100;
+        if (this.world == null) return false;
+        boolean canManage = (this.owner != null && player.getUuid().equals(this.owner)) || player.isCreative() || player.hasPermissionLevel(2);
+        return canManage && this.world.getBlockEntity(this.pos) == this && this.pos.getSquaredDistance(player.getX(), player.getY(), player.getZ()) <= 100;
     }
 
+    @Nullable
     public UUID getOwner() {
         return owner;
     }
 
-    public void setOwner(UUID owner) {
+    public void setOwner(@Nullable UUID owner) {
         this.owner = owner;
         markDirty();
     }

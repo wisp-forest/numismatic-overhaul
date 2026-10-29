@@ -7,6 +7,8 @@ import com.glisco.numismaticoverhaul.currency.Currency;
 import com.glisco.numismaticoverhaul.item.CurrencyTooltipData;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
 import com.glisco.numismaticoverhaul.mixin.LayerInstanceAccessor;
+import com.glisco.numismaticoverhaul.network.UpdatePawnShopScreenS2CPacket;
+import com.glisco.numismaticoverhaul.network.UpdateShopScreenS2CPacket;
 import io.wispforest.owo.mixin.ui.layers.HandledScreenAccessor;
 import io.wispforest.owo.ui.container.StackLayout;
 import io.wispforest.owo.ui.core.*;
@@ -27,6 +29,9 @@ public class NumismaticOverhaulClient implements ClientModInitializer {
         HandledScreens.register(NumismaticOverhaul.SHOP_SCREEN_HANDLER_TYPE, ShopScreen::new);
         HandledScreens.register(NumismaticOverhaul.PAWN_SHOP_SCREEN_HANDLER_TYPE, PawnShopScreen::new);
         HandledScreens.register(NumismaticOverhaul.PIGGY_BANK_SCREEN_HANDLER_TYPE, PiggyBankScreen::new);
+
+        NumismaticOverhaul.CHANNEL.registerClientbound(UpdateShopScreenS2CPacket.class, UpdateShopScreenS2CPacket::handle);
+        NumismaticOverhaul.CHANNEL.registerClientbound(UpdatePawnShopScreenS2CPacket.class, UpdatePawnShopScreenS2CPacket::handle);
 
         FakeSlotComponent.init();
 
