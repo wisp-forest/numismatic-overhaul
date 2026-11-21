@@ -115,6 +115,7 @@ public class NumismaticOverhaul implements ModInitializer {
         Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, id("money_bag"), MONEY_BAG_ENTRY);
 
         Registry.register(Registries.SCREEN_HANDLER, id("shop"), SHOP_SCREEN_HANDLER_TYPE);
+        Registry.register(Registries.SCREEN_HANDLER, id("pawn_shop"), PAWN_SHOP_SCREEN_HANDLER_TYPE);
         Registry.register(Registries.SCREEN_HANDLER, id("piggy_bank"), PIGGY_BANK_SCREEN_HANDLER_TYPE);
 
         CHANNEL.registerServerbound(RequestPurseActionC2SPacket.class, RequestPurseActionC2SPacket::handle);
