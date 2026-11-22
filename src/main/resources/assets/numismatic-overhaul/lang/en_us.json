@@ -70,7 +70,8 @@
   "currency.numismatic-overhaul.bronze": "Bronze",
   "currency.numismatic-overhaul.silver": "Silver",
   "currency.numismatic-overhaul.gold": "Gold",
-  "feedback.numismatic-overhaul.out_of_reach": "Out of reach from %s",
+  "feedback.numismatic-overhaul.shop.out_of_reach": "Out of reach from Shop",
+  "feedback.numismatic-overhaul.pawn.out_of_reach": "Out of reach from Pawn Shop",
   "chat.numismatic-overhaul.balance": [
     {"text": "numismatic ", "color": "#bd9838"},
     {"text": "> balance: ", "color": "gray"},

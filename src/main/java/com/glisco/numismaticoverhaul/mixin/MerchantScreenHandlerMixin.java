@@ -114,10 +114,9 @@ public class MerchantScreenHandlerMixin {
         if (shop.isRemoved() || shop.getWorld() == null || shop.getWorld().getBlockEntity(pos) != shop) {
             cir.setReturnValue(false);
         }
-        if (player.squaredDistanceTo((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) > 10.0) {
-            var translation = isPawnShop ? "block.numismatic-overhaul.pawn_shop" : "block.numismatic-overhaul.shop";
-            var blockName = I18n.translate(translation);
-            player.sendMessage(Text.translatable("feedback.numismatic-overhaul.out_of_reach", blockName), true);
+        if (player.squaredDistanceTo((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) > 100.0) {
+            var translation = isPawnShop ? "pawn" : "shop";
+            player.sendMessage(Text.translatable("feedback.numismatic-overhaul.%s.out_of_reach".formatted(translation)), true);
             cir.setReturnValue(false);
         }
     }
