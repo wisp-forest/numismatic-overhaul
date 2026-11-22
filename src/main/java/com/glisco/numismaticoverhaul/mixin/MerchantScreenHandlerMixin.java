@@ -1,16 +1,21 @@
 package com.glisco.numismaticoverhaul.mixin;
 
 import com.glisco.numismaticoverhaul.ModComponents;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopBlockEntity;
+import com.glisco.numismaticoverhaul.block.pawn.PawnShopMerchant;
 import com.glisco.numismaticoverhaul.block.shop.ShopMerchant;
 import com.glisco.numismaticoverhaul.currency.CurrencyComponent;
 import com.glisco.numismaticoverhaul.currency.CurrencyHelper;
 import com.glisco.numismaticoverhaul.item.CoinItem;
 import com.glisco.numismaticoverhaul.item.NumismaticOverhaulItems;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.MerchantScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradedItem;
 import org.spongepowered.asm.mixin.*;
@@ -95,10 +100,24 @@ public class MerchantScreenHandlerMixin {
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     public void thwartTaxEvasion(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        if (!(this.merchant instanceof ShopMerchant shopMerchant)) return;
+        BlockEntity shop = null;
+        if (this.merchant instanceof ShopMerchant shopMerchant) {
+            shop = shopMerchant.shop();
+        } else if (this.merchant instanceof PawnShopMerchant pawnShopMerchant) {
+            shop = pawnShopMerchant.shop();
+        }
+        if (shop == null) return;
 
-        var shop = shopMerchant.shop();
-        if (shop.getWorld().getBlockEntity(shop.getPos()) != shop || shop.getPos().getSquaredDistance(player.getX(), player.getY(), player.getZ()) > 100) {
+        boolean isPawnShop = shop instanceof PawnShopBlockEntity;
+
+        var pos = shop.getPos();
+        if (shop.isRemoved() || shop.getWorld() == null || shop.getWorld().getBlockEntity(pos) != shop) {
+            cir.setReturnValue(false);
+        }
+        if (player.squaredDistanceTo((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) > 10.0) {
+            var translation = isPawnShop ? "block.numismatic-overhaul.pawn_shop" : "block.numismatic-overhaul.shop";
+            var blockName = I18n.translate(translation);
+            player.sendMessage(Text.translatable("feedback.numismatic-overhaul.out_of_reach", blockName), true);
             cir.setReturnValue(false);
         }
     }
