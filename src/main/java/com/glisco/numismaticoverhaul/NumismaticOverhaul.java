@@ -100,7 +100,7 @@ public class NumismaticOverhaul implements ModInitializer {
 
     public static final Map<EntityType<?>, Integer> MOBS_IN_BOURGEOISIE = new HashMap<>();
 
-    public static final com.glisco.numismaticoverhaul.NumismaticOverhaulConfig CONFIG = com.glisco.numismaticoverhaul.NumismaticOverhaulConfig.createAndLoad();
+    public static final NumismaticOverhaulConfig CONFIG = NumismaticOverhaulConfig.createAndLoad();
 
     @Override
     public void onInitialize() {

@@ -9,8 +9,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -142,6 +141,7 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
         if (entity instanceof FallingBlockEntity fallingBlock && fallingBlock.getBlockState().isIn(NumismaticOverhaul.VERY_HEAVY_BLOCKS) && !world.isClient) {
             if (world.getBlockEntity(pos) instanceof PiggyBankBlockEntity piggyBank) {
                 ItemScatterer.spawn(world, pos.offset(world.getBlockState(pos).get(FACING).getOpposite()), piggyBank.inventory());
+                piggyBank.inventory().clear();
             }
 
             world.removeBlock(pos, false);
@@ -183,7 +183,8 @@ public class PiggyBankBlock extends HorizontalFacingBlock implements BlockEntity
 
                 var drops = new ArrayList<>(super.getDroppedStacks(state, builder));
                 piggyBank.inventory().stream().filter(stack -> !stack.isEmpty()).forEach(drops::add);
-                drops.removeIf(itemStack -> itemStack.getItem().equals(NumismaticOverhaulBlocks.PIGGY_BANK.asItem()));
+                drops.removeIf(itemStack -> itemStack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof PiggyBankBlock);
+                piggyBank.inventory().clear();
                 return drops;
             } else {
                 builder.addDynamicDrop(Identifier.of("contents"), (consumer) -> {
